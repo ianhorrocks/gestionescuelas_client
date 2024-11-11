@@ -13,7 +13,8 @@ export const loginUser = async (email: string, password: string) => {
     throw new Error("Login failed");
   }
 
-  const data = await response.json();
+  const { data } = await response.json();
+  console.log("User token:", data.token); // Agregar console.log
   localStorage.setItem("token", data.token);
   return data;
 };
@@ -31,7 +32,7 @@ export const loginAdmin = async (email: string, password: string) => {
     throw new Error("Login failed");
   }
 
-  const data = await response.json();
+  const { data } = await response.json();
   localStorage.setItem("token", data.token);
   return data;
 };

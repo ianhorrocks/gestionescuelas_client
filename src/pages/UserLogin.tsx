@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { loginAdmin } from "../services/auth";
+import { loginUser } from "../services/auth";
 import Alert from "../components/Alert";
 import { useNavigate, Link } from "react-router-dom";
 
-const AdminLogin: React.FC = () => {
+const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -13,13 +13,13 @@ const AdminLogin: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await loginAdmin(email, password);
+      await loginUser(email, password);
       setSuccess("Access OK");
       setTimeout(() => {
-        navigate("/admin/users");
+        navigate("/user/dashboard");
       }, 2000);
     } catch (err) {
-      setError("Login failed. Please check your credentials and try again.");
+      setError("Datos Incorrectos.");
     }
   };
 
@@ -42,7 +42,7 @@ const AdminLogin: React.FC = () => {
           </svg>
           Back
         </Link>
-        <h1>Admin Login</h1>
+        <h1>Login</h1>
         {error && <p className="text-danger">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -67,14 +67,20 @@ const AdminLogin: React.FC = () => {
               required
             />
           </div>
+          <Link to="/forgot-password" className="d-block mb-3">
+            Olvidé mi contraseña
+          </Link>
           <button type="submit" className="btn btn-primary mt-3">
             Login
           </button>
         </form>
+        <Link to="/register" className="d-block mt-3">
+          ¿Sos nuevo?
+        </Link>
         {success && <Alert message={success} type="success" />}
       </div>
     </div>
   );
 };
 
-export default AdminLogin;
+export default Login;

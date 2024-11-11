@@ -1,26 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import logo from "../assets/images/LogoSmallPilotLog.png";
 
 const Home: React.FC = () => {
   return (
     <div className="card-container">
+      <div className="logo-container">
+        <Link className="navbar-brand" to="/">
+          <img src={logo} alt="PilotLog Logo" className="logo-image-home" />
+          <span className="logo-title-home">PilotLog</span>
+        </Link>
+      </div>
       <h2>Soy:</h2>
       <div className="card-row">
         <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">Piloto</h5>
-            <Link to="/login" className="btn btn-primary">
-              User Login
-            </Link>
-          </div>
+          <Link className="card-body" to="/user/login">
+            Usuario
+          </Link>
         </div>
         <div className="card">
-          <div className="card-body">
-            <h5 className="card-title">Administrador</h5>
-            <Link to="/admin-login" className="btn btn-primary">
-              Admin Login
-            </Link>
-          </div>
+          <Link className="card-body" to="/admin/login">
+            Escuela
+          </Link>
         </div>
       </div>
     </div>
