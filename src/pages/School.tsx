@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getSchoolsById } from "../services/schoolService";
 
+// TODO Seria como el dashboard o hamburguesa menu de la escuela
+
 interface School {
   _id: string;
   name: string;
@@ -17,6 +19,7 @@ const School: React.FC = () => {
       try {
         if (id) {
           const schoolData = await getSchoolsById(id);
+          console.log("School data:", schoolData); // Log para verificar los datos de la escuela
           setSchool(schoolData);
         } else {
           setError("Invalid school ID");

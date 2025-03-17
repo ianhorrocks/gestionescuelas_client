@@ -1,0 +1,40 @@
+.school-container {
+  padding: 1rem;
+}
+
+.school-content {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.school-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.add-flight-button:hover {
+  background-color: #0056b3;
+}
+
+.add-user-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgb(123, 105, 131);
+  color: white;
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.224);
+  transition: transform 0.2s;
+  border: none;
+}
+
+.add-user-button:hover {
+  transform: scale(1.1);
+}

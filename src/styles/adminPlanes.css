@@ -1,0 +1,37 @@
+.plane-item {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.plane-item:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.plane-registration {
+  color: black;
+  font-weight: bold;
+}
+
+.plane-details {
+  color: grey;
+}
+
+.plane-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.section-title {
+  font-weight: bold;
+  font-size: 1rem; /* Ajustar el tamaño de fuente según sea necesario */
+}
+
+.subtitle {
+  color: #6c757d; /* Gris suave */
+  font-size: 0.875rem; /* Ajustar el tamaño de fuente según sea necesario */
+}

@@ -14,29 +14,36 @@ export const loginUser = async (email: string, password: string) => {
   }
 
   const { data } = await response.json();
-  console.log("User token:", data.token); // Agregar console.log
   localStorage.setItem("token", data.token);
+  localStorage.setItem("user", JSON.stringify(data.user));
   return data;
 };
 
-export const loginAdmin = async (email: string, password: string) => {
-  const response = await fetch(`${API_URL}/admin/login`, {
-    method: "POST",
+export const getCurrentUser = () => {
+  return JSON.parse(localStorage.getItem("user") || "{}");
+};
+
+export const getLoggedUser = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await fetch(`${API_URL}/me`, {
     headers: {
-      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ email, password }),
   });
 
   if (!response.ok) {
-    throw new Error("Login failed");
+    throw new Error("Failed to fetch user");
   }
 
   const { data } = await response.json();
-  localStorage.setItem("token", data.token);
   return data;
 };
 
 export const logout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };

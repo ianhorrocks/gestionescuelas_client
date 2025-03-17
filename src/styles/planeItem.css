@@ -1,0 +1,33 @@
+.plane-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centrar las tarjetas */
+  gap: 1rem; /* Espacio entre tarjetas */
+}
+
+.plane-item {
+  cursor: pointer;
+  transition: transform 0.2s;
+  width: 100%; /* Ocupa toda la pantalla */
+  max-width: 600px; /* Ancho máximo para evitar que se estire demasiado */
+  margin-bottom: 1rem; /* Espacio entre tarjetas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agregar sombra */
+  border: none; /* Quitar borde */
+}
+
+.plane-item:hover {
+  transform: scale(1.05);
+}
+
+.plane-registration {
+  font-weight: normal; /* Font más tranquilo */
+  text-align: left; /* Alineado a la izquierda */
+  font-size: 1.25rem; /* Tamaño de fuente */
+}
+
+.plane-details {
+  color: #ffffff97; /* Gris suave */
+  font-weight: lighter; /* Grosor de font más suave */
+  text-align: left; /* Alineado a la izquierda */
+  font-size: 0.85rem; /* Tamaño de fuente más pequeño */
+}

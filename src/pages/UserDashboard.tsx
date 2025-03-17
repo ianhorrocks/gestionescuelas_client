@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getUserById } from "../services/userService";
-import { getSchoolsById } from "../services/schoolService";
+import { getSchoolsForUser } from "../services/schoolService";
+import HamburgerMenu from "../components/HamburgerMenu";
+import { getLoggedUser } from "../services/auth";
+import "../styles/UserDashboard.css"; // Asegúrate de crear este archivo CSS
 
 interface School {
   _id: string;
@@ -12,10 +15,11 @@ interface User {
   name: string;
 }
 
-const Dashboard: React.FC = () => {
+const UserDashboard: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [schools, setSchools] = useState<School[]>([]);
   const [error, setError] = useState("");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const fetchUserAndSchools = async () => {
@@ -31,13 +35,15 @@ const Dashboard: React.FC = () => {
         const userId = decodedToken._id;
 
         const userData = await getUserById(userId);
+        console.log("User data:", userData); // Log para verificar los datos del usuario
         setUser(userData);
 
-        const schoolIds = userData.assignedSchools;
-        const schoolsData = await Promise.all(
-          schoolIds.map((schoolId: string) => getSchoolsById(schoolId))
-        );
+        const schoolsData = await getSchoolsForUser();
+        console.log("Schools data:", schoolsData); // Log para verificar los datos de las escuelas
         setSchools(schoolsData);
+
+        const user = await getLoggedUser();
+        setUserName(`${user.name} ${user.lastname}`);
       } catch (err) {
         console.log("Fetch user or schools error:", err);
         setError("Failed to fetch user or schools");
@@ -48,10 +54,11 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="dashboard-container">
+      <HamburgerMenu userName={userName} />
       {error && <p className="text-danger">{error}</p>}
       {user && (
-        <div>
+        <div className="dashboard-content">
           <h1>¡Hola {user.name}!</h1>
           <div className="kpis">
             <div className="kpi">
@@ -74,12 +81,12 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           </div>
-          <h2>Escuelas:</h2>
+          <h2>Gestiona tus vuelos:</h2>
           {schools && schools.length > 0 ? (
             <ul className="list-group">
               {schools.map((school) => (
                 <li key={school._id} className="list-group-item">
-                  <a href={`/user/schools/${school._id}`}>{school.name}</a>
+                  <a href={`/user/school/${school._id}`}>{school.name}</a>
                 </li>
               ))}
             </ul>
@@ -92,4 +99,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default UserDashboard;
