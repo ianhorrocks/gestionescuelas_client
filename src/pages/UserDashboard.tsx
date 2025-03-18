@@ -83,13 +83,17 @@ const UserDashboard: React.FC = () => {
           </div>
           <h2>Gestiona tus vuelos:</h2>
           {schools && schools.length > 0 ? (
-            <ul className="list-group">
+            <div className="school-cards">
               {schools.map((school) => (
-                <li key={school._id} className="list-group-item">
-                  <a href={`/user/school/${school._id}`}>{school.name}</a>
-                </li>
+                <a
+                  key={school._id}
+                  href={`/user/school/${school._id}`}
+                  className="school-card"
+                >
+                  {school.name}
+                </a>
               ))}
-            </ul>
+            </div>
           ) : (
             <p>No hay escuelas asociadas.</p>
           )}

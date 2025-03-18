@@ -167,22 +167,29 @@ const Login: React.FC = () => {
               />
             </div>
           </div>
+          <div className="forgot-password-container">
+            <a href="#" className="forgot-password-link">
+              Olvidé la contraseña
+            </a>
+          </div>
           <button type="submit" className="btn btn-primary mt-3">
             Ingresar
           </button>
         </form>
-        <button
-          className="btn btn-secondary btn-register-user mt-3"
-          onClick={() => setShowRegisterUserModal(true)}
-        >
-          Crear Cuenta
-        </button>
-        <button
-          className="btn btn-secondary mt-3"
-          onClick={() => setShowRegisterSchoolModal(true)}
-        >
-          Registrar mi escuela
-        </button>
+        <div className="register-buttons-container">
+          <button
+            className="btn btn-secondary btn-register-user mt-3"
+            onClick={() => setShowRegisterUserModal(true)}
+          >
+            Crear Cuenta
+          </button>
+          <button
+            className="btn btn-secondary mt-3"
+            onClick={() => setShowRegisterSchoolModal(true)}
+          >
+            Registrar mi escuela
+          </button>
+        </div>
         {success && <Alert message={success} type="success" />}
       </div>
       <RegisterUserModal

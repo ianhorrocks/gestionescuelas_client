@@ -25,7 +25,9 @@ export const fetchFlights = async () => {
     throw new Error("Failed to fetch flights");
   }
 
-  return await response.json();
+  const data = await response.json();
+  console.log("Fetched flights:", data); // Agregar console.log para verificar los datos
+  return data;
 };
 
 export const validateFlight = async (id: string) => {

@@ -454,6 +454,10 @@ h2 {
 .btn-register-user {
   margin-bottom: -15px; /* Reducir el margen inferior para acercar los botones */
 }
+.forgot-password-link {
+  color: #7b6983;
+  text-align: right;
+}
 
 .section-title {
   font-weight: bold;

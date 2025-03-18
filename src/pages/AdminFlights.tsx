@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { fetchFlights, validateFlight } from "../services/flightService";
 import AdminHamburgerMenu from "../components/AdminHamburgerMenu";
+import ValidateFlightsModal from "../components/ValidateFlightsModal";
 import { getLoggedUser } from "../services/auth";
+import "../styles/AdminFlights.css"; // Asegúrate de crear este archivo CSS
 
 const AdminFlights: React.FC = () => {
   interface Flight {
@@ -13,6 +15,7 @@ const AdminFlights: React.FC = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
   const [error, setError] = useState("");
   const [userName, setUserName] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -53,23 +56,61 @@ const AdminFlights: React.FC = () => {
     }
   };
 
+  const handleUpload = (file: File) => {
+    console.log("Uploaded file:", file);
+    // Aquí se manejará la lógica de carga de archivos
+  };
+
   return (
-    <div>
+    <div className="admin-flights-container">
       <AdminHamburgerMenu userName={userName} />
       <h1>Gestión de Vuelos</h1>
       {error && <p className="text-danger">{error}</p>}
-      <ul className="list-group">
-        {flights.map((flight) => (
-          <li key={flight._id} className="list-group-item">
-            {flight.details}
-            {!flight.validated && (
-              <button onClick={() => handleValidate(flight._id)}>
-                Validar
-              </button>
-            )}
-          </li>
-        ))}
-      </ul>
+      <div className="flights-section">
+        <div className="flights-subsection">
+          <h2>Pendientes</h2>
+          <div className="flights-list">
+            {Array.isArray(flights) &&
+              flights
+                .filter((flight) => !flight.validated)
+                .map((flight) => (
+                  <div key={flight._id} className="flight-card">
+                    <div className="flight-details">{flight.details}</div>
+                    <button
+                      onClick={() => handleValidate(flight._id)}
+                      className="btn btn-success btn-sm validate-button"
+                    >
+                      Validar
+                    </button>
+                  </div>
+                ))}
+          </div>
+          <button
+            onClick={() => setShowModal(true)}
+            className="btn btn-primary mt-3"
+          >
+            Validar Vuelos
+          </button>
+        </div>
+        <div className="flights-subsection">
+          <h2>Validados</h2>
+          <div className="flights-list">
+            {Array.isArray(flights) &&
+              flights
+                .filter((flight) => flight.validated)
+                .map((flight) => (
+                  <div key={flight._id} className="flight-card">
+                    <div className="flight-details">{flight.details}</div>
+                  </div>
+                ))}
+          </div>
+        </div>
+      </div>
+      <ValidateFlightsModal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        onUpload={handleUpload}
+      />
     </div>
   );
 };
