@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import "../styles/fichas.css"; // Importa el archivo CSS general
 
 interface User {
   _id: string;
@@ -56,7 +55,7 @@ const UserItem: React.FC<UserItemProps> = ({ user, onDelete, schoolId }) => {
           <h5 className="mb-1">
             {user.name} {user.lastname}
           </h5>
-          <p className="mb-0">{userRole}</p>
+          <p className="mb-0">Rol: {userRole}</p>
         </div>
       </li>
 
@@ -69,13 +68,14 @@ const UserItem: React.FC<UserItemProps> = ({ user, onDelete, schoolId }) => {
             <div className="user-photo-container">
               <img src={userPhoto} alt="User" className="user-photo" />
             </div>
-            <div className="user-info ms-3">
+            <div className="user-info d-flex flex-column">
               <h5 className="mb-1">
                 {user.name} {user.lastname}
               </h5>
-              <p className="mb-0">Rol: {userRole}</p>
+              <p className="user-role mb-0">Rol: {userRole}</p>
             </div>
           </div>
+
           <h5 className="section-title">Perfil del usuario:</h5>
           <p className="subtitle">
             Email: <strong>{user.email}</strong>

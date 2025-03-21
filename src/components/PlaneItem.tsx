@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Card, Modal, Button, Form } from "react-bootstrap";
 import defaultPlane from "../assets/images/default-plane.jpg"; // Importar la foto por defecto
 import ReactCrop, { Crop as ReactCropType } from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+// import "../styles/planeItem.css"; // Importar el archivo CSS específico
 
 interface Crop extends ReactCropType {
   aspect?: number;
 }
-import "react-image-crop/dist/ReactCrop.css";
-import "../styles/planeItem.css"; // Importar el archivo CSS específico
-
 interface PlaneItemProps {
   plane: {
     _id: string;

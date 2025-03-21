@@ -1,0 +1,137 @@
+@use "../Variables/variables";
+@use "../Mixins/mixins";
+@use "sass:color";
+
+/* Estilo para mensajes de error */
+.text-danger {
+  color: variables.$error-text-color !important;
+}
+
+/* Estilo para la lista de usuarios */
+.user-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+}
+
+.user-list .user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: variables.$white-color;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px variables.$shadow-color;
+  margin-bottom: 10px;
+
+  .user-info {
+    flex: 1;
+  }
+
+  .user-actions {
+    display: flex;
+    gap: 10px;
+
+    .delete-button {
+      background-color: variables.$error-bg-color;
+      color: variables.$error-text-color;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: color.adjust(
+          variables.$error-bg-color,
+          $lightness: -10%
+        );
+      }
+    }
+  }
+}
+
+/* Estilo para el botón de agregar usuario */
+.add-user-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: variables.$secondary-color;
+  color: variables.$white-color;
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px variables.$shadow-color;
+  transition: transform 0.2s;
+  border: none;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.admin-users-container {
+  padding: 20px;
+}
+
+.admin-users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h1 {
+    font-size: 2rem;
+    color: variables.$primary-color;
+  }
+
+  .add-user-button {
+    background-color: variables.$primary-color;
+    color: variables.$white-color;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px variables.$shadow-color;
+
+    &:hover {
+      background-color: color.adjust(
+        variables.$primary-color,
+        $lightness: -10%
+      );
+    }
+  }
+}
+
+.list-group-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem; /* Reduced font size */
+  border-radius: 10px; /* Redondear las esquinas */
+  box-shadow: 0 4px 8px variables.$shadow-color; /* Agregar sombra */
+  background-color: variables.$white-color; /* Fondo blanco */
+  padding: 10px; /* Añadir padding */
+  transition: transform 0.2s; /* Añadir transición para hover */
+
+  &:hover {
+    transform: scale(1.02); /* Efecto de hover */
+  }
+
+  img {
+    margin-right: 15px;
+    border-radius: 50%; /* Redondear la imagen */
+  }
+}

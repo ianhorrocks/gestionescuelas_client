@@ -3,7 +3,7 @@ import { getUserById } from "../services/userService";
 import { getSchoolsForUser } from "../services/schoolService";
 import HamburgerMenu from "../components/HamburgerMenu";
 import { getLoggedUser } from "../services/auth";
-import "../styles/UserDashboard.css"; // Asegúrate de crear este archivo CSS
+// import "../styles/UserDashboard.css"; // Asegúrate de crear este archivo CSS
 
 interface School {
   _id: string;

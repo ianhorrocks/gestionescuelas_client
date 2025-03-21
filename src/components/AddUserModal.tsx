@@ -24,7 +24,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
   return (
     <Modal show={show} onHide={onClose} className="fade">
       <Modal.Header closeButton>
-        <Modal.Title>Asignar Usuario</Modal.Title>
+        <Modal.Title>Agregar Usuario</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
@@ -44,17 +44,22 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
               value={role}
               onChange={(e) => setRole(e.target.value)}
               required
-              className="custom-select"
+              className="form-select" // Usamos la clase de Bootstrap en vez de form-select
             >
               <option value="Alumno">Alumno</option>
               <option value="Piloto">Piloto</option>
               <option value="Instructor">Instructor</option>
-              <option value="Admin">Admin</option>
             </Form.Control>
           </Form.Group>
-          <Button variant="primary" type="submit" className="modal-button mt-3">
-            Asignar
-          </Button>
+          <div className="text-end">
+            <Button
+              variant="primary"
+              type="submit"
+              className="modal-button mt-3"
+            >
+              Agregar
+            </Button>
+          </div>
         </Form>
       </Modal.Body>
     </Modal>

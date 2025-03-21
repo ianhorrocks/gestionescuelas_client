@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  background-color: #94a9b5;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1,
+h2 {
+  margin-bottom: 20px;
+  text-align: center; /* Center the title */
+}
+
+// *** Styles from bootstrap ***
+
+.btn-primary {
+  background-color: #a18fbf; /* Lighter shade of #7B6983 */
+  border-color: #a18fbf;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #8e7aa6; /* Slightly darker shade for hover effect */
+  border-color: #8e7aa6;
+}
+
+.btn-secondary {
+  background-color: white;
+  border-color: white;
+  color: #7b6983;
+}
+
+.btn-secondary:hover {
+  color: #7b6983a1;
+  background-color: white;
+  border-color: white;
+}
+
+.form-select {
+  background-color: #ffffff; /* Fondo gris claro */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 0.5rem 1rem; /* Espaciado interno */
+}
+
+.form-select:focus {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul al enfocar */
+}

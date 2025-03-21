@@ -3,7 +3,7 @@ import { fetchFlights, validateFlight } from "../services/flightService";
 import AdminHamburgerMenu from "../components/AdminHamburgerMenu";
 import ValidateFlightsModal from "../components/ValidateFlightsModal";
 import { getLoggedUser } from "../services/auth";
-import "../styles/AdminFlights.css"; // Asegúrate de crear este archivo CSS
+// import "../styles/AdminFlights.css"; // Asegúrate de crear este archivo CSS
 
 const AdminFlights: React.FC = () => {
   interface Flight {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchUserProfile, updateUserProfile } from "../services/userService";
 import HamburgerMenu from "../components/HamburgerMenu";
 import { getLoggedUser } from "../services/auth";
-import "../styles/UserProfile.css"; // Asegúrate de crear este archivo CSS
+// import "../styles/UserProfile.css"; // Asegúrate de crear este archivo CSS
 
 const UserProfile: React.FC = () => {
   const [profile, setProfile] = useState({ name: "", email: "" });

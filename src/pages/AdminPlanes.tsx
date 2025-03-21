@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AdminHamburgerMenu from "../components/AdminHamburgerMenu";
+import Navbar from "../components/Navbar";
 import AddPlaneModal from "../components/AddPlaneModal";
 import PlaneItem from "../components/PlaneItem";
 import {
@@ -10,8 +10,8 @@ import {
 } from "../services/planeService";
 import { getLoggedUser } from "../services/auth";
 import defaultPlane from "../assets/images/default-plane.jpg"; // Importar la foto por defecto
-import "../styles/fichas.css"; // Importar el archivo CSS general
-import "../styles/planeItem.css"; // Importar el archivo CSS específico
+//import "../styles/fichas.css"; // Importar el archivo CSS general
+//import "../styles/PlaneItem.css"; // Importar el archivo CSS específico
 import "react-image-crop/dist/ReactCrop.css";
 
 interface Plane {
@@ -31,7 +31,7 @@ const AdminPlanes: React.FC = () => {
   const [error, setError] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [schoolId, setSchoolId] = useState<string | null>(null);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("Admin User");
 
   useEffect(() => {
     const fetchSchoolId = async () => {
@@ -98,39 +98,54 @@ const AdminPlanes: React.FC = () => {
     }
   };
 
+  const links = [
+    { path: "/admin/users", label: "Usuarios" },
+    { path: "/admin/planes", label: "Aeronaves" },
+    { path: "/admin/flights", label: "Vuelos" },
+  ];
+
   return (
     <div>
-      <AdminHamburgerMenu userName={userName} />
-      <h1>Aeronaves</h1>
-      {error && <p className="text-danger">{error}</p>}
-      <div className="plane-list">
-        {planes.map((plane) => (
-          <PlaneItem
-            key={plane._id}
-            plane={{
-              _id: plane._id,
-              registrationNumber: plane.registrationNumber,
-              brand: plane.brand,
-              model: plane.model,
-              photoUrl: plane.photoUrl || defaultPlane,
-              baseAerodrome: plane.baseAerodrome,
-              addedDate: new Date(
-                parseInt(plane._id.substring(0, 8), 16) * 1000
-              ).toLocaleDateString("es-ES"),
-            }}
-            onDelete={handleDeletePlane}
-            onUpdatePhoto={handleUpdatePlanePhoto}
-          />
-        ))}
-      </div>
-      <button className="add-user-button" onClick={() => setShowAddModal(true)}>
-        +
-      </button>
-      <AddPlaneModal
-        show={showAddModal}
-        onClose={() => setShowAddModal(false)}
-        onAddPlane={handleAddPlane}
+      <Navbar
+        title="Gestión de Aeronaves"
+        userName={userName}
+        links={links}
+        logoutPath="/"
       />
+      <div className="content">
+        {error && <p className="text-danger">{error}</p>}
+        <div className="plane-list">
+          {planes.map((plane) => (
+            <PlaneItem
+              key={plane._id}
+              plane={{
+                _id: plane._id,
+                registrationNumber: plane.registrationNumber,
+                brand: plane.brand,
+                model: plane.model,
+                photoUrl: plane.photoUrl || defaultPlane,
+                baseAerodrome: plane.baseAerodrome,
+                addedDate: new Date(
+                  parseInt(plane._id.substring(0, 8), 16) * 1000
+                ).toLocaleDateString("es-ES"),
+              }}
+              onDelete={handleDeletePlane}
+              onUpdatePhoto={handleUpdatePlanePhoto}
+            />
+          ))}
+        </div>
+        <button
+          className="add-user-button"
+          onClick={() => setShowAddModal(true)}
+        >
+          +
+        </button>
+        <AddPlaneModal
+          show={showAddModal}
+          onClose={() => setShowAddModal(false)}
+          onAddPlane={handleAddPlane}
+        />
+      </div>
     </div>
   );
 };

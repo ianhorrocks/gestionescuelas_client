@@ -83,7 +83,7 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
               value={planeData.country}
               onChange={handleChange}
               required
-              className="custom-select"
+              className="form-select"
             >
               <option value="Argentina">🇦🇷 Argentina</option>
             </Form.Control>

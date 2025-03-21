@@ -5,7 +5,7 @@ import { getUserFlightsBySchool } from "../services/flightService";
 import HamburgerMenu from "../components/HamburgerMenu";
 import AddFlightModal from "../components/AddFlightModal";
 import { getLoggedUser } from "../services/auth";
-import "../styles/UserSchool.css"; // Asegúrate de crear este archivo CSS
+//import "../styles/UserSchool.css";
 
 interface School {
   _id: string;

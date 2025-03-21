@@ -1,0 +1,244 @@
+@use "../Variables/variables";
+@use "../Mixins/mixins";
+
+.login-page {
+  background-color: variables.$background-color;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login-container {
+    background-color: variables.$white-color;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 10px variables.$shadow-color;
+    text-align: center;
+    width: 300px;
+
+    .login-logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 0.2rem;
+    }
+
+    .login-title {
+      font-family: variables.$font-family-caveat;
+      font-size: 3.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .forgot-password-link {
+      color: variables.$secondary-color;
+      text-align: left;
+      display: block;
+      margin-top: -1rem;
+      font-size: 0.8rem;
+    }
+
+    .register-buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+
+      .new-user-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1rem;
+        p {
+          margin-bottom: 0;
+          .new-user-text {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #615768;
+          }
+        }
+        .btn-register-user {
+          padding-left: 6px;
+        }
+      }
+    }
+
+    .password-input-container {
+      position: relative;
+
+      .password-toggle-icon {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #757575;
+      }
+    }
+
+    @include mixins.floating-label(#757575, variables.$primary-color);
+  }
+}
+
+// Ajustes para las etiquetas flotantes
+.floating-label-group,
+.register-user-modal .form-group,
+.register-school-modal .form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+
+  .floating-input {
+    width: 100%;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #757575;
+    background: transparent;
+    font-size: 14px; /* Reducir el tamaño de la letra */
+    border-radius: 0;
+    box-shadow: none;
+    appearance: none;
+
+    &:focus {
+      outline: none !important;
+      border-bottom: 1px solid variables.$primary-color;
+    }
+
+    &:focus ~ .floating-label,
+    &:not(:placeholder-shown) ~ .floating-label {
+      top: -20px;
+      font-size: 12px;
+      color: variables.$primary-color;
+    }
+  }
+
+  .floating-label {
+    color: #757575;
+    font-size: 14px; /* Reducir el tamaño de la letra */
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+  }
+}
+
+// Estilos para el modal de registro de usuario
+.register-user-modal,
+.register-school-modal {
+  .modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+    margin-top: 10px;
+  }
+
+  .password-input-container {
+    position: relative;
+
+    .password-toggle-icon {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #757575; /* Asegurar que el color sea gris */
+    }
+  }
+
+  .validation-requirements {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #757575;
+
+    div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+
+      .text-success {
+        color: green;
+      }
+
+      .text-danger {
+        color: red;
+      }
+
+      span {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+// Estilos para los pasos del formulario de registro de escuela
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem; /* Aumentar el margen inferior */
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.step-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.step-label {
+  font-size: 0.875rem;
+  color: #666;
+  text-align: center;
+}
+
+.step.active .step-number {
+  background-color: #5264ae;
+}
+
+.step.active .step-label {
+  font-weight: bold;
+  color: #000;
+}
+
+// Alert Styles
+.alert {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 4px 6px variables.$shadow-color;
+
+  &-success {
+    background-color: variables.$success-bg-color;
+    color: variables.$success-text-color;
+    border: 1px solid variables.$success-border-color;
+  }
+
+  &-error {
+    background-color: variables.$error-bg-color;
+    color: variables.$error-text-color;
+    border: 1px solid variables.$error-border-color;
+  }
+
+  &-warning {
+    background-color: variables.$warning-bg-color;
+    color: variables.$warning-text-color;
+    border: 1px solid variables.$warning-border-color;
+  }
+}

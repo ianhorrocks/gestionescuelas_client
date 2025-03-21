@@ -38,3 +38,24 @@
 .add-user-button:hover {
   transform: scale(1.1);
 }
+
+.list-group-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem; /* Reduced font size */
+  border-radius: 10px; /* Redondear las esquinas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agregar sombra */
+  background-color: #ffffff; /* Fondo blanco */
+  padding: 10px; /* Añadir padding */
+  transition: transform 0.2s; /* Añadir transición para hover */
+}
+
+.list-group-item:hover {
+  transform: scale(1.02); /* Efecto de hover */
+}
+
+.list-group-item img {
+  margin-right: 15px;
+  border-radius: 50%; /* Redondear la imagen */
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import "../styles/ValidateFlightsModal.css"; // Asegúrate de crear este archivo CSS
+//import "../styles/ValidateFlightsModal.css"; // Asegúrate de crear este archivo CSS
 
 interface ValidateFlightsModalProps {
   show: boolean;

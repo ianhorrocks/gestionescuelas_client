@@ -4,7 +4,6 @@ import { loginUser } from "../services/auth";
 import Alert from "../components/Alert";
 import RegisterSchoolModal from "../components/RegisterSchoolModal";
 import RegisterUserModal from "../components/RegisterUserModal";
-import "../styles/global.css"; // Importa el archivo CSS global
 import logo from "../assets/images/LogoSmallPilotLog.png"; // Importa el logo
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -17,44 +16,74 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [warning, setWarning] = useState(""); // Nuevo estado para advertencias
   const [showRegisterSchoolModal, setShowRegisterSchoolModal] = useState(false);
   const [showRegisterUserModal, setShowRegisterUserModal] = useState(false);
   const navigate = useNavigate();
+
+  // Function to handle temporary messages
+  const showTemporaryMessage = (
+    type: "error" | "success" | "warning",
+    message: string,
+    duration = 3000
+  ) => {
+    if (type === "error") {
+      setError(message);
+    } else if (type === "success") {
+      setSuccess(message);
+    } else if (type === "warning") {
+      setWarning(message);
+    }
+    setTimeout(() => {
+      if (type === "error") {
+        setError("");
+      } else if (type === "success") {
+        setSuccess("");
+      } else if (type === "warning") {
+        setWarning("");
+      }
+    }, duration);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const { token, user } = await loginUser(email, password);
+      if (!user.assignedSchools || user.assignedSchools.length === 0) {
+        showTemporaryMessage(
+          "warning",
+          "Usuario no pertenece a ninguna escuela."
+        );
+        return; // Detenemos la ejecución si hay un error
+      }
+
       localStorage.setItem("token", token);
-      setSuccess("Access OK");
+      showTemporaryMessage("success", "Access OK");
       setTimeout(() => {
-        if (user.assignedSchools && user.assignedSchools.length > 0) {
-          const school = user.assignedSchools[0]; // Assuming the first assigned school is the one to navigate to
-          if (
-            school.role.includes("Alumno") ||
-            school.role.includes("Piloto") ||
-            school.role.includes("Instructor")
-          ) {
-            navigate("/user/dashboard");
-          } else if (school.role.includes("Admin")) {
-            navigate("/admin/users");
-          } else {
-            navigate("/"); // Default route
-          }
+        const school = user.assignedSchools[0];
+        if (
+          school.role.includes("Alumno") ||
+          school.role.includes("Piloto") ||
+          school.role.includes("Instructor")
+        ) {
+          navigate("/user/dashboard");
+        } else if (school.role.includes("Admin")) {
+          navigate("/admin/users");
         } else {
-          setError("No assigned schools found for the user.");
+          navigate("/");
         }
       }, 2000);
     } catch (err) {
       if (
         err instanceof Error &&
-        err.message === "LA_ESCUELA_AUN_NO_FUE_APROBADA" // TODO consultar con Seba para que se muestre el mensaje correcto
+        err.message === "LA_ESCUELA_AUN_NO_FUE_APROBADA"
       ) {
-        setError(
+        showTemporaryMessage(
+          "error",
           "La escuela aún no fue aprobada. Espere aprobación del Super Admin."
         );
       } else {
-        setError("Usuario o Contraseña incorrectos.");
+        showTemporaryMessage("error", "Usuario o Contraseña incorrectos.");
       }
     }
   };
@@ -87,12 +116,12 @@ const Login: React.FC = () => {
         throw new Error("Registration failed");
       }
 
-      setSuccess("School registration successful");
+      showTemporaryMessage("success", "School registration successful");
       setTimeout(() => {
         setShowRegisterSchoolModal(false);
       }, 2000);
     } catch (err) {
-      setError("Registration failed. Please try again.");
+      showTemporaryMessage("error", "Registration failed. Please try again.");
     }
   };
 
@@ -116,12 +145,12 @@ const Login: React.FC = () => {
         throw new Error("Registration failed");
       }
 
-      setSuccess("User registration successful");
+      showTemporaryMessage("success", "User registration successful");
       setTimeout(() => {
         setShowRegisterUserModal(false);
       }, 2000);
     } catch (err) {
-      setError("Registration failed. Please try again.");
+      showTemporaryMessage("error", "Registration failed. Please try again.");
     }
   };
 
@@ -130,7 +159,10 @@ const Login: React.FC = () => {
       <div className="login-container">
         <img src={logo} alt="Logo" className="login-logo" />
         <h1 className="login-title">PilotLog</h1>
-        {error && <p className="text-danger">{error}</p>}
+        {error && <Alert message={error} type="error" />}
+        {success && <Alert message={success} type="success" />}
+        {warning && <Alert message={warning} type="warning" />}{" "}
+        {/* Nueva alerta para advertencias */}
         <form onSubmit={handleSubmit}>
           <div className="form-group floating-label-group">
             <input
@@ -158,7 +190,7 @@ const Login: React.FC = () => {
                 placeholder=" " // Añadir un espacio para que el placeholder funcione correctamente
               />
               <label htmlFor="password" className="floating-label">
-                Password
+                Contraseña
               </label>
               <FontAwesomeIcon
                 icon={showPassword ? faEyeSlash : faEye}
@@ -172,25 +204,27 @@ const Login: React.FC = () => {
               Olvidé la contraseña
             </a>
           </div>
-          <button type="submit" className="btn btn-primary mt-3">
+          <button type="submit" className="btn btn-primary mt-4">
             Ingresar
           </button>
         </form>
         <div className="register-buttons-container">
+          <div className="new-user-container">
+            <p className="new-user-text">¿Sos nuevo?</p>
+            <button
+              className="btn btn-secondary btn-register-user"
+              onClick={() => setShowRegisterUserModal(true)}
+            >
+              Crear Cuenta
+            </button>
+          </div>
           <button
-            className="btn btn-secondary btn-register-user mt-3"
-            onClick={() => setShowRegisterUserModal(true)}
-          >
-            Crear Cuenta
-          </button>
-          <button
-            className="btn btn-secondary mt-3"
+            className="btn btn-secondary"
             onClick={() => setShowRegisterSchoolModal(true)}
           >
             Registrar mi escuela
           </button>
         </div>
-        {success && <Alert message={success} type="success" />}
       </div>
       <RegisterUserModal
         show={showRegisterUserModal}

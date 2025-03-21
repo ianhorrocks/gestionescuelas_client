@@ -7,7 +7,6 @@
 
 .plane-item {
   cursor: pointer;
-  transition: transform 0.2s;
   width: 100%; /* Ocupa toda la pantalla */
   max-width: 600px; /* Ancho máximo para evitar que se estire demasiado */
   margin-bottom: 1rem; /* Espacio entre tarjetas */
@@ -16,18 +15,29 @@
 }
 
 .plane-item:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
 .plane-registration {
   font-weight: normal; /* Font más tranquilo */
   text-align: left; /* Alineado a la izquierda */
   font-size: 1.25rem; /* Tamaño de fuente */
+  color: black;
 }
 
 .plane-details {
-  color: #ffffff97; /* Gris suave */
+  color: #000000a8; /* Gris suave */
   font-weight: lighter; /* Grosor de font más suave */
   text-align: left; /* Alineado a la izquierda */
   font-size: 0.85rem; /* Tamaño de fuente más pequeño */
+}
+
+.section-title {
+  font-weight: bold;
+  font-size: 1rem; /* Ajustar el tamaño de fuente según sea necesario */
+}
+
+.subtitle {
+  color: #6c757d; /* Gris suave */
+  font-size: 0.875rem; /* Ajustar el tamaño de fuente según sea necesario */
 }

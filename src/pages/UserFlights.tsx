@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchUserFlights } from "../services/flightService";
 import HamburgerMenu from "../components/HamburgerMenu";
 import { getLoggedUser } from "../services/auth";
-import "../styles/UserFlights.css"; // Asegúrate de crear este archivo CSS
+// import "../styles/UserFlights.css"; // Asegúrate de crear este archivo CSS
 
 const UserFlights: React.FC = () => {
   interface Flight {
