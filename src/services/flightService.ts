@@ -1,17 +1,24 @@
 const API_URL = "http://localhost:3001/api/flights";
 
-export const fetchUserFlights = async () => {
-  const response = await fetch(`${API_URL}/user`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+export const fetchUserFlights = async (schoolId: string) => {
+  const API_URL = `http://localhost:3001/api/schools/${schoolId}/flights`;
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch flights");
+  try {
+    const response = await fetch(API_URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch flights");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching flights:", error);
+    throw error;
   }
-
-  return await response.json();
 };
 
 export const fetchFlights = async () => {

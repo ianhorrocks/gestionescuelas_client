@@ -16,7 +16,7 @@ export const getSchoolsForUser = async () => {
 };
 
 export const getSchoolsById = async (schoolId: string) => {
-  console.log(`Fetching school by ID: ${schoolId}`); // Agregar console.log
+  console.log(`Fetching school by ID por getSchoolsById: ${schoolId}`); // Agregar console.log
   const response = await fetch(`${API_URL}/${schoolId}`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -30,4 +30,25 @@ export const getSchoolsById = async (schoolId: string) => {
   const data = await response.json();
   console.log("School data:", data); // Agregar console.log
   return data;
+};
+
+export const getSchoolDetails = async (schoolId: string) => {
+  console.log(`Fetching school by ID por getSchoolDetails: ${schoolId}`); // Agregar console.log
+  try {
+    const response = await fetch(`${API_URL}/${schoolId}/details`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch school details");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching school details:", error);
+    throw error;
+  }
 };

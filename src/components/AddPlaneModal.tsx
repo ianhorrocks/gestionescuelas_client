@@ -58,93 +58,113 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
   };
 
   return (
-    <Modal show={show} onHide={onClose}>
+    <Modal show={show} onHide={onClose} className="fade add-plane-modal">
       <Modal.Header closeButton>
         <Modal.Title>Agregar Avión</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formRegistrationNumber" className="mb-3">
-            <Form.Label>Matricula</Form.Label>
+          <Form.Group controlId="formRegistrationNumber" className="form-group">
             <Form.Control
               type="text"
               name="registrationNumber"
               value={planeData.registrationNumber}
               onChange={handleChange}
               required
+              className="floating-input"
+              placeholder=" "
             />
+            <Form.Label className="floating-label">Matrícula</Form.Label>
           </Form.Group>
 
-          <Form.Group controlId="formCountry" className="mb-3">
-            <Form.Label>País</Form.Label>
+          <Form.Group controlId="formCountry" className="form-group">
             <Form.Control
               as="select"
               name="country"
               value={planeData.country}
               onChange={handleChange}
               required
-              className="form-select"
+              className="floating-input"
             >
               <option value="Argentina">🇦🇷 Argentina</option>
             </Form.Control>
+            <Form.Label className="floating-label">País</Form.Label>
           </Form.Group>
-          <Form.Group controlId="formBrand" className="mb-3">
-            <Form.Label>Marca</Form.Label>
+
+          <Form.Group controlId="formBrand" className="form-group">
             <Form.Control
               type="text"
               name="brand"
               value={planeData.brand}
               onChange={handleChange}
               required
+              className="floating-input"
+              placeholder=" "
             />
+            <Form.Label className="floating-label">Marca</Form.Label>
           </Form.Group>
-          <Form.Group controlId="formModel" className="mb-3">
-            <Form.Label>Modelo</Form.Label>
+
+          <Form.Group controlId="formModel" className="form-group">
             <Form.Control
               type="text"
               name="model"
               value={planeData.model}
               onChange={handleChange}
               required
+              className="floating-input"
+              placeholder=" "
             />
+            <Form.Label className="floating-label">Modelo</Form.Label>
           </Form.Group>
-          <Form.Group controlId="formTotalHours" className="mb-3">
-            <Form.Label>
-              Horas Totales{" "}
-              <small>
-                <strong>(Odometro Actual)</strong>
-              </small>
-            </Form.Label>
+
+          <Form.Group controlId="formTotalHours" className="form-group">
             <Form.Control
               type="number"
               name="totalHours"
               value={planeData.totalHours}
               onChange={handleChange}
               required
+              className="floating-input"
+              placeholder=" "
             />
+            <Form.Label className="floating-label">Horas Totales</Form.Label>
           </Form.Group>
-          <Form.Group controlId="formLastMaintenance" className="mb-3">
-            <Form.Label>Último Mantenimiento</Form.Label>
+
+          <Form.Group controlId="formLastMaintenance" className="form-group">
             <Form.Control
               type="date"
               name="lastMaintenance"
               value={planeData.lastMaintenance}
               onChange={handleChange}
+              className="floating-input"
+              placeholder=" "
             />
+            <Form.Label className="floating-label">
+              Último Mantenimiento
+            </Form.Label>
           </Form.Group>
-          <Form.Group controlId="formBaseAerodrome" className="mb-3">
-            <Form.Label>Aeródromo Base</Form.Label>
+
+          <Form.Group controlId="formBaseAerodrome" className="form-group">
             <Form.Control
               type="text"
               name="baseAerodrome"
               value={planeData.baseAerodrome}
               onChange={handleChange}
               required
+              className="floating-input"
+              placeholder=" "
             />
+            <Form.Label className="floating-label">Aeródromo Base</Form.Label>
           </Form.Group>
-          <Button variant="primary" type="submit" className="modal-button mt-3">
-            Agregar
-          </Button>
+          <div className="text-end">
+            <Button
+              variant="primary"
+              type="submit"
+              className="modal-button mt-3"
+            >
+              Agregar
+            </Button>
+          </div>
         </Form>
       </Modal.Body>
     </Modal>

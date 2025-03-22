@@ -1,3 +1,6 @@
+@use "../Variables/variables";
+@use "../Mixins/mixins";
+
 .plane-list {
   display: flex;
   flex-wrap: wrap;
@@ -40,4 +43,54 @@
 .subtitle {
   color: #6c757d; /* Gris suave */
   font-size: 0.875rem; /* Ajustar el tamaño de fuente según sea necesario */
+}
+
+/* Estilos para el modal de agregar avión */
+.add-plane-modal {
+  .modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+    margin-top: 10px;
+  }
+
+  .floating-input {
+    width: 100%;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #757575;
+    background: transparent;
+    font-size: 14px;
+    border-radius: 0;
+    box-shadow: none;
+    appearance: none;
+
+    &:focus {
+      outline: none !important;
+      border-bottom: 1px solid variables.$primary-color;
+    }
+
+    &:focus ~ .floating-label,
+    &:not(:placeholder-shown) ~ .floating-label {
+      top: -20px;
+      font-size: 12px;
+      color: variables.$primary-color;
+    }
+  }
+
+  .floating-label {
+    color: #757575;
+    font-size: 14px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+  }
+
+  .form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
 }

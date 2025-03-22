@@ -772,6 +772,48 @@ h2 {
   font-size: 0.875rem; /* Ajustar el tamaño de fuente según sea necesario */
 }
 
+/* Estilos para el modal de agregar avión */
+.add-plane-modal .modal-body {
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+  margin-top: 10px;
+}
+.add-plane-modal .floating-input {
+  width: 100%;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #757575;
+  background: transparent;
+  font-size: 14px;
+  border-radius: 0;
+  box-shadow: none;
+  appearance: none;
+}
+.add-plane-modal .floating-input:focus {
+  outline: none !important;
+  border-bottom: 1px solid #5264ae;
+}
+.add-plane-modal .floating-input:focus ~ .floating-label, .add-plane-modal .floating-input:not(:placeholder-shown) ~ .floating-label {
+  top: -20px;
+  font-size: 12px;
+  color: #5264ae;
+}
+.add-plane-modal .floating-label {
+  color: #757575;
+  font-size: 14px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+}
+.add-plane-modal .form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
 .dashboard-container {
   padding: 20px;
 }
@@ -841,6 +883,48 @@ h2 {
 
 .flights-content {
   margin-top: 2rem;
+}
+
+/* Estilos para el modal de agregar vuelo */
+.add-flight-modal .modal-body {
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+  margin-top: 10px;
+}
+.add-flight-modal .floating-input {
+  width: 100%;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  border: none;
+  border-bottom: 1px solid #757575;
+  background: transparent;
+  font-size: 14px;
+  border-radius: 0;
+  box-shadow: none;
+  appearance: none;
+}
+.add-flight-modal .floating-input:focus {
+  outline: none !important;
+  border-bottom: 1px solid #5264ae;
+}
+.add-flight-modal .floating-input:focus ~ .floating-label, .add-flight-modal .floating-input:not(:placeholder-shown) ~ .floating-label {
+  top: -20px;
+  font-size: 12px;
+  color: #5264ae;
+}
+.add-flight-modal .floating-label {
+  color: #757575;
+  font-size: 14px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+}
+.add-flight-modal .form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
 }
 
 .profile-container {

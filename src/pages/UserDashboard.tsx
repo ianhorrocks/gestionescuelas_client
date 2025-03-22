@@ -53,6 +53,12 @@ const UserDashboard: React.FC = () => {
     fetchUserAndSchools();
   }, []);
 
+  const handleSchoolClick = (schoolId: string) => {
+    console.log("Guardando schoolId en localStorage:", schoolId);
+    localStorage.setItem("selectedSchoolId", schoolId); // Guardar schoolId en localStorage
+    window.location.href = `/user/school/${schoolId}`; // Navegar a la página de vuelos
+  };
+
   return (
     <div className="dashboard-container">
       <HamburgerMenu userName={userName} />
@@ -87,7 +93,7 @@ const UserDashboard: React.FC = () => {
               {schools.map((school) => (
                 <a
                   key={school._id}
-                  href={`/user/school/${school._id}`}
+                  onClick={() => handleSchoolClick(school._id)} // Usar la función para manejar el click
                   className="school-card"
                 >
                   {school.name}
