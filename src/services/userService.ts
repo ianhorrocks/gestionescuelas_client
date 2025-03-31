@@ -116,3 +116,21 @@ export const updateUserProfile = async (profile: {
 
   return await response.json();
 };
+
+export const fetchUsersByIds = async (userIds: string[]) => {
+  const response = await fetch(`${API_URL}/details`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify({ userIds }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch user details");
+  }
+
+  const data = await response.json();
+  return data.data; // Devuelve los detalles de los usuarios
+};

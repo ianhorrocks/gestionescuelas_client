@@ -7,43 +7,16 @@ import RegisterUserModal from "../components/RegisterUserModal";
 import logo from "../assets/images/LogoSmallPilotLog.png"; // Importa el logo
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-
-// TODO Ver con seba el tema de vencimiento de token para redirigir a login
+import useTemporaryMessage from "../hooks/useTemporaryMessage";
 
 const Login: React.FC = () => {
+  const { message, showTemporaryMessage } = useTemporaryMessage();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [warning, setWarning] = useState(""); // Nuevo estado para advertencias
   const [showRegisterSchoolModal, setShowRegisterSchoolModal] = useState(false);
   const [showRegisterUserModal, setShowRegisterUserModal] = useState(false);
   const navigate = useNavigate();
-
-  // Function to handle temporary messages
-  const showTemporaryMessage = (
-    type: "error" | "success" | "warning",
-    message: string,
-    duration = 3000
-  ) => {
-    if (type === "error") {
-      setError(message);
-    } else if (type === "success") {
-      setSuccess(message);
-    } else if (type === "warning") {
-      setWarning(message);
-    }
-    setTimeout(() => {
-      if (type === "error") {
-        setError("");
-      } else if (type === "success") {
-        setSuccess("");
-      } else if (type === "warning") {
-        setWarning("");
-      }
-    }, duration);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,7 +27,7 @@ const Login: React.FC = () => {
           "warning",
           "Usuario no pertenece a ninguna escuela."
         );
-        return; // Detenemos la ejecución si hay un error
+        return;
       }
 
       localStorage.setItem("token", token);
@@ -159,10 +132,7 @@ const Login: React.FC = () => {
       <div className="login-container">
         <img src={logo} alt="Logo" className="login-logo" />
         <h1 className="login-title">PilotLog</h1>
-        {error && <Alert message={error} type="error" />}
-        {success && <Alert message={success} type="success" />}
-        {warning && <Alert message={warning} type="warning" />}{" "}
-        {/* Nueva alerta para advertencias */}
+        {message && <Alert message={message.message} type={message.type} />}
         <form onSubmit={handleSubmit}>
           <div className="form-group floating-label-group">
             <input

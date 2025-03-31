@@ -1,0 +1,82 @@
+@use "../Variables/variables";
+@use "../Mixins/mixins";
+
+.flight-card {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  background-color: #fff;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+
+  &.pending {
+    border-left: 6px solid #f39c12;
+  }
+
+  &.confirmed {
+    border-left: 6px solid #27ae60;
+  }
+
+  .flight-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+
+    .flight-date {
+      margin-bottom: 4px;
+    }
+
+    .flight-time {
+      font-size: 14px;
+    }
+  }
+
+  .flight-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      min-width: 0;
+      gap: 10px; // Espacio entre columnas
+
+      > div {
+        flex: 1; // Para que compartan el espacio de forma pareja
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+
+        .icon {
+          margin-right: 6px;
+          color: #444;
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 420px) {
+    .flight-card-body .row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+  }
+}

@@ -926,6 +926,102 @@ h2 {
   position: relative;
   margin-bottom: 1.5rem;
 }
+.add-flight-modal .button-container {
+  display: flex;
+  justify-content: space-between; /* Coloca los botones en extremos opuestos */
+  align-items: center; /* Alinea los botones verticalmente */
+  margin-top: 20px; /* Separación del resto del formulario */
+  padding: 0 15px; /* Espaciado interno opcional */
+  width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+}
+.add-flight-modal .reset-button,
+.add-flight-modal .add-button {
+  width: 45%; /* Ambos botones ocuparán el 45% del ancho del contenedor */
+  padding: 10px 0; /* Tamaño consistente para los botones */
+  font-size: 14px;
+  border-radius: 5px;
+  text-align: center;
+}
+.add-flight-modal .reset-button {
+  background-color: #f8f9fa; /* Color de fondo para el botón Reset */
+  color: #6c757d; /* Color del texto */
+  border: 1px solid #ced4da; /* Borde para el botón Reset */
+}
+.add-flight-modal .add-button {
+  background-color: secondary-color; /* Color de fondo para el botón Agregar */
+  color: #fff; /* Color del texto */
+  border: none; /* Sin borde */
+}
+
+.flight-card {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  background-color: #fff;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.flight-card.pending {
+  border-left: 6px solid #f39c12;
+}
+.flight-card.confirmed {
+  border-left: 6px solid #27ae60;
+}
+.flight-card .flight-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 8px;
+}
+.flight-card .flight-card-header .flight-date {
+  margin-bottom: 4px;
+}
+.flight-card .flight-card-header .flight-time {
+  font-size: 14px;
+}
+.flight-card .flight-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.flight-card .flight-card-body .row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 0;
+  gap: 10px;
+}
+.flight-card .flight-card-body .row > div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+.flight-card .flight-card-body .row > div .icon {
+  margin-right: 6px;
+  color: #444;
+  flex-shrink: 0;
+}
+@media (max-width: 420px) {
+  .flight-card .flight-card-body .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
 
 .profile-container {
   padding: 1rem;
@@ -976,14 +1072,21 @@ h2 {
   transform: scale(1.1);
 }
 
+.list-group {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
 .list-group-item {
   margin-bottom: 10px;
   display: flex;
   align-items: center;
   font-size: 0.9rem; /* Reduced font size */
   border-radius: 10px; /* Redondear las esquinas */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agregar sombra */
-  background-color: #ffffff; /* Fondo blanco */
+  box-shadow: none; /* Eliminar sombra */
+  background-color: transparent;
+  border: none;
   padding: 10px; /* Añadir padding */
   transition: transform 0.2s; /* Añadir transición para hover */
 }

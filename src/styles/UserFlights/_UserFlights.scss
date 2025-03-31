@@ -57,4 +57,34 @@
     position: relative;
     margin-bottom: 1.5rem;
   }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between; /* Coloca los botones en extremos opuestos */
+    align-items: center; /* Alinea los botones verticalmente */
+    margin-top: 20px; /* Separación del resto del formulario */
+    padding: 0 15px; /* Espaciado interno opcional */
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+  }
+
+  .reset-button,
+  .add-button {
+    width: 45%; /* Ambos botones ocuparán el 45% del ancho del contenedor */
+    padding: 10px 0; /* Tamaño consistente para los botones */
+    font-size: 14px;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .reset-button {
+    background-color: #f8f9fa; /* Color de fondo para el botón Reset */
+    color: #6c757d; /* Color del texto */
+    border: 1px solid #ced4da; /* Borde para el botón Reset */
+  }
+
+  .add-button {
+    background-color: secondary-color; /* Color de fondo para el botón Agregar */
+    color: #fff; /* Color del texto */
+    border: none; /* Sin borde */
+  }
 }
