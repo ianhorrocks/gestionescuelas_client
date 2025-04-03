@@ -45,7 +45,7 @@ const UserItem: React.FC<UserItemProps> = ({ user, onDelete, schoolId }) => {
   return (
     <>
       <li
-        className="list-group-item d-flex align-items-center"
+        className="list-group-item-users d-flex align-items-center"
         onClick={handleShowModal}
       >
         <div className="user-photo-container">

@@ -1,9 +1,7 @@
 @use "./AdminFlights/AdminFlights";
-@use "./GeneralComponents/AdminHamburgerMenu";
 @use "./AdminUsers/AdminUsers";
 @use "./GeneralComponents/fichas";
 @use "./GeneralComponents/global";
-@use "./GeneralComponents/HamburgerMenu";
 @use "./Login/Login";
 @use "./AdminPlanes/AdminPlanes";
 @use "./UserDashboard/UserDashboard";
@@ -13,3 +11,11 @@
 @use "./UserSchool/UserSchool";
 @use "./GeneralComponents/ValidateFlightsModal";
 @use "./NavBar/Navbar";
+@use "./UserProfile/EdistUserProfileModal";
+
+.dashboard-container,
+.profile-container,
+.school-container,
+.flights-container {
+  padding-top: 4rem; // Ajusta el valor según sea necesario
+}

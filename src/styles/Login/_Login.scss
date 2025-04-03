@@ -6,7 +6,8 @@
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; // Cambiar de center a flex-start para mover hacia arriba
+  padding-top: 5rem; // Agregar un margen superior para ajustar la posición
 
   .login-container {
     background-color: variables.$white-color;

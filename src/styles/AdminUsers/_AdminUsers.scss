@@ -54,7 +54,7 @@
 }
 
 /* Estilo para el botón de agregar usuario */
-.add-user-button {
+.add-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -71,6 +71,7 @@
   box-shadow: 0 4px 8px variables.$shadow-color;
   transition: transform 0.2s;
   border: none;
+  z-index: 1000;
 
   &:hover {
     transform: scale(1.1);
@@ -92,7 +93,7 @@
     color: variables.$primary-color;
   }
 
-  .add-user-button {
+  .add-button {
     background-color: variables.$primary-color;
     color: variables.$white-color;
     border: none;
@@ -115,7 +116,7 @@
   }
 }
 
-.list-group-item {
+.list-group-item-users {
   margin-bottom: 10px;
   display: flex;
   align-items: center;

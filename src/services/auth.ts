@@ -15,12 +15,12 @@ export const loginUser = async (email: string, password: string) => {
 
   const { data } = await response.json();
   localStorage.setItem("token", data.token);
-  localStorage.setItem("user", JSON.stringify(data.user));
+  localStorage.setItem("profile", JSON.stringify(data.user));
   return data;
 };
 
 export const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem("user") || "{}");
+  return JSON.parse(localStorage.getItem("profile") || "{}");
 };
 
 export const getLoggedUser = async () => {
@@ -45,5 +45,5 @@ export const getLoggedUser = async () => {
 
 export const logout = () => {
   localStorage.removeItem("token");
-  localStorage.removeItem("user");
+  localStorage.removeItem("profile");
 };

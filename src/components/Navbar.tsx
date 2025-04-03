@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons"; // Cambiado el icono de cerrar
-import "../styles/NavBar/_Navbar.scss";
+import {
+  faBars,
+  faAngleDoubleLeft,
+  faUser,
+  faPlane,
+  faTachometerAlt,
+  faSignOutAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface NavbarProps {
   title: string;
@@ -20,43 +26,64 @@ const Navbar: React.FC<NavbarProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
+  const toggleMenu = () => setIsOpen(!isOpen);
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate(logoutPath);
   };
 
+  const linkIcons: {
+    [key: string]: import("@fortawesome/fontawesome-svg-core").IconDefinition;
+  } = {
+    "/user/dashboard": faTachometerAlt,
+    "/user/profile": faUser,
+    "/user/flights": faPlane,
+  };
+
   return (
     <div className="navbar">
       <div className="navbar-content">
-        <div className="navbar-title-container">
-          <h1 className="navbar-title">{title}</h1>
-        </div>
-        <div className="menu-icon-container">
-          <FontAwesomeIcon
-            icon={isOpen ? faAngleDoubleLeft : faBars} // Cambiado el icono de cerrar
-            onClick={toggleMenu}
-            className="menu-icon"
-          />
-        </div>
+        <h1 className="navbar-title">{title}</h1>
+        <FontAwesomeIcon
+          icon={isOpen ? faAngleDoubleLeft : faBars}
+          onClick={toggleMenu}
+          className="navbar-icon"
+        />
       </div>
+
       <div className={`menu-content ${isOpen ? "open" : ""}`}>
         <div className="user-info">
-          <span>
-            <strong>{userName}</strong>
-          </span>
+          <strong>Hola, {userName}.</strong>
+          <NavLink to="/user/profile" className="edit-profile-link">
+            (Editar Perfil)
+          </NavLink>
         </div>
-        {links.map((link) => (
-          <Link key={link.path} to={link.path} onClick={toggleMenu}>
-            {link.label}
-          </Link>
-        ))}
-        <button className="logout-button" onClick={handleLogout}>
+
+        {links
+          .filter((link) => link.path !== "/user/profile")
+          .map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              className={({ isActive }) =>
+                isActive ? "menu-link active" : "menu-link"
+              }
+              onClick={toggleMenu}
+            >
+              <div className="icon-container">
+                <FontAwesomeIcon
+                  icon={linkIcons[link.path]}
+                  className="link-icon"
+                />
+              </div>
+              {link.label}
+            </NavLink>
+          ))}
+
+        <NavLink to="/" className="logout-button" onClick={handleLogout}>
+          <FontAwesomeIcon icon={faSignOutAlt} className="logout-icon" />
           Cerrar Sesión
-        </button>
+        </NavLink>
       </div>
     </div>
   );

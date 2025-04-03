@@ -77,21 +77,7 @@ export const getUserById = async (id: string) => {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch user");
-  }
-
-  return await response.json();
-};
-
-export const fetchUserProfile = async () => {
-  const response = await fetch(`${API_URL}/profile`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch profile");
+    throw new Error("Failed to fetch user jeje");
   }
 
   return await response.json();
@@ -99,6 +85,7 @@ export const fetchUserProfile = async () => {
 
 export const updateUserProfile = async (profile: {
   name: string;
+  lastname: string;
   email: string;
 }) => {
   const response = await fetch(`${API_URL}/profile`, {
@@ -133,4 +120,39 @@ export const fetchUsersByIds = async (userIds: string[]) => {
 
   const data = await response.json();
   return data.data; // Devuelve los detalles de los usuarios
+};
+
+export const changePassword = async (
+  currentPassword: string,
+  newPassword: string
+) => {
+  const response = await fetch(`${API_URL}/change-password`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to change password");
+  }
+
+  return await response.json();
+};
+
+export const fetchUserProfile = async () => {
+  const response = await fetch(`${API_URL}/profile`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch profile");
+  }
+
+  return await response.json();
 };

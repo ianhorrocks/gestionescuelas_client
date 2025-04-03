@@ -1,86 +1,104 @@
 import React, { useEffect, useState } from "react";
-import { fetchUserProfile, updateUserProfile } from "../services/userService";
-import HamburgerMenu from "../components/HamburgerMenu";
-import { getLoggedUser } from "../services/auth";
-// import "../styles/UserProfile.css"; // Asegúrate de crear este archivo CSS
+import { getCurrentUser } from "../services/auth";
+import Navbar from "../components/Navbar";
+import defaultProfilePhoto from "../assets/images/Logosmalluserprofilephoto.png";
+import EditProfileModal from "../components/EditProfileModal";
+import ChangePasswordModal from "../components/ChangePasswordModal";
 
 const UserProfile: React.FC = () => {
-  const [profile, setProfile] = useState({ name: "", email: "" });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [profile, setProfile] = useState({
+    name: "",
+    lastname: "",
+    email: "",
+    dni: "",
+    role: "",
+    photo: null,
+  });
   const [userName, setUserName] = useState("");
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
 
   useEffect(() => {
-    const getProfile = async () => {
-      try {
-        const data = await fetchUserProfile();
-        setProfile(data);
-      } catch (err) {
-        setError("Failed to fetch profile");
-      }
+    const fetchProfile = () => {
+      const user = getCurrentUser(); // Obtener los datos del usuario desde localStorage
+      setProfile(user);
+      setUserName(`${user.name} ${user.lastname}`);
     };
 
-    const fetchUser = async () => {
-      try {
-        const user = await getLoggedUser();
-        setUserName(`${user.name} ${user.lastname}`);
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-      }
-    };
-
-    getProfile();
-    fetchUser();
+    fetchProfile();
   }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await updateUserProfile(profile);
-      setSuccess("Profile updated successfully");
-    } catch (err) {
-      setError("Failed to update profile");
-    }
-  };
 
   return (
     <div className="profile-container">
-      <HamburgerMenu userName={userName} />
+      <Navbar
+        title="Mi Perfil"
+        userName={userName}
+        links={[
+          { path: "/user/dashboard", label: "Dashboard" },
+          { path: "/user/profile", label: "Mi Perfil" },
+          { path: "/user/flights", label: "Mis Vuelos" },
+        ]}
+        logoutPath="/user/login"
+      />
       <div className="profile-content">
-        <h1>Mi Perfil</h1>
-        {error && <p className="text-danger">{error}</p>}
-        {success && <p className="text-success">{success}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">Nombre</label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              name="name"
-              value={profile.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Correo Electrónico</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              value={profile.email}
-              onChange={handleChange}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Actualizar
+        <div className="profile-photo-container">
+          <img
+            src={profile.photo || defaultProfilePhoto}
+            alt="Foto de perfil"
+            className="profile-photo"
+          />
+          <button className="change-photo-btn">
+            <i className="fas fa-camera"></i>
           </button>
-        </form>
+        </div>
+        <div className="profile-details">
+          <h2>{`${profile.name} ${profile.lastname}`}</h2>
+          <p>
+            <strong>Email:</strong> {profile.email}
+          </p>
+          <p>
+            <strong>DNI:</strong> {profile.dni}
+          </p>
+          <p>
+            <strong>Rol:</strong> {profile.role}
+          </p>
+        </div>
+        <>
+          <div className="profile-actions">
+            <button
+              className="btn btn-primary"
+              onClick={() => setEditModalOpen(true)}
+            >
+              Editar Perfil
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setPasswordModalOpen(true)}
+            >
+              Cambiar Contraseña
+            </button>
+          </div>
+          {isEditModalOpen && (
+            <EditProfileModal
+              profile={profile}
+              onClose={() => setEditModalOpen(false)}
+              onSave={(updatedProfile) =>
+                setProfile({
+                  ...profile,
+                  ...updatedProfile,
+                })
+              }
+            />
+          )}
+          {isPasswordModalOpen && (
+            <ChangePasswordModal
+              onClose={() => setPasswordModalOpen(false)}
+              onSave={(passwords) =>
+                console.log("Contraseñas enviadas:", passwords)
+              }
+            />
+          )}
+        </>
       </div>
     </div>
   );

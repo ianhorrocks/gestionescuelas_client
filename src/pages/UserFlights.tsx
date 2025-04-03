@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"; // Importar useParams
 import { fetchUserFlights } from "../services/flightService";
-import HamburgerMenu from "../components/HamburgerMenu";
+import Navbar from "../components/Navbar"; // Importar el componente Navbar
 import { getLoggedUser } from "../services/auth";
 
 const UserFlights: React.FC = () => {
@@ -53,9 +53,17 @@ const UserFlights: React.FC = () => {
 
   return (
     <div className="flights-container">
-      <HamburgerMenu userName={userName} />
+      <Navbar
+        title="Vuelos"
+        userName={userName}
+        links={[
+          { path: "/user/dashboard", label: "Dashboard" },
+          { path: "/user/profile", label: "Mi Perfil" },
+          { path: "/user/flights", label: "Mis Vuelos" },
+        ]}
+        logoutPath="/user/login"
+      />
       <div className="flights-content">
-        <h1>Mis Vuelos</h1>
         {error && <p className="text-danger">{error}</p>}
         <ul className="list-group">
           {flights.map((flight) => (

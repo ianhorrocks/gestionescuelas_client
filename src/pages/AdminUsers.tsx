@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserItem from "../components/UserItem";
 import AddUserModal from "../components/AddUserModal";
-import AdminHamburgerMenu from "../components/AdminHamburgerMenu";
+import Navbar from "../components/Navbar"; // Importar el nuevo Navbar
 import {
   fetchUsers,
   removeUserFromSchool,
@@ -118,49 +118,65 @@ const AdminUsers: React.FC = () => {
     }
   };
 
+  const links = [
+    { path: "/admin/users", label: "Usuarios" },
+    { path: "/admin/planes", label: "Aeronaves" },
+    { path: "/admin/flights", label: "Vuelos" },
+  ];
+
   return (
     <div>
-      <AdminHamburgerMenu userName={userName} />
-      <h1>Usuarios</h1>
-      {error && <p className="text-danger">{error}</p>}
-      <ul className="list-group">
-        {users.map((user) => (
-          <UserItem
-            key={user._id}
-            user={user}
-            onDelete={handleDeleteClick}
-            schoolId={schoolId || ""}
-          />
-        ))}
-      </ul>
-      <button className="add-user-button" onClick={() => setShowModal(true)}>
-        +
-      </button>
-      <AddUserModal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        onAssignUser={handleAssignUser}
+      <Navbar
+        title="Gestión de Usuarios"
+        userName={userName}
+        links={links}
+        logoutPath="/"
       />
+      <div className="admin-users-container">
+        <h1>Usuarios</h1>
+        {error && <p className="text-danger">{error}</p>}
+        <ul className="list-group-users">
+          {users.map((user) => (
+            <UserItem
+              key={user._id}
+              user={user}
+              onDelete={handleDeleteClick}
+              schoolId={schoolId || ""}
+            />
+          ))}
+        </ul>
+        <button className="add-button" onClick={() => setShowModal(true)}>
+          +
+        </button>
+        <AddUserModal
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          onAssignUser={handleAssignUser}
+        />
 
-      <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmar Eliminación</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          ¿Estás seguro de que deseas eliminar este usuario?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => setShowConfirmModal(false)}
-          >
-            Cancelar
-          </Button>
-          <Button variant="danger" onClick={handleConfirmDelete}>
-            Eliminar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <Modal
+          show={showConfirmModal}
+          onHide={() => setShowConfirmModal(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmar Eliminación</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            ¿Estás seguro de que deseas eliminar este usuario?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowConfirmModal(false)}
+            >
+              Cancelar
+            </Button>
+            <Button variant="danger" onClick={handleConfirmDelete}>
+              Eliminar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
     </div>
   );
 };

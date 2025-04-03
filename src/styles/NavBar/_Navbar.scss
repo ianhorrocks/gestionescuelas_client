@@ -1,5 +1,4 @@
 @use "../Variables/variables";
-@use "../Mixins/mixins";
 
 .navbar {
   position: fixed;
@@ -8,95 +7,179 @@
   width: 100%;
   background-color: variables.$secondary-color;
   color: variables.$white-color;
-  padding: 15px 20px; // Aumentar el padding para hacer el Navbar más alto
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 
   .navbar-content {
-    display: flex;
-    align-items: center; // Centrar verticalmente los elementos
-    justify-content: space-between; // Espacio entre los contenedores
-    max-width: 1200px;
-    margin: 0 auto;
+    position: relative;
+    height: 60px;
+    width: 100%;
+  }
 
-    .navbar-title-container {
-      flex: 1; // Ocupa el espacio restante
-      display: flex;
-      justify-content: center; // Centrar el título horizontalmente
-    }
+  .navbar-title {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 0;
+    color: variables.$white-color;
+    white-space: nowrap;
+  }
 
-    .navbar-title {
-      font-size: 1.4rem; // Ajustar el tamaño del título
-      font-weight: bold;
-      text-align: center;
-      color: variables.$white-color;
-      margin: 0; // Asegura que no haya márgenes adicionales
-    }
-
-    .menu-icon-container {
-      display: flex;
-      justify-content: flex-end; // Asegura que el ícono esté completamente a la derecha
-    }
-
-    .menu-icon {
-      font-size: 1.6rem; // Ajustar el tamaño del icono
-      cursor: pointer;
-      color: variables.$white-color;
-    }
+  .navbar-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: variables.$white-color;
   }
 
   .menu-content {
     position: fixed;
     top: 0;
-    left: -300px; // Ocultar el menú inicialmente
+    left: 0;
     width: 300px;
-    height: 100%;
-    background-color: variables.$primary-color;
+    height: 100vh;
+    background-color: variables.$primary-color !important;
     color: variables.$white-color;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    transition: left 0.3s ease-in-out; // Efecto de deslizamiento
+    overflow-y: auto;
+    z-index: 2000;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-300px);
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
 
     &.open {
-      left: 0; // Mostrar el menú cuando esté abierto
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
     }
 
     .user-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       margin-bottom: 20px;
       font-size: 1rem;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      justify-content: start;
+
+      strong {
+        font-weight: bold;
+        white-space: nowrap;
+      }
+
+      .edit-profile-link {
+        display: flex;
+        align-items: center;
+        color: variables.$white-color;
+        font-size: 0.85rem;
+        text-decoration: none;
+        white-space: nowrap;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
-    a {
-      text-decoration: none;
+    .menu-link {
+      display: flex;
+      align-items: center;
       color: variables.$white-color;
+      text-decoration: none;
       margin: 10px 0;
       font-size: 1rem;
+      padding: 8px 12px;
+      font-weight: 500;
+      transition: background 0.2s;
+
+      .icon-container {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+      }
+
+      .link-icon {
+        font-size: 1.2rem;
+      }
 
       &:hover {
-        text-decoration: underline;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 6px;
+      }
+    }
+
+    .menu-link.active {
+      background-color: variables.$white-color;
+      color: variables.$primary-color;
+      border-radius: 6px;
+
+      .link-icon {
+        color: variables.$primary-color;
       }
     }
 
     .logout-button {
-      background-color: transparent;
-      border: none;
+      margin-top: auto;
+      padding-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: variables.$error-text-color;
       font-size: 1rem;
+      text-decoration: none;
       cursor: pointer;
-      margin-top: 20px;
+      gap: 8px;
+
+      .logout-icon {
+        font-size: 1rem;
+      }
 
       &:hover {
         text-decoration: underline;
       }
     }
   }
+
+  .menu-content * {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
 }
 
-// Ajustar el contenido principal para que no quede oculto detrás del Navbar
+html,
+body,
+#root {
+  height: 100% !important;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .content {
-  margin-top: 80px; // Ajustar el margen superior según la nueva altura del Navbar
+  margin-top: 60px;
   padding: 20px;
 }

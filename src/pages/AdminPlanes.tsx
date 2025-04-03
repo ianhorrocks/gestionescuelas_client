@@ -107,7 +107,7 @@ const AdminPlanes: React.FC = () => {
   return (
     <div>
       <Navbar
-        title="Gestión de Aeronaves"
+        title="Aeronaves"
         userName={userName}
         links={links}
         logoutPath="/"
@@ -134,10 +134,7 @@ const AdminPlanes: React.FC = () => {
             />
           ))}
         </div>
-        <button
-          className="add-user-button"
-          onClick={() => setShowAddModal(true)}
-        >
+        <button className="add-button" onClick={() => setShowAddModal(true)}>
           +
         </button>
         <AddPlaneModal

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getUserById } from "../services/userService";
 import { getSchoolsForUser } from "../services/schoolService";
-import HamburgerMenu from "../components/HamburgerMenu";
+import Navbar from "../components/Navbar"; // Cambiar HamburgerMenu por Navbar
 import { getLoggedUser } from "../services/auth";
 // import "../styles/UserDashboard.css"; // Asegúrate de crear este archivo CSS
 
@@ -46,7 +46,7 @@ const UserDashboard: React.FC = () => {
         setUserName(`${user.name} ${user.lastname}`);
       } catch (err) {
         console.log("Fetch user or schools error:", err);
-        setError("Failed to fetch user or schools");
+        setError("Inicie Sesion (Arreglar)");
       }
     };
 
@@ -61,7 +61,16 @@ const UserDashboard: React.FC = () => {
 
   return (
     <div className="dashboard-container">
-      <HamburgerMenu userName={userName} />
+      <Navbar
+        title="Dashboard"
+        userName={userName}
+        links={[
+          { path: "/user/dashboard", label: "Dashboard" },
+          { path: "/user/profile", label: "Mi Perfil" },
+          { path: "/user/flights", label: "Mis Vuelos" },
+        ]}
+        logoutPath="/user/login"
+      />
       {error && <p className="text-danger">{error}</p>}
       {user && (
         <div className="dashboard-content">

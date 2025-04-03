@@ -4,7 +4,7 @@ import { getSchoolsById } from "../services/schoolService";
 import { getUserFlightsBySchool } from "../services/flightService";
 import { fetchPlanes } from "../services/planeService";
 import { fetchUsersByIds } from "../services/userService";
-import HamburgerMenu from "../components/HamburgerMenu";
+import Navbar from "../components/Navbar"; // Cambiar HamburgerMenu por Navbar
 import AddFlightModal from "../components/AddFlightModal";
 import { getLoggedUser } from "../services/auth";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
@@ -210,13 +210,22 @@ const UserSchool: React.FC = () => {
 
   return (
     <div className="school-container">
-      <HamburgerMenu userName={userName} />
+      <Navbar
+        title="Escuela (Pasar a vuelos)"
+        userName={userName}
+        links={[
+          { path: "/user/dashboard", label: "Dashboard" },
+          { path: "/user/profile", label: "Mi Perfil" },
+          { path: "/user/flights", label: "Mis Vuelos" },
+        ]}
+        logoutPath="/user/login"
+      />
       {message && <Alert message={message.message} type={message.type} />}
       {error && <p className="text-danger">{error}</p>}
       {school && (
         <div className="school-content">
           <h1 className="school-title">Mis vuelos en {school.name}</h1>
-          <button className="add-user-button" onClick={handleShowModal}>
+          <button className="add-button" onClick={handleShowModal}>
             +
           </button>
           <h2>Vuelos Pendientes:</h2>
