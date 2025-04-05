@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { fetchFlights, validateFlight } from "../services/flightService";
 import ValidateFlightsModal from "../components/ValidateFlightsModal";
-import Navbar from "../components/Navbar"; // Importar el nuevo Navbar
-import { getLoggedUser } from "../services/auth";
+import Navbar from "../components/NavbarAdmin";
+//import { getLoggedUser } from "../services/auth";
 
 const AdminFlights: React.FC = () => {
   interface Flight {
@@ -13,14 +13,15 @@ const AdminFlights: React.FC = () => {
 
   const [flights, setFlights] = useState<Flight[]>([]);
   const [error, setError] = useState("");
-  const [userName, setUserName] = useState("");
+  //const [adminName, setAdminName] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
+  // Para traer la info del admin logueado
+  /* useEffect(() => {
     const fetchUser = async () => {
       try {
         const loggedUser = await getLoggedUser();
-        setUserName(`${loggedUser.name} ${loggedUser.lastname}`);
+        setAdminName(`${loggedUser.name}`);
       } catch (err) {
         setError("Error al obtener la información del usuario logueado.");
       }
@@ -28,7 +29,7 @@ const AdminFlights: React.FC = () => {
 
     fetchUser();
   }, []);
-
+*/
   useEffect(() => {
     const getFlights = async () => {
       try {
@@ -68,14 +69,8 @@ const AdminFlights: React.FC = () => {
 
   return (
     <div>
-      <Navbar
-        title="Gestión de Vuelos"
-        userName={userName}
-        links={links}
-        logoutPath="/"
-      />
+      <Navbar title="Vuelos" links={links} logoutPath="/" />
       <div className="admin-flights-container">
-        <h1>Gestión de Vuelos</h1>
         {error && <p className="text-danger">{error}</p>}
         <div className="flights-section">
           <div className="flights-subsection">

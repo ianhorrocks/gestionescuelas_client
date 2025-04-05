@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getUserById } from "../services/userService";
 import { getSchoolsForUser } from "../services/schoolService";
-import Navbar from "../components/Navbar"; // Cambiar HamburgerMenu por Navbar
+import Navbar from "../components/NavbarUser";
 import { getLoggedUser } from "../services/auth";
-// import "../styles/UserDashboard.css"; // Asegúrate de crear este archivo CSS
 
 interface School {
   _id: string;
@@ -35,15 +34,13 @@ const UserDashboard: React.FC = () => {
         const userId = decodedToken._id;
 
         const userData = await getUserById(userId);
-        console.log("User data:", userData); // Log para verificar los datos del usuario
         setUser(userData);
 
         const schoolsData = await getSchoolsForUser();
-        console.log("Schools data:", schoolsData); // Log para verificar los datos de las escuelas
         setSchools(schoolsData);
 
-        const user = await getLoggedUser();
-        setUserName(`${user.name} ${user.lastname}`);
+        const userLogged = await getLoggedUser();
+        setUserName(`${userLogged.name} ${userLogged.lastname}`);
       } catch (err) {
         console.log("Fetch user or schools error:", err);
         setError("Inicie Sesion (Arreglar)");
@@ -54,13 +51,12 @@ const UserDashboard: React.FC = () => {
   }, []);
 
   const handleSchoolClick = (schoolId: string) => {
-    console.log("Guardando schoolId en localStorage:", schoolId);
-    localStorage.setItem("selectedSchoolId", schoolId); // Guardar schoolId en localStorage
-    window.location.href = `/user/school/${schoolId}`; // Navegar a la página de vuelos
+    localStorage.setItem("selectedSchoolId", schoolId);
+    window.location.href = `/user/school/${schoolId}`;
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container container-dashboard">
       <Navbar
         title="Dashboard"
         userName={userName}
@@ -74,7 +70,6 @@ const UserDashboard: React.FC = () => {
       {error && <p className="text-danger">{error}</p>}
       {user && (
         <div className="dashboard-content">
-          <h1>¡Hola {user.name}!</h1>
           <div className="kpis">
             <div className="kpi">
               <h3>Vuelos realizados</h3>
@@ -102,7 +97,7 @@ const UserDashboard: React.FC = () => {
               {schools.map((school) => (
                 <a
                   key={school._id}
-                  onClick={() => handleSchoolClick(school._id)} // Usar la función para manejar el click
+                  onClick={() => handleSchoolClick(school._id)}
                   className="school-card"
                 >
                   {school.name}

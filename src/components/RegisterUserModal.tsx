@@ -118,12 +118,10 @@ const RegisterUserModal: React.FC<RegisterUserModalProps> = ({
       size="sm"
     >
       <Modal.Header closeButton>
-        <Modal.Title style={{ fontSize: "1.2rem" }}>
-          Crea tu cuenta en PilotLog
-        </Modal.Title>
+        <Modal.Title style={{ fontSize: "1.2rem" }}>Crea tu cuenta</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className="register-user-form">
           <Form.Group controlId="formDni" className="form-group">
             <Form.Control
               type="text"
@@ -261,7 +259,7 @@ const RegisterUserModal: React.FC<RegisterUserModalProps> = ({
             </div>
           </Form.Group>
           {passwordError && <div className="text-danger">{passwordError}</div>}
-          <div className="d-flex justify-content-between mt-5">
+          <div className="d-flex justify-content-between ">
             <Button
               variant="secondary"
               onClick={onClose}

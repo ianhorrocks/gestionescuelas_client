@@ -17,6 +17,12 @@
     text-align: center;
     width: 300px;
 
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
     .login-logo {
       width: 100px;
       height: auto;
@@ -31,11 +37,15 @@
     }
 
     .forgot-password-link {
-      color: variables.$secondary-color;
+      color: variables.$tertiary-color;
       text-align: left;
       display: block;
       margin-top: -1rem;
       font-size: 0.8rem;
+    }
+    .forgot-password-link:hover {
+      text-decoration: underline;
+      color: variables.$tertiary-color-hover;
     }
 
     .register-buttons-container {
@@ -50,14 +60,17 @@
         margin-top: 1rem;
         p {
           margin-bottom: 0;
-          .new-user-text {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #615768;
-          }
+          font-size: 1rem;
+          font-weight: 600;
+          color: #757575;
         }
-        .btn-register-user {
+        .btn-register-user .btn-register-school {
           padding-left: 6px;
+          color: variables.$tertiary-color;
+        }
+        .btn-register-user:hover .btn-register-school:hover {
+          padding-left: 6px;
+          color: variables.$tertiary-color-hover;
         }
       }
     }
@@ -71,7 +84,7 @@
         right: 10px;
         transform: translateY(-50%);
         cursor: pointer;
-        color: #757575;
+        color: variables.$soft-text-color;
       }
     }
 
@@ -79,12 +92,18 @@
   }
 }
 
+.modal-content {
+  width: 400px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 // Ajustes para las etiquetas flotantes
 .floating-label-group,
 .register-user-modal .form-group,
 .register-school-modal .form-group {
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 
   .floating-input {
     width: 100%;
@@ -110,6 +129,9 @@
       color: variables.$primary-color;
     }
   }
+  .form-check-input {
+    width: 0%;
+  }
 
   .floating-label {
     color: #757575;
@@ -127,9 +149,19 @@
 .register-user-modal,
 .register-school-modal {
   .modal-body {
-    max-height: calc(100vh - 210px);
+    max-height: calc(100vh - 150px);
     overflow-y: auto;
     margin-top: 10px;
+    .register-user-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .form-register-school {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
   }
 
   .password-input-container {

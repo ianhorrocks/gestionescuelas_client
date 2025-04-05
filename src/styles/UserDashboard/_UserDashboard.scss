@@ -1,5 +1,13 @@
 .dashboard-container {
+  // Se añade margen superior para no quedar debajo del navbar
+  margin-top: 60px;
+  // Espaciado lateral
   padding: 20px;
+
+  // A partir de 990px, dejamos espacio al menú fijo
+  @media (min-width: 990px) {
+    margin-left: 260px;
+  }
 }
 
 .dashboard-content {
@@ -48,15 +56,24 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  text-align: left; /* Alinear el texto a la izquierda */
+  text-align: left;
   transition: transform 0.2s;
-  text-decoration: none; /* Quitar subrayado */
-  color: #333; /* Color del texto */
-  font-size: 1.25rem; /* Tamaño de fuente */
-  font-weight: bold; /* Grosor de fuente */
+  text-decoration: none;
+  color: #333;
+  font-size: 1.25rem;
+  font-weight: bold;
 }
 
 .school-card:hover {
   transform: scale(1.05);
-  text-decoration: underline; /* Subrayado al pasar el ratón */
+  text-decoration: underline;
+}
+
+.dashboard-container {
+  margin-top: 60px;
+  padding: 0 var(--content-padding);
+
+  @media (min-width: 990px) {
+    margin-left: var(--sidebar-width);
+  }
 }

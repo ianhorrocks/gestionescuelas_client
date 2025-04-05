@@ -2,11 +2,103 @@
 @use "../Mixins/mixins";
 
 .flights-container {
-  padding: 1rem;
+  padding: 20px;
+
+  @media (min-width: 990px) {
+    margin-left: 300px; // Ajustar al menú lateral fijo
+  }
 }
 
 .flights-content {
-  margin-top: 2rem;
+  margin-top: 20px;
+}
+
+.filter-panel {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  select {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+}
+
+.date-filters {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+
+  label {
+    font-weight: bold;
+  }
+
+  input {
+    padding: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  button {
+    padding: 5px 10px;
+    font-size: 1rem;
+    background-color: variables.$primary-color;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: variables.$primary-hover-color;
+    }
+  }
+}
+
+.list-group {
+  list-style: none;
+  padding: 0;
+
+  .list-group-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+}
+
+.flight-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.flight-card {
+  flex: 1 1 calc(33.333% - 1rem);
+  max-width: 300px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.2s;
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+}
+
+.flight-card:hover {
+  transform: scale(1.05);
 }
 
 /* Estilos para el modal de agregar vuelo */
@@ -86,5 +178,27 @@
     background-color: secondary-color; /* Color de fondo para el botón Agregar */
     color: #fff; /* Color del texto */
     border: none; /* Sin borde */
+  }
+}
+
+.add-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: variables.$tertiary-color;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background-color: variables.$tertiary-color-hover;
   }
 }

@@ -10,8 +10,9 @@
 @use "./UserProfile/UserProfile";
 @use "./UserSchool/UserSchool";
 @use "./GeneralComponents/ValidateFlightsModal";
-@use "./NavBar/Navbar";
+@use "./NavBar/NavbarUser";
 @use "./UserProfile/EdistUserProfileModal";
+@use "./NavBar/NavbarAdmin";
 
 .dashboard-container,
 .profile-container,

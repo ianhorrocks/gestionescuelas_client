@@ -94,7 +94,7 @@ const RegisterSchoolModal: React.FC<RegisterSchoolModalProps> = ({
           </div>
         </div>
         {step === 1 && (
-          <Form>
+          <Form className="form-register-school">
             <Form.Group controlId="formType" className="form-group">
               <Form.Control
                 as="select"
@@ -165,7 +165,7 @@ const RegisterSchoolModal: React.FC<RegisterSchoolModalProps> = ({
           </Form>
         )}
         {step === 2 && (
-          <Form>
+          <Form className="form-register-school">
             <Form.Group controlId="formAddress" className="form-group">
               <Form.Control
                 type="text"
@@ -229,7 +229,7 @@ const RegisterSchoolModal: React.FC<RegisterSchoolModalProps> = ({
           </Form>
         )}
         {step === 3 && (
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} className="form-register-school">
             <Form.Group controlId="formAdminEmail" className="form-group">
               <Form.Control
                 type="email"

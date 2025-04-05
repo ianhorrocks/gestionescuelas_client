@@ -54,64 +54,70 @@
 }
 
 /* Estilo para el botón de agregar usuario */
-.add-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background-color: variables.$secondary-color;
-  color: variables.$white-color;
-  font-size: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  box-shadow: 0 4px 8px variables.$shadow-color;
-  transition: transform 0.2s;
-  border: none;
-  z-index: 1000;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-}
 
 .admin-users-container {
+  margin-top: 60px;
   padding: 20px;
-}
 
-.admin-users-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  @media (min-width: 990px) {
+    margin-left: 260px; // Espacio para el menú fijo
+  }
 
   h1 {
+    text-align: center;
+    margin-bottom: 20px;
     font-size: 2rem;
     color: variables.$primary-color;
   }
 
-  .add-button {
-    background-color: variables.$primary-color;
-    color: variables.$white-color;
+  .list-group-users {
+    display: grid;
+    grid-template-columns: 1fr; // 1 columna por defecto
+    gap: 1rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr); // 2 columnas
+    }
+
+    @media (min-width: 990px) {
+      grid-template-columns: repeat(4, 1fr); // 4 columnas
+    }
+  }
+
+  .add-button-user {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: variables.$tertiary-color;
+    color: #fff;
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    font-size: 32px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 1.5rem;
+    justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 8px variables.$shadow-color;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.224);
 
     &:hover {
       background-color: color.adjust(
-        variables.$primary-color,
+        variables.$tertiary-color-hover,
         $lightness: -10%
       );
+    }
+  }
+
+  .admin-users-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 2rem;
+      color: variables.$primary-color;
     }
   }
 }

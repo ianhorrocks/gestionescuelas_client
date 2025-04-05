@@ -1,3 +1,6 @@
+@use "../Variables/variables";
+@use "sass:color";
+
 .school-container {
   padding: 1rem;
 }
@@ -22,21 +25,23 @@
   right: 20px;
   width: 60px;
   height: 60px;
+  background-color: variables.$tertiary-color;
+  color: #fff;
+  border: none;
   border-radius: 50%;
-  background-color: rgb(123, 105, 131);
-  color: white;
   font-size: 32px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.224);
-  transition: transform 0.2s;
-  border: none;
-}
 
-.add-button:hover {
-  transform: scale(1.1);
+  &:hover {
+    background-color: color.adjust(
+      variables.$tertiary-color-hover,
+      $lightness: -10%
+    );
+  }
 }
 
 .list-group {

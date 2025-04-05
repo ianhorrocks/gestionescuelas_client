@@ -133,7 +133,7 @@ const Login: React.FC = () => {
         <img src={logo} alt="Logo" className="login-logo" />
         <h1 className="login-title">PilotLog</h1>
         {message && <Alert message={message.message} type={message.type} />}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group floating-label-group">
             <input
               type="email"
@@ -170,11 +170,11 @@ const Login: React.FC = () => {
             </div>
           </div>
           <div className="forgot-password-container">
-            <a href="#" className="forgot-password-link">
-              Olvidé la contraseña
+            <a href="#" className="forgot-password-link text-end">
+              Olvidé mi contraseña
             </a>
           </div>
-          <button type="submit" className="btn btn-primary mt-4">
+          <button type="submit" className="btn btn-primary mt-3">
             Ingresar
           </button>
         </form>

@@ -1,0 +1,211 @@
+@use "../Variables/variables";
+
+:root {
+  --sidebar-width: 260px;
+  --content-padding: 20px;
+}
+
+.navbar-admin {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: variables.$secondary-color;
+  color: variables.$white-color;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+
+  .navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centrar el contenido horizontalmente */
+    height: 60px;
+    width: 100%;
+    position: relative;
+
+    @media (min-width: 990px) {
+      /* Alinear a la izquierda en pantallas grandes */
+      padding-left: var(
+        --sidebar-width
+      ); /* Dejar espacio para el menú lateral */
+    }
+  }
+
+  .navbar-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    color: variables.$text-color;
+    white-space: nowrap;
+  }
+
+  .navbar-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: variables.$text-color;
+
+    @media (min-width: 990px) {
+      display: none; /* Ocultar el ícono del menú en pantallas grandes */
+    }
+  }
+
+  .menu-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: variables.$primary-color !important;
+    color: variables.$white-color;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 2000;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-300px);
+    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+
+    &.open {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    @media (min-width: 990px) {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-admin-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 10px;
+
+      .nav-admin-logo {
+        width: 100px;
+        height: auto;
+        margin-bottom: 0.2rem;
+      }
+
+      .nav-admin-title {
+        font-family: variables.$font-family-caveat;
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .nav-log-min-title {
+        margin-top: -20px;
+        transform: scale(0.9);
+
+        p {
+          background-color: violet;
+          padding: 3px;
+          border-radius: 3px;
+          color: white;
+          letter-spacing: 1px;
+          font-size: 0.8rem;
+          text-align: center;
+        }
+      }
+    }
+
+    .admin-info {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      justify-content: start;
+
+      strong {
+        font-weight: bold;
+        white-space: nowrap;
+      }
+    }
+
+    .menu-link {
+      display: flex;
+      align-items: center;
+      color: variables.$white-color;
+      text-decoration: none;
+      border-radius: 12px;
+      margin: 10px 0;
+      font-size: 1rem;
+      padding: 8px 12px;
+      font-weight: 500;
+      transition: background 0.2s;
+
+      .icon-container {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+      }
+
+      .link-icon {
+        font-size: 1.2rem;
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    .menu-link.active {
+      background-color: variables.$white-color;
+      color: variables.$primary-color;
+
+      .link-icon {
+        color: variables.$primary-color;
+      }
+    }
+
+    .logout-button {
+      margin-top: auto;
+      padding-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: variables.$error-text-color;
+      font-size: 1rem;
+      text-decoration: none;
+      gap: 8px;
+
+      .logout-icon {
+        font-size: 1rem;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .menu-content * {
+    box-shadow: none !important;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100% !important;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}

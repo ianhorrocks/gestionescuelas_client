@@ -7,17 +7,17 @@ export const fetchUsers = async () => {
     },
   });
 
-  console.log("Response status:", response.status); // Añadir log para ver el estado de la respuesta
+  console.log("Response status:", response.status);
 
   if (!response.ok) {
     const errorData = await response.json();
-    console.error("Error fetching users:", errorData); // Añadir log para ver el error
+    console.error("Error fetching users:", errorData);
     throw new Error("Failed to fetch users");
   }
 
   const result = await response.json();
-  console.log("Fetched users:", result); // Añadir log para ver los datos obtenidos
-  return result.data; // Devolver directamente el array de usuarios
+  console.log("Fetched users:", result);
+  return result.data;
 };
 
 export const deleteUser = async (id: string) => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,26 +9,32 @@ import {
   faTachometerAlt,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import logo from "../assets/images/LogoSmallPilotLog.png";
 
 interface NavbarProps {
   title: string;
-  userName: string;
   links: { path: string; label: string }[];
   logoutPath: string;
 }
 
-const Navbar: React.FC<NavbarProps> = ({
-  title,
-  userName,
-  links,
-  logoutPath,
-}) => {
+const Navbar: React.FC<NavbarProps> = ({ title, links, logoutPath }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [userName, setUserName] = useState<string | null>(null); // Inicializar con null
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Obtener el nombre del usuario desde localStorage
+    const profile = localStorage.getItem("profile");
+    if (profile) {
+      const parsedProfile = JSON.parse(profile);
+      setUserName(`${parsedProfile.name} ${parsedProfile.lastname}`);
+    }
+  }, []); // Solo se ejecuta al montar el componente
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("profile"); // Limpiar el perfil del usuario
     navigate(logoutPath);
   };
 
@@ -43,7 +49,9 @@ const Navbar: React.FC<NavbarProps> = ({
   return (
     <div className="navbar">
       <div className="navbar-content">
-        <h1 className="navbar-title">{title}</h1>
+        <div className="container-dashboard">
+          <h1 className="navbar-title">{title}</h1>
+        </div>
         <FontAwesomeIcon
           icon={isOpen ? faAngleDoubleLeft : faBars}
           onClick={toggleMenu}
@@ -52,8 +60,13 @@ const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       <div className={`menu-content ${isOpen ? "open" : ""}`}>
-        <div className="user-info">
-          <strong>Hola, {userName}.</strong>
+        <div className="nav-user-header">
+          <img src={logo} alt="Logo" className="nav-user-logo" />
+          <h1 className="nav-user-title">PilotLog</h1>
+        </div>
+
+        <div className="nav-user-info">
+          <strong>Hola, {userName?.split(" ")[0] || "Usuario"}.</strong>
           <NavLink to="/user/profile" className="edit-profile-link">
             (Editar Perfil)
           </NavLink>

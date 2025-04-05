@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserItem from "../components/UserItem";
 import AddUserModal from "../components/AddUserModal";
-import Navbar from "../components/Navbar"; // Importar el nuevo Navbar
+import Navbar from "../components/NavbarAdmin"; // Importar el nuevo Navbar
 import {
   fetchUsers,
   removeUserFromSchool,
@@ -32,7 +32,6 @@ const AdminUsers: React.FC = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null);
   const [schoolId, setSchoolId] = useState<string | null>(null);
-  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const fetchSchoolId = async () => {
@@ -40,7 +39,6 @@ const AdminUsers: React.FC = () => {
         const loggedUser = await getLoggedUser();
         if (loggedUser && loggedUser.assignedSchools.length > 0) {
           setSchoolId(loggedUser.assignedSchools[0].school._id);
-          setUserName(`${loggedUser.name} ${loggedUser.lastname}`);
         } else {
           setError("No se pudo obtener la escuela del usuario logueado.");
         }
@@ -126,14 +124,8 @@ const AdminUsers: React.FC = () => {
 
   return (
     <div>
-      <Navbar
-        title="Gestión de Usuarios"
-        userName={userName}
-        links={links}
-        logoutPath="/"
-      />
+      <Navbar title="Usuarios" links={links} logoutPath="/" />
       <div className="admin-users-container">
-        <h1>Usuarios</h1>
         {error && <p className="text-danger">{error}</p>}
         <ul className="list-group-users">
           {users.map((user) => (
@@ -145,7 +137,7 @@ const AdminUsers: React.FC = () => {
             />
           ))}
         </ul>
-        <button className="add-button" onClick={() => setShowModal(true)}>
+        <button className="add-button-user" onClick={() => setShowModal(true)}>
           +
         </button>
         <AddUserModal

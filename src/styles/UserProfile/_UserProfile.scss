@@ -1,3 +1,5 @@
+@use "../Variables/variables";
+
 .profile-container {
   padding: 1rem;
 }
@@ -7,28 +9,35 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 990px) {
+    margin-left: 300px; // Espacio para el menú lateral fijo
+  }
 }
 
 .profile-photo-container {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 120px; /* Reducir el tamaño */
+  height: 120px;
   margin-bottom: 1rem;
+  background-color: variables.$white-color; /* Fondo blanco */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .profile-photo {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #ccc;
   }
 
   .change-photo-btn {
     position: absolute;
     bottom: 0;
     right: 0;
-    background-color: #007bff;
-    color: white;
+    background-color: variables.$primary-color;
+    color: variables.$white-color;
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -43,15 +52,18 @@
     }
 
     &:hover {
-      background-color: #0056b3;
+      background-color: variables.$primary-hover-color;
     }
   }
 }
 
 .profile-details {
-  text-align: center;
+  text-align: left; /* Alinear a la izquierda */
+  width: 100%;
+  max-width: 300px;
 
   h2 {
+    text-align: center; /* Mantener el nombre centrado */
     margin-bottom: 0.5rem;
   }
 
@@ -64,10 +76,36 @@
 .profile-actions {
   margin-top: 1.5rem;
   display: flex;
+  flex-direction: column; /* Colocar los botones en columna */
   gap: 1rem;
 
   .btn {
     padding: 0.5rem 1rem;
     font-size: 1rem;
+    width: 100%; /* Botones ocupan todo el ancho */
+    max-width: 300px;
+  }
+}
+
+.assigned-schools {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+
+  .school-item {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: rgba(238, 238, 238, 0.904);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    p {
+      margin: 0.2rem 0;
+      font-size: 0.9rem;
+
+      strong {
+        font-weight: bold;
+      }
+    }
   }
 }

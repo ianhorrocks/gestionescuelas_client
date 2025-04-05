@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavbarAdmin";
 import AddPlaneModal from "../components/AddPlaneModal";
 import PlaneItem from "../components/PlaneItem";
 import {
@@ -9,10 +9,7 @@ import {
   updatePlanePhoto,
 } from "../services/planeService";
 import { getLoggedUser } from "../services/auth";
-import defaultPlane from "../assets/images/default-plane.jpg"; // Importar la foto por defecto
-//import "../styles/fichas.css"; // Importar el archivo CSS general
-//import "../styles/PlaneItem.css"; // Importar el archivo CSS específico
-import "react-image-crop/dist/ReactCrop.css";
+import defaultPlane from "../assets/images/default-plane.jpg";
 
 interface Plane {
   _id: string;
@@ -31,7 +28,6 @@ const AdminPlanes: React.FC = () => {
   const [error, setError] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
   const [schoolId, setSchoolId] = useState<string | null>(null);
-  const [userName, setUserName] = useState("Admin User");
 
   useEffect(() => {
     const fetchSchoolId = async () => {
@@ -39,7 +35,6 @@ const AdminPlanes: React.FC = () => {
         const loggedUser = await getLoggedUser();
         if (loggedUser && loggedUser.assignedSchools.length > 0) {
           setSchoolId(loggedUser.assignedSchools[0].school._id);
-          setUserName(`${loggedUser.name} ${loggedUser.lastname}`);
         } else {
           setError("No se pudo obtener la escuela del usuario logueado.");
         }
@@ -105,13 +100,8 @@ const AdminPlanes: React.FC = () => {
   ];
 
   return (
-    <div>
-      <Navbar
-        title="Aeronaves"
-        userName={userName}
-        links={links}
-        logoutPath="/"
-      />
+    <div className="admin-planes-container">
+      <Navbar title="Aeronaves" links={links} logoutPath="/" />
       <div className="content">
         {error && <p className="text-danger">{error}</p>}
         <div className="plane-list">

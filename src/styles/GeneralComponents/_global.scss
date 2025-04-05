@@ -1,3 +1,4 @@
+@use "../Variables/variables";
 @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap");
 
 body {
@@ -5,11 +6,12 @@ body {
   font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  background-color: #94a9b5;
+  background-color: variables.$white-color;
 }
 
 .container {
   padding: 20px;
+  background-color: variables.$background-color;
 }
 
 h1,
@@ -34,11 +36,11 @@ h2 {
 .btn-secondary {
   background-color: white;
   border-color: white;
-  color: #7b6983;
+  color: variables.$tertiary-color; /* Use the tertiary color for text */
 }
 
 .btn-secondary:hover {
-  color: #7b6983a1;
+  color: variables.$tertiary-color-hover;
   background-color: white;
   border-color: white;
 }

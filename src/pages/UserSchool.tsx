@@ -4,7 +4,7 @@ import { getSchoolsById } from "../services/schoolService";
 import { getUserFlightsBySchool } from "../services/flightService";
 import { fetchPlanes } from "../services/planeService";
 import { fetchUsersByIds } from "../services/userService";
-import Navbar from "../components/Navbar"; // Cambiar HamburgerMenu por Navbar
+import Navbar from "../components/NavbarUser"; // Cambiar HamburgerMenu por Navbar
 import AddFlightModal from "../components/AddFlightModal";
 import { getLoggedUser } from "../services/auth";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";

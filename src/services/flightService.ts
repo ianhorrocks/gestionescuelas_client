@@ -112,3 +112,24 @@ export const createFlight = async (flightData: FlightData) => {
     throw error;
   }
 };
+
+export const getAllUserFlights = async (userId: string) => {
+  const API_URL = `http://localhost:3001/api/flights/user/${userId}`; // Endpoint para obtener todos los vuelos del usuario
+
+  try {
+    const response = await fetch(API_URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch all user flights");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching all user flights:", error);
+    throw error;
+  }
+};

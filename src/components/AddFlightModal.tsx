@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
-import { getSchoolDetails } from "../services/schoolService";
+import { fetchPlanes } from "../services/planeService";
+import { fetchUsersByIds } from "../services/userService";
 import { createFlight } from "../services/flightService";
 
 export interface LocalFlightData {
@@ -11,10 +12,8 @@ export interface LocalFlightData {
   departureTime: string;
   arrivalTime: string;
   landings: string;
-  oil?: string; // Opcional
-  oilUnit?: string; // Opcional
-  charge?: string; // Opcional
-  chargeUnit?: string; // Opcional
+  oil?: string;
+  charge?: string;
   school: string;
   origin: string;
   destination: string;
@@ -25,8 +24,7 @@ export interface LocalFlightData {
 interface AddFlightModalProps {
   show: boolean;
   onClose: () => void;
-  initialFlight: LocalFlightData; // Ya existe
-  newFlight: LocalFlightData; // Agregar esta línea
+  newFlight: LocalFlightData;
   handleChange: (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -38,88 +36,109 @@ interface AddFlightModalProps {
 const AddFlightModal: React.FC<AddFlightModalProps> = ({
   show,
   onClose,
-  initialFlight,
+  newFlight,
+  handleChange,
   onSuccess,
 }) => {
-  const [newFlight, setNewFlight] = useState(initialFlight);
+  const [schools, setSchools] = useState<
+    { _id: string; name: string; planes: string[]; role: string }[]
+  >([]);
   const [planes, setPlanes] = useState<
     { _id: string; registrationNumber: string; model: string }[]
   >([]);
-  const [pilots, setPilots] = useState<
+  const [users, setUsers] = useState<
     { _id: string; name: string; lastname: string }[]
   >([]);
-  const [instructors, setInstructors] = useState<
-    { _id: string; name: string; lastname: string }[]
-  >([]);
+  const [currentUser, setCurrentUser] = useState<{
+    _id: string;
+    name: string;
+    lastname: string;
+    role: string;
+  } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // Cargar perfil del usuario y escuelas al abrir el modal
   useEffect(() => {
     if (show) {
-      const storedSchoolId = localStorage.getItem("selectedSchoolId");
-      const effectiveSchoolId = newFlight.school || storedSchoolId;
-
-      if (!effectiveSchoolId) {
-        console.error("No se encontró el ID de la escuela.");
-        return;
-      }
-
-      const fetchSchoolDetails = async () => {
+      const loadProfile = () => {
         try {
-          const data = await getSchoolDetails(effectiveSchoolId);
-          setPlanes(data.planes || []);
-          setPilots(data.pilots || []);
-          setInstructors(data.instructors || []);
+          const profile = localStorage.getItem("profile");
+          if (profile) {
+            const parsedProfile = JSON.parse(profile);
+
+            setCurrentUser({
+              _id: parsedProfile._id,
+              name: parsedProfile.name,
+              lastname: parsedProfile.lastname,
+              role: "", // El rol se determinará según la escuela seleccionada
+            });
+
+            const assignedSchools = parsedProfile.assignedSchools.map(
+              (assignment: {
+                school: { _id: string; name: string; planes: string[] };
+                role: string;
+              }) => ({
+                _id: assignment.school._id,
+                name: assignment.school.name,
+                planes: assignment.school.planes,
+                role: assignment.role,
+              })
+            );
+
+            setSchools(assignedSchools);
+          } else {
+            throw new Error("No se encontró el perfil en el localStorage.");
+          }
         } catch (error) {
-          console.error("Error fetching school details:", error);
+          console.error("Error al cargar el perfil:", error);
+          setErrorMessage("Error al cargar los datos del usuario.");
         }
       };
 
-      fetchSchoolDetails();
+      loadProfile();
     }
-  }, [show, newFlight.school]);
+  }, [show]);
 
+  // Cargar aviones y usuarios al seleccionar una escuela
   useEffect(() => {
-    if (!show) {
-      setNewFlight(initialFlight); // Reiniciar los datos del vuelo al cerrar el modal
-    }
-  }, [show, initialFlight]);
+    const loadSchoolData = async () => {
+      try {
+        if (!newFlight.school) return;
 
-  const handleLocalChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setNewFlight((prev) => ({
-      ...prev,
-      [name]: value, // Actualiza el estado con el valor correcto
-    }));
-  };
+        const selectedSchool = schools.find(
+          (school) => school._id === newFlight.school
+        );
+
+        if (selectedSchool) {
+          // Actualizar el rol del usuario en la escuela seleccionada
+          setCurrentUser((prev) =>
+            prev ? { ...prev, role: selectedSchool.role } : null
+          );
+
+          // Cargar aviones
+          const planesData = await fetchPlanes(selectedSchool._id);
+          setPlanes(planesData);
+
+          // Cargar usuarios
+          const usersData = await fetchUsersByIds(selectedSchool.planes);
+          setUsers(usersData);
+        }
+      } catch (error) {
+        console.error("Error al cargar los datos de la escuela:", error);
+        setErrorMessage(
+          "No se pudieron cargar los datos de la escuela. Por favor, inténtalo nuevamente."
+        );
+      }
+    };
+
+    loadSchoolData();
+  }, [newFlight.school, schools]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const flightData = {
-      ...newFlight,
-      instructor: newFlight.instructor || null, // Convertir null a cadena vacía
-      oil:
-        newFlight.oilUnit === "qt"
-          ? ((parseFloat(newFlight.oil || "0") || 0) * 946.353).toString()
-          : newFlight.oil
-          ? parseFloat(newFlight.oil || "0").toString()
-          : undefined,
-      charge:
-        newFlight.chargeUnit === "gal"
-          ? ((parseFloat(newFlight.charge || "0") || 0) * 3.78541).toString()
-          : newFlight.charge
-          ? parseFloat(newFlight.charge || "0").toString()
-          : undefined,
-    };
-
     try {
-      console.log("Datos enviados al backend:", flightData);
-      await createFlight(flightData);
-      console.log("Vuelo creado exitosamente");
+      await createFlight(newFlight);
       if (onSuccess) {
         onSuccess("Vuelo agregado exitosamente");
       }
@@ -127,10 +146,6 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
     } catch (error) {
       console.error("Error al agregar el vuelo:", error);
       setErrorMessage("No se pudo agregar el vuelo. Inténtalo nuevamente.");
-
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000);
     }
   };
 
@@ -142,26 +157,48 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
       <Modal.Body>
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
         <Form onSubmit={handleSubmit}>
+          {/* Fecha */}
           <Form.Group controlId="formDate" className="form-group">
             <Form.Control
               type="date"
               name="date"
               value={newFlight.date}
-              onChange={handleLocalChange}
+              onChange={handleChange}
               required
               className="floating-input"
-              placeholder=" "
-              max={new Date().toISOString().split("T")[0]}
             />
             <Form.Label className="floating-label">Fecha</Form.Label>
           </Form.Group>
 
+          {/* Escuela */}
+          <Form.Group controlId="formSchool" className="form-group">
+            <Form.Control
+              as="select"
+              name="school"
+              value={newFlight.school}
+              onChange={handleChange}
+              required
+              className="floating-input"
+            >
+              <option value="" disabled hidden>
+                Selecciona una escuela
+              </option>
+              {schools.map((school) => (
+                <option key={school._id} value={school._id}>
+                  {school.name}
+                </option>
+              ))}
+            </Form.Control>
+            <Form.Label className="floating-label">Escuela</Form.Label>
+          </Form.Group>
+
+          {/* Aeronave */}
           <Form.Group controlId="formAirplane" className="form-group">
             <Form.Control
               as="select"
               name="airplane"
               value={newFlight.airplane}
-              onChange={handleLocalChange}
+              onChange={handleChange}
               required
               className="floating-input"
             >
@@ -177,188 +214,155 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Label className="floating-label">Aeronave</Form.Label>
           </Form.Group>
 
+          {/* Piloto */}
           <Form.Group controlId="formPilot" className="form-group">
             <Form.Control
               as="select"
               name="pilot"
               value={newFlight.pilot}
-              onChange={handleLocalChange}
+              onChange={handleChange}
               required
               className="floating-input"
+              disabled={currentUser?.role === "Instructor"}
             >
               <option value="" disabled hidden>
                 Selecciona un piloto
               </option>
-              {pilots.map((pilot) => (
-                <option key={pilot._id} value={pilot._id}>
-                  {pilot.name} {pilot.lastname}
+              {users.map((user) => (
+                <option key={user._id} value={user._id}>
+                  {user.name} {user.lastname}
                 </option>
               ))}
             </Form.Control>
             <Form.Label className="floating-label">Piloto</Form.Label>
           </Form.Group>
 
+          {/* Instructor */}
           <Form.Group controlId="formInstructor" className="form-group">
             <Form.Control
               as="select"
               name="instructor"
               value={newFlight.instructor || ""}
-              onChange={handleLocalChange}
+              onChange={handleChange}
+              required
               className="floating-input"
+              disabled={currentUser?.role === "Piloto"}
             >
               <option value="" disabled hidden>
                 Selecciona un instructor
               </option>
-              <option value="">Ningún Instructor</option>
-              {instructors.map((instructor) => (
-                <option key={instructor._id} value={instructor._id}>
-                  {instructor.name} {instructor.lastname}
+              {users.map((user) => (
+                <option key={user._id} value={user._id}>
+                  {user.name} {user.lastname}
                 </option>
               ))}
             </Form.Control>
             <Form.Label className="floating-label">Instructor</Form.Label>
           </Form.Group>
 
-          <Form.Group controlId="formDepartureTime" className="form-group">
-            <Form.Control
-              type="time"
-              name="departureTime"
-              value={newFlight.departureTime}
-              onChange={handleLocalChange}
-              required
-              className="floating-input"
-              placeholder=" "
-            />
-            <Form.Label className="floating-label">Hora de Salida</Form.Label>
-          </Form.Group>
-          <Form.Group controlId="formArrivalTime" className="form-group">
-            <Form.Control
-              type="time"
-              name="arrivalTime"
-              value={newFlight.arrivalTime}
-              onChange={handleLocalChange}
-              required
-              className="floating-input"
-              placeholder=" "
-            />
-            <Form.Label className="floating-label">Hora de Llegada</Form.Label>
-          </Form.Group>
-
-          <Form.Group controlId="formInitialOdometer" className="form-group">
-            <Form.Control
-              type="number"
-              name="initialOdometer"
-              value={newFlight.initialOdometer}
-              onChange={handleLocalChange}
-              required
-              className="floating-input"
-              placeholder=" "
-              min="0"
-            />
-            <Form.Label className="floating-label">Odómetro Inicial</Form.Label>
-          </Form.Group>
-
-          <Form.Group controlId="formFinalOdometer" className="form-group">
-            <Form.Control
-              type="number"
-              name="finalOdometer"
-              value={newFlight.finalOdometer}
-              onChange={handleLocalChange}
-              required
-              className="floating-input"
-              placeholder=" "
-              min="0"
-            />
-            <Form.Label className="floating-label">Odómetro Final</Form.Label>
-          </Form.Group>
-
+          {/* Origen */}
           <Form.Group controlId="formOrigin" className="form-group">
             <Form.Control
               type="text"
-              name="origin" // Asegúrate de que el nombre sea "origin"
-              value={newFlight.origin} // Vinculado al estado
-              onChange={handleLocalChange}
+              name="origin"
+              value={newFlight.origin}
+              onChange={handleChange}
               required
               className="floating-input"
-              placeholder=" "
             />
             <Form.Label className="floating-label">Origen</Form.Label>
           </Form.Group>
 
+          {/* Destino */}
           <Form.Group controlId="formDestination" className="form-group">
             <Form.Control
               type="text"
               name="destination"
               value={newFlight.destination}
-              onChange={handleLocalChange}
+              onChange={handleChange}
               required
               className="floating-input"
-              placeholder=" "
             />
             <Form.Label className="floating-label">Destino</Form.Label>
           </Form.Group>
 
-          <Form.Group controlId="formLandings" className="form-group">
+          {/* Hora de salida */}
+          <Form.Group controlId="formDepartureTime" className="form-group">
+            <Form.Control
+              type="time"
+              name="departureTime"
+              value={newFlight.departureTime}
+              onChange={handleChange}
+              required
+              className="floating-input"
+            />
+            <Form.Label className="floating-label">Hora de salida</Form.Label>
+          </Form.Group>
+
+          {/* Hora de llegada */}
+          <Form.Group controlId="formArrivalTime" className="form-group">
+            <Form.Control
+              type="time"
+              name="arrivalTime"
+              value={newFlight.arrivalTime}
+              onChange={handleChange}
+              required
+              className="floating-input"
+            />
+            <Form.Label className="floating-label">Hora de llegada</Form.Label>
+          </Form.Group>
+
+          {/* Odómetro inicial */}
+          <Form.Group controlId="formInitialOdometer" className="form-group">
             <Form.Control
               type="number"
-              name="landings"
-              value={newFlight.landings}
-              onChange={handleLocalChange}
+              name="initialOdometer"
+              value={newFlight.initialOdometer}
+              onChange={handleChange}
+              required
               className="floating-input"
-              placeholder=" "
-              min="0"
             />
-            <Form.Label className="floating-label">Aterrizajes</Form.Label>
+            <Form.Label className="floating-label">Odómetro inicial</Form.Label>
           </Form.Group>
 
+          {/* Odómetro final */}
+          <Form.Group controlId="formFinalOdometer" className="form-group">
+            <Form.Control
+              type="number"
+              name="finalOdometer"
+              value={newFlight.finalOdometer}
+              onChange={handleChange}
+              required
+              className="floating-input"
+            />
+            <Form.Label className="floating-label">Odómetro final</Form.Label>
+          </Form.Group>
+
+          {/* Aceite */}
           <Form.Group controlId="formOil" className="form-group">
-            <div className="floating-container">
-              <Form.Control
-                type="number"
-                name="oil"
-                value={newFlight.oil}
-                onChange={handleLocalChange}
-                className="floating-input"
-                placeholder=" "
-                min="0"
-              />
-              <Form.Label className="floating-label">Aceite</Form.Label>
-              <Form.Select
-                name="oilUnit"
-                value={newFlight.oilUnit || "ml"}
-                onChange={handleLocalChange}
-                className="unit-select"
-              >
-                <option value="ml">Mililitros</option>
-                <option value="qt">Quarts</option>
-              </Form.Select>
-            </div>
+            <Form.Control
+              type="text"
+              name="oil"
+              value={newFlight.oil || ""}
+              onChange={handleChange}
+              className="floating-input"
+            />
+            <Form.Label className="floating-label">Aceite</Form.Label>
           </Form.Group>
 
+          {/* Combustible */}
           <Form.Group controlId="formCharge" className="form-group">
-            <div className="floating-container">
-              <Form.Control
-                type="number"
-                name="charge"
-                value={newFlight.charge}
-                onChange={handleLocalChange}
-                className="floating-input"
-                placeholder=" "
-                min="0"
-              />
-              <Form.Label className="floating-label">Combustible</Form.Label>
-              <Form.Select
-                name="chargeUnit"
-                value={newFlight.chargeUnit || "lts"}
-                onChange={handleLocalChange}
-                className="unit-select"
-              >
-                <option value="lts">Litros</option>
-                <option value="gal">Galones</option>
-              </Form.Select>
-            </div>
+            <Form.Control
+              type="text"
+              name="charge"
+              value={newFlight.charge || ""}
+              onChange={handleChange}
+              className="floating-input"
+            />
+            <Form.Label className="floating-label">Combustible</Form.Label>
           </Form.Group>
 
+          {/* Botones */}
           <div className="button-container">
             <Button variant="secondary" type="button" onClick={onClose}>
               Cancelar
