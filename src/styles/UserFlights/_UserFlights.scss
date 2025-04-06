@@ -108,6 +108,11 @@
     overflow-y: auto;
     margin-top: 10px;
   }
+  .disabled-field {
+    background-color: #e9ecef !important; /* Fondo gris claro */
+    pointer-events: none; /* Deshabilitar interacción */
+    opacity: 1; /* Mantener el texto visible */
+  }
 
   .floating-input {
     width: 100%;

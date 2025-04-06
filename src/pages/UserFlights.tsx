@@ -28,7 +28,6 @@ const UserFlights: React.FC = () => {
   const [startDate, setStartDate] = useState<string>(""); // Fecha de inicio
   const [endDate, setEndDate] = useState<string>(""); // Fecha de fin
   const [error, setError] = useState("");
-  const [userName, setUserName] = useState("");
 
   // Estado para el modal
   const [showModal, setShowModal] = useState(false);
@@ -53,7 +52,6 @@ const UserFlights: React.FC = () => {
     const fetchFlights = async () => {
       try {
         const user = await getLoggedUser();
-        setUserName(`${user.name} ${user.lastname}`);
 
         const flightsData = await getAllUserFlights(user._id);
         setFlights(flightsData.data);
@@ -68,9 +66,10 @@ const UserFlights: React.FC = () => {
             ])
           ).values()
         );
+        console.log("Escuelas únicas:", uniqueSchools);
         setSchools(uniqueSchools);
       } catch (err) {
-        console.error("Failed to fetch flights:", err);
+        console.error("Failed to fetch flightsss:", err);
         setError("Failed to fetch flights");
       }
     };
@@ -153,7 +152,6 @@ const UserFlights: React.FC = () => {
     <div className="flights-container">
       <Navbar
         title="Mis Vuelos"
-        userName={userName}
         links={[
           { path: "/user/dashboard", label: "Dashboard" },
           { path: "/user/profile", label: "Mi Perfil" },
@@ -233,7 +231,6 @@ const UserFlights: React.FC = () => {
           setNewFlight({ ...newFlight, [e.target.name]: e.target.value })
         }
         onSuccess={handleFlightAdded}
-        initialFlight={newFlight}
       />
     </div>
   );

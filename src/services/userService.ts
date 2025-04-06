@@ -156,3 +156,19 @@ export const fetchUserProfile = async () => {
 
   return await response.json();
 };
+
+export const fetchUsersFromSchool = async (schoolId: string) => {
+  const response = await fetch(`${API_URL}/school/${schoolId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch users by school ID");
+  }
+
+  const data = await response.json();
+  return data.data; // Devuelve los usuarios asociados a la escuela
+};

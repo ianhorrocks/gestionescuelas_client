@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { fetchPlanes } from "../services/planeService";
-import { fetchUsersByIds } from "../services/userService";
+import { fetchUsersFromSchool } from "../services/userService";
 import { createFlight } from "../services/flightService";
 
 export interface LocalFlightData {
@@ -47,7 +47,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
     { _id: string; registrationNumber: string; model: string }[]
   >([]);
   const [users, setUsers] = useState<
-    { _id: string; name: string; lastname: string }[]
+    { _id: string; name: string; lastname: string; role: string }[]
   >([]);
   const [currentUser, setCurrentUser] = useState<{
     _id: string;
@@ -56,8 +56,48 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
     role: string;
   } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [newFlightData, setNewFlight] = useState<LocalFlightData>({
+    date: "",
+    initialOdometer: "",
+    finalOdometer: "",
+    origin: "",
+    destination: "",
+    departureTime: "",
+    arrivalTime: "",
+    landings: "",
+    oil: "",
+    charge: "",
+    airplane: "",
+    pilot: "",
+    instructor: "",
+    school: "",
+  });
 
-  // Cargar perfil del usuario y escuelas al abrir el modal
+  const handleShowModal = () => {
+    setNewFlight({
+      date: "",
+      initialOdometer: "",
+      finalOdometer: "",
+      origin: "",
+      destination: "",
+      departureTime: "",
+      arrivalTime: "",
+      landings: "",
+      oil: "",
+      charge: "",
+      airplane: "",
+      pilot:
+        currentUser?.role === "Alumno" || currentUser?.role === "Piloto"
+          ? currentUser._id
+          : "", // Precargar piloto si es Alumno o Piloto
+      instructor: currentUser?.role === "Instructor" ? currentUser._id : "", // Precargar instructor si es Instructor
+      school: "",
+    });
+    setShowModal(true);
+  };
+
+  // Cargar datos del usuario actual y las escuelas al abrir el modal
   useEffect(() => {
     if (show) {
       const loadProfile = () => {
@@ -120,7 +160,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
           setPlanes(planesData);
 
           // Cargar usuarios
-          const usersData = await fetchUsersByIds(selectedSchool.planes);
+          const usersData = await fetchUsersFromSchool(selectedSchool._id);
           setUsers(usersData);
         }
       } catch (error) {
@@ -134,6 +174,36 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
     loadSchoolData();
   }, [newFlight.school, schools]);
 
+  // Manejar el cambio de escuela
+  const handleSchoolChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedSchoolId = e.target.value;
+    handleChange(e);
+
+    if (selectedSchoolId) {
+      const selectedSchool = schools.find(
+        (school) => school._id === selectedSchoolId
+      );
+
+      if (selectedSchool) {
+        // Actualizar el rol del usuario en la escuela seleccionada
+        setCurrentUser((prev) =>
+          prev ? { ...prev, role: selectedSchool.role } : null
+        );
+
+        // Cargar aviones
+        const planesData = await fetchPlanes(selectedSchoolId);
+        setPlanes(planesData);
+
+        // Cargar usuarios de la escuela
+        const usersData = await fetchUsersFromSchool(selectedSchoolId);
+        setUsers(usersData);
+      }
+    }
+  };
+
+  // Manejar el envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -176,7 +246,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
               as="select"
               name="school"
               value={newFlight.school}
-              onChange={handleChange}
+              onChange={handleSchoolChange}
               required
               className="floating-input"
             >
@@ -189,7 +259,6 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
                 </option>
               ))}
             </Form.Control>
-            <Form.Label className="floating-label">Escuela</Form.Label>
           </Form.Group>
 
           {/* Aeronave */}
@@ -211,7 +280,6 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
                 </option>
               ))}
             </Form.Control>
-            <Form.Label className="floating-label">Aeronave</Form.Label>
           </Form.Group>
 
           {/* Piloto */}
@@ -219,22 +287,35 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Control
               as="select"
               name="pilot"
-              value={newFlight.pilot}
+              value={
+                currentUser?.role === "Alumno" || currentUser?.role === "Piloto"
+                  ? currentUser._id
+                  : newFlight.pilot
+              }
               onChange={handleChange}
               required
-              className="floating-input"
-              disabled={currentUser?.role === "Instructor"}
+              className={`floating-input ${
+                currentUser?.role === "Alumno" || currentUser?.role === "Piloto"
+                  ? "disabled-field"
+                  : ""
+              }`}
+              disabled={
+                currentUser?.role === "Alumno" || currentUser?.role === "Piloto"
+              }
             >
               <option value="" disabled hidden>
                 Selecciona un piloto
               </option>
-              {users.map((user) => (
-                <option key={user._id} value={user._id}>
-                  {user.name} {user.lastname}
-                </option>
-              ))}
+              {users
+                .filter(
+                  (user) => user.role === "Alumno" || user.role === "Piloto"
+                )
+                .map((user) => (
+                  <option key={user._id} value={user._id}>
+                    {user.name} {user.lastname}
+                  </option>
+                ))}
             </Form.Control>
-            <Form.Label className="floating-label">Piloto</Form.Label>
           </Form.Group>
 
           {/* Instructor */}
@@ -242,22 +323,29 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Control
               as="select"
               name="instructor"
-              value={newFlight.instructor || ""}
+              value={
+                currentUser?.role === "Instructor"
+                  ? currentUser._id
+                  : newFlight.instructor
+              }
               onChange={handleChange}
               required
-              className="floating-input"
-              disabled={currentUser?.role === "Piloto"}
+              className={`floating-input ${
+                currentUser?.role === "Instructor" ? "disabled-field" : ""
+              }`}
+              disabled={currentUser?.role === "Instructor"}
             >
               <option value="" disabled hidden>
                 Selecciona un instructor
               </option>
-              {users.map((user) => (
-                <option key={user._id} value={user._id}>
-                  {user.name} {user.lastname}
-                </option>
-              ))}
+              {users
+                .filter((user) => user.role === "Instructor")
+                .map((user) => (
+                  <option key={user._id} value={user._id}>
+                    {user.name} {user.lastname}
+                  </option>
+                ))}
             </Form.Control>
-            <Form.Label className="floating-label">Instructor</Form.Label>
           </Form.Group>
 
           {/* Origen */}
@@ -338,33 +426,9 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Label className="floating-label">Odómetro final</Form.Label>
           </Form.Group>
 
-          {/* Aceite */}
-          <Form.Group controlId="formOil" className="form-group">
-            <Form.Control
-              type="text"
-              name="oil"
-              value={newFlight.oil || ""}
-              onChange={handleChange}
-              className="floating-input"
-            />
-            <Form.Label className="floating-label">Aceite</Form.Label>
-          </Form.Group>
-
-          {/* Combustible */}
-          <Form.Group controlId="formCharge" className="form-group">
-            <Form.Control
-              type="text"
-              name="charge"
-              value={newFlight.charge || ""}
-              onChange={handleChange}
-              className="floating-input"
-            />
-            <Form.Label className="floating-label">Combustible</Form.Label>
-          </Form.Group>
-
           {/* Botones */}
-          <div className="button-container">
-            <Button variant="secondary" type="button" onClick={onClose}>
+          <div className="form-buttons">
+            <Button variant="secondary" onClick={onClose}>
               Cancelar
             </Button>
             <Button variant="primary" type="submit">

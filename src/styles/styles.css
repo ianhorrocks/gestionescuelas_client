@@ -927,6 +927,11 @@ h2 {
   overflow-y: auto;
   margin-top: 10px;
 }
+.add-flight-modal .disabled-field {
+  background-color: #e9ecef !important; /* Fondo gris claro */
+  pointer-events: none; /* Deshabilitar interacción */
+  opacity: 1; /* Mantener el texto visible */
+}
 .add-flight-modal .floating-input {
   width: 100%;
   padding: 10px 10px 10px 5px;
