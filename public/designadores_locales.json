@@ -1,0 +1,2081 @@
+[
+  {
+    "designador": "ACB"
+  },
+  {
+    "designador": "ACH"
+  },
+  {
+    "designador": "ACM"
+  },
+  {
+    "designador": "ADO"
+  },
+  {
+    "designador": "ADT"
+  },
+  {
+    "designador": "ADU"
+  },
+  {
+    "designador": "AER"
+  },
+  {
+    "designador": "AGI"
+  },
+  {
+    "designador": "AGR"
+  },
+  {
+    "designador": "AII"
+  },
+  {
+    "designador": "AJA"
+  },
+  {
+    "designador": "ALC"
+  },
+  {
+    "designador": "ALL"
+  },
+  {
+    "designador": "ALR"
+  },
+  {
+    "designador": "ALT"
+  },
+  {
+    "designador": "ALV"
+  },
+  {
+    "designador": "AMA"
+  },
+  {
+    "designador": "AME"
+  },
+  {
+    "designador": "AMG"
+  },
+  {
+    "designador": "ANA"
+  },
+  {
+    "designador": "AND"
+  },
+  {
+    "designador": "APO"
+  },
+  {
+    "designador": "ARB"
+  },
+  {
+    "designador": "ARS"
+  },
+  {
+    "designador": "ARY"
+  },
+  {
+    "designador": "ATE"
+  },
+  {
+    "designador": "ATN"
+  },
+  {
+    "designador": "AUL"
+  },
+  {
+    "designador": "AVA"
+  },
+  {
+    "designador": "AVL"
+  },
+  {
+    "designador": "AYA"
+  },
+  {
+    "designador": "BAD"
+  },
+  {
+    "designador": "BAI"
+  },
+  {
+    "designador": "BAL"
+  },
+  {
+    "designador": "BAR"
+  },
+  {
+    "designador": "BAS"
+  },
+  {
+    "designador": "BCA"
+  },
+  {
+    "designador": "BDO"
+  },
+  {
+    "designador": "BDR"
+  },
+  {
+    "designador": "BEL"
+  },
+  {
+    "designador": "BEX"
+  },
+  {
+    "designador": "BHB"
+  },
+  {
+    "designador": "BHT"
+  },
+  {
+    "designador": "BIO"
+  },
+  {
+    "designador": "BLA"
+  },
+  {
+    "designador": "BLC"
+  },
+  {
+    "designador": "BLE"
+  },
+  {
+    "designador": "BLL"
+  },
+  {
+    "designador": "BLN"
+  },
+  {
+    "designador": "BLR"
+  },
+  {
+    "designador": "BMO"
+  },
+  {
+    "designador": "BOE"
+  },
+  {
+    "designador": "BOG"
+  },
+  {
+    "designador": "BOL"
+  },
+  {
+    "designador": "BOM"
+  },
+  {
+    "designador": "BOS"
+  },
+  {
+    "designador": "BPS"
+  },
+  {
+    "designador": "BRA"
+  },
+  {
+    "designador": "BRF"
+  },
+  {
+    "designador": "BRQ"
+  },
+  {
+    "designador": "BTA"
+  },
+  {
+    "designador": "BTS"
+  },
+  {
+    "designador": "CAF"
+  },
+  {
+    "designador": "CAL"
+  },
+  {
+    "designador": "CAM"
+  },
+  {
+    "designador": "CAT"
+  },
+  {
+    "designador": "CAY"
+  },
+  {
+    "designador": "CBA"
+  },
+  {
+    "designador": "CBB"
+  },
+  {
+    "designador": "CBD"
+  },
+  {
+    "designador": "CCA"
+  },
+  {
+    "designador": "CCH"
+  },
+  {
+    "designador": "CCI"
+  },
+  {
+    "designador": "CCM"
+  },
+  {
+    "designador": "CCO"
+  },
+  {
+    "designador": "CCP"
+  },
+  {
+    "designador": "CCS"
+  },
+  {
+    "designador": "CDA"
+  },
+  {
+    "designador": "CDI"
+  },
+  {
+    "designador": "CDL"
+  },
+  {
+    "designador": "CDS"
+  },
+  {
+    "designador": "CDU"
+  },
+  {
+    "designador": "CED"
+  },
+  {
+    "designador": "CEJ"
+  },
+  {
+    "designador": "CFU"
+  },
+  {
+    "designador": "CHA"
+  },
+  {
+    "designador": "CHC"
+  },
+  {
+    "designador": "CHJ"
+  },
+  {
+    "designador": "CHM"
+  },
+  {
+    "designador": "CHO"
+  },
+  {
+    "designador": "CHP"
+  },
+  {
+    "designador": "CHR"
+  },
+  {
+    "designador": "CHT"
+  },
+  {
+    "designador": "CHY"
+  },
+  {
+    "designador": "CIF"
+  },
+  {
+    "designador": "CII"
+  },
+  {
+    "designador": "CIP"
+  },
+  {
+    "designador": "CIT"
+  },
+  {
+    "designador": "CLD"
+  },
+  {
+    "designador": "CLE"
+  },
+  {
+    "designador": "CLH"
+  },
+  {
+    "designador": "CLI"
+  },
+  {
+    "designador": "CLN"
+  },
+  {
+    "designador": "CLT"
+  },
+  {
+    "designador": "CNA"
+  },
+  {
+    "designador": "CNO"
+  },
+  {
+    "designador": "CNS"
+  },
+  {
+    "designador": "COA"
+  },
+  {
+    "designador": "COL"
+  },
+  {
+    "designador": "CON"
+  },
+  {
+    "designador": "CPO"
+  },
+  {
+    "designador": "CQN"
+  },
+  {
+    "designador": "CQZ"
+  },
+  {
+    "designador": "CRD"
+  },
+  {
+    "designador": "CRR"
+  },
+  {
+    "designador": "CRV"
+  },
+  {
+    "designador": "CSA"
+  },
+  {
+    "designador": "CSJ"
+  },
+  {
+    "designador": "CSP"
+  },
+  {
+    "designador": "CSQ"
+  },
+  {
+    "designador": "CSR"
+  },
+  {
+    "designador": "CSU"
+  },
+  {
+    "designador": "CTA"
+  },
+  {
+    "designador": "CTP"
+  },
+  {
+    "designador": "CTS"
+  },
+  {
+    "designador": "CUA"
+  },
+  {
+    "designador": "CUM"
+  },
+  {
+    "designador": "CUT"
+  },
+  {
+    "designador": "CVV"
+  },
+  {
+    "designador": "CZU"
+  },
+  {
+    "designador": "DAR"
+  },
+  {
+    "designador": "DFR"
+  },
+  {
+    "designador": "DIA"
+  },
+  {
+    "designador": "DIL"
+  },
+  {
+    "designador": "DIO"
+  },
+  {
+    "designador": "DOF"
+  },
+  {
+    "designador": "DOL"
+  },
+  {
+    "designador": "DOP"
+  },
+  {
+    "designador": "DOR"
+  },
+  {
+    "designador": "DOZ"
+  },
+  {
+    "designador": "DRA"
+  },
+  {
+    "designador": "DRX"
+  },
+  {
+    "designador": "DRY"
+  },
+  {
+    "designador": "DTE"
+  },
+  {
+    "designador": "EAU"
+  },
+  {
+    "designador": "EBF"
+  },
+  {
+    "designador": "ECA"
+  },
+  {
+    "designador": "ECX"
+  },
+  {
+    "designador": "EDO"
+  },
+  {
+    "designador": "EGO"
+  },
+  {
+    "designador": "ELC"
+  },
+  {
+    "designador": "ELD"
+  },
+  {
+    "designador": "ELL"
+  },
+  {
+    "designador": "ELP"
+  },
+  {
+    "designador": "ELZ"
+  },
+  {
+    "designador": "EMA"
+  },
+  {
+    "designador": "EML"
+  },
+  {
+    "designador": "ENO"
+  },
+  {
+    "designador": "ENV"
+  },
+  {
+    "designador": "EPZ"
+  },
+  {
+    "designador": "ERE"
+  },
+  {
+    "designador": "ERT"
+  },
+  {
+    "designador": "ESN"
+  },
+  {
+    "designador": "ESQ"
+  },
+  {
+    "designador": "ESR"
+  },
+  {
+    "designador": "ETB"
+  },
+  {
+    "designador": "EVC"
+  },
+  {
+    "designador": "EZA"
+  },
+  {
+    "designador": "EZE"
+  },
+  {
+    "designador": "EZP"
+  },
+  {
+    "designador": "FAE"
+  },
+  {
+    "designador": "FAG"
+  },
+  {
+    "designador": "FDD"
+  },
+  {
+    "designador": "FDO"
+  },
+  {
+    "designador": "FIM"
+  },
+  {
+    "designador": "FLO"
+  },
+  {
+    "designador": "FMA"
+  },
+  {
+    "designador": "FOR"
+  },
+  {
+    "designador": "FRA"
+  },
+  {
+    "designador": "FRO"
+  },
+  {
+    "designador": "FRS"
+  },
+  {
+    "designador": "FSA"
+  },
+  {
+    "designador": "FUN"
+  },
+  {
+    "designador": "FVA"
+  },
+  {
+    "designador": "GAA"
+  },
+  {
+    "designador": "GAI"
+  },
+  {
+    "designador": "GAL"
+  },
+  {
+    "designador": "GAR"
+  },
+  {
+    "designador": "GAS"
+  },
+  {
+    "designador": "GBE"
+  },
+  {
+    "designador": "GBL"
+  },
+  {
+    "designador": "GCR"
+  },
+  {
+    "designador": "GDH"
+  },
+  {
+    "designador": "GDO"
+  },
+  {
+    "designador": "GEP"
+  },
+  {
+    "designador": "GES"
+  },
+  {
+    "designador": "GEZ"
+  },
+  {
+    "designador": "GIL"
+  },
+  {
+    "designador": "GIT"
+  },
+  {
+    "designador": "GLH"
+  },
+  {
+    "designador": "GLM"
+  },
+  {
+    "designador": "GLP"
+  },
+  {
+    "designador": "GNA"
+  },
+  {
+    "designador": "GNR"
+  },
+  {
+    "designador": "GNV"
+  },
+  {
+    "designador": "GOC"
+  },
+  {
+    "designador": "GOM"
+  },
+  {
+    "designador": "GOR"
+  },
+  {
+    "designador": "GOY"
+  },
+  {
+    "designador": "GOZ"
+  },
+  {
+    "designador": "GPF"
+  },
+  {
+    "designador": "GPI"
+  },
+  {
+    "designador": "GPK"
+  },
+  {
+    "designador": "GPO"
+  },
+  {
+    "designador": "GRA"
+  },
+  {
+    "designador": "GRE"
+  },
+  {
+    "designador": "GRZ"
+  },
+  {
+    "designador": "GSE"
+  },
+  {
+    "designador": "GTE"
+  },
+  {
+    "designador": "GUA"
+  },
+  {
+    "designador": "GVA"
+  },
+  {
+    "designador": "GVZ"
+  },
+  {
+    "designador": "GYA"
+  },
+  {
+    "designador": "GYT"
+  },
+  {
+    "designador": "HAB"
+  },
+  {
+    "designador": "HAC"
+  },
+  {
+    "designador": "HAD"
+  },
+  {
+    "designador": "HAG"
+  },
+  {
+    "designador": "HAI"
+  },
+  {
+    "designador": "HAM"
+  },
+  {
+    "designador": "HAS"
+  },
+  {
+    "designador": "HAT"
+  },
+  {
+    "designador": "HAU"
+  },
+  {
+    "designador": "HBA"
+  },
+  {
+    "designador": "HBC"
+  },
+  {
+    "designador": "HBI"
+  },
+  {
+    "designador": "HBM"
+  },
+  {
+    "designador": "HBO"
+  },
+  {
+    "designador": "HBP"
+  },
+  {
+    "designador": "HBR"
+  },
+  {
+    "designador": "HBT"
+  },
+  {
+    "designador": "HCA"
+  },
+  {
+    "designador": "HCC"
+  },
+  {
+    "designador": "HCD"
+  },
+  {
+    "designador": "HCE"
+  },
+  {
+    "designador": "HCG"
+  },
+  {
+    "designador": "HCI"
+  },
+  {
+    "designador": "HCL"
+  },
+  {
+    "designador": "HCN"
+  },
+  {
+    "designador": "HCO"
+  },
+  {
+    "designador": "HCP"
+  },
+  {
+    "designador": "HCR"
+  },
+  {
+    "designador": "HCS"
+  },
+  {
+    "designador": "HCT"
+  },
+  {
+    "designador": "HCU"
+  },
+  {
+    "designador": "HCV"
+  },
+  {
+    "designador": "HDA"
+  },
+  {
+    "designador": "HDI"
+  },
+  {
+    "designador": "HDL"
+  },
+  {
+    "designador": "HDR"
+  },
+  {
+    "designador": "HDS"
+  },
+  {
+    "designador": "HDT"
+  },
+  {
+    "designador": "HEA"
+  },
+  {
+    "designador": "HEC"
+  },
+  {
+    "designador": "HEN"
+  },
+  {
+    "designador": "HES"
+  },
+  {
+    "designador": "HET"
+  },
+  {
+    "designador": "HEV"
+  },
+  {
+    "designador": "HFA"
+  },
+  {
+    "designador": "HFC"
+  },
+  {
+    "designador": "HFV"
+  },
+  {
+    "designador": "HGA"
+  },
+  {
+    "designador": "HGB"
+  },
+  {
+    "designador": "HGM"
+  },
+  {
+    "designador": "HGN"
+  },
+  {
+    "designador": "HGS"
+  },
+  {
+    "designador": "HHL"
+  },
+  {
+    "designador": "HHM"
+  },
+  {
+    "designador": "HHT"
+  },
+  {
+    "designador": "HHW"
+  },
+  {
+    "designador": "HIL"
+  },
+  {
+    "designador": "HIS"
+  },
+  {
+    "designador": "HIT"
+  },
+  {
+    "designador": "HJN"
+  },
+  {
+    "designador": "HLE"
+  },
+  {
+    "designador": "HLF"
+  },
+  {
+    "designador": "HLH"
+  },
+  {
+    "designador": "HLI"
+  },
+  {
+    "designador": "HLL"
+  },
+  {
+    "designador": "HLP"
+  },
+  {
+    "designador": "HLR"
+  },
+  {
+    "designador": "HLS"
+  },
+  {
+    "designador": "HLT"
+  },
+  {
+    "designador": "HLU"
+  },
+  {
+    "designador": "HMA"
+  },
+  {
+    "designador": "HMC"
+  },
+  {
+    "designador": "HMD"
+  },
+  {
+    "designador": "HME"
+  },
+  {
+    "designador": "HMF"
+  },
+  {
+    "designador": "HMG"
+  },
+  {
+    "designador": "HMH"
+  },
+  {
+    "designador": "HMM"
+  },
+  {
+    "designador": "HMQ"
+  },
+  {
+    "designador": "HMT"
+  },
+  {
+    "designador": "HMY"
+  },
+  {
+    "designador": "HNB"
+  },
+  {
+    "designador": "HNE"
+  },
+  {
+    "designador": "HNH"
+  },
+  {
+    "designador": "HNO"
+  },
+  {
+    "designador": "HNP"
+  },
+  {
+    "designador": "HOB"
+  },
+  {
+    "designador": "HOC"
+  },
+  {
+    "designador": "HOS"
+  },
+  {
+    "designador": "HPA"
+  },
+  {
+    "designador": "HPC"
+  },
+  {
+    "designador": "HPD"
+  },
+  {
+    "designador": "HPE"
+  },
+  {
+    "designador": "HPG"
+  },
+  {
+    "designador": "HPI"
+  },
+  {
+    "designador": "HPL"
+  },
+  {
+    "designador": "HPM"
+  },
+  {
+    "designador": "HPN"
+  },
+  {
+    "designador": "HPO"
+  },
+  {
+    "designador": "HPS"
+  },
+  {
+    "designador": "HPT"
+  },
+  {
+    "designador": "HPU"
+  },
+  {
+    "designador": "HRC"
+  },
+  {
+    "designador": "HRE"
+  },
+  {
+    "designador": "HRI"
+  },
+  {
+    "designador": "HRM"
+  },
+  {
+    "designador": "HRR"
+  },
+  {
+    "designador": "HRT"
+  },
+  {
+    "designador": "HRW"
+  },
+  {
+    "designador": "HSC"
+  },
+  {
+    "designador": "HSD"
+  },
+  {
+    "designador": "HSG"
+  },
+  {
+    "designador": "HSH"
+  },
+  {
+    "designador": "HSJ"
+  },
+  {
+    "designador": "HSM"
+  },
+  {
+    "designador": "HSN"
+  },
+  {
+    "designador": "HSR"
+  },
+  {
+    "designador": "HSW"
+  },
+  {
+    "designador": "HTA"
+  },
+  {
+    "designador": "HTD"
+  },
+  {
+    "designador": "HTE"
+  },
+  {
+    "designador": "HTL"
+  },
+  {
+    "designador": "HTS"
+  },
+  {
+    "designador": "HUE"
+  },
+  {
+    "designador": "HUG"
+  },
+  {
+    "designador": "HUI"
+  },
+  {
+    "designador": "HUM"
+  },
+  {
+    "designador": "HUP"
+  },
+  {
+    "designador": "HUU"
+  },
+  {
+    "designador": "HVA"
+  },
+  {
+    "designador": "HVM"
+  },
+  {
+    "designador": "HWG"
+  },
+  {
+    "designador": "HYC"
+  },
+  {
+    "designador": "HZA"
+  },
+  {
+    "designador": "IAA"
+  },
+  {
+    "designador": "IAC"
+  },
+  {
+    "designador": "IAL"
+  },
+  {
+    "designador": "IBA"
+  },
+  {
+    "designador": "IBY"
+  },
+  {
+    "designador": "ICO"
+  },
+  {
+    "designador": "IGL"
+  },
+  {
+    "designador": "IGU"
+  },
+  {
+    "designador": "IJC"
+  },
+  {
+    "designador": "ILD"
+  },
+  {
+    "designador": "ILM"
+  },
+  {
+    "designador": "IRA"
+  },
+  {
+    "designador": "IRI"
+  },
+  {
+    "designador": "ITO"
+  },
+  {
+    "designador": "IVB"
+  },
+  {
+    "designador": "IVL"
+  },
+  {
+    "designador": "JAH"
+  },
+  {
+    "designador": "JAR"
+  },
+  {
+    "designador": "JBA"
+  },
+  {
+    "designador": "JCM"
+  },
+  {
+    "designador": "JDA"
+  },
+  {
+    "designador": "JES"
+  },
+  {
+    "designador": "JGA"
+  },
+  {
+    "designador": "JLA"
+  },
+  {
+    "designador": "JMB"
+  },
+  {
+    "designador": "JOC"
+  },
+  {
+    "designador": "JOR"
+  },
+  {
+    "designador": "JRZ"
+  },
+  {
+    "designador": "JSM"
+  },
+  {
+    "designador": "JUA"
+  },
+  {
+    "designador": "JUJ"
+  },
+  {
+    "designador": "LAE"
+  },
+  {
+    "designador": "LAM"
+  },
+  {
+    "designador": "LAN"
+  },
+  {
+    "designador": "LAR"
+  },
+  {
+    "designador": "LAU"
+  },
+  {
+    "designador": "LAZ"
+  },
+  {
+    "designador": "LBI"
+  },
+  {
+    "designador": "LCC"
+  },
+  {
+    "designador": "LCP"
+  },
+  {
+    "designador": "LCT"
+  },
+  {
+    "designador": "LDA"
+  },
+  {
+    "designador": "LDG"
+  },
+  {
+    "designador": "LDR"
+  },
+  {
+    "designador": "LEN"
+  },
+  {
+    "designador": "LEO"
+  },
+  {
+    "designador": "LGM"
+  },
+  {
+    "designador": "LHP"
+  },
+  {
+    "designador": "LIB"
+  },
+  {
+    "designador": "LIN"
+  },
+  {
+    "designador": "LIO"
+  },
+  {
+    "designador": "LJN"
+  },
+  {
+    "designador": "LLA"
+  },
+  {
+    "designador": "LLC"
+  },
+  {
+    "designador": "LLE"
+  },
+  {
+    "designador": "LLJ"
+  },
+  {
+    "designador": "LMD"
+  },
+  {
+    "designador": "LMF"
+  },
+  {
+    "designador": "LNH"
+  },
+  {
+    "designador": "LNV"
+  },
+  {
+    "designador": "LPB"
+  },
+  {
+    "designador": "LPP"
+  },
+  {
+    "designador": "LPR"
+  },
+  {
+    "designador": "LRE"
+  },
+  {
+    "designador": "LRS"
+  },
+  {
+    "designador": "LRT"
+  },
+  {
+    "designador": "LVA"
+  },
+  {
+    "designador": "LVL"
+  },
+  {
+    "designador": "LVM"
+  },
+  {
+    "designador": "LVR"
+  },
+  {
+    "designador": "LYE"
+  },
+  {
+    "designador": "LZA"
+  },
+  {
+    "designador": "MAB"
+  },
+  {
+    "designador": "MAC"
+  },
+  {
+    "designador": "MAD"
+  },
+  {
+    "designador": "MAI"
+  },
+  {
+    "designador": "MAO"
+  },
+  {
+    "designador": "MAQ"
+  },
+  {
+    "designador": "MAT"
+  },
+  {
+    "designador": "MAY"
+  },
+  {
+    "designador": "MBF"
+  },
+  {
+    "designador": "MBI"
+  },
+  {
+    "designador": "MBL"
+  },
+  {
+    "designador": "MCL"
+  },
+  {
+    "designador": "MCO"
+  },
+  {
+    "designador": "MCP"
+  },
+  {
+    "designador": "MCS"
+  },
+  {
+    "designador": "MCT"
+  },
+  {
+    "designador": "MDB"
+  },
+  {
+    "designador": "MDP"
+  },
+  {
+    "designador": "MER"
+  },
+  {
+    "designador": "MEZ"
+  },
+  {
+    "designador": "MGI"
+  },
+  {
+    "designador": "MIN"
+  },
+  {
+    "designador": "MJZ"
+  },
+  {
+    "designador": "MLA"
+  },
+  {
+    "designador": "MLD"
+  },
+  {
+    "designador": "MLG"
+  },
+  {
+    "designador": "MOI"
+  },
+  {
+    "designador": "MON"
+  },
+  {
+    "designador": "MOR"
+  },
+  {
+    "designador": "MPH"
+  },
+  {
+    "designador": "MPP"
+  },
+  {
+    "designador": "MPU"
+  },
+  {
+    "designador": "MRD"
+  },
+  {
+    "designador": "MSA"
+  },
+  {
+    "designador": "MSP"
+  },
+  {
+    "designador": "MSR"
+  },
+  {
+    "designador": "MTL"
+  },
+  {
+    "designador": "MTN"
+  },
+  {
+    "designador": "MTR"
+  },
+  {
+    "designador": "MUQ"
+  },
+  {
+    "designador": "MUS"
+  },
+  {
+    "designador": "NAN"
+  },
+  {
+    "designador": "NDL"
+  },
+  {
+    "designador": "NDR"
+  },
+  {
+    "designador": "NEC"
+  },
+  {
+    "designador": "NEI"
+  },
+  {
+    "designador": "NEU"
+  },
+  {
+    "designador": "NIK"
+  },
+  {
+    "designador": "NIN"
+  },
+  {
+    "designador": "NJB"
+  },
+  {
+    "designador": "NOG"
+  },
+  {
+    "designador": "NOT"
+  },
+  {
+    "designador": "NPA"
+  },
+  {
+    "designador": "NST"
+  },
+  {
+    "designador": "NVR"
+  },
+  {
+    "designador": "OBE"
+  },
+  {
+    "designador": "OCA"
+  },
+  {
+    "designador": "OEL"
+  },
+  {
+    "designador": "OGB"
+  },
+  {
+    "designador": "OLA"
+  },
+  {
+    "designador": "OLV"
+  },
+  {
+    "designador": "OMA"
+  },
+  {
+    "designador": "ORA"
+  },
+  {
+    "designador": "OSA"
+  },
+  {
+    "designador": "OVJ"
+  },
+  {
+    "designador": "PAL"
+  },
+  {
+    "designador": "PAN"
+  },
+  {
+    "designador": "PAR"
+  },
+  {
+    "designador": "PAS"
+  },
+  {
+    "designador": "PAT"
+  },
+  {
+    "designador": "PBE"
+  },
+  {
+    "designador": "PBO"
+  },
+  {
+    "designador": "PCA"
+  },
+  {
+    "designador": "PDA"
+  },
+  {
+    "designador": "PDP"
+  },
+  {
+    "designador": "PED"
+  },
+  {
+    "designador": "PEH"
+  },
+  {
+    "designador": "PEL"
+  },
+  {
+    "designador": "PEN"
+  },
+  {
+    "designador": "PEP"
+  },
+  {
+    "designador": "PER"
+  },
+  {
+    "designador": "PIG"
+  },
+  {
+    "designador": "PJO"
+  },
+  {
+    "designador": "PLC"
+  },
+  {
+    "designador": "PLG"
+  },
+  {
+    "designador": "PLL"
+  },
+  {
+    "designador": "PLS"
+  },
+  {
+    "designador": "PLT"
+  },
+  {
+    "designador": "PNA"
+  },
+  {
+    "designador": "PNR"
+  },
+  {
+    "designador": "PNT"
+  },
+  {
+    "designador": "POS"
+  },
+  {
+    "designador": "PRA"
+  },
+  {
+    "designador": "PRC"
+  },
+  {
+    "designador": "PRI"
+  },
+  {
+    "designador": "PSA"
+  },
+  {
+    "designador": "PSP"
+  },
+  {
+    "designador": "PST"
+  },
+  {
+    "designador": "PSV"
+  },
+  {
+    "designador": "PTA"
+  },
+  {
+    "designador": "PTL"
+  },
+  {
+    "designador": "PTM"
+  },
+  {
+    "designador": "PUA"
+  },
+  {
+    "designador": "PUP"
+  },
+  {
+    "designador": "RAE"
+  },
+  {
+    "designador": "RAI"
+  },
+  {
+    "designador": "RAU"
+  },
+  {
+    "designador": "RAW"
+  },
+  {
+    "designador": "RBS"
+  },
+  {
+    "designador": "RCE"
+  },
+  {
+    "designador": "RCR"
+  },
+  {
+    "designador": "RCV"
+  },
+  {
+    "designador": "RDJ"
+  },
+  {
+    "designador": "RES"
+  },
+  {
+    "designador": "RGR"
+  },
+  {
+    "designador": "RIE"
+  },
+  {
+    "designador": "RIN"
+  },
+  {
+    "designador": "RJA"
+  },
+  {
+    "designador": "RLA"
+  },
+  {
+    "designador": "RLC"
+  },
+  {
+    "designador": "RMY"
+  },
+  {
+    "designador": "ROB"
+  },
+  {
+    "designador": "ROH"
+  },
+  {
+    "designador": "ROP"
+  },
+  {
+    "designador": "ROS"
+  },
+  {
+    "designador": "ROT"
+  },
+  {
+    "designador": "RST"
+  },
+  {
+    "designador": "RTA"
+  },
+  {
+    "designador": "RUF"
+  },
+  {
+    "designador": "RVA"
+  },
+  {
+    "designador": "RVD"
+  },
+  {
+    "designador": "RYD"
+  },
+  {
+    "designador": "SAB"
+  },
+  {
+    "designador": "SAF"
+  },
+  {
+    "designador": "SAL"
+  },
+  {
+    "designador": "SAN"
+  },
+  {
+    "designador": "SBE"
+  },
+  {
+    "designador": "SCA"
+  },
+  {
+    "designador": "SCF"
+  },
+  {
+    "designador": "SCL"
+  },
+  {
+    "designador": "SCT"
+  },
+  {
+    "designador": "SCZ"
+  },
+  {
+    "designador": "SDE"
+  },
+  {
+    "designador": "SDL"
+  },
+  {
+    "designador": "SEN"
+  },
+  {
+    "designador": "SER"
+  },
+  {
+    "designador": "SEZ"
+  },
+  {
+    "designador": "SFN"
+  },
+  {
+    "designador": "SGE"
+  },
+  {
+    "designador": "SGI"
+  },
+  {
+    "designador": "SGR"
+  },
+  {
+    "designador": "SGV"
+  },
+  {
+    "designador": "SHP"
+  },
+  {
+    "designador": "SIS"
+  },
+  {
+    "designador": "SJA"
+  },
+  {
+    "designador": "SJB"
+  },
+  {
+    "designador": "SJD"
+  },
+  {
+    "designador": "SJR"
+  },
+  {
+    "designador": "SJT"
+  },
+  {
+    "designador": "SJU"
+  },
+  {
+    "designador": "SLG"
+  },
+  {
+    "designador": "SLO"
+  },
+  {
+    "designador": "SLP"
+  },
+  {
+    "designador": "SLT"
+  },
+  {
+    "designador": "SLV"
+  },
+  {
+    "designador": "SLY"
+  },
+  {
+    "designador": "SLZ"
+  },
+  {
+    "designador": "SMC"
+  },
+  {
+    "designador": "SMF"
+  },
+  {
+    "designador": "SMM"
+  },
+  {
+    "designador": "SMS"
+  },
+  {
+    "designador": "SMT"
+  },
+  {
+    "designador": "SNT"
+  },
+  {
+    "designador": "SNY"
+  },
+  {
+    "designador": "SQI"
+  },
+  {
+    "designador": "SRA"
+  },
+  {
+    "designador": "SRC"
+  },
+  {
+    "designador": "SRE"
+  },
+  {
+    "designador": "SRM"
+  },
+  {
+    "designador": "SSK"
+  },
+  {
+    "designador": "SSR"
+  },
+  {
+    "designador": "STD"
+  },
+  {
+    "designador": "STI"
+  },
+  {
+    "designador": "STR"
+  },
+  {
+    "designador": "SUZ"
+  },
+  {
+    "designador": "SVO"
+  },
+  {
+    "designador": "TAR"
+  },
+  {
+    "designador": "TBL"
+  },
+  {
+    "designador": "TCM"
+  },
+  {
+    "designador": "TDB"
+  },
+  {
+    "designador": "TEC"
+  },
+  {
+    "designador": "TEJ"
+  },
+  {
+    "designador": "TEO"
+  },
+  {
+    "designador": "TEV"
+  },
+  {
+    "designador": "THN"
+  },
+  {
+    "designador": "TIN"
+  },
+  {
+    "designador": "TIO"
+  },
+  {
+    "designador": "TIR"
+  },
+  {
+    "designador": "TLS"
+  },
+  {
+    "designador": "TOR"
+  },
+  {
+    "designador": "TOS"
+  },
+  {
+    "designador": "TOT"
+  },
+  {
+    "designador": "TQL"
+  },
+  {
+    "designador": "TRC"
+  },
+  {
+    "designador": "TRE"
+  },
+  {
+    "designador": "TRH"
+  },
+  {
+    "designador": "TRW"
+  },
+  {
+    "designador": "TSV"
+  },
+  {
+    "designador": "TUC"
+  },
+  {
+    "designador": "TVN"
+  },
+  {
+    "designador": "TXO"
+  },
+  {
+    "designador": "UAE"
+  },
+  {
+    "designador": "UCO"
+  },
+  {
+    "designador": "UEL"
+  },
+  {
+    "designador": "UEN"
+  },
+  {
+    "designador": "UIS"
+  },
+  {
+    "designador": "ULL"
+  },
+  {
+    "designador": "UNE"
+  },
+  {
+    "designador": "UPE"
+  },
+  {
+    "designador": "URD"
+  },
+  {
+    "designador": "URL"
+  },
+  {
+    "designador": "URO"
+  },
+  {
+    "designador": "USU"
+  },
+  {
+    "designador": "VAL"
+  },
+  {
+    "designador": "VAN"
+  },
+  {
+    "designador": "VAY"
+  },
+  {
+    "designador": "VCA"
+  },
+  {
+    "designador": "VCC"
+  },
+  {
+    "designador": "VDA"
+  },
+  {
+    "designador": "VDL"
+  },
+  {
+    "designador": "VDO"
+  },
+  {
+    "designador": "VDR"
+  },
+  {
+    "designador": "VEC"
+  },
+  {
+    "designador": "VER"
+  },
+  {
+    "designador": "VEZ"
+  },
+  {
+    "designador": "VGB"
+  },
+  {
+    "designador": "VIC"
+  },
+  {
+    "designador": "VIE"
+  },
+  {
+    "designador": "VIG"
+  },
+  {
+    "designador": "VIT"
+  },
+  {
+    "designador": "VLL"
+  },
+  {
+    "designador": "VMA"
+  },
+  {
+    "designador": "VMB"
+  },
+  {
+    "designador": "VMC"
+  },
+  {
+    "designador": "VMK"
+  },
+  {
+    "designador": "VMR"
+  },
+  {
+    "designador": "VMT"
+  },
+  {
+    "designador": "VNA"
+  },
+  {
+    "designador": "VNO"
+  },
+  {
+    "designador": "VNR"
+  },
+  {
+    "designador": "VNS"
+  },
+  {
+    "designador": "VPO"
+  },
+  {
+    "designador": "VRG"
+  },
+  {
+    "designador": "VRU"
+  },
+  {
+    "designador": "VTE"
+  },
+  {
+    "designador": "VTO"
+  },
+  {
+    "designador": "VTS"
+  },
+  {
+    "designador": "YOP"
+  },
+  {
+    "designador": "YOS"
+  },
+  {
+    "designador": "YPY"
+  },
+  {
+    "designador": "ZAP"
+  },
+  {
+    "designador": "ZLM"
+  },
+  {
+    "designador": "ZUL"
+  }
+]
