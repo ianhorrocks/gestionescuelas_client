@@ -22,34 +22,36 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
   };
 
   return (
-    <Modal show={show} onHide={onClose} className="fade">
+    <Modal show={show} onHide={onClose} className="fade add-modal">
       <Modal.Header closeButton>
         <Modal.Title>Agregar Usuario</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formDni" className="mb-3">
-            <Form.Label>DNI</Form.Label>
+          <Form.Group controlId="formDni" className="form-group">
             <Form.Control
               type="text"
               value={dni}
               onChange={(e) => setDni(e.target.value)}
               required
+              className="floating-input"
+              placeholder=" "
             />
+            <Form.Label className="floating-label">DNI</Form.Label>
           </Form.Group>
-          <Form.Group controlId="formRole" className="mb-1">
-            <Form.Label>Rol</Form.Label>
+          <Form.Group controlId="formRole" className="form-group">
             <Form.Control
               as="select"
               value={role}
               onChange={(e) => setRole(e.target.value)}
               required
-              className="form-select" // Usamos la clase de Bootstrap en vez de form-select
+              className="floating-input"
             >
               <option value="Alumno">Alumno</option>
               <option value="Piloto">Piloto</option>
               <option value="Instructor">Instructor</option>
             </Form.Control>
+            <Form.Label className="floating-label">Rol</Form.Label>
           </Form.Group>
           <div className="text-end">
             <Button

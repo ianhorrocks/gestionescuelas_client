@@ -1,8 +1,11 @@
 @use "../Variables/variables";
-@use "sass:color";
 
 .school-container {
-  padding: 1rem;
+  padding: 20px;
+
+  @media (min-width: 990px) {
+    margin-left: 300px;
+  }
 }
 
 .school-content {
@@ -13,61 +16,4 @@
 .school-title {
   font-size: 2rem;
   margin-bottom: 1rem;
-}
-
-.add-flight-button:hover {
-  background-color: #0056b3;
-}
-
-.add-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background-color: variables.$tertiary-color;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.224);
-
-  &:hover {
-    background-color: color.adjust(
-      variables.$tertiary-color-hover,
-      $lightness: -10%
-    );
-  }
-}
-
-.list-group {
-  background-color: transparent; // Hacer que el fondo sea transparente
-  border: none; // Eliminar bordes si es necesario
-  padding: 0;
-}
-
-.list-group-item {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem; /* Reduced font size */
-  border-radius: 10px; /* Redondear las esquinas */
-  box-shadow: none; /* Eliminar sombra */
-  background-color: transparent; // Hacer que los elementos individuales también sean transparentes
-  border: none; // Eliminar bordes si es necesario
-  padding: 10px; /* Añadir padding */
-  transition: transform 0.2s; /* Añadir transición para hover */
-}
-
-.list-group-item:hover {
-  transform: scale(1.02); /* Efecto de hover */
-}
-
-.list-group-item img {
-  margin-right: 15px;
-  border-radius: 50%; /* Redondear la imagen */
 }

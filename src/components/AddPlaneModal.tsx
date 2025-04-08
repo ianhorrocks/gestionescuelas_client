@@ -58,7 +58,7 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
   };
 
   return (
-    <Modal show={show} onHide={onClose} className="fade add-plane-modal">
+    <Modal show={show} onHide={onClose} className="fade add-modal">
       <Modal.Header closeButton>
         <Modal.Title>Agregar Avión</Modal.Title>
       </Modal.Header>

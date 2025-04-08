@@ -11,8 +11,10 @@
 @use "./UserSchool/UserSchool";
 @use "./GeneralComponents/ValidateFlightsModal";
 @use "./NavBar/NavbarUser";
-@use "./UserProfile/EdistUserProfileModal";
+@use "./UserProfile/EditUserProfileModal";
 @use "./NavBar/NavbarAdmin";
+@use "./Modals/AddModal";
+@use "./GeneralComponents/CustomSelect.scss";
 
 .dashboard-container,
 .profile-container,

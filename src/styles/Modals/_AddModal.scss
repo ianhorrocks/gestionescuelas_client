@@ -1,0 +1,96 @@
+@use "../Variables/variables";
+@use "../Mixins/mixins";
+
+/* Botón flotante de agregar */
+.add-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: variables.$tertiary-color;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 38px;
+  font-weight: lighter;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+
+  &:hover {
+    background-color: variables.$tertiary-color-hover;
+  }
+}
+/* Estilos compartidos para todos los modales */
+.add-modal {
+  .modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+    margin-top: 30px;
+  }
+
+  .floating-input {
+    width: 100%;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #757575;
+    background: transparent;
+    font-size: 14px;
+    border-radius: 0;
+    box-shadow: none;
+    appearance: none;
+
+    &:focus {
+      outline: none !important;
+      border-bottom: 1px solid variables.$primary-color;
+    }
+
+    &:focus ~ .floating-label,
+    &:not(:placeholder-shown) ~ .floating-label {
+      top: -20px;
+      font-size: 12px;
+      color: variables.$primary-color;
+    }
+  }
+
+  .floating-label {
+    color: #757575;
+    font-size: 14px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+  }
+
+  .form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-button {
+    background-color: variables.$tertiary-color;
+    border-color: variables.$tertiary-color;
+    color: #fff;
+    padding: 8px 20px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: variables.$tertiary-color-hover;
+      border-color: variables.$tertiary-color-hover;
+    }
+  }
+
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 1.5rem;
+  }
+}

@@ -12,29 +12,6 @@
   margin-top: 35px;
 }
 
-/* Botón flotante de agregar */
-.add-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: variables.$tertiary-color;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 999;
-
-  &:hover {
-    background-color: variables.$tertiary-color-hover;
-  }
-}
-
 /* Filtros de estado */
 .flight-table-filters {
   display: flex;
