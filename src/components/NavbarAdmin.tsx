@@ -13,7 +13,6 @@ import {
 
 interface NavbarAdminProps {
   title: string;
-  userName: string;
   links: { path: string; label: string }[];
   logoutPath: string;
 }

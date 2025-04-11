@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getUserById } from "../services/userService";
 import { getSchoolsForUser } from "../services/schoolService";
 import Navbar from "../components/NavbarUser";
-import { getLoggedUser } from "../services/auth";
 
 interface School {
   _id: string;
@@ -18,7 +17,6 @@ const UserDashboard: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [schools, setSchools] = useState<School[]>([]);
   const [error, setError] = useState("");
-  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const fetchUserAndSchools = async () => {
@@ -38,9 +36,6 @@ const UserDashboard: React.FC = () => {
 
         const schoolsData = await getSchoolsForUser();
         setSchools(schoolsData);
-
-        const userLogged = await getLoggedUser();
-        setUserName(`${userLogged.name} ${userLogged.lastname}`);
       } catch (err) {
         console.log("Fetch user or schools error:", err);
         setError("Inicie Sesion (Arreglar)");
@@ -59,7 +54,6 @@ const UserDashboard: React.FC = () => {
     <div className="dashboard-container container-dashboard">
       <Navbar
         title="Dashboard"
-        userName={userName}
         links={[
           { path: "/user/dashboard", label: "Dashboard" },
           { path: "/user/profile", label: "Mi Perfil" },

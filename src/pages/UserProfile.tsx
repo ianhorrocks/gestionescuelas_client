@@ -17,7 +17,6 @@ const UserProfile: React.FC = () => {
     photo: null,
     assignedSchools: [],
   });
-  const [userName, setUserName] = useState("");
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
 
@@ -25,7 +24,6 @@ const UserProfile: React.FC = () => {
     const fetchProfile = () => {
       const user = getCurrentUser();
       setProfile(user);
-      setUserName(`${user.name} ${user.lastname}`);
     };
 
     fetchProfile();
@@ -35,7 +33,6 @@ const UserProfile: React.FC = () => {
     <div className="profile-container">
       <Navbar
         title="Mi Perfil"
-        userName={userName}
         links={[
           { path: "/user/dashboard", label: "Dashboard" },
           { path: "/user/profile", label: "Mi Perfil" },
