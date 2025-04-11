@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCurrentUser } from "../services/auth";
 import Navbar from "../components/NavbarUser";
-import defaultProfilePhoto from "../assets/images/Logosmalluserprofilephoto.png";
+import defaultProfilePhoto from "../assets/images/LogoSmallUserProfilePhoto.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import EditProfileModal from "../components/EditProfileModal";
