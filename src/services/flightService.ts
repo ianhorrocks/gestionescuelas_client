@@ -133,3 +133,24 @@ export const getAllUserFlights = async (userId: string) => {
     throw error;
   }
 };
+
+export const getAllSchoolFlights = async (schoolId: string) => {
+  const API_URL = `http://localhost:3001/api/flights/school/${schoolId}`;
+
+  try {
+    const response = await fetch(API_URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch flights for the school");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching school flights:", error);
+    throw error;
+  }
+};

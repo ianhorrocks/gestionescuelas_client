@@ -1,63 +1,90 @@
 import React, { useEffect, useState } from "react";
-import { fetchFlights, validateFlight } from "../services/flightService";
+import { getAllSchoolFlights } from "../services/flightService";
 import ValidateFlightsModal from "../components/ValidateFlightsModal";
 import Navbar from "../components/NavbarAdmin";
-//import { getLoggedUser } from "../services/auth";
+import FlightValidationTable from "../components/FlightValidationTable";
+import FlightHistoryTable from "../components/FlightHistoryTable";
+import { getLoggedUser } from "../services/auth";
 
 const AdminFlights: React.FC = () => {
   interface Flight {
     _id: string;
-    details: string;
+    status: "pending" | "confirmed" | "cancelled";
     validated: boolean;
+    date: string;
+    departureTime: string;
+    arrivalTime: string;
+    pilot: { name: string; lastname: string };
+    instructor: { name: string; lastname: string } | null;
+    origin: string;
+    destination: string;
+    airplane: { registrationNumber: string } | null;
   }
 
   const [flights, setFlights] = useState<Flight[]>([]);
   const [error, setError] = useState("");
-  //const [adminName, setAdminName] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  // Para traer la info del admin logueado
-  /* useEffect(() => {
-    const fetchUser = async () => {
+  useEffect(() => {
+    const fetchFlights = async () => {
       try {
         const loggedUser = await getLoggedUser();
-        setAdminName(`${loggedUser.name}`);
+        const schoolId = loggedUser.assignedSchools[0]?.school?._id;
+        const flightsData = await getAllSchoolFlights(schoolId);
+        console.log("Vuelos obtenidos:", flightsData.data);
+
+        // Normalizar los datos de los vuelos
+        interface FlightData {
+          _id: string;
+          status: "pending" | "confirmed" | "cancelled";
+          date: string;
+          departureTime: string;
+          arrivalTime: string;
+          pilot: { name: string; lastname: string };
+          instructor: { name: string; lastname: string } | null;
+          origin: string;
+          destination: string;
+          airplane: { registrationNumber: string } | null;
+        }
+
+        const normalizedFlights = flightsData.data.map(
+          (flight: FlightData) => ({
+            _id: flight._id,
+            status: flight.status,
+            validated: flight.status === "confirmed", // Considerar "confirmed" como validado
+            date: flight.date,
+            departureTime: flight.departureTime,
+            arrivalTime: flight.arrivalTime,
+            pilot: {
+              name: flight.pilot.name,
+              lastname: flight.pilot.lastname,
+            },
+            instructor: flight.instructor
+              ? {
+                  name: flight.instructor.name,
+                  lastname: flight.instructor.lastname,
+                }
+              : null,
+            origin: flight.origin,
+            destination: flight.destination,
+            airplane: flight.airplane
+              ? { registrationNumber: flight.airplane.registrationNumber }
+              : null,
+          })
+        );
+
+        setFlights(normalizedFlights);
       } catch (err) {
-        setError("Error al obtener la información del usuario logueado.");
+        console.error("Error fetching school flights:", err);
+        setError("Error al obtener los vuelos de la escuela.");
       }
     };
 
-    fetchUser();
+    fetchFlights();
   }, []);
-*/
-  useEffect(() => {
-    const getFlights = async () => {
-      try {
-        const data = await fetchFlights();
-        setFlights(data);
-      } catch (err) {
-        setError("Failed to fetch flights");
-      }
-    };
-
-    getFlights();
-  }, []);
-
-  const handleValidate = async (id: string) => {
-    try {
-      await validateFlight(id);
-      setFlights(
-        flights.map((flight) =>
-          flight._id === id ? { ...flight, validated: true } : flight
-        )
-      );
-    } catch (err) {
-      setError("Failed to validate flight");
-    }
-  };
 
   const handleUpload = (file: File) => {
-    console.log("Uploaded file:", file);
+    console.log("Archivo subido:", file);
     // Aquí se manejará la lógica de carga de archivos
   };
 
@@ -73,42 +100,35 @@ const AdminFlights: React.FC = () => {
       <div className="admin-flights-container">
         {error && <p className="text-danger">{error}</p>}
         <div className="flights-section">
+          {/* Vuelos Pendientes */}
           <div className="flights-subsection">
             <h2>Pendientes</h2>
-            <div className="flights-list">
-              {Array.isArray(flights) &&
-                flights
-                  .filter((flight) => !flight.validated)
-                  .map((flight) => (
-                    <div key={flight._id} className="flight-card">
-                      <div className="flight-details">{flight.details}</div>
-                      <button
-                        onClick={() => handleValidate(flight._id)}
-                        className="btn btn-success btn-sm validate-button"
-                      >
-                        Validar
-                      </button>
-                    </div>
-                  ))}
+            <div className="flight-table-wrapper pending-flights">
+              <FlightValidationTable
+                flights={flights.filter(
+                  (flight) => flight.status === "pending"
+                )}
+                csvData={[]} // Datos del CSV
+              />
             </div>
-            <button
-              onClick={() => setShowModal(true)}
-              className="btn btn-primary mt-3"
-            >
-              Validar Vuelos
-            </button>
           </div>
+
+          {/* Vuelos Validados y Cancelados */}
           <div className="flights-subsection">
-            <h2>Validados</h2>
-            <div className="flights-list">
-              {Array.isArray(flights) &&
-                flights
-                  .filter((flight) => flight.validated)
-                  .map((flight) => (
-                    <div key={flight._id} className="flight-card">
-                      <div className="flight-details">{flight.details}</div>
-                    </div>
-                  ))}
+            <h2>Historial</h2>
+            <div className="flight-history-table-wrapper">
+              <FlightHistoryTable
+                flights={flights
+                  .filter(
+                    (flight) =>
+                      flight.status === "confirmed" ||
+                      flight.status === "cancelled"
+                  )
+                  .map((flight) => ({
+                    ...flight,
+                    status: flight.status as "confirmed" | "cancelled", // Asegurar el tipo correcto
+                  }))}
+              />
             </div>
           </div>
         </div>

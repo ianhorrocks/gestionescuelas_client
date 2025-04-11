@@ -24,12 +24,28 @@
     background-color: variables.$tertiary-color-hover;
   }
 }
+
 /* Estilos compartidos para todos los modales */
 .add-modal {
   .modal-body {
     max-height: calc(100vh - 210px);
     overflow-y: auto;
-    margin-top: 30px;
+  }
+
+  .form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  .floating-label {
+    color: #757575;
+    font-size: 14px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
   }
 
   .floating-input {
@@ -42,7 +58,6 @@
     font-size: 14px;
     border-radius: 0;
     box-shadow: none;
-    appearance: none;
 
     &:focus {
       outline: none !important;
@@ -57,20 +72,10 @@
     }
   }
 
-  .floating-label {
-    color: #757575;
-    font-size: 14px;
-    font-weight: normal;
-    position: absolute;
-    pointer-events: none;
-    left: 5px;
-    top: 10px;
-    transition: 0.2s ease all;
-  }
-
-  .form-group {
-    position: relative;
-    margin-bottom: 1.5rem;
+  // Corrección específica para el input de fecha
+  input[type="date"].floating-input {
+    background-color: #fff;
+    appearance: auto;
   }
 
   .modal-button {
@@ -89,8 +94,37 @@
 
   .form-buttons {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .modal-button {
+    background-color: variables.$tertiary-color;
+    border-color: variables.$tertiary-color;
+    color: #fff;
+    padding: 8px 24px;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: variables.$tertiary-color-hover;
+      border-color: variables.$tertiary-color-hover;
+    }
+  }
+
+  .btn-secondary {
+    color: variables.$tertiary-color;
+    background-color: transparent;
+    border: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+      background-color: transparent;
+    }
   }
 }

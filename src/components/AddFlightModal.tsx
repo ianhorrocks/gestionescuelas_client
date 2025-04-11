@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import CustomSelect from "./CustomSelect";
+import { createFlight } from "../services/flightService";
 import { fetchPlanes } from "../services/planeService";
 import { fetchUsersFromSchool } from "../services/userService";
-import { createFlight } from "../services/flightService";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import airportCodes from "../data/designadores_locales.json";
 
@@ -27,151 +27,164 @@ export interface LocalFlightData {
 interface AddFlightModalProps {
   show: boolean;
   onClose: () => void;
-  newFlight: LocalFlightData;
-  handleChange: (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => void;
   onSuccess?: (message: string) => void;
+  showTemporaryMessage: (
+    type: "success" | "error" | "warning",
+    message: string
+  ) => void;
+}
+
+interface Plane {
+  _id: string;
+  registrationNumber: string;
+  model: string;
+}
+
+interface User {
+  _id: string;
+  name: string;
+  lastname: string;
+  role: string;
 }
 
 const AddFlightModal: React.FC<AddFlightModalProps> = ({
   show,
   onClose,
-  newFlight,
-  handleChange,
   onSuccess,
 }) => {
-  const [schools, setSchools] = useState<
-    { _id: string; name: string; planes: string[]; role: string }[]
-  >([]);
-  const [planes, setPlanes] = useState<
-    { _id: string; registrationNumber: string; model: string }[]
-  >([]);
-  const [users, setUsers] = useState<
-    { _id: string; name: string; lastname: string; role: string }[]
-  >([]);
-  const [currentUser, setCurrentUser] = useState<{
-    _id: string;
-    name: string;
-    lastname: string;
-    role: string;
-  } | null>(null);
   const { message, showTemporaryMessage } = useTemporaryMessage();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [schools, setSchools] = useState<
+    { value: string; label: string; role: string }[]
+  >([]);
+  const [selectedSchool, setSelectedSchool] = useState<string>("");
+  const [planes, setPlanes] = useState<Plane[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [isPilotDisabled, setIsPilotDisabled] = useState(false);
+  const [isInstructorDisabled, setIsInstructorDisabled] = useState(false);
 
-  const handleClose = () => {
-    onClose();
+  const [flight, setFlight] = useState<LocalFlightData>({
+    date: "",
+    airplane: "",
+    pilot: "",
+    instructor: "",
+    departureTime: "",
+    arrivalTime: "",
+    landings: "",
+    oil: "",
+    charge: "",
+    school: "",
+    origin: "",
+    destination: "",
+    initialOdometer: "",
+    finalOdometer: "",
+  });
+
+  const updateField = (name: keyof LocalFlightData, value: string) => {
+    setFlight((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    if (name === "departureTime" || name === "arrivalTime") {
+      const isValidTime = /^([01]\d|2[0-3]):([0-5]\d)$/.test(value);
+      if (!isValidTime) return;
+    }
+    updateField(name as keyof LocalFlightData, value);
   };
 
   useEffect(() => {
     if (show) {
-      const loadProfile = () => {
-        try {
-          const profile = localStorage.getItem("profile");
-          if (profile) {
-            const parsedProfile = JSON.parse(profile);
-
-            setCurrentUser({
-              _id: parsedProfile._id,
-              name: parsedProfile.name,
-              lastname: parsedProfile.lastname,
-              role: "",
-            });
-
-            const assignedSchools = parsedProfile.assignedSchools.map(
-              (assignment: {
-                school: { _id: string; name: string; planes: string[] };
-                role: string;
-              }) => ({
-                _id: assignment.school._id,
-                name: assignment.school.name,
-                planes: assignment.school.planes,
-                role: assignment.role,
-              })
-            );
-
-            setSchools(assignedSchools);
-          } else {
-            throw new Error("No se encontró el perfil en el localStorage.");
-          }
-        } catch (error) {
-          showTemporaryMessage(
-            "error",
-            "Error al cargar los datos del usuario."
-          );
-        }
-      };
-
-      loadProfile();
-    }
-  }, [show, showTemporaryMessage]);
-
-  useEffect(() => {
-    const loadSchoolData = async () => {
-      try {
-        if (!newFlight.school) return;
-
-        const selectedSchool = schools.find(
-          (school) => school._id === newFlight.school
+      const profile = localStorage.getItem("profile");
+      if (profile) {
+        const parsed = JSON.parse(profile);
+        setCurrentUser({
+          _id: parsed._id,
+          name: parsed.name,
+          lastname: parsed.lastname,
+          role: parsed.role,
+        });
+        const assigned = parsed.assignedSchools.map(
+          (a: { school: { _id: string; name: string }; role: string }) => ({
+            value: a.school._id,
+            label: a.school.name,
+            role: a.role,
+          })
         );
-
-        if (selectedSchool) {
-          setCurrentUser((prev) =>
-            prev ? { ...prev, role: selectedSchool.role } : null
-          );
-
-          const planesData = await fetchPlanes(selectedSchool._id);
-          setPlanes(planesData);
-
-          const usersData = await fetchUsersFromSchool(selectedSchool._id);
-          setUsers(usersData);
-        }
-      } catch (error) {
-        showTemporaryMessage(
-          "error",
-          "No se pudieron cargar los datos de la escuela."
-        );
+        setSchools(assigned);
       }
-    };
 
-    loadSchoolData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newFlight.school]); // Solo se ejecuta cuando cambia la escuela seleccionada
+      const today = new Date().toISOString().split("T")[0];
+      updateField("date", today);
+    }
+  }, [show]);
 
-  const setField = React.useCallback(
-    (name: string, value: string) => {
-      handleChange({
-        target: { name, value },
-      } as React.ChangeEvent<HTMLInputElement>);
-    },
-    [handleChange]
-  );
+  const handleSchoolChange = async (value: string) => {
+    setSelectedSchool(value);
+    updateField("school", value);
 
-  useEffect(() => {
-    if (!currentUser || !newFlight.school) return;
-
-    // Pre-cargar piloto si el usuario es Alumno o Piloto
-    if (
-      (currentUser.role === "Alumno" || currentUser.role === "Piloto") &&
-      newFlight.pilot === ""
-    ) {
-      setField("pilot", currentUser._id);
+    if (!value) {
+      resetFields();
+      return;
     }
 
-    // Pre-cargar instructor si el usuario es Instructor
-    if (currentUser.role === "Instructor" && newFlight.instructor === "") {
-      setField("instructor", currentUser._id);
-    }
+    resetFields();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser, newFlight.school]); // Solo se ejecuta cuando cambia el usuario actual o la escuela
+    try {
+      const [planesData, usersData] = await Promise.all([
+        fetchPlanes(value),
+        fetchUsersFromSchool(value),
+      ]);
+      setPlanes(planesData);
+      setUsers(usersData);
+
+      const selected = schools.find((s) => s.value === value);
+      if (selected) {
+        setTimeout(() => prefillFieldsBasedOnRole(usersData), 0);
+      }
+    } catch {
+      showTemporaryMessage("error", "No se pudieron cargar los datos.");
+    }
+  };
+
+  const resetFields = () => {
+    setPlanes([]);
+    setUsers([]);
+    setIsPilotDisabled(false);
+    setIsInstructorDisabled(false);
+  };
+
+  const prefillFieldsBasedOnRole = (usersData: User[]) => {
+    const user = usersData.find((u) => u._id === currentUser?._id);
+    if (!user) return;
+
+    if (user.role === "Alumno" || user.role === "Piloto") {
+      updateField("pilot", user._id);
+      setIsPilotDisabled(true);
+    } else if (user.role === "Instructor") {
+      updateField("instructor", user._id);
+      setIsInstructorDisabled(true);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Convertir "" a null para el campo instructor
+    const flightData = {
+      ...flight,
+      instructor: flight.instructor === "" ? null : flight.instructor,
+    };
+
+    if (!flightData.pilot || !flightData.school || !flightData.airplane) {
+      showTemporaryMessage("error", "Faltan campos obligatorios.");
+      return;
+    }
+
     try {
-      await createFlight(newFlight);
+      console.log("Submitting flight:", flightData);
+      await createFlight(flightData);
       showTemporaryMessage("success", "Vuelo agregado exitosamente");
       onSuccess?.("Vuelo agregado exitosamente");
       onClose();
@@ -181,149 +194,124 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
   };
 
   const airportOptions = (airportCodes as { designador: string }[]).map(
-    (airport) => ({
-      value: airport.designador,
-      label: airport.designador,
+    (a) => ({
+      value: a.designador,
+      label: a.designador,
     })
   );
 
-  const handleCustomSelectChange = (fieldName: string, value: string) => {
-    handleChange({
-      target: { name: fieldName, value },
-    } as React.ChangeEvent<HTMLInputElement>);
-  };
-
-  const schoolOptions = useMemo(
-    () =>
-      schools.map((school) => ({
-        value: school._id,
-        label: school.name,
-      })),
-    [schools]
-  );
-
-  const planeOptions = useMemo(
-    () =>
-      planes.map((plane) => ({
-        value: plane._id,
-        label: `${plane.registrationNumber} - ${plane.model}`,
-      })),
-    [planes]
-  );
+  const planeOptions = planes.map((p) => ({
+    value: p._id,
+    label: `${p.registrationNumber} - ${p.model}`,
+  }));
 
   const pilotOptions = useMemo(
     () =>
       users
-        .filter((user) => user.role === "Alumno" || user.role === "Piloto")
-        .map((user) => ({
-          value: user._id,
-          label: `${user.name} ${user.lastname}`,
-        })),
+        .filter((u) => u.role === "Alumno" || u.role === "Piloto")
+        .map((u) => ({ value: u._id, label: `${u.name} ${u.lastname}` })),
     [users]
   );
 
   const instructorOptions = useMemo(
     () =>
       users
-        .filter((user) => user.role === "Instructor")
-        .map((user) => ({
-          value: user._id,
-          label: `${user.name} ${user.lastname}`,
-        })),
+        .filter((u) => u.role === "Instructor")
+        .map((u) => ({ value: u._id, label: `${u.name} ${u.lastname}` })),
     [users]
   );
 
   return (
-    <Modal show={show} onHide={handleClose} className="fade add-modal">
+    <Modal show={show} onHide={onClose} className="fade add-modal">
       <Modal.Header closeButton>
         <Modal.Title>Agregar Vuelo</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {message && <Alert variant={message.type}>{message.message}</Alert>}
         <Form onSubmit={handleSubmit}>
-          {/* Fecha */}
           <Form.Group controlId="formDate" className="form-group">
             <Form.Control
               type="date"
               name="date"
-              value={newFlight.date}
-              onChange={handleChange}
+              value={flight.date.split("/").reverse().join("-")}
+              onChange={(e) => {
+                const [yyyy, mm, dd] = e.target.value.split("-");
+                updateField("date", `${dd}/${mm}/${yyyy}`);
+              }}
+              min="2020-01-01"
+              max={new Date().toISOString().split("T")[0]}
               required
               className="floating-input"
             />
+
             <Form.Label className="floating-label">Fecha</Form.Label>
           </Form.Group>
 
-          {/* Escuela */}
           <Form.Group controlId="formSchool" className="form-group">
             <CustomSelect
-              options={schoolOptions}
-              value={newFlight.school}
-              onChange={(value) => handleCustomSelectChange("school", value)}
-              placeholder="Selecciona una escuela"
+              options={schools}
+              value={selectedSchool}
+              onChange={handleSchoolChange}
+              placeholder="Escuela"
             />
           </Form.Group>
 
-          {/* Aeronave */}
           <Form.Group controlId="formAirplane" className="form-group">
             <CustomSelect
               options={planeOptions}
-              value={newFlight.airplane}
-              onChange={(value) => handleCustomSelectChange("airplane", value)}
-              placeholder="Selecciona una aeronave"
+              value={flight.airplane}
+              onChange={(value) => updateField("airplane", value)}
+              placeholder="Aeronave"
             />
           </Form.Group>
 
-          {/* Piloto */}
           <Form.Group controlId="formPilot" className="form-group">
             <CustomSelect
               options={pilotOptions}
-              value={newFlight.pilot}
-              onChange={(value) => handleCustomSelectChange("pilot", value)}
-              placeholder="Selecciona un piloto"
+              value={flight.pilot}
+              onChange={(value) => updateField("pilot", value)}
+              placeholder="Piloto"
+              disabled={isPilotDisabled}
             />
           </Form.Group>
 
-          {/* Instructor */}
           <Form.Group controlId="formInstructor" className="form-group">
             <CustomSelect
-              options={instructorOptions}
-              value={newFlight.instructor || ""}
-              onChange={(value) =>
-                handleCustomSelectChange("instructor", value)
-              }
-              placeholder="Selecciona un instructor"
+              options={[
+                { value: "", label: "Sin instructor" }, // Opción adicional
+                ...instructorOptions,
+              ]}
+              value={flight.instructor || ""}
+              onChange={(value) => updateField("instructor", value)}
+              placeholder="Instructor"
+              disabled={isInstructorDisabled}
             />
           </Form.Group>
 
-          {/* Origen */}
           <Form.Group controlId="formOrigin" className="form-group">
             <CustomSelect
               options={airportOptions}
-              value={newFlight.origin}
-              onChange={(value) => handleCustomSelectChange("origin", value)}
+              value={flight.origin}
+              onChange={(value) => updateField("origin", value)}
               placeholder="Origen"
             />
           </Form.Group>
 
-          {/* Destino */}
           <Form.Group controlId="formDestination" className="form-group">
             <CustomSelect
               options={airportOptions}
-              value={newFlight.destination}
-              onChange={(value) =>
-                handleCustomSelectChange("destination", value)
-              }
+              value={flight.destination}
+              onChange={(value) => updateField("destination", value)}
               placeholder="Destino"
             />
           </Form.Group>
 
           <Form.Group controlId="formDepartureTime" className="form-group">
             <Form.Control
-              type="time"
+              type="time" // Cambiado a formato 24 horas
               name="departureTime"
-              value={newFlight.departureTime}
-              onChange={handleChange}
+              value={flight.departureTime}
+              onChange={handleInputChange}
               required
               className="floating-input"
             />
@@ -332,10 +320,10 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
 
           <Form.Group controlId="formArrivalTime" className="form-group">
             <Form.Control
-              type="time"
+              type="time" // Cambiado a formato 24 horas
               name="arrivalTime"
-              value={newFlight.arrivalTime}
-              onChange={handleChange}
+              value={flight.arrivalTime}
+              onChange={handleInputChange}
               required
               className="floating-input"
             />
@@ -346,11 +334,10 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Control
               type="number"
               name="initialOdometer"
-              value={newFlight.initialOdometer}
-              onChange={handleChange}
+              value={flight.initialOdometer}
+              onChange={handleInputChange}
               required
               className="floating-input"
-              placeholder=" "
             />
             <Form.Label className="floating-label">Odómetro inicial</Form.Label>
           </Form.Group>
@@ -359,11 +346,10 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Control
               type="number"
               name="finalOdometer"
-              value={newFlight.finalOdometer}
-              onChange={handleChange}
+              value={flight.finalOdometer}
+              onChange={handleInputChange}
               required
               className="floating-input"
-              placeholder=" "
             />
             <Form.Label className="floating-label">Odómetro final</Form.Label>
           </Form.Group>
@@ -372,11 +358,10 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Control
               type="number"
               name="landings"
-              value={newFlight.landings}
-              onChange={handleChange}
+              value={flight.landings}
+              onChange={handleInputChange}
               required
               className="floating-input"
-              placeholder=" "
             />
             <Form.Label className="floating-label">Aterrizajes</Form.Label>
           </Form.Group>
@@ -385,10 +370,9 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Control
               type="text"
               name="oil"
-              value={newFlight.oil || ""}
-              onChange={handleChange}
+              value={flight.oil || ""}
+              onChange={handleInputChange}
               className="floating-input"
-              placeholder=" "
             />
             <Form.Label className="floating-label">Aceite</Form.Label>
           </Form.Group>
@@ -397,16 +381,15 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Control
               type="text"
               name="charge"
-              value={newFlight.charge || ""}
-              onChange={handleChange}
+              value={flight.charge || ""}
+              onChange={handleInputChange}
               className="floating-input"
-              placeholder=" "
             />
             <Form.Label className="floating-label">Combustible</Form.Label>
           </Form.Group>
 
           <div className="form-buttons">
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="secondary" onClick={onClose}>
               Cancelar
             </Button>
             <Button

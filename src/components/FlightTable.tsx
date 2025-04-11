@@ -12,6 +12,7 @@ interface Flight {
   destination: string;
   status: "pending" | "confirmed" | "cancelled";
   airplane?: string;
+  totalFlightTime?: string;
 }
 
 interface FlightTableProps {
@@ -41,13 +42,6 @@ const FlightTable: React.FC<FlightTableProps> = ({
   onFilterChange,
   allFlights,
 }) => {
-  const calculateFlightHours = (start: string, end: string): string => {
-    const startTime = new Date(start).getTime();
-    const endTime = new Date(end).getTime();
-    const diffHours = (endTime - startTime) / (1000 * 60 * 60);
-    return diffHours.toFixed(1);
-  };
-
   const countByStatus = allFlights.reduce(
     (acc, flight) => {
       acc.all++;
@@ -90,36 +84,56 @@ const FlightTable: React.FC<FlightTableProps> = ({
               <th>Instructor</th>
               <th>Ruta</th>
               <th>Aeronave</th>
+              <th>Tiempo Total</th>
             </tr>
           </thead>
           <tbody>
-            {flights.map((flight) => (
-              <tr key={flight._id}>
-                <td>{new Date(flight.date).toLocaleDateString()}</td>
-                <td>
-                  {new Date(flight.departureTime).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}{" "}
-                  -{" "}
-                  {new Date(flight.arrivalTime).toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </td>
-                <td>
-                  <span className={`badge ${flight.status}`}>
-                    {statusMap[flight.status]}
-                  </span>
-                </td>
-                <td>{flight.pilot}</td>
-                <td>{flight.instructor}</td>
-                <td>
-                  {flight.origin} → {flight.destination}
-                </td>
-                <td>{flight.airplane || "-"}</td>
-              </tr>
-            ))}
+            {flights.map((flight) => {
+              return (
+                <tr key={flight._id}>
+                  <td>
+                    {new Date(flight.date).toLocaleDateString("es-ES", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}
+                  </td>
+                  <td>
+                    {new Date(flight.departureTime).toLocaleTimeString(
+                      "es-ES",
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false, // Formato 24 horas
+                      }
+                    )}{" "}
+                    -{" "}
+                    {new Date(flight.arrivalTime).toLocaleTimeString("es-ES", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: false, // Formato 24 horas
+                    })}{" "}
+                    Hs
+                  </td>
+                  <td>
+                    <span className={`badge ${flight.status}`}>
+                      {statusMap[flight.status]}
+                    </span>
+                  </td>
+                  <td>{flight.pilot}</td>
+                  <td>{flight.instructor}</td>
+                  <td>
+                    {flight.origin} → {flight.destination}
+                  </td>
+                  <td>{flight.airplane || "-"}</td>
+                  <td>
+                    {flight.totalFlightTime
+                      ? `${parseFloat(flight.totalFlightTime).toFixed(1)} h`
+                      : "N/A"}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -129,18 +143,25 @@ const FlightTable: React.FC<FlightTableProps> = ({
           <div key={flight._id} className={`mobile-card ${flight.status}`}>
             <div className="mobile-card-header">
               <span className="date">
-                {new Date(flight.date).toLocaleDateString()}
+                {new Date(flight.date).toLocaleDateString("es-ES", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                })}
               </span>
               <span className="time">
-                {new Date(flight.departureTime).toLocaleTimeString([], {
+                {new Date(flight.departureTime).toLocaleTimeString("es-ES", {
                   hour: "2-digit",
                   minute: "2-digit",
+                  hour12: false,
                 })}{" "}
                 -{" "}
-                {new Date(flight.arrivalTime).toLocaleTimeString([], {
+                {new Date(flight.arrivalTime).toLocaleTimeString("es-ES", {
                   hour: "2-digit",
                   minute: "2-digit",
-                })}
+                  hour12: false,
+                })}{" "}
+                Hs
               </span>
             </div>
 
@@ -173,11 +194,9 @@ const FlightTable: React.FC<FlightTableProps> = ({
               <div className="icon-value">
                 <FaClock className="icon" />
                 <span className="value">
-                  {calculateFlightHours(
-                    flight.departureTime,
-                    flight.arrivalTime
-                  )}{" "}
-                  h
+                  {flight.totalFlightTime
+                    ? `${parseFloat(flight.totalFlightTime).toFixed(1)} h`
+                    : "N/A"}
                 </span>
               </div>
             </div>

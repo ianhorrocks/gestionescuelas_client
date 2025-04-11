@@ -14,7 +14,8 @@
 @use "./UserProfile/EditUserProfileModal";
 @use "./NavBar/NavbarAdmin";
 @use "./Modals/AddModal";
-@use "./GeneralComponents/CustomSelect.scss";
+@use "./GeneralComponents/CustomSelect";
+@use "./AdminFlights/FlightHistoryTable";
 
 .dashboard-container,
 .profile-container,

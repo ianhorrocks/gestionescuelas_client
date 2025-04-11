@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 
 interface CustomSelectProps {
   options: { value: string; label: string }[];
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  disabled?: boolean;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -12,11 +13,18 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   value,
   onChange,
   placeholder = "Selecciona una opción",
+  disabled = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Memorizar las opciones filtradas
+  // Siempre mostrar el label correspondiente al value actual
+  const displayValue = useMemo(() => {
+    const selectedOption = options.find((option) => option.value === value);
+    return selectedOption ? selectedOption.label : "";
+  }, [value, options]);
+
+  // Filtrar opciones en base al input del usuario
   const filteredOptions = useMemo(
     () =>
       options.filter((option) =>
@@ -25,11 +33,22 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     [searchTerm, options]
   );
 
+  // Manejar selección
   const handleOptionClick = (optionValue: string) => {
-    onChange(optionValue);
-    setIsOpen(false);
-    setSearchTerm(""); // Limpiar el término de búsqueda al seleccionar
+    if (!disabled) {
+      onChange(optionValue);
+      setIsOpen(false);
+      setSearchTerm("");
+    }
   };
+
+  // Resetear búsqueda si cambia el valor externo
+  useEffect(() => {
+    const selected = options.find((opt) => opt.value === value);
+    if (selected) {
+      setSearchTerm("");
+    }
+  }, [value, options]);
 
   return (
     <div className="form-group custom-select-wrapper">
@@ -37,13 +56,11 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         type="text"
         className="floating-input custom-select__search"
         placeholder=" "
-        value={
-          searchTerm ||
-          (value ? options.find((opt) => opt.value === value)?.label : "")
-        }
+        value={isOpen ? searchTerm : displayValue}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onFocus={() => setIsOpen(true)}
-        onBlur={() => setTimeout(() => setIsOpen(false), 200)} // Retraso para permitir clic en opciones
+        onFocus={() => !disabled && setIsOpen(true)}
+        onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+        disabled={disabled}
       />
       <label className="floating-label">{placeholder}</label>
       {isOpen && (

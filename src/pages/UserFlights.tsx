@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getAllUserFlights } from "../services/flightService";
 import Navbar from "../components/NavbarUser";
 import AddFlightModal from "../components/AddFlightModal";
-import { getLoggedUser } from "../services/auth";
 import FlightTable from "../components/FlightTable";
+import { getLoggedUser } from "../services/auth";
+import useTemporaryMessage from "../hooks/useTemporaryMessage";
 
 interface Flight {
   _id: string;
@@ -18,7 +19,13 @@ interface Flight {
   origin: string;
   destination: string;
   status: "pending" | "confirmed" | "cancelled";
+  totalFlightTime?: string;
 }
+
+const convertToDecimalHours = (time: string): string => {
+  const [hours, minutes] = time.split(":").map(Number);
+  return (hours + minutes / 60).toFixed(2); // Convertir a formato centesimal
+};
 
 const UserFlights: React.FC = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
@@ -27,28 +34,13 @@ const UserFlights: React.FC = () => {
   >("all");
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState("");
-
-  const [newFlight, setNewFlight] = useState({
-    date: "",
-    initialOdometer: "",
-    finalOdometer: "",
-    origin: "",
-    destination: "",
-    departureTime: "",
-    arrivalTime: "",
-    landings: "",
-    oil: "",
-    charge: "",
-    airplane: "",
-    pilot: "",
-    instructor: "",
-    school: "",
-  });
+  const { message, showTemporaryMessage } = useTemporaryMessage();
 
   useEffect(() => {
     const fetchFlights = async () => {
       try {
         const user = await getLoggedUser();
+        console.log("Userrrrrrr:", user); // Loguear el ID del usuario
         const flightsData = await getAllUserFlights(user._id);
         setFlights(flightsData.data);
       } catch (err) {
@@ -60,31 +52,15 @@ const UserFlights: React.FC = () => {
     fetchFlights();
   }, []);
 
-  const handleShowModal = () => {
-    setNewFlight({
-      date: "",
-      initialOdometer: "",
-      finalOdometer: "",
-      origin: "",
-      destination: "",
-      departureTime: "",
-      arrivalTime: "",
-      landings: "",
-      oil: "",
-      charge: "",
-      airplane: "",
-      pilot: "",
-      instructor: "",
-      school: "",
-    });
-    setShowModal(true);
-  };
+  const handleShowModal = () => setShowModal(true);
 
   const handleCloseModal = () => setShowModal(false);
 
-  const handleFlightAdded = async () => {
+  const handleFlightAdded = async (msg?: string) => {
     setShowModal(false);
     setError("");
+    if (msg) showTemporaryMessage("success", msg);
+
     try {
       const user = await getLoggedUser();
       const flightsData = await getAllUserFlights(user._id);
@@ -114,6 +90,9 @@ const UserFlights: React.FC = () => {
 
       <div className="flights-content">
         {error && <p className="text-danger">{error}</p>}
+        {message && (
+          <p className={`alert alert-${message.type}`}>{message.message}</p>
+        )}
 
         <button className="add-button" onClick={handleShowModal}>
           +
@@ -134,6 +113,9 @@ const UserFlights: React.FC = () => {
             status: flight.status,
             airplane: flight.airplane
               ? `${flight.airplane.registrationNumber}`
+              : "N/A",
+            totalFlightTime: flight.totalFlightTime
+              ? convertToDecimalHours(flight.totalFlightTime)
               : "N/A",
           }))}
           selectedStatus={statusFilter}
@@ -157,6 +139,9 @@ const UserFlights: React.FC = () => {
             airplane: flight.airplane
               ? `${flight.airplane.registrationNumber}`
               : "N/A",
+            totalFlightTime: flight.totalFlightTime
+              ? convertToDecimalHours(flight.totalFlightTime)
+              : "N/A",
           }))}
         />
       </div>
@@ -164,11 +149,8 @@ const UserFlights: React.FC = () => {
       <AddFlightModal
         show={showModal}
         onClose={handleCloseModal}
-        newFlight={newFlight}
-        handleChange={(e) =>
-          setNewFlight({ ...newFlight, [e.target.name]: e.target.value })
-        }
         onSuccess={handleFlightAdded}
+        showTemporaryMessage={showTemporaryMessage}
       />
     </div>
   );
