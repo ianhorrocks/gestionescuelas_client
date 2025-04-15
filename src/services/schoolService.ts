@@ -1,52 +1,28 @@
-const API_URL = "http://localhost:3001/api/schools";
+import api from "./api";
+import { School } from "../types/types";
 
-export const getSchoolsForUser = async () => {
-  console.log("Fetching schools for user"); // Agregar console.log
-  const response = await fetch(`${API_URL}/user-schools`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch schools for user");
-  }
-
-  return await response.json();
+// Se usa en: UserDashboard.tsx
+export const getSchoolsForUser = async (): Promise<School[]> => {
+  const response = await api.get<School[]>("/schools/user-schools");
+  return response.data;
 };
 
-export const getSchoolsById = async (schoolId: string) => {
-  console.log(`Fetching school by ID por getSchoolsById: ${schoolId}`); // Agregar console.log
-  const response = await fetch(`${API_URL}/${schoolId}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch school by ID");
-  }
-
-  const data = await response.json();
-  console.log("School data:", data); // Agregar console.log
-  return data;
+// Se usa en: por ahora para ningun lado.. pero si en el futuro
+export const getSchoolsById = async (schoolId: string): Promise<School> => {
+  console.log(`Fetching school by ID por getSchoolsById: ${schoolId}`);
+  const response = await api.get<{ data: School }>(`/schools/${schoolId}`);
+  console.log("School data:", response.data.data);
+  return response.data.data;
 };
 
-export const getSchoolDetails = async (schoolId: string) => {
-  console.log(`Fetching school by ID por getSchoolDetails: ${schoolId}`); // Agregar console.log
+// Se usa en: cuando se necesitan más detalles (probablemente admin)
+export const getSchoolDetails = async (schoolId: string): Promise<School> => {
+  console.log(`Fetching school by ID por getSchoolDetails: ${schoolId}`);
   try {
-    const response = await fetch(`${API_URL}/${schoolId}/details`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch school details");
-    }
-
-    const data = await response.json();
-    return data;
+    const response = await api.get<{ data: School }>(
+      `/schools/${schoolId}/details`
+    );
+    return response.data.data;
   } catch (error) {
     console.error("Error fetching school details:", error);
     throw error;

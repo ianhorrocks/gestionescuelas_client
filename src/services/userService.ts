@@ -1,174 +1,84 @@
-const API_URL = "http://localhost:3001/api/users";
+import api from "./api";
+import { AdminUser, User, FlightUser } from "../types/types";
 
-export const fetchUsers = async () => {
-  const response = await fetch(API_URL, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  console.log("Response status:", response.status);
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    console.error("Error fetching users:", errorData);
-    throw new Error("Failed to fetch users");
-  }
-
-  const result = await response.json();
-  console.log("Fetched users:", result);
-  return result.data;
+// Se usa en AdminUsers.tsx // Error en'response.data' is of type 'unknown'.ts(18046) (property) Axios.AxiosXHR<unknown>.data: unknown Response that was provided by the server
+export const fetchUsers = async (): Promise<AdminUser[]> => {
+  const response = await api.get<{ data: AdminUser[] }>("/users");
+  return response.data.data;
 };
 
+// Se usa en: por ahora ningun lado..
 export const deleteUser = async (id: string) => {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to delete user");
-  }
-
-  return await response.json();
+  const response = await api.delete(`/users/${id}`);
+  return response.data;
 };
 
-export const assignUserToSchool = async (dni: string, role: string) => {
-  const response = await fetch(`${API_URL}/add`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify({ dni, role }),
+export const assignUserToSchool = async (
+  dni: string,
+  role: string
+): Promise<{ message: string }> => {
+  const response = await api.post<{ message: string }>("/users/add", {
+    dni,
+    role,
   });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Failed to assign user");
-  }
-
-  return await response.json();
+  return response.data;
 };
 
-export const removeUserFromSchool = async (id: string) => {
-  const response = await fetch(`${API_URL}/remove/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to remove user from school");
-  }
-
-  return await response.json();
+export const removeUserFromSchool = async (
+  id: string
+): Promise<{ message: string }> => {
+  const response = await api.delete<{ message: string }>(`/users/remove/${id}`);
+  return response.data;
 };
 
-export const getUserById = async (id: string) => {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch user jeje");
-  }
-
-  return await response.json();
+// Se usa en UserDashboard.tsx
+export const getUserById = async (id: string): Promise<User> => {
+  const response = await api.get<User>(`/users/${id}`);
+  return response.data;
 };
 
+// Se usa en: por ahora ningun lado..
 export const updateUserProfile = async (profile: {
   name: string;
   lastname: string;
   email: string;
 }) => {
-  const response = await fetch(`${API_URL}/profile`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify(profile),
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to update profile");
-  }
-
-  return await response.json();
+  const response = await api.put("/users/profile", profile);
+  return response.data;
 };
 
-export const fetchUsersByIds = async (userIds: string[]) => {
-  const response = await fetch(`${API_URL}/details`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify({ userIds }),
+// Se usa en: por ahora ningun lado.. // Error en 'response.data' is of type 'unknown'.ts(18046) const response: Axios.AxiosXHR<unknown>
+export const fetchUsersByIds = async (userIds: string[]): Promise<User[]> => {
+  const response = await api.post<{ data: User[] }>("/users/details", {
+    userIds,
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch user details");
-  }
-
-  const data = await response.json();
-  return data.data; // Devuelve los detalles de los usuarios
+  return response.data.data;
 };
 
+// Se usa en: por ahora ningun lado.. pero si en el futuro
 export const changePassword = async (
   currentPassword: string,
   newPassword: string
 ) => {
-  const response = await fetch(`${API_URL}/change-password`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify({ currentPassword, newPassword }),
+  const response = await api.put("/users/change-password", {
+    currentPassword,
+    newPassword,
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to change password");
-  }
-
-  return await response.json();
+  return response.data;
 };
 
+// Se usa en: por ahora ningun lado..
 export const fetchUserProfile = async () => {
-  const response = await fetch(`${API_URL}/profile`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch profile");
-  }
-
-  return await response.json();
+  const response = await api.get("/users/profile");
+  return response.data;
 };
 
-export const fetchUsersFromSchool = async (schoolId: string) => {
-  const response = await fetch(`${API_URL}/school/${schoolId}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch users by school ID");
-  }
-
-  const data = await response.json();
-  return data.data; // Devuelve los usuarios asociados a la escuela
+// Se usa en: addFlightModal.tsx // Error en 'response.data' is of type 'unknown'.ts(18046) const response: Axios.AxiosXHR<unknown>
+export const fetchUsersFromSchool = async (
+  schoolId: string
+): Promise<FlightUser[]> => {
+  const response = await api.get<{ data: FlightUser[] }>(
+    `/users/school/${schoolId}`
+  );
+  return response.data.data;
 };

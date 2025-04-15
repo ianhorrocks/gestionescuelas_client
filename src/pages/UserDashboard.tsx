@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { User, School } from "../types/types"; // id y name
 import { getUserById } from "../services/userService";
 import { getSchoolsForUser } from "../services/schoolService";
 import Navbar from "../components/NavbarUser";
-
-interface School {
-  _id: string;
-  name: string;
-}
-
-interface User {
-  _id: string;
-  name: string;
-}
 
 const UserDashboard: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -32,9 +23,11 @@ const UserDashboard: React.FC = () => {
         const userId = decodedToken._id;
 
         const userData = await getUserById(userId);
+        console.log("User data:", userData); // 👈
         setUser(userData);
 
         const schoolsData = await getSchoolsForUser();
+        console.log("Schools data:", schoolsData);
         setSchools(schoolsData);
       } catch (err) {
         console.log("Fetch user or schools error:", err);

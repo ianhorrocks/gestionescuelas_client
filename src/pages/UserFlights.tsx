@@ -5,22 +5,7 @@ import AddFlightModal from "../components/AddFlightModal";
 import FlightTable from "../components/FlightTable";
 import { getLoggedUser } from "../services/auth";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
-
-interface Flight {
-  _id: string;
-  details: string;
-  school: { _id: string; name: string };
-  airplane: { registrationNumber: string; brand: string; model: string } | null;
-  pilot: { name: string; lastname: string };
-  instructor: { name: string; lastname: string | null };
-  date: string;
-  departureTime: string;
-  arrivalTime: string;
-  origin: string;
-  destination: string;
-  status: "pending" | "confirmed" | "cancelled";
-  totalFlightTime?: string;
-}
+import { Flight } from "../types/types";
 
 const convertToDecimalHours = (time: string): string => {
   const [hours, minutes] = time.split(":").map(Number);
@@ -40,9 +25,8 @@ const UserFlights: React.FC = () => {
     const fetchFlights = async () => {
       try {
         const user = await getLoggedUser();
-        console.log("Userrrrrrr:", user); // Loguear el ID del usuario
         const flightsData = await getAllUserFlights(user._id);
-        setFlights(flightsData.data);
+        setFlights(flightsData);
       } catch (err) {
         console.error("Failed to fetch flights:", err);
         setError("Failed to fetch flights");
@@ -64,7 +48,7 @@ const UserFlights: React.FC = () => {
     try {
       const user = await getLoggedUser();
       const flightsData = await getAllUserFlights(user._id);
-      setFlights(flightsData.data);
+      setFlights(flightsData);
     } catch (err) {
       console.error("Error al refrescar los vuelos:", err);
       setError("Error al refrescar los vuelos");

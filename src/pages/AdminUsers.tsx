@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import UserItem from "../components/UserItem";
 import AddUserModal from "../components/AddUserModal";
-import Navbar from "../components/NavbarAdmin"; // Importar el nuevo Navbar
+import Navbar from "../components/NavbarAdmin";
+import PlaneLoader from "../components/PlaneLoader";
+import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import {
   fetchUsers,
   removeUserFromSchool,
@@ -10,28 +12,18 @@ import {
 import { getLoggedUser } from "../services/auth";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-
-interface User {
-  _id: string;
-  name: string;
-  lastname: string;
-  assignedSchools: {
-    school: string;
-    role: string;
-    createdAt: string;
-  }[];
-  email: string;
-  photo?: string;
-  dni: string;
-}
+import { AdminUser } from "../types/types";
+import Alert from "../components/Alert";
 
 const AdminUsers: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<AdminUser[]>([]);
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null);
   const [schoolId, setSchoolId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { message, showTemporaryMessage } = useTemporaryMessage();
 
   useEffect(() => {
     const fetchSchoolId = async () => {
@@ -52,6 +44,7 @@ const AdminUsers: React.FC = () => {
 
   const getUsers = async () => {
     try {
+      setLoading(true);
       const data = await fetchUsers();
       if (Array.isArray(data)) {
         setUsers(data);
@@ -64,6 +57,8 @@ const AdminUsers: React.FC = () => {
       } else {
         setError("Failed to fetch users");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,16 +69,27 @@ const AdminUsers: React.FC = () => {
   }, [schoolId]);
 
   const handleRemove = async (id: string) => {
+    setLoading(true);
     try {
+      const userToRemove = users.find((user) => user._id === id);
       await removeUserFromSchool(id);
       setUsers(users.filter((user) => user._id !== id));
       setShowConfirmModal(false);
+      if (userToRemove) {
+        showTemporaryMessage(
+          "success",
+          `Usuario "${userToRemove.name} ${userToRemove.lastname}" Eliminado`
+        );
+      }
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message || "Failed to remove user from school");
+        showTemporaryMessage("error", "Error al eliminar el usuario.");
       } else {
         setError("Failed to remove user from school");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,20 +105,31 @@ const AdminUsers: React.FC = () => {
   };
 
   const handleAssignUser = async (dni: string, role: string) => {
+    setLoading(true);
     try {
       const response = await assignUserToSchool(dni, role);
       if (response.message === "USER_ALREADY_ASSIGNED") {
-        setError("El usuario ya pertenece a la escuela.");
+        showTemporaryMessage(
+          "warning",
+          "El usuario ya está asignado a la escuela"
+        );
       } else {
         setError("");
-        getUsers(); // Refrescar la lista de usuarios
+        getUsers();
+        showTemporaryMessage("success", `Usuario Agregado`);
       }
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message || "Error al asignar el usuario a la escuela.");
       } else {
         setError("Error al asignar el usuario a la escuela.");
+        showTemporaryMessage(
+          "error",
+          "Error al asignar el usuario a la escuela"
+        );
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -127,19 +144,31 @@ const AdminUsers: React.FC = () => {
       <Navbar title="Usuarios" links={links} logoutPath="/" />
       <div className="admin-users-container">
         {error && <p className="text-danger">{error}</p>}
-        <ul className="list-group-users">
-          {users.map((user) => (
-            <UserItem
-              key={user._id}
-              user={user}
-              onDelete={handleDeleteClick}
-              schoolId={schoolId || ""}
-            />
-          ))}
-        </ul>
-        <button className="add-button-user" onClick={() => setShowModal(true)}>
-          +
-        </button>
+        {message && <Alert message={message.message} type={message.type} />}
+
+        {loading ? (
+          <PlaneLoader />
+        ) : (
+          <>
+            <ul className="list-group-users">
+              {users.map((user) => (
+                <UserItem
+                  key={user._id}
+                  user={user}
+                  onDelete={handleDeleteClick}
+                  schoolId={schoolId || ""}
+                />
+              ))}
+            </ul>
+            <button
+              className="add-button-user"
+              onClick={() => setShowModal(true)}
+            >
+              +
+            </button>
+          </>
+        )}
+
         <AddUserModal
           show={showModal}
           onClose={() => setShowModal(false)}

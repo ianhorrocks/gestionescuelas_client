@@ -1,20 +1,12 @@
 import React from "react";
+import { Flight as BaseFlight } from "../types/types";
 
-interface Flight {
-  _id: string;
-  date: string;
-  departureTime: string;
-  arrivalTime: string;
-  pilot: { name: string; lastname: string };
-  instructor: { name: string; lastname: string } | null;
-  airplane: { registrationNumber: string } | null;
-  origin: string;
-  destination: string;
-  status: "confirmed" | "cancelled"; // Solo acepta estos valores
-}
+type HistoryFlight = Omit<BaseFlight, "status"> & {
+  status: "confirmed" | "cancelled";
+};
 
 interface FlightHistoryTableProps {
-  flights: Flight[];
+  flights: HistoryFlight[];
 }
 
 const statusMap = {

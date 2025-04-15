@@ -16,6 +16,7 @@
 @use "./Modals/AddModal";
 @use "./GeneralComponents/CustomSelect";
 @use "./AdminFlights/FlightHistoryTable";
+@use "./GeneralComponents/PlaneLoader.module";
 
 .dashboard-container,
 .profile-container,

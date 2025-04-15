@@ -1,15 +1,17 @@
-const API_URL = "http://localhost:3001/api/flights";
+// client/src/services/flightService.ts
+import api from "./api";
+import { Flight } from "../types/types";
 
 export interface FlightData {
   date: string;
   airplane: string;
   pilot: string;
-  instructor: string | null; // Permitir null como valor válido
+  instructor: string | null;
   departureTime: string;
   arrivalTime: string;
   landings: string;
-  oil?: string; // Opcional
-  charge?: string; // Opcional
+  oil?: string;
+  charge?: string;
   school: string;
   origin: string;
   destination: string;
@@ -17,140 +19,64 @@ export interface FlightData {
   finalOdometer: string;
 }
 
-export const fetchUserFlights = async (schoolId: string) => {
-  const API_URL = `http://localhost:3001/api/schools/${schoolId}/flights`;
-
-  try {
-    const response = await fetch(API_URL, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch flights");
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching flights:", error);
-    throw error;
-  }
+// Por ahora en ningun lado
+export const fetchUserFlights = async (schoolId: string): Promise<Flight[]> => {
+  const response = await api.get<Flight[]>(`/schools/${schoolId}/flights`);
+  return response.data;
 };
 
-export const fetchFlights = async () => {
-  const response = await fetch(API_URL, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch flights");
-  }
-
-  const data = await response.json();
-  console.log("Fetched flights:", data); // Agregar console.log para verificar los datos
-  return data;
+// Se usa en Userflights y en AdminFlights .tsx
+export const fetchFlights = async (): Promise<Flight[]> => {
+  const response = await api.get<Flight[]>(`/flights`);
+  console.log("Fetched flights:", response.data);
+  return response.data;
 };
 
-export const validateFlight = async (id: string) => {
-  const response = await fetch(`${API_URL}/${id}/validate`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to validate flight");
-  }
-
-  return await response.json();
+// Se va a usar en adminflightmodal y por ende en validateflightsmodal.tsx pero aun no
+export const validateFlight = async (
+  id: string
+): Promise<{ message: string }> => {
+  const response = await api.post<{ message: string }>(
+    `/flights/${id}/validate`
+  );
+  return response.data;
 };
 
+// Era para UserSchool.tsx pero no se usa mas
 export const getUserFlightsBySchool = async (
   userId: string,
   schoolId: string
-) => {
+): Promise<Flight[]> => {
   console.log(
     `Fetching flights for user ID: ${userId} and school ID: ${schoolId}`
   );
-  const response = await fetch(`${API_URL}/user/${userId}/school/${schoolId}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch flights for school");
-  }
-
-  const data = await response.json();
-  console.log("Flights data:", data); // Agregar console.log para verificar los datos
-  return data;
+  const response = await api.get<Flight[]>(
+    `/flights/user/${userId}/school/${schoolId}`
+  );
+  console.log("Flights data:", response.data);
+  return response.data;
 };
 
-export const createFlight = async (flightData: FlightData) => {
-  try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(flightData),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to create flight");
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error creating flight:", error);
-    throw error;
-  }
+// Se usa en addFlight modal habria que hacer un type exportarlo y usarlo aqui... solo para los vuelos que son creados...
+export const createFlight = async (
+  flightData: FlightData
+): Promise<{ message: string }> => {
+  const response = await api.post<{ message: string }>(`/flights`, flightData);
+  return response.data;
 };
 
-export const getAllUserFlights = async (userId: string) => {
-  const API_URL = `http://localhost:3001/api/flights/user/${userId}`; // Endpoint para obtener todos los vuelos del usuario
-
-  try {
-    const response = await fetch(API_URL, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch all user flights");
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching all user flights:", error);
-    throw error;
-  }
+// Se usa en userflights .tsx
+export const getAllUserFlights = async (userId: string): Promise<Flight[]> => {
+  const response = await api.get<{ data: Flight[] }>(`/flights/user/${userId}`);
+  return response.data.data;
 };
 
-export const getAllSchoolFlights = async (schoolId: string) => {
-  const API_URL = `http://localhost:3001/api/flights/school/${schoolId}`;
-
-  try {
-    const response = await fetch(API_URL, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch flights for the school");
-    }
-
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching school flights:", error);
-    throw error;
-  }
+// se usa en adminflights.tsx
+export const getAllSchoolFlights = async (
+  schoolId: string
+): Promise<Flight[]> => {
+  const response = await api.get<{ data: Flight[] }>(
+    `/flights/school/${schoolId}`
+  );
+  return response.data.data;
 };

@@ -6,23 +6,7 @@ import { fetchPlanes } from "../services/planeService";
 import { fetchUsersFromSchool } from "../services/userService";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import airportCodes from "../data/designadores_locales.json";
-
-export interface LocalFlightData {
-  date: string;
-  airplane: string;
-  pilot: string;
-  instructor: string | null;
-  departureTime: string;
-  arrivalTime: string;
-  landings: string;
-  oil?: string;
-  charge?: string;
-  school: string;
-  origin: string;
-  destination: string;
-  initialOdometer: string;
-  finalOdometer: string;
-}
+import { FlightUser, FlightData, Plane } from "../types/types";
 
 interface AddFlightModalProps {
   show: boolean;
@@ -34,36 +18,23 @@ interface AddFlightModalProps {
   ) => void;
 }
 
-interface Plane {
-  _id: string;
-  registrationNumber: string;
-  model: string;
-}
-
-interface User {
-  _id: string;
-  name: string;
-  lastname: string;
-  role: string;
-}
-
 const AddFlightModal: React.FC<AddFlightModalProps> = ({
   show,
   onClose,
   onSuccess,
 }) => {
   const { message, showTemporaryMessage } = useTemporaryMessage();
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<FlightUser | null>(null);
   const [schools, setSchools] = useState<
     { value: string; label: string; role: string }[]
   >([]);
   const [selectedSchool, setSelectedSchool] = useState<string>("");
   const [planes, setPlanes] = useState<Plane[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<FlightUser[]>([]);
   const [isPilotDisabled, setIsPilotDisabled] = useState(false);
   const [isInstructorDisabled, setIsInstructorDisabled] = useState(false);
 
-  const [flight, setFlight] = useState<LocalFlightData>({
+  const [flight, setFlight] = useState<FlightData>({
     date: "",
     airplane: "",
     pilot: "",
@@ -80,7 +51,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
     finalOdometer: "",
   });
 
-  const updateField = (name: keyof LocalFlightData, value: string) => {
+  const updateField = (name: keyof FlightData, value: string) => {
     setFlight((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -91,7 +62,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
       const isValidTime = /^([01]\d|2[0-3]):([0-5]\d)$/.test(value);
       if (!isValidTime) return;
     }
-    updateField(name as keyof LocalFlightData, value);
+    updateField(name as keyof FlightData, value);
   };
 
   useEffect(() => {
@@ -155,7 +126,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
     setIsInstructorDisabled(false);
   };
 
-  const prefillFieldsBasedOnRole = (usersData: User[]) => {
+  const prefillFieldsBasedOnRole = (usersData: FlightUser[]) => {
     const user = usersData.find((u) => u._id === currentUser?._id);
     if (!user) return;
 
@@ -200,10 +171,12 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
     })
   );
 
-  const planeOptions = planes.map((p) => ({
-    value: p._id,
-    label: `${p.registrationNumber} - ${p.model}`,
-  }));
+  const planeOptions = planes
+    .filter((p) => p._id) // Ensure _id is not undefined
+    .map((p) => ({
+      value: p._id as string,
+      label: `${p.registrationNumber} - ${p.model}`,
+    }));
 
   const pilotOptions = useMemo(
     () =>

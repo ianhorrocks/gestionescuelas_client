@@ -1,0 +1,45 @@
+@use "../Variables/variables";
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.orbit {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  animation: spin 3s cubic-bezier(0.6, 0.05, 0.2, 0.9) infinite;
+}
+
+.planeIcon {
+  position: absolute;
+  top: -9px; // más cerca del borde
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  color: variables.$tertiary-color;
+  font-size: 20px;
+  transform-origin: center 60px;
+  z-index: 1000;
+}
+
+.dottedCircle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 3px dotted variables.$soft-text-color;
+  border-radius: 50%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
