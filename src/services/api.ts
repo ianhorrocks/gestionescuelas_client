@@ -1,4 +1,3 @@
-// client/src/services/api.ts
 import axios from "axios";
 
 // Detectar entorno automáticamente
@@ -15,7 +14,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// Interceptor de request: agrega el token al header
+// Interceptor para token
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token && config.headers) {
@@ -24,7 +23,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Interceptor de respuesta: detecta si el token expiró o no es válido
+// Interceptor para errores 401
 api.interceptors.response.use(
   (response) => response,
   (error) => {

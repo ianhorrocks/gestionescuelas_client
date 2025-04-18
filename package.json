@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"vite\" \"npm run sass\"",
-    "doppler-dev": "doppler run -- npm run dev",
-    "build": "cross-env VITE_API_ENV=prod tsc && vite build",
+    "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "sass": "sass src/styles/styles.scss src/styles/styles.css --watch"
