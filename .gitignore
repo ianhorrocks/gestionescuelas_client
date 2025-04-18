@@ -25,3 +25,6 @@ dist-ssr
 
 src/data/AR.json
 .env
+
+*.pem
+.c/Users/ianho/.keys/
