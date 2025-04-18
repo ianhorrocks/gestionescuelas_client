@@ -1,7 +1,8 @@
 import api from "./api";
-import { AdminUser, User, FlightUser } from "../types/types";
+import { AdminUser, User, FlightUser, NewUser } from "../types/types";
+import { AxiosError } from "axios";
 
-// Se usa en AdminUsers.tsx // Error en'response.data' is of type 'unknown'.ts(18046) (property) Axios.AxiosXHR<unknown>.data: unknown Response that was provided by the server
+// Se usa en AdminUsers.tsx
 export const fetchUsers = async (): Promise<AdminUser[]> => {
   const response = await api.get<{ data: AdminUser[] }>("/users");
   return response.data.data;
@@ -47,7 +48,7 @@ export const updateUserProfile = async (profile: {
   return response.data;
 };
 
-// Se usa en: por ahora ningun lado.. // Error en 'response.data' is of type 'unknown'.ts(18046) const response: Axios.AxiosXHR<unknown>
+// Se usa en: por ahora ningun lado..
 export const fetchUsersByIds = async (userIds: string[]): Promise<User[]> => {
   const response = await api.post<{ data: User[] }>("/users/details", {
     userIds,
@@ -73,7 +74,7 @@ export const fetchUserProfile = async () => {
   return response.data;
 };
 
-// Se usa en: addFlightModal.tsx // Error en 'response.data' is of type 'unknown'.ts(18046) const response: Axios.AxiosXHR<unknown>
+// Se usa en: addFlightModal.tsx
 export const fetchUsersFromSchool = async (
   schoolId: string
 ): Promise<FlightUser[]> => {
@@ -81,4 +82,54 @@ export const fetchUsersFromSchool = async (
     `/users/school/${schoolId}`
   );
   return response.data.data;
+};
+
+export const registerUser = async (userData: NewUser) => {
+  try {
+    const response = await api.post("/auth/register", userData);
+    return response.data;
+  } catch (error: unknown) {
+    const axiosError = error as AxiosError<{ error: string }>;
+
+    const errorMessage = axiosError.response?.data?.error;
+    console.error("Error in registration:", errorMessage);
+    if (axiosError.response?.status === 409) {
+      if (errorMessage === "EMAIL_ALREADY_REGISTERED") {
+        throw new Error("EMAIL_ALREADY_REGISTERED");
+      }
+      if (errorMessage === "DNI_ALREADY_REGISTERED") {
+        throw new Error("DNI_ALREADY_REGISTERED");
+      }
+    }
+
+    throw new Error("REGISTRATION_FAILED");
+  }
+};
+
+export const assignTagToUser = async (
+  userId: string,
+  schoolId: string,
+  tag: string
+): Promise<{ message: string; user: User }> => {
+  const response = await api.put<{ message: string; user: User }>(
+    "/users/assign-tag",
+    {
+      userId,
+      schoolId,
+      tag,
+    }
+  );
+
+  return response.data;
+};
+
+export const removeTagFromUser = async (
+  userId: string,
+  schoolId: string
+): Promise<{ message: string }> => {
+  const response = await api.put("/users/remove-tag", {
+    userId,
+    schoolId,
+  });
+  return response.data;
 };

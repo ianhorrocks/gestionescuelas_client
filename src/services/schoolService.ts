@@ -1,5 +1,6 @@
 import api from "./api";
-import { School } from "../types/types";
+import { School, NewSchool } from "../types/types";
+import { AxiosError } from "axios";
 
 // Se usa en: UserDashboard.tsx
 export const getSchoolsForUser = async (): Promise<School[]> => {
@@ -26,5 +27,24 @@ export const getSchoolDetails = async (schoolId: string): Promise<School> => {
   } catch (error) {
     console.error("Error fetching school details:", error);
     throw error;
+  }
+};
+
+export const registerSchool = async (schoolData: NewSchool) => {
+  try {
+    const response = await api.post("/schools", schoolData);
+    return response.data;
+  } catch (error: unknown) {
+    const axiosError = error as AxiosError<{ error: string }>;
+    const errorMsg = axiosError.response?.data?.error;
+
+    if (
+      axiosError.response?.status === 409 &&
+      errorMsg === "SCHOOL_ALREADY_EXISTS"
+    ) {
+      throw new Error("SCHOOL_ALREADY_EXISTS");
+    }
+
+    throw new Error("SCHOOL_REGISTRATION_FAILED");
   }
 };

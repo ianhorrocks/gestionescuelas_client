@@ -92,12 +92,6 @@
   }
 }
 
-.modal-content {
-  width: 400px;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
 // Ajustes para las etiquetas flotantes
 .floating-label-group,
 .register-user-modal .form-group,
@@ -243,7 +237,7 @@
   color: #000;
 }
 
-// Alert Styles
+// Alert Styles (ShowTemporaryMessage)
 .alert {
   position: fixed;
   bottom: 20px;
@@ -264,7 +258,7 @@
   }
 
   &-error {
-    background-color: variables.$error-bg-color;
+    background-color: variables.$error-bg-color-message;
     color: variables.$error-text-color;
     border: 1px solid variables.$error-border-color;
   }

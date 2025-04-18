@@ -6,6 +6,7 @@ import FlightTable from "../components/FlightTable";
 import { getLoggedUser } from "../services/auth";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import { Flight } from "../types/types";
+import PlaneLoader from "../components/PlaneLoader";
 
 const convertToDecimalHours = (time: string): string => {
   const [hours, minutes] = time.split(":").map(Number);
@@ -20,8 +21,10 @@ const UserFlights: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState("");
   const { message, showTemporaryMessage } = useTemporaryMessage();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     const fetchFlights = async () => {
       try {
         const user = await getLoggedUser();
@@ -30,6 +33,8 @@ const UserFlights: React.FC = () => {
       } catch (err) {
         console.error("Failed to fetch flights:", err);
         setError("Failed to fetch flights");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -72,63 +77,67 @@ const UserFlights: React.FC = () => {
         logoutPath="/user/login"
       />
 
-      <div className="flights-content">
-        {error && <p className="text-danger">{error}</p>}
-        {message && (
-          <p className={`alert alert-${message.type}`}>{message.message}</p>
-        )}
+      {error && <p className="text-danger">{error}</p>}
+      {message && (
+        <p className={`alert alert-${message.type}`}>{message.message}</p>
+      )}
 
-        <button className="add-button" onClick={handleShowModal}>
-          +
-        </button>
+      {loading ? (
+        <PlaneLoader />
+      ) : (
+        <div className="flights-content">
+          <button className="add-button" onClick={handleShowModal}>
+            +
+          </button>
 
-        <FlightTable
-          flights={filteredByStatus.map((flight) => ({
-            _id: flight._id,
-            date: flight.date,
-            departureTime: flight.departureTime,
-            arrivalTime: flight.arrivalTime,
-            pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
-            instructor: flight.instructor
-              ? `${flight.instructor.name} ${flight.instructor.lastname}`
-              : "S/A",
-            origin: flight.origin,
-            destination: flight.destination,
-            status: flight.status,
-            airplane: flight.airplane
-              ? `${flight.airplane.registrationNumber}`
-              : "N/A",
-            totalFlightTime: flight.totalFlightTime
-              ? convertToDecimalHours(flight.totalFlightTime)
-              : "N/A",
-          }))}
-          selectedStatus={statusFilter}
-          onFilterChange={(status: string) =>
-            setStatusFilter(
-              status as "pending" | "confirmed" | "cancelled" | "all"
-            )
-          }
-          allFlights={flights.map((flight) => ({
-            _id: flight._id,
-            date: flight.date,
-            departureTime: flight.departureTime,
-            arrivalTime: flight.arrivalTime,
-            pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
-            instructor: flight.instructor
-              ? `${flight.instructor.name} ${flight.instructor.lastname}`
-              : "S/A",
-            origin: flight.origin,
-            destination: flight.destination,
-            status: flight.status,
-            airplane: flight.airplane
-              ? `${flight.airplane.registrationNumber}`
-              : "N/A",
-            totalFlightTime: flight.totalFlightTime
-              ? convertToDecimalHours(flight.totalFlightTime)
-              : "N/A",
-          }))}
-        />
-      </div>
+          <FlightTable
+            flights={filteredByStatus.map((flight) => ({
+              _id: flight._id,
+              date: flight.date,
+              departureTime: flight.departureTime,
+              arrivalTime: flight.arrivalTime,
+              pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
+              instructor: flight.instructor
+                ? `${flight.instructor.name} ${flight.instructor.lastname}`
+                : "S/A",
+              origin: flight.origin,
+              destination: flight.destination,
+              status: flight.status,
+              airplane: flight.airplane
+                ? `${flight.airplane.registrationNumber}`
+                : "N/A",
+              totalFlightTime: flight.totalFlightTime
+                ? convertToDecimalHours(flight.totalFlightTime)
+                : "N/A",
+            }))}
+            selectedStatus={statusFilter}
+            onFilterChange={(status: string) =>
+              setStatusFilter(
+                status as "pending" | "confirmed" | "cancelled" | "all"
+              )
+            }
+            allFlights={flights.map((flight) => ({
+              _id: flight._id,
+              date: flight.date,
+              departureTime: flight.departureTime,
+              arrivalTime: flight.arrivalTime,
+              pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
+              instructor: flight.instructor
+                ? `${flight.instructor.name} ${flight.instructor.lastname}`
+                : "S/A",
+              origin: flight.origin,
+              destination: flight.destination,
+              status: flight.status,
+              airplane: flight.airplane
+                ? `${flight.airplane.registrationNumber}`
+                : "N/A",
+              totalFlightTime: flight.totalFlightTime
+                ? convertToDecimalHours(flight.totalFlightTime)
+                : "N/A",
+            }))}
+          />
+        </div>
+      )}
 
       <AddFlightModal
         show={showModal}

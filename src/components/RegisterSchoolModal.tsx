@@ -2,22 +2,12 @@ import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { NewSchool } from "../types/types";
 
 interface RegisterSchoolModalProps {
   show: boolean;
   onClose: () => void;
-  onRegisterSchool: (schoolData: {
-    type: string;
-    name: string;
-    country: string;
-    aerodrome: string;
-    address: string;
-    openingHours: string;
-    publicPhone: string;
-    publicEmail: string;
-    adminEmail: string;
-    adminPassword: string;
-  }) => Promise<void>;
+  onRegisterSchool: (schoolData: NewSchool) => Promise<void>;
 }
 
 const RegisterSchoolModal: React.FC<RegisterSchoolModalProps> = ({
@@ -27,7 +17,7 @@ const RegisterSchoolModal: React.FC<RegisterSchoolModalProps> = ({
 }) => {
   const [step, setStep] = useState(1);
   const [useSameEmail, setUseSameEmail] = useState(false);
-  const [schoolData, setSchoolData] = useState({
+  const [schoolData, setSchoolData] = useState<NewSchool>({
     type: "Escuela de vuelo",
     name: "",
     country: "🇦🇷 Argentina",

@@ -1,6 +1,6 @@
 @use "./AdminFlights/AdminFlights";
 @use "./AdminUsers/AdminUsers";
-@use "./GeneralComponents/fichas";
+@use "./GeneralComponents/Items/Items";
 @use "./GeneralComponents/global";
 @use "./Login/Login";
 @use "./AdminPlanes/AdminPlanes";
@@ -17,6 +17,8 @@
 @use "./GeneralComponents/CustomSelect";
 @use "./AdminFlights/FlightHistoryTable";
 @use "./GeneralComponents/PlaneLoader.module";
+@use "./GeneralComponents/Items/UserItem";
+@use "./GeneralComponents/Items/PlaneItem";
 
 .dashboard-container,
 .profile-container,

@@ -1,31 +1,32 @@
 import React, { useState } from "react";
 import { Card, Modal, Button, Form } from "react-bootstrap";
-import defaultPlane from "../assets/images/default-plane.jpg"; // Importar la foto por defecto
+import { TrashFill } from "react-bootstrap-icons";
+import defaultPlane from "../assets/images/default-plane.jpg";
 import ReactCrop, { Crop as ReactCropType } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-// import "../styles/planeItem.css"; // Importar el archivo CSS específico
+import {
+  assignEmbeddedIdToPlane,
+  removeEmbeddedIdFromPlane,
+} from "../services/planeService";
+import useTemporaryMessage from "../hooks/useTemporaryMessage";
+import Alert from "./Alert";
+import { Plane } from "../types/types";
 
 interface Crop extends ReactCropType {
   aspect?: number;
 }
 interface PlaneItemProps {
-  plane: {
-    _id: string;
-    registrationNumber: string;
-    brand: string;
-    model: string;
-    photoUrl: string;
-    baseAerodrome: string;
-    addedDate: string;
-  };
+  plane: Plane;
   onDelete: (id: string) => void;
   onUpdatePhoto: (id: string, formData: FormData) => Promise<void>;
+  onIdAssigned: () => void;
 }
 
 const PlaneItem: React.FC<PlaneItemProps> = ({
   plane,
   onDelete,
   onUpdatePhoto,
+  onIdAssigned,
 }) => {
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [crop, setCrop] = useState<Crop>({
@@ -39,8 +40,17 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
   const [completedCrop, setCompletedCrop] = useState<Crop | null>(null);
   const [imageRef, setImageRef] = useState<HTMLImageElement | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [idInput, setIdInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { message, showTemporaryMessage } = useTemporaryMessage();
 
   const planePhoto = plane.photoUrl || defaultPlane;
+
+  const handleShowModal = () => setShowDetailModal(true);
+  const handleCloseModal = () => {
+    onIdAssigned();
+    setShowDetailModal(false);
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -62,9 +72,7 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
   };
 
   const handleSavePhoto = async () => {
-    if (!completedCrop || !imageRef) {
-      return;
-    }
+    if (!completedCrop || !imageRef) return;
 
     const canvas = document.createElement("canvas");
     const scaleX = imageRef.naturalWidth / imageRef.width;
@@ -94,8 +102,10 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
           try {
             await onUpdatePhoto(plane._id, formData);
             setPreviewUrl(null);
+            showTemporaryMessage("success", "Foto actualizada correctamente");
           } catch (err) {
             console.error("Failed to update plane photo");
+            showTemporaryMessage("error", "Error al actualizar la foto");
           }
         }
       });
@@ -107,18 +117,42 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
     setCompletedCrop(null);
   };
 
-  const handleDeletePlane = async () => {
+  const [currentIdEmbebbedState, setCurrentEmbebbedState] = useState(
+    plane?.idEmbebbed || ""
+  );
+
+  const handleAssignId = async () => {
+    setLoading(true);
     try {
-      await onDelete(plane._id);
-      setShowDetailModal(false);
+      await assignEmbeddedIdToPlane(plane._id, idInput);
+      setCurrentEmbebbedState(idInput);
+      showTemporaryMessage("success", "ID EMBEBIDO ASIGNADO");
+      setIdInput("");
     } catch (err) {
-      console.error("Failed to delete plane");
+      console.error("FAILED TO ASSIGN EMBEDDED ID:", err);
+      showTemporaryMessage("error", "ERROR AL ASIGNAR ID EMBEBIDO");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRemoveId = async () => {
+    setLoading(true);
+    try {
+      await removeEmbeddedIdFromPlane(plane._id);
+      setCurrentEmbebbedState("");
+      showTemporaryMessage("success", "ID EMBEBIDO ELIMINADO");
+    } catch (err) {
+      console.error("Error eliminando ID embebido");
+      showTemporaryMessage("error", "Error al eliminar el ID embebido");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      <Card className="plane-item" onClick={() => setShowDetailModal(true)}>
+      <Card className="plane-item" onClick={handleShowModal}>
         <Card.Img
           variant="top"
           src={planePhoto}
@@ -131,15 +165,30 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
           <Card.Text className="plane-details">
             {plane.brand} - {plane.model}
           </Card.Text>
+          <Card.Text>
+            ID Embebido:{" "}
+            <strong
+              className={`plane-id ${!plane.idEmbebbed ? "text-danger" : ""}`}
+            >
+              {plane.idEmbebbed || "Sin asignar"}
+            </strong>
+          </Card.Text>
         </Card.Body>
       </Card>
 
-      <Modal show={showDetailModal} onHide={() => setShowDetailModal(false)}>
+      <Modal show={showDetailModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Ficha de aeronave</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <img src={planePhoto} alt={plane.model} className="img-fluid mb-3" />
+        <Modal.Body className="plane-modal-body">
+          <div className="plane-photo-container">
+            <img
+              src={planePhoto}
+              alt={plane.model}
+              className="plane-photo img-fluid mb-3"
+            />
+          </div>
+
           <h5 className="section-title">Detalles de la aeronave:</h5>
           <p className="subtitle">
             Aeródromo base: <strong>{plane.baseAerodrome}</strong>
@@ -153,11 +202,44 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
           <p className="subtitle">
             Matrícula: <strong>{plane.registrationNumber}</strong>
           </p>
+          <p className="subtitle">
+            ID Embebido:{" "}
+            <strong className={!currentIdEmbebbedState ? "id-unassigned" : ""}>
+              {currentIdEmbebbedState || "Sin asignar"}
+            </strong>
+          </p>
+
           <h5 className="section-title mt-4">Relación con la escuela:</h5>
           <p className="subtitle">
-            Agregado el: <strong>{plane.addedDate}</strong>
+            Agregado el: <strong>{plane.addedDate || "-"}</strong>
           </p>
-          <h5 className="section-title mt-4">Acciones:</h5>
+
+          <h5 className="section-title mt-4">Asignar ID Embebido:</h5>
+          <div className="tag-assignment-container">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Escanea o ingresa el ID"
+              value={idInput}
+              onChange={(e) => setIdInput(e.target.value)}
+            />
+            <div className="tag-action-buttons">
+              <button
+                className="btn btn-assign"
+                disabled={loading || !idInput}
+                onClick={handleAssignId}
+              >
+                {loading ? "..." : "Asignar"}
+              </button>
+              <Button className="btn-delete-tag" onClick={handleRemoveId}>
+                <TrashFill />
+              </Button>
+            </div>
+          </div>
+
+          {message && <Alert message={message.message} type={message.type} />}
+
+          <h5 className="section-title">Acciones:</h5>
           {previewUrl ? (
             <>
               <ReactCrop
@@ -191,7 +273,7 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
               <Button
                 variant="primary"
                 onClick={() => document.getElementById("fileInput")?.click()}
-                className="mt-3 d-block"
+                className="btn-change-photo mt-3 d-block"
               >
                 Cambiar foto principal
               </Button>
@@ -205,7 +287,10 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
           )}
           <Button
             variant="danger"
-            onClick={handleDeletePlane}
+            onClick={() => {
+              onDelete(plane._id);
+              handleCloseModal();
+            }}
             className="mt-3 d-block"
           >
             Eliminar

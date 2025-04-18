@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/auth";
+import { registerUser } from "../services/userService";
+import { NewUser, NewSchool } from "../types/types";
 import Alert from "../components/Alert";
 import RegisterSchoolModal from "../components/RegisterSchoolModal";
 import RegisterUserModal from "../components/RegisterUserModal";
-import logo from "../assets/images/LogoSmallPilotLog.png"; // Importa el logo
+import logo from "../assets/images/LogoSmallPilotLog.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
+import { useAuth } from "../context/useAuth";
+import { registerSchool } from "../services/schoolService";
 
 const Login: React.FC = () => {
   const { message, showTemporaryMessage } = useTemporaryMessage();
@@ -17,6 +21,7 @@ const Login: React.FC = () => {
   const [showRegisterSchoolModal, setShowRegisterSchoolModal] = useState(false);
   const [showRegisterUserModal, setShowRegisterUserModal] = useState(false);
   const navigate = useNavigate();
+  const { setLoggedIn } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,13 +30,14 @@ const Login: React.FC = () => {
       if (!user.assignedSchools || user.assignedSchools.length === 0) {
         showTemporaryMessage(
           "warning",
-          "Usuario no pertenece a ninguna escuela."
+          "USUARIO NO PERTENECE A NINGUNA ESCUELA"
         );
         return;
       }
 
       localStorage.setItem("token", token);
-      showTemporaryMessage("success", "Access OK");
+      setLoggedIn(true);
+      showTemporaryMessage("success", "ACCESO EXITOSO");
       setTimeout(() => {
         const school = user.assignedSchools[0];
         if (
@@ -47,85 +53,70 @@ const Login: React.FC = () => {
         }
       }, 2000);
     } catch (err) {
-      if (
-        err instanceof Error &&
-        err.message === "LA_ESCUELA_AUN_NO_FUE_APROBADA"
-      ) {
-        showTemporaryMessage(
-          "error",
-          "La escuela aún no fue aprobada. Espere aprobación del Super Admin."
-        );
-      } else {
-        showTemporaryMessage("error", "Usuario o Contraseña incorrectos.");
+      if (err instanceof Error) {
+        if (err.message === "LA_ESCUELA_AUN_NO_FUE_APROBADA") {
+          showTemporaryMessage(
+            "warning",
+            "ESCUELA NO FUE APROBADA. CONTACTE SOPORTE"
+          );
+        } else if (err.message === "LOGIN_INVALID") {
+          showTemporaryMessage("error", "USUARIO O CONTRASEÑA INCORRECTOS");
+        } else {
+          showTemporaryMessage("error", "ERROR AL INICIAR SESIÓN");
+        }
       }
     }
   };
 
-  interface SchoolData {
-    type: string;
-    name: string;
-    country: string;
-    aerodrome: string;
-    address: string;
-    openingHours: string;
-    publicPhone: string;
-    publicEmail: string;
-    adminEmail: string;
-    adminPassword: string;
-    [key: string]: string | number; // Adjust the type based on expected additional fields
-  }
-
-  const handleRegisterSchool = async (schoolData: SchoolData) => {
+  const handleRegisterSchool = async (schoolData: NewSchool) => {
     try {
-      const response = await fetch("http://localhost:3001/api/schools", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(schoolData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Registration failed");
-      }
-
-      showTemporaryMessage("success", "School registration successful");
+      await registerSchool(schoolData);
+      showTemporaryMessage("success", "Registro de escuela exitoso");
       setTimeout(() => {
         setShowRegisterSchoolModal(false);
       }, 2000);
     } catch (err) {
-      showTemporaryMessage("error", "Registration failed. Please try again.");
+      if (err instanceof Error && err.message === "SCHOOL_ALREADY_EXISTS") {
+        showTemporaryMessage("error", "YA EXISTE UNA ESCUELA CON ESE NOMBRE");
+      } else {
+        showTemporaryMessage(
+          "error",
+          "ERROR AL REGISTRAR ESCUELA. INTENTE NUEVAMENTE"
+        );
+      }
     }
   };
 
-  const handleRegisterUser = async (userData: {
-    dni: string;
-    name: string;
-    lastname: string;
-    email: string;
-    password: string;
-  }) => {
+  const handleRegisterUser = async (userData: NewUser) => {
     try {
-      const response = await fetch("http://localhost:3001/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Registration failed");
-      }
-
-      showTemporaryMessage("success", "User registration successful");
+      await registerUser(userData);
+      showTemporaryMessage("success", "REGISTRO EXITOSO");
       setTimeout(() => {
         setShowRegisterUserModal(false);
       }, 2000);
     } catch (err) {
-      showTemporaryMessage("error", "Registration failed. Please try again.");
+      if (err instanceof Error) {
+        if (err.message === "EMAIL_ALREADY_REGISTERED") {
+          showTemporaryMessage("error", "EL EMAIL YA ESTA REGISTRADO");
+        } else if (err.message === "DNI_ALREADY_REGISTERED") {
+          showTemporaryMessage("error", "EL DNI YA ESTA REGISTRADO");
+        } else {
+          showTemporaryMessage(
+            "error",
+            "ERROR AL REGISTRAR USUARIO. INTENTE NUEVAMENTE"
+          );
+        }
+      }
     }
   };
+
+  useEffect(() => {
+    const sessionMessage = localStorage.getItem("sessionMessage");
+    if (sessionMessage) {
+      showTemporaryMessage("error", sessionMessage);
+      localStorage.removeItem("sessionMessage");
+    }
+  }, [showTemporaryMessage]);
 
   return (
     <div className="login-page">

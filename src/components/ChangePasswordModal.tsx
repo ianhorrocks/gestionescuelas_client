@@ -26,7 +26,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div className="add-modal">
         <h2>Cambiar Contraseña</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">

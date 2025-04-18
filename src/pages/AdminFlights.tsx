@@ -12,7 +12,6 @@ type Flight = FlightBase & { validated: boolean };
 
 const AdminFlights: React.FC = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
-  const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -22,14 +21,12 @@ const AdminFlights: React.FC = () => {
         const loggedUser = await getLoggedUser();
         const schoolId = loggedUser.assignedSchools[0]?.school?._id;
         if (!schoolId) {
-          setError("No se encontró una escuela asignada.");
+          console.error("No school ID found for the logged user.");
           setLoading(false);
           return;
         }
 
         const flightsData = await getAllSchoolFlights(schoolId);
-        console.log("Vuelos obtenidos:", flightsData); // ya es un array
-
         const normalizedFlights = flightsData.map((flight) => ({
           ...flight,
           validated: flight.status === "confirmed",
@@ -38,7 +35,6 @@ const AdminFlights: React.FC = () => {
         setFlights(normalizedFlights);
       } catch (err) {
         console.error("Error fetching school flights:", err);
-        setError("Error al obtener los vuelos de la escuela.");
       } finally {
         setLoading(false);
       }
@@ -61,7 +57,6 @@ const AdminFlights: React.FC = () => {
           <PlaneLoader />
         ) : (
           <>
-            {error && <p className="text-danger">{error}</p>}
             <div className="flights-section">
               <div className="flights-subsection">
                 <h2>Pendientes</h2>

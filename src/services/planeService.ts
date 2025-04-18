@@ -35,3 +35,23 @@ export const updatePlanePhoto = async (
   );
   return response.data;
 };
+
+export const assignEmbeddedIdToPlane = async (
+  planeId: string,
+  idEmbebbed: string
+): Promise<{ message: string }> => {
+  const response = await api.put("/planes/assign-id", {
+    planeId,
+    idEmbebbed,
+  });
+  return response.data;
+};
+
+export const removeEmbeddedIdFromPlane = async (
+  planeId: string
+): Promise<{ message: string }> => {
+  const response = await api.put("/planes/remove-id", {
+    planeId,
+  });
+  return response.data;
+};

@@ -1,33 +1,38 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-
-interface User {
-  _id: string;
-  name: string;
-  lastname: string;
-  assignedSchools: {
-    school: string;
-    role: string;
-    createdAt: string; // Asegurarse de que el campo createdAt esté presente
-  }[];
-  photo?: string | null;
-  email: string;
-  dni: string;
-}
+import { assignTagToUser, removeTagFromUser } from "../services/userService";
+import useTemporaryMessage from "../hooks/useTemporaryMessage";
+import Alert from "./Alert";
+import { TrashFill } from "react-bootstrap-icons";
+import "../styles/GeneralComponents/Items/_UserItem.scss";
+import { User } from "../types/types"; // Importamos el tipo User
 
 interface UserItemProps {
   user: User;
   onDelete: (id: string) => void;
-  schoolId: string; // Añadir schoolId para identificar la escuela en cuestión
+  schoolId: string;
+  onTagAssigned: () => void;
 }
 
-const UserItem: React.FC<UserItemProps> = ({ user, onDelete, schoolId }) => {
+const UserItem: React.FC<UserItemProps> = ({
+  user,
+  onDelete,
+  schoolId,
+  onTagAssigned,
+}) => {
   const [showModal, setShowModal] = useState(false);
+  const [tag, setTag] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { message, showTemporaryMessage } = useTemporaryMessage();
+
   const defaultPhoto = "/src/assets/images/LogoSmallUserProfilePhoto.png";
   const userPhoto = user.photo || defaultPhoto;
 
   const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => {
+    onTagAssigned();
+    setShowModal(false);
+  };
 
   const assignedSchool = user.assignedSchools.find(
     (s) => s.school.toString() === schoolId.toString()
@@ -42,37 +47,82 @@ const UserItem: React.FC<UserItemProps> = ({ user, onDelete, schoolId }) => {
       })
     : "";
 
+  const [currentTagState, setCurrentTagState] = useState(
+    assignedSchool?.tag || ""
+  );
+
+  const handleAssignTag = async () => {
+    setLoading(true);
+    try {
+      await assignTagToUser(user._id, schoolId, tag);
+      setCurrentTagState(tag);
+      showTemporaryMessage("success", "Tag asignado exitosamente");
+      setTag("");
+    } catch (error) {
+      console.error("Error asignando tag:", error);
+      showTemporaryMessage("error", "Error al asignar el tag");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRemoveTag = async () => {
+    setLoading(true);
+    try {
+      await removeTagFromUser(user._id, schoolId);
+      setCurrentTagState("");
+      showTemporaryMessage("success", "Tag eliminado");
+    } catch (error) {
+      console.error("Error eliminando tag:", error);
+      showTemporaryMessage("error", "Error al eliminar el tag");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
-      <li
-        className="list-group-item-users d-flex align-items-center"
-        onClick={handleShowModal}
-      >
+      <li className="user-item-list" onClick={handleShowModal}>
         <div className="user-photo-container">
           <img src={userPhoto} alt="User" className="user-photo" />
         </div>
-        <div className="flex-grow-1">
-          <h5 className="mb-1">
+        <div className="user-details">
+          <h5>
             {user.name} {user.lastname}
           </h5>
-          <p className="mb-0">Rol: {userRole}</p>
+          <p>Rol: {userRole}</p>
+          <p className="tag-label">
+            Tag:{" "}
+            <strong className={assignedSchool?.tag ? "" : "tag-unassigned"}>
+              {assignedSchool?.tag || "Sin asignar"}
+            </strong>
+          </p>
         </div>
       </li>
 
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} onHide={handleCloseModal} className="user-modal">
         <Modal.Header closeButton>
           <Modal.Title>Ficha de usuario</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <div className="user-profile d-flex align-items-center mb-3">
+        <Modal.Body className="user-modal-body">
+          <div className="user-profile">
             <div className="user-photo-container">
               <img src={userPhoto} alt="User" className="user-photo" />
             </div>
-            <div className="user-info d-flex flex-column">
-              <h5 className="mb-1">
-                {user.name} {user.lastname}
-              </h5>
-              <p className="user-role mb-0">Rol: {userRole}</p>
+            <div className="user-info">
+              <div className="user-main-line">
+                <h5 className="user-name">
+                  {user.name} {user.lastname}
+                </h5>
+                <span
+                  className={`tag-highlight ${
+                    !currentTagState ? "tag-unassigned" : ""
+                  }`}
+                >
+                  ({currentTagState || "Sin asignar"})
+                </span>
+              </div>
+              <p className="user-role">Rol: {userRole}</p>
             </div>
           </div>
 
@@ -83,18 +133,45 @@ const UserItem: React.FC<UserItemProps> = ({ user, onDelete, schoolId }) => {
           <p className="subtitle">
             DNI: <strong>{user.dni}</strong>
           </p>
-          <h5 className="section-title mt-4">Relación con la escuela:</h5>
+
+          <h5 className="section-title">Relación con la escuela:</h5>
           <p className="subtitle">
             Fecha de asignación: <strong>{assignedDate}</strong>
           </p>
-          <h5 className="section-title mt-4">Acciones:</h5>
+
+          <h5 className="section-title">Asignar Tag RFID:</h5>
+          <div className="tag-assignment-container">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Escanea o ingresa el tag RFID"
+              value={tag}
+              onChange={(e) => setTag(e.target.value)}
+            />
+            <div className="tag-action-buttons">
+              <button
+                className="btn btn-assign"
+                disabled={loading || !tag}
+                onClick={handleAssignTag}
+              >
+                {loading ? "..." : "Asignar"}
+              </button>
+              <Button className="btn-delete-tag" onClick={handleRemoveTag}>
+                <TrashFill />
+              </Button>
+            </div>
+          </div>
+
+          {message && <Alert message={message.message} type={message.type} />}
+
+          <h5 className="section-title">Acciones:</h5>
           <Button
             variant="danger"
             onClick={() => {
               onDelete(user._id);
               handleCloseModal();
             }}
-            className="mt-3"
+            className="delete-user-button btn"
           >
             Eliminar de la escuela
           </Button>

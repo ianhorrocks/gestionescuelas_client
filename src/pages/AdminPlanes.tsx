@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 import Navbar from "../components/NavbarAdmin";
 import AddPlaneModal from "../components/AddPlaneModal";
 import PlaneItem from "../components/PlaneItem";
@@ -17,8 +19,9 @@ import { NewPlane, Plane } from "../types/types";
 
 const AdminPlanes: React.FC = () => {
   const [planes, setPlanes] = useState<Plane[]>([]);
-  const [error, setError] = useState("");
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [planeIdToDelete, setPlaneIdToDelete] = useState<string | null>(null);
   const [schoolId, setSchoolId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const { message, showTemporaryMessage } = useTemporaryMessage();
@@ -30,10 +33,10 @@ const AdminPlanes: React.FC = () => {
         if (loggedUser && loggedUser.assignedSchools.length > 0) {
           setSchoolId(loggedUser.assignedSchools[0].school._id);
         } else {
-          setError("No se pudo obtener la escuela del usuario logueado.");
+          console.error("Error cant obtain school ID for logged user.");
         }
       } catch (err) {
-        setError("Error al obtener la información del usuario logueado.");
+        console.error("Error fetching logged user information:", err);
       }
     };
 
@@ -45,9 +48,17 @@ const AdminPlanes: React.FC = () => {
       setLoading(true);
       if (!schoolId) throw new Error("School ID is null");
       const data = await fetchPlanes(schoolId);
-      setPlanes(data);
+      const enrichedPlanes = data.map((plane) => ({
+        ...plane,
+        addedDate: new Date(
+          parseInt(plane._id.substring(0, 8), 16) * 1000
+        ).toLocaleDateString("es-ES"),
+        photoUrl: plane.photoUrl || defaultPlane,
+      }));
+
+      setPlanes(enrichedPlanes);
     } catch (err) {
-      setError("Failed to fetch planes");
+      console.error("Error fetching planes:", err);
     } finally {
       setLoading(false);
     }
@@ -67,24 +78,34 @@ const AdminPlanes: React.FC = () => {
       showTemporaryMessage("success", "Aeronave Agregada");
       setShowAddModal(false);
     } catch (err) {
-      setError("Failed to add plane");
+      console.error("Error adding plane:", err);
       showTemporaryMessage("error", "Error al eliminar la aeronave.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDeletePlane = async (id: string) => {
-    setLoading(true);
-    try {
-      await deletePlane(id);
-      setPlanes((prevPlanes) => prevPlanes.filter((plane) => plane._id !== id));
-      showTemporaryMessage("success", "Aeronave Eliminada");
-    } catch (err) {
-      setError("Failed to delete plane");
-      showTemporaryMessage("error", "Error al eliminar la aeronave.");
-    } finally {
-      setLoading(false);
+  const handleDeleteClick = (id: string) => {
+    setPlaneIdToDelete(id);
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (planeIdToDelete) {
+      setLoading(true);
+      try {
+        await deletePlane(planeIdToDelete);
+        setPlanes((prevPlanes) =>
+          prevPlanes.filter((plane) => plane._id !== planeIdToDelete)
+        );
+        showTemporaryMessage("success", "Aeronave Eliminada");
+      } catch (err) {
+        console.error("Error deleting plane:", err);
+        showTemporaryMessage("error", "Error al eliminar la aeronave.");
+      } finally {
+        setLoading(false);
+        setShowConfirmModal(false);
+      }
     }
   };
 
@@ -101,7 +122,8 @@ const AdminPlanes: React.FC = () => {
       );
       setPlanes(updatedPlanes);
     } catch (err) {
-      setError("Failed to update plane photo");
+      console.error("Error updating plane photo:", err);
+      showTemporaryMessage("error", "Error al subir foto");
     }
   };
 
@@ -112,33 +134,23 @@ const AdminPlanes: React.FC = () => {
   ];
 
   return (
-    <div className="admin-planes-container">
+    <div>
       <Navbar title="Aeronaves" links={links} logoutPath="/" />
-      <div className="content">
-        {error && <p className="text-danger">{error}</p>}
+      <div className="admin-planes-container">
         {message && <Alert message={message.message} type={message.type} />}
 
         {loading ? (
           <PlaneLoader />
         ) : (
           <>
-            <div className="plane-list">
+            <div className="list-group-planes">
               {planes.map((plane) => (
                 <PlaneItem
                   key={plane._id}
-                  plane={{
-                    _id: plane._id,
-                    registrationNumber: plane.registrationNumber,
-                    brand: plane.brand,
-                    model: plane.model,
-                    photoUrl: plane.photoUrl || defaultPlane,
-                    baseAerodrome: plane.baseAerodrome,
-                    addedDate: new Date(
-                      parseInt(plane._id.substring(0, 8), 16) * 1000
-                    ).toLocaleDateString("es-ES"),
-                  }}
-                  onDelete={handleDeletePlane}
+                  plane={plane}
+                  onDelete={handleDeleteClick}
                   onUpdatePhoto={handleUpdatePlanePhoto}
+                  onIdAssigned={getPlanes}
                 />
               ))}
             </div>
@@ -157,6 +169,29 @@ const AdminPlanes: React.FC = () => {
           onClose={() => setShowAddModal(false)}
           onAddPlane={handleAddPlane}
         />
+
+        <Modal
+          show={showConfirmModal}
+          onHide={() => setShowConfirmModal(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Confirmar Eliminación</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            ¿Estás seguro de que deseas eliminar esta aeronave?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setShowConfirmModal(false)}
+            >
+              Cancelar
+            </Button>
+            <Button variant="danger" onClick={handleConfirmDelete}>
+              Eliminar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );

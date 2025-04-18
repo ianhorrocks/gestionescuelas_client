@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
 import Login from "./pages/Login";
 import Dashboard from "./pages/UserDashboard";
 import AdminUsers from "./pages/AdminUsers";
@@ -14,12 +15,55 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/user/login" element={<Login />} />
-        <Route path="/user/dashboard" element={<Dashboard />} />
-        <Route path="/admin/users" element={<AdminUsers />} />
-        <Route path="/admin/planes" element={<AdminPlanes />} />
-        <Route path="/admin/flights" element={<AdminFlights />} />
-        <Route path="/user/flights" element={<UserFlights />} />
-        <Route path="/user/profile" element={<UserProfile />} />
+
+        <Route
+          path="/user/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <PrivateRoute>
+              <AdminUsers />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/planes"
+          element={
+            <PrivateRoute>
+              <AdminPlanes />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/flights"
+          element={
+            <PrivateRoute>
+              <AdminFlights />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/user/flights"
+          element={
+            <PrivateRoute>
+              <UserFlights />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/user/profile"
+          element={
+            <PrivateRoute>
+              <UserProfile />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );

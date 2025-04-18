@@ -6,10 +6,12 @@ export interface Plane {
   country: string;
   brand: string;
   model: string;
-  totalHours: number;
+  totalHours: number | undefined; // opcional para cuando lo creás
   lastMaintenance?: Date;
   baseAerodrome: string;
   photoUrl?: string;
+  addedDate?: string; // opcional para cuando lo creás
+  idEmbebbed?: string | null; // ✅ agregado para manejar id del sistema embebido
 }
 
 export interface School {
@@ -34,6 +36,7 @@ export interface AssignedSchool {
   role: string;
   createdAt: string;
   school: School;
+  tag?: string; // Agregamos la propiedad tag aquí
 }
 
 export interface User {
@@ -43,7 +46,7 @@ export interface User {
   dni: number;
   email: string;
   photo: string | null;
-  assignedSchools: AssignedSchool[];
+  assignedSchools: AssignedSchool[]; // Utilizamos el subtipo actualizado
   createdAt: string;
   updatedAt: string;
   deleted?: boolean;
@@ -61,14 +64,8 @@ export interface AssignedSchoolShort {
   createdAt: string;
 }
 
-export interface AdminUser {
-  _id: string;
-  name: string;
-  lastname: string;
-  email: string;
-  photo?: string;
-  dni: string;
-  assignedSchools: AssignedSchoolShort[];
+export interface AdminUser extends User {
+  // Si necesitas agregar propiedades adicionales específicas de AdminUser, hazlo aquí
 }
 
 export interface FlightUser {
@@ -117,4 +114,25 @@ export interface NewPlane {
   totalHours: number;
   lastMaintenance?: Date;
   baseAerodrome: string;
+}
+
+export interface NewUser {
+  dni: string;
+  name: string;
+  lastname: string;
+  email: string;
+  password: string;
+}
+
+export interface NewSchool {
+  type: string;
+  name: string;
+  country: string;
+  aerodrome: string;
+  address: string;
+  openingHours: string;
+  publicPhone: string;
+  publicEmail: string;
+  adminEmail: string;
+  adminPassword: string;
 }

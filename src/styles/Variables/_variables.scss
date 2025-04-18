@@ -10,8 +10,8 @@ $tertiary-color-hover: #7b6983a1;
 $success-bg-color: #d4edda;
 $success-text-color: #155724;
 $success-border-color: #c3e6cb;
-$error-bg-color: #f8d7da;
-$error-text-color: #f10722d9;
+$error-bg-color-message: #f8d7da; // showTemporaryMessage (Error)
+$error-text-color: #d41027; // showTemporaryMessage (Error)
 $error-border-color: #f5c6cb;
 $warning-bg-color: #fff3cd;
 $warning-text-color: #856404;
@@ -19,3 +19,4 @@ $warning-border-color: #ffeeba;
 $font-family-caveat: "Caveat", cursive;
 $primary-hover-color: #94a9b5;
 $medium-soft-text-color: #484949b8;
+$error-bg-color: #dc3545;

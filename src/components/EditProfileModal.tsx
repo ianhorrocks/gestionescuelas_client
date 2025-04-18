@@ -33,7 +33,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
   return (
     <div className="modal-overlay-edit-user">
-      <div className="modal-content">
+      <div className="modal-content-edit-user">
         <h2>Editar Perfil</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">

@@ -5,65 +5,59 @@
   margin-top: 60px; // Espacio debajo del navbar
   padding: 20px;
 
+  .list-group-planes {
+    display: grid;
+    grid-template-columns: 1fr; // Una columna por defecto
+    gap: 1.2rem; // Espacio entre tarjetas
+    padding: 2px 15px 2px 15px;
+
+    .plane-item {
+      cursor: pointer;
+      width: 100%;
+      max-width: 100%; // Ajustar al ancho del contenedor
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border: none;
+      border-radius: 8px; // Bordes redondeados
+      overflow: hidden; // Asegurar que el contenido no se desborde
+      transition: transform 0.2s;
+
+      &:hover {
+        transform: scale(1.03); // Efecto de hover
+      }
+
+      .plane-registration {
+        font-weight: bold;
+        text-align: center;
+        font-size: 1rem;
+        color: variables.$primary-color;
+        margin-top: 10px;
+      }
+
+      .plane-details {
+        color: #6c757d; // Gris suave
+        font-size: 0.875rem;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(
+        2,
+        1fr
+      ); // Dos columnas en pantallas medianas
+    }
+
+    @media (min-width: 990px) {
+      grid-template-columns: repeat(
+        4,
+        1fr
+      ); // Cuatro columnas en pantallas grandes
+    }
+  }
+
   @media (min-width: 990px) {
     margin-left: 260px; // Ajustar al menú lateral fijo
   }
-}
-
-.plane-list {
-  display: grid;
-  grid-template-columns: 1fr; // Una columna por defecto
-  gap: 1rem; // Espacio entre tarjetas
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, 1fr); // Dos columnas en pantallas medianas
-  }
-
-  @media (min-width: 990px) {
-    grid-template-columns: repeat(
-      4,
-      1fr
-    ); // Cuatro columnas en pantallas grandes
-  }
-}
-
-.plane-item {
-  cursor: pointer;
-  width: 100%;
-  max-width: 100%; // Ajustar al ancho del contenedor
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: none;
-  border-radius: 8px; // Bordes redondeados
-  overflow: hidden; // Asegurar que el contenido no se desborde
-  transition: transform 0.2s;
-
-  &:hover {
-    transform: scale(1.02); // Efecto de hover
-  }
-
-  .plane-registration {
-    font-weight: bold;
-    text-align: center;
-    font-size: 1rem;
-    color: variables.$primary-color;
-    margin-top: 10px;
-  }
-
-  .plane-details {
-    color: #6c757d; // Gris suave
-    font-size: 0.875rem;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-}
-
-.section-title {
-  font-weight: bold;
-  font-size: 1rem; // Ajustar el tamaño de fuente según sea necesario
-}
-
-.subtitle {
-  color: #6c757d; // Gris suave
-  font-size: 0.875rem; // Ajustar el tamaño de fuente según sea necesario
 }

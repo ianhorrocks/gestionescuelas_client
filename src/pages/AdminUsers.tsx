@@ -17,7 +17,6 @@ import Alert from "../components/Alert";
 
 const AdminUsers: React.FC = () => {
   const [users, setUsers] = useState<AdminUser[]>([]);
-  const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null);
@@ -32,10 +31,13 @@ const AdminUsers: React.FC = () => {
         if (loggedUser && loggedUser.assignedSchools.length > 0) {
           setSchoolId(loggedUser.assignedSchools[0].school._id);
         } else {
-          setError("No se pudo obtener la escuela del usuario logueado.");
+          console.error("Error cant obtain school ID for logged user.");
         }
       } catch (err) {
-        setError("Error al obtener la información del usuario logueado.");
+        console.error(
+          "Error fetching logged user information:",
+          err instanceof Error ? err.message : "Unknown error"
+        );
       }
     };
 
@@ -49,13 +51,13 @@ const AdminUsers: React.FC = () => {
       if (Array.isArray(data)) {
         setUsers(data);
       } else {
-        setError("Unexpected response format");
+        console.error("Error: Expected an array of users, but got:", data);
       }
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message || "Failed to fetch users");
+        console.error("Error fetching users:", err.message);
       } else {
-        setError("Failed to fetch users");
+        console.error("Error fetching users:", err);
       }
     } finally {
       setLoading(false);
@@ -83,10 +85,10 @@ const AdminUsers: React.FC = () => {
       }
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message || "Failed to remove user from school");
+        console.error("Error removing user:", err.message);
         showTemporaryMessage("error", "Error al eliminar el usuario.");
       } else {
-        setError("Failed to remove user from school");
+        console.error("Error removing user:", err);
       }
     } finally {
       setLoading(false);
@@ -114,15 +116,14 @@ const AdminUsers: React.FC = () => {
           "El usuario ya está asignado a la escuela"
         );
       } else {
-        setError("");
         getUsers();
         showTemporaryMessage("success", `Usuario Agregado`);
       }
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message || "Error al asignar el usuario a la escuela.");
+        console.error("Error assigning user:", err.message);
       } else {
-        setError("Error al asignar el usuario a la escuela.");
+        console.error("Error assigning user:", err);
         showTemporaryMessage(
           "error",
           "Error al asignar el usuario a la escuela"
@@ -143,9 +144,7 @@ const AdminUsers: React.FC = () => {
     <div>
       <Navbar title="Usuarios" links={links} logoutPath="/" />
       <div className="admin-users-container">
-        {error && <p className="text-danger">{error}</p>}
         {message && <Alert message={message.message} type={message.type} />}
-
         {loading ? (
           <PlaneLoader />
         ) : (
@@ -157,13 +156,11 @@ const AdminUsers: React.FC = () => {
                   user={user}
                   onDelete={handleDeleteClick}
                   schoolId={schoolId || ""}
+                  onTagAssigned={getUsers}
                 />
               ))}
             </ul>
-            <button
-              className="add-button-user"
-              onClick={() => setShowModal(true)}
-            >
+            <button className="add-button" onClick={() => setShowModal(true)}>
               +
             </button>
           </>

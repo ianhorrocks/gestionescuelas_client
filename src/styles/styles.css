@@ -94,70 +94,65 @@
   background-color: #f9f9f9;
 }
 
-/* Estilo para mensajes de error */
-.text-danger {
-  color: rgba(241, 7, 34, 0.8509803922) !important;
-}
-
-/* Estilo para la lista de usuarios */
-.user-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  list-style: none;
-  padding: 0;
-}
-
-.user-list .user-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 15px;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
-}
-.user-list .user-item .user-info {
-  flex: 1;
-}
-.user-list .user-item .user-actions {
-  display: flex;
-  gap: 10px;
-}
-.user-list .user-item .user-actions .delete-button {
-  background-color: #f8d7da;
-  color: rgba(241, 7, 34, 0.8509803922);
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-.user-list .user-item .user-actions .delete-button:hover {
-  background-color: rgb(240.4042553191, 171.5957446809, 177.8510638298);
-}
-
-/* Estilo para el botón de agregar usuario */
+/* Contenedor de pagina. En AdminUsers.tsx */
 .admin-users-container {
   margin-top: 60px;
   padding: 20px;
+  /* Lista de cartas de usuarios. Estan en UserItems.tsx */
+}
+.admin-users-container .user-item-list {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  transition: transform 0.2s;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.admin-users-container .user-item-list:hover {
+  transform: scale(1.03);
+}
+.admin-users-container .user-item-list .user-photo-container {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+.admin-users-container .user-item-list .user-photo-container .user-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.admin-users-container .user-item-list .user-details {
+  flex-grow: 1;
+}
+.admin-users-container .user-item-list .user-details h5 {
+  margin-bottom: 0;
+}
+.admin-users-container .user-item-list .user-details p {
+  margin-bottom: 0;
+  font-size: 0.875rem;
+}
+.admin-users-container .user-item-list .user-details .tag-label {
+  color: #282d3c;
+}
+.admin-users-container .user-item-list .user-details .tag-unassigned {
+  color: #d41027;
 }
 @media (min-width: 990px) {
   .admin-users-container {
     margin-left: 260px;
   }
 }
-.admin-users-container h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 2rem;
-  color: #282d3c;
-}
 .admin-users-container .list-group-users {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.2rem;
+  padding: 2px 15px 2px 15px;
 }
 @media (min-width: 768px) {
   .admin-users-container .list-group-users {
@@ -166,57 +161,13 @@
 }
 @media (min-width: 990px) {
   .admin-users-container .list-group-users {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
-.admin-users-container .add-button-user {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background-color: #7b6983;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.224);
-}
-.admin-users-container .add-button-user:hover {
-  background-color: rgba(96.4194915254, 82.3093220339, 102.6906779661, 0.631372549);
-}
-.admin-users-container .admin-users-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-.admin-users-container .admin-users-header h1 {
-  font-size: 2rem;
-  color: #282d3c;
-}
-
-.list-group-item-users {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem; /* Reduced font size */
-  border-radius: 10px; /* Redondear las esquinas */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agregar sombra */
-  background-color: #ffffff; /* Fondo blanco */
-  padding: 10px; /* Añadir padding */
-  transition: transform 0.2s; /* Añadir transición para hover */
-}
-.list-group-item-users:hover {
-  transform: scale(1.02); /* Efecto de hover */
-}
-.list-group-item-users img {
-  margin-right: 15px;
-  border-radius: 50%; /* Redondear la imagen */
+@media (min-width: 1300px) {
+  .admin-users-container .list-group-users {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .modal-content {
@@ -231,141 +182,14 @@
 
 .section-title {
   font-weight: bold;
-  font-size: 1rem; /* Ajustar el tamaño de fuente según sea necesario */
+  font-size: 1rem;
+  margin-top: 1.2rem;
 }
 
 .subtitle {
-  color: #6c757d; /* Gris suave */
-  font-size: 0.875rem; /* Ajustar el tamaño de fuente según sea necesario */
-}
-
-.user-profile,
-.plane-profile {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.user-photo-container {
-  width: 50px;
-  height: 50px;
-  overflow: hidden;
-  border-radius: 50%;
-  margin-right: 1rem;
-}
-
-.user-photo,
-.plane-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.plane-info {
-  flex-grow: 1;
-}
-
-.user-profile {
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Añade espacio entre la imagen y el texto */
-}
-
-.user-info {
-  display: flex;
-  flex-direction: column; /* Nombre arriba, rol abajo */
-  justify-content: center;
-}
-
-.user-role {
-  color: #6c757d; /* Gris Bootstrap */
+  color: #6c757d;
   font-size: 0.875rem;
-  margin-left: -20px; /* Añadir margen izquierdo */
-}
-
-.text-danger {
-  color: rgba(241, 7, 34, 0.8509803922) !important;
-}
-
-.no-underline {
-  text-decoration: none !important; /* Quitar el subrayado */
-}
-
-.modal-button {
-  margin-left: 9.67rem; /* Añadir margen superior */
-}
-
-.user-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 15px;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
-}
-.user-item .user-info {
-  flex: 1;
-}
-.user-item .user-actions {
-  display: flex;
-  gap: 10px;
-}
-.user-item .user-actions .delete-button {
-  background-color: #f8d7da;
-  color: rgba(241, 7, 34, 0.8509803922);
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-.user-item .user-actions .delete-button:hover {
-  background-color: rgb(240.4042553191, 171.5957446809, 177.8510638298);
-}
-.user-item .user-photo-container {
-  margin-right: 15px;
-}
-.user-item .user-photo-container .user-photo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-.plane-item {
-  cursor: pointer;
-  transition: transform 0.1s ease-in-out; /* Ajustar la duración y el tipo de transición */
-}
-.plane-item:hover {
-  transform: scale(1.01); /* Reducir el efecto de escala */
-}
-.plane-item .plane-registration {
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: #282d3c;
-}
-.plane-item .plane-details {
-  color: #6c757d; /* Gris suave */
-  font-size: 0.875rem;
-}
-
-.img-fluid {
-  max-width: 100%;
-  height: auto;
-}
-
-.mt-3 {
-  margin-top: 1rem;
-}
-
-.d-block {
-  display: block;
-}
-
-.w-100 {
-  width: 100%;
+  margin-bottom: 0.5rem;
 }
 
 body {
@@ -416,6 +240,10 @@ h2 {
 
 .form-select:focus {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul al enfocar */
+}
+
+.text-danger {
+  color: #d41027 !important;
 }
 
 .login-page {
@@ -498,12 +326,6 @@ h2 {
   transform: translateY(-50%);
   cursor: pointer;
   color: rgba(144, 152, 158, 0.862745098);
-}
-
-.modal-content {
-  width: 400px;
-  max-width: 100%;
-  margin: 0 auto;
 }
 
 .floating-label-group,
@@ -675,7 +497,7 @@ h2 {
 }
 .alert-error {
   background-color: #f8d7da;
-  color: rgba(241, 7, 34, 0.8509803922);
+  color: #d41027;
   border: 1px solid #f5c6cb;
 }
 .alert-warning {
@@ -688,29 +510,13 @@ h2 {
   margin-top: 60px;
   padding: 20px;
 }
-@media (min-width: 990px) {
-  .admin-planes-container {
-    margin-left: 260px;
-  }
-}
-
-.plane-list {
+.admin-planes-container .list-group-planes {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.2rem;
+  padding: 2px 15px 2px 15px;
 }
-@media (min-width: 768px) {
-  .plane-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (min-width: 990px) {
-  .plane-list {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.plane-item {
+.admin-planes-container .list-group-planes .plane-item {
   cursor: pointer;
   width: 100%;
   max-width: 100%;
@@ -721,31 +527,36 @@ h2 {
   overflow: hidden;
   transition: transform 0.2s;
 }
-.plane-item:hover {
-  transform: scale(1.02);
+.admin-planes-container .list-group-planes .plane-item:hover {
+  transform: scale(1.03);
 }
-.plane-item .plane-registration {
+.admin-planes-container .list-group-planes .plane-item .plane-registration {
   font-weight: bold;
   text-align: center;
   font-size: 1rem;
   color: #282d3c;
   margin-top: 10px;
 }
-.plane-item .plane-details {
+.admin-planes-container .list-group-planes .plane-item .plane-details {
   color: #6c757d;
   font-size: 0.875rem;
   text-align: center;
   margin-bottom: 10px;
 }
-
-.section-title {
-  font-weight: bold;
-  font-size: 1rem;
+@media (min-width: 768px) {
+  .admin-planes-container .list-group-planes {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
-
-.subtitle {
-  color: #6c757d;
-  font-size: 0.875rem;
+@media (min-width: 990px) {
+  .admin-planes-container .list-group-planes {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 990px) {
+  .admin-planes-container {
+    margin-left: 260px;
+  }
 }
 
 .dashboard-container {
@@ -1387,7 +1198,7 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(241, 7, 34, 0.8509803922);
+  color: #d41027;
   font-size: 1rem;
   text-decoration: none;
   gap: 8px;
@@ -1423,56 +1234,56 @@ body,
   align-items: center;
   z-index: 1000;
 }
-.modal-overlay-edit-user .modal-content {
+.modal-overlay-edit-user .modal-content-edit-user {
   background-color: white;
   padding: 2rem;
   border-radius: 8px;
   width: 400px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-.modal-overlay-edit-user .modal-content h2 {
+.modal-overlay-edit-user .modal-content-edit-user h2 {
   margin-bottom: 1rem;
   text-align: center;
 }
-.modal-overlay-edit-user .modal-content .form-group {
+.modal-overlay-edit-user .modal-content-edit-user .form-group {
   margin-bottom: 1rem;
 }
-.modal-overlay-edit-user .modal-content .form-group label {
+.modal-overlay-edit-user .modal-content-edit-user .form-group label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: bold;
 }
-.modal-overlay-edit-user .modal-content .form-group input {
+.modal-overlay-edit-user .modal-content-edit-user .form-group input {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-.modal-overlay-edit-user .modal-content .modal-actions {
+.modal-overlay-edit-user .modal-content-edit-user .modal-actions {
   display: flex;
   justify-content: space-between;
 }
-.modal-overlay-edit-user .modal-content .modal-actions .btn {
+.modal-overlay-edit-user .modal-content-edit-user .modal-actions .btn {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
 }
-.modal-overlay-edit-user .modal-content .modal-actions .btn-primary {
+.modal-overlay-edit-user .modal-content-edit-user .modal-actions .btn-primary {
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
 }
-.modal-overlay-edit-user .modal-content .modal-actions .btn-primary:hover {
+.modal-overlay-edit-user .modal-content-edit-user .modal-actions .btn-primary:hover {
   background-color: #0056b3;
 }
-.modal-overlay-edit-user .modal-content .modal-actions .btn-secondary {
+.modal-overlay-edit-user .modal-content-edit-user .modal-actions .btn-secondary {
   background-color: #6c757d;
   color: white;
   border: none;
   border-radius: 4px;
 }
-.modal-overlay-edit-user .modal-content .modal-actions .btn-secondary:hover {
+.modal-overlay-edit-user .modal-content-edit-user .modal-actions .btn-secondary:hover {
   background-color: #5a6268;
 }
 
@@ -1640,7 +1451,7 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(241, 7, 34, 0.8509803922);
+  color: #d41027;
   font-size: 1rem;
   text-decoration: none;
   gap: 8px;
@@ -1685,6 +1496,7 @@ body,
 }
 .add-button:hover {
   background-color: rgba(123, 105, 131, 0.631372549);
+  transform: scale(1.07);
 }
 
 /* Estilos compartidos para todos los modales */
@@ -1694,7 +1506,8 @@ body,
 }
 .add-modal .form-group {
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-top: 0.8rem;
+  margin-bottom: 1.6rem;
 }
 .add-modal .floating-label {
   color: #757575;
@@ -1983,6 +1796,185 @@ body,
     transform: rotate(360deg);
   }
 }
+.user-modal-body .user-profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 5px;
+}
+.user-modal-body .user-profile .user-photo-container {
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+.user-modal-body .user-profile .user-photo-container .user-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.user-modal-body .user-profile .user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.user-modal-body .user-profile .user-info .user-main-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.user-modal-body .user-profile .user-info .user-name {
+  margin-bottom: 0;
+}
+.user-modal-body .user-profile .user-info .tag-highlight {
+  font-size: 0.875rem;
+  color: #282d3c;
+  font-weight: bold;
+}
+.user-modal-body .user-profile .user-info .tag-unassigned {
+  color: #d41027;
+}
+.user-modal-body .user-profile .user-info .user-role {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin: 0;
+}
+.user-modal-body .tag-assignment-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.user-modal-body .tag-assignment-container .tag-action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+.user-modal-body .tag-assignment-container .tag-action-buttons .btn-assign {
+  background-color: #7b6983;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+.user-modal-body .tag-assignment-container .tag-action-buttons .btn-assign:hover {
+  background-color: rgb(96.4194915254, 82.3093220339, 102.6906779661);
+}
+.user-modal-body .tag-assignment-container .tag-action-buttons .btn-delete-tag {
+  background-color: #dc3545;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+.user-modal-body .tag-assignment-container .tag-action-buttons .btn-delete-tag svg {
+  color: white;
+}
+.user-modal-body .tag-assignment-container .tag-action-buttons .btn-delete-tag:hover {
+  background-color: rgb(189.2151898734, 32.7848101266, 47.7721518987);
+}
+.user-modal-body .delete-user-button {
+  margin-top: 0.5rem;
+}
+
+.plane-modal-body {
+  padding: 1.5rem;
+}
+.plane-modal-body .plane-photo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.plane-modal-body .plane-photo-container .plane-photo {
+  max-width: 220px;
+  max-height: 220px;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+.plane-modal-body .section-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+}
+.plane-modal-body .subtitle {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.25rem;
+}
+.plane-modal-body .subtitle strong {
+  color: #222;
+}
+.plane-modal-body .subtitle .id-unassigned {
+  color: #d41027;
+  font-weight: 600;
+}
+.plane-modal-body .tag-assignment-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.plane-modal-body .tag-assignment-container input.form-control {
+  font-size: 0.95rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+}
+.plane-modal-body .tag-assignment-container .tag-action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+.plane-modal-body .tag-assignment-container .tag-action-buttons .btn-assign {
+  background-color: #7b6983;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+.plane-modal-body .tag-assignment-container .tag-action-buttons .btn-assign:hover {
+  background-color: rgb(96.4194915254, 82.3093220339, 102.6906779661);
+}
+.plane-modal-body .tag-assignment-container .tag-action-buttons .btn-delete-tag {
+  background-color: #dc3545;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+.plane-modal-body .tag-assignment-container .tag-action-buttons .btn-delete-tag svg {
+  color: white;
+}
+.plane-modal-body .tag-assignment-container .tag-action-buttons .btn-delete-tag:hover {
+  background-color: rgb(189.2151898734, 32.7848101266, 47.7721518987);
+}
+.plane-modal-body .btn-change-photo {
+  background-color: #7b6983;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+.plane-modal-body .btn-change-photo:hover {
+  background-color: rgb(96.4194915254, 82.3093220339, 102.6906779661);
+}
+.plane-modal-body button {
+  font-size: 0.9rem;
+}
+.plane-modal-body .btn-danger {
+  margin-top: 1.5rem;
+}
+
 .dashboard-container,
 .profile-container,
 .school-container,

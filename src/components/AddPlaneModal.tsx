@@ -20,13 +20,31 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
   onClose,
   onAddPlane,
 }) => {
+  const [focusedFields, setFocusedFields] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  const handleFocus = (field: string) =>
+    setFocusedFields((prev) => ({ ...prev, [field]: true }));
+
+  const handleBlur = (field: string) =>
+    setFocusedFields((prev) => ({ ...prev, [field]: false }));
+
+  const placeholders: { [key: string]: string } = {
+    registrationNumber: "Ej: LV-S007",
+    totalHours: "0",
+    model: "Ej: P202",
+    brand: "Ej: Cessna",
+    baseAerodrome: "Ej: La Carlota",
+  };
+
   const [planeData, setPlaneData] = useState({
     registrationNumber: "",
     country: "Argentina",
     brand: "",
     model: "",
-    totalHours: 0,
-    lastMaintenance: "", // Inicializar como cadena vacía
+    totalHours: "",
+    lastMaintenance: "",
     baseAerodrome: "",
   });
 
@@ -36,33 +54,33 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
     >
   ) => {
     const { name, value } = e.target;
-    if (name === "lastMaintenance") {
-      setPlaneData({ ...planeData, [name]: value }); // Mantener como cadena
-    } else if (name === "totalHours") {
-      setPlaneData({ ...planeData, [name]: parseFloat(value) }); // Convertir a número
-    } else {
-      setPlaneData({ ...planeData, [name]: value });
-    }
+    setPlaneData({ ...planeData, [name]: value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
     const formattedPlaneData = {
       ...planeData,
+      totalHours:
+        planeData.totalHours === "" ? 0 : parseFloat(planeData.totalHours),
       lastMaintenance: planeData.lastMaintenance
         ? new Date(planeData.lastMaintenance)
-        : undefined, // Convertir a Date si no está vacío
+        : undefined,
     };
+
     onAddPlane(formattedPlaneData);
     onClose();
   };
+
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <Modal show={show} onHide={onClose} className="fade add-modal">
       <Modal.Header closeButton>
         <Modal.Title>Agregar Avión</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="modal-body">
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formRegistrationNumber" className="form-group">
             <Form.Control
@@ -70,9 +88,15 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
               name="registrationNumber"
               value={planeData.registrationNumber}
               onChange={handleChange}
+              onFocus={() => handleFocus("registrationNumber")}
+              onBlur={() => handleBlur("registrationNumber")}
               required
               className="floating-input"
-              placeholder=" "
+              placeholder={
+                focusedFields["registrationNumber"]
+                  ? placeholders["registrationNumber"]
+                  : " "
+              }
             />
             <Form.Label className="floating-label">Matrícula</Form.Label>
           </Form.Group>
@@ -97,9 +121,11 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
               name="brand"
               value={planeData.brand}
               onChange={handleChange}
+              onFocus={() => handleFocus("brand")}
+              onBlur={() => handleBlur("brand")}
               required
               className="floating-input"
-              placeholder=" "
+              placeholder={focusedFields["brand"] ? placeholders["brand"] : " "}
             />
             <Form.Label className="floating-label">Marca</Form.Label>
           </Form.Group>
@@ -110,9 +136,11 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
               name="model"
               value={planeData.model}
               onChange={handleChange}
+              onFocus={() => handleFocus("model")}
+              onBlur={() => handleBlur("model")}
               required
               className="floating-input"
-              placeholder=" "
+              placeholder={focusedFields["model"] ? placeholders["model"] : " "}
             />
             <Form.Label className="floating-label">Modelo</Form.Label>
           </Form.Group>
@@ -123,9 +151,13 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
               name="totalHours"
               value={planeData.totalHours}
               onChange={handleChange}
+              onFocus={() => handleFocus("totalHours")}
+              onBlur={() => handleBlur("totalHours")}
               required
               className="floating-input"
-              placeholder=" "
+              placeholder={
+                focusedFields["totalHours"] ? placeholders["totalHours"] : " "
+              }
             />
             <Form.Label className="floating-label">Horas Totales</Form.Label>
           </Form.Group>
@@ -138,6 +170,7 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
               onChange={handleChange}
               className="floating-input"
               placeholder=" "
+              max={today}
             />
             <Form.Label className="floating-label">
               Último Mantenimiento
@@ -150,12 +183,19 @@ const AddPlaneModal: React.FC<AddPlaneModalProps> = ({
               name="baseAerodrome"
               value={planeData.baseAerodrome}
               onChange={handleChange}
+              onFocus={() => handleFocus("baseAerodrome")}
+              onBlur={() => handleBlur("baseAerodrome")}
               required
               className="floating-input"
-              placeholder=" "
+              placeholder={
+                focusedFields["baseAerodrome"]
+                  ? placeholders["baseAerodrome"]
+                  : " "
+              }
             />
             <Form.Label className="floating-label">Aeródromo Base</Form.Label>
           </Form.Group>
+
           <div className="text-end">
             <Button
               variant="primary"

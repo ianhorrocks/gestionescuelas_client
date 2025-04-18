@@ -1,0 +1,4848 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "CORONEL BOGADO",
+      "iata": "EQS",
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 2,
+      "name": "GENERAL ACHA",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 3,
+      "name": "ARRECIFES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 4,
+      "name": "PUERTO DESEADO",
+      "iata": "PSS",
+      "oaci": "SAWD",
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 5,
+      "name": "BANDERA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTIAGO DEL ESTERO"
+    },
+    {
+      "id": 6,
+      "name": "BANDERA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTIAGO DEL ESTERO"
+    },
+    {
+      "id": 7,
+      "name": "BUENOS AIRES",
+      "iata": null,
+      "oaci": "SABE",
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 8,
+      "name": "PIEDRA DEL ÁGUILA",
+      "iata": null,
+      "oaci": "SAVA",
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 9,
+      "name": "ALTA GRACIA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 10,
+      "name": "CHACABUCO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 11,
+      "name": "LA LAJA",
+      "iata": null,
+      "oaci": null,
+      "region": "SAN JUAN"
+    },
+    {
+      "id": 12,
+      "name": "AMEGHINO",
+      "iata": "RGL",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 13,
+      "name": "AEROCLUB ALLEN",
+      "iata": null,
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 14,
+      "name": "AEROCLUB ﻿ALEJANDRO ROCA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 15,
+      "name": "CRUZ ALTA",
+      "iata": "REL",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 16,
+      "name": "ALVEAR",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 17,
+      "name": "ROBERTS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 18,
+      "name": "AMEGHINO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 19,
+      "name": "AMEGHINO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 20,
+      "name": "﻿PARANÁ",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 21,
+      "name": "ANDALGALÁ",
+      "iata": null,
+      "oaci": null,
+      "region": "CATAMARCA"
+    },
+    {
+      "id": 22,
+      "name": "APÓSTOLES",
+      "iata": null,
+      "oaci": null,
+      "region": "MISIONES"
+    },
+    {
+      "id": 23,
+      "name": "ARRIBEÑOS",
+      "iata": "USH",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 24,
+      "name": "ALTO RÍO SENGUER",
+      "iata": "SDE",
+      "oaci": "SAVR",
+      "region": "CHUBUT"
+    },
+    {
+      "id": 25,
+      "name": "ARROYITO",
+      "iata": "NQN",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 26,
+      "name": "ZÁRATE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 27,
+      "name": "TRENQUE LAUQUEN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 28,
+      "name": "AMEGHINO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 29,
+      "name": "ALVEAR",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 30,
+      "name": "AVELLANEDA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 31,
+      "name": "AYACUCHO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 32,
+      "name": "BERÓN DE ASTRADA",
+      "iata": "RZA",
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 33,
+      "name": "LAGO BUENOS AIRES",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 34,
+      "name": "BALCARCE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 35,
+      "name": "SAN CARLOS DE BARILOCHE",
+      "iata": "CPC",
+      "oaci": "SAZS",
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 36,
+      "name": "BASAVILBASO",
+      "iata": "AEP",
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 37,
+      "name": "BAHÍA BLANCA",
+      "iata": "MDQ",
+      "oaci": "SAZB",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 38,
+      "name": "BARADERO",
+      "iata": "PMY",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 39,
+      "name": "BAHÍA DORADA",
+      "iata": "CRD",
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 40,
+      "name": "BELL VILLE",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 41,
+      "name": "BARADERO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 42,
+      "name": "﻿BAHÍA BLANCA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 43,
+      "name": "BRAGADO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 44,
+      "name": "EL TURBIO",
+      "iata": null,
+      "oaci": "SAWT",
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 45,
+      "name": "BALCARCE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 46,
+      "name": "BALCARCE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 47,
+      "name": "BALCARCE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 48,
+      "name": "MIRAMAR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 49,
+      "name": "LONDRES",
+      "iata": null,
+      "oaci": null,
+      "region": "CATAMARCA"
+    },
+    {
+      "id": 50,
+      "name": "BOLÍVAR",
+      "iata": "OES",
+      "oaci": "SAZI",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 51,
+      "name": "BRAGADO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 52,
+      "name": "MORTEROS",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 53,
+      "name": "CORONEL BOGADO",
+      "iata": "COR",
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 54,
+      "name": "EL BOLSÓN",
+      "iata": null,
+      "oaci": "SAVB",
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 55,
+      "name": "BOMBAL",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 56,
+      "name": "LOBOS",
+      "iata": "VDM",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 57,
+      "name": "BRINKMANN",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 58,
+      "name": "BRAGADO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 59,
+      "name": "BAHÍA BLANCA",
+      "iata": "NEC",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 60,
+      "name": "BUTA RANQUIL",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 61,
+      "name": "BELLA VISTA (CORRIENTES)",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 62,
+      "name": "CORRAL DE BUSTOS",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 63,
+      "name": "CAFAYATE",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 64,
+      "name": "CAMPO ARENAL",
+      "iata": null,
+      "oaci": null,
+      "region": "CATAMARCA"
+    },
+    {
+      "id": 65,
+      "name": "CORRALITO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 66,
+      "name": "CATAMARCA",
+      "iata": null,
+      "oaci": "SANC",
+      "region": "CATAMARCA"
+    },
+    {
+      "id": 67,
+      "name": "SAN CAYETANO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 68,
+      "name": "CÓRDOBA",
+      "iata": null,
+      "oaci": "SACO",
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 69,
+      "name": "CAÑADA ROSQUÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 70,
+      "name": "﻿CABILDO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 71,
+      "name": "CURUZÚ CUATIÁ",
+      "iata": "VDR",
+      "oaci": "SATU",
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 72,
+      "name": "CARLOS CASARES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 73,
+      "name": "CALCHAQUÍ – (CCI) - DRNE - PRIVADO NO CONTROLADO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 74,
+      "name": "CARLOS CASARES",
+      "iata": "TDL",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 75,
+      "name": "CARLOS CASARES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 76,
+      "name": "CONCEPCIÓN",
+      "iata": null,
+      "oaci": null,
+      "region": "TUCUMÁN"
+    },
+    {
+      "id": 77,
+      "name": "CACHI",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 78,
+      "name": "SARGENTO CABRAL",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 79,
+      "name": "CARCARAÑÁ",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 80,
+      "name": "CAÑADA DE LUQUE",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 81,
+      "name": "CAÑADÓN SECO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 82,
+      "name": "CONCEPCIÓN DEL URUGUAY",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 83,
+      "name": "MERCEDES",
+      "iata": null,
+      "oaci": null,
+      "region": "SAN LUIS"
+    },
+    {
+      "id": 84,
+      "name": "LAS CEJAS",
+      "iata": null,
+      "oaci": null,
+      "region": "TUCUMÁN"
+    },
+    {
+      "id": 85,
+      "name": "CARHUÉ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 86,
+      "name": "CHARATA",
+      "iata": null,
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 87,
+      "name": "CHAJARÍ",
+      "iata": "PEH",
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 88,
+      "name": "CHAJARÍ",
+      "iata": "RYO",
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 89,
+      "name": "CHOS MALAL",
+      "iata": null,
+      "oaci": "SAHC",
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 90,
+      "name": "CHOLILA",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 91,
+      "name": "SAN MARTÍN DE LOS ANDES",
+      "iata": "IGR",
+      "oaci": "SAZY",
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 92,
+      "name": "CHACHARRAMENDI",
+      "iata": "ARR",
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 93,
+      "name": "CHARATA",
+      "iata": "ROY",
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 94,
+      "name": "CHIVILCOY",
+      "iata": "CSZ",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 95,
+      "name": "ARRECIFES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 96,
+      "name": "CORRIENTES",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 97,
+      "name": "CIPOLLETTI",
+      "iata": null,
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 98,
+      "name": "CORRIENTES",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 99,
+      "name": "CHAÑEAR LADEADO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 100,
+      "name": "CORRALITO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 101,
+      "name": "LAS HERAS",
+      "iata": null,
+      "oaci": "SAVH",
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 102,
+      "name": "CALILEGUA",
+      "iata": null,
+      "oaci": null,
+      "region": "JUJUY"
+    },
+    {
+      "id": 103,
+      "name": "COLÓN (ENTRE RÍOS)",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 104,
+      "name": "COLONIA CATRIEL",
+      "iata": null,
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 105,
+      "name": "CAÑUELAS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 106,
+      "name": "CARMEN DE ARECO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 107,
+      "name": "CANALS",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 108,
+      "name": "ARIAS",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 109,
+      "name": "RÍO COLORADO",
+      "iata": null,
+      "oaci": "SAZQ",
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 110,
+      "name": "COLÓN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 111,
+      "name": "CAMPO DE MAYO",
+      "iata": null,
+      "oaci": "SADO",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 112,
+      "name": "COSQUÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 113,
+      "name": "CAÑADA QUIRÓZ",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 114,
+      "name": "CONCORDIA",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 115,
+      "name": "CORRIENTES",
+      "iata": null,
+      "oaci": "SARC",
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 116,
+      "name": "COMODORO RIVADAVIA",
+      "iata": null,
+      "oaci": "SAVC",
+      "region": "CHUBUT"
+    },
+    {
+      "id": 117,
+      "name": "CALCHÍN",
+      "iata": "OYO",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 118,
+      "name": "MORTEROS",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 119,
+      "name": "CAPITÁN SARMIENTO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 120,
+      "name": "CAPITÁN SARMIENTO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 121,
+      "name": "CARLOS CASARES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 122,
+      "name": "CHAJARÍ",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 123,
+      "name": "COPETONAS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 124,
+      "name": "CATRILÓ",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 125,
+      "name": "CAPITÁN SARMIENTO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 126,
+      "name": "RÍO CUARTO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 127,
+      "name": "LA CUMBRE",
+      "iata": null,
+      "oaci": "SACC",
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 128,
+      "name": "CUTRAL CÓ",
+      "iata": null,
+      "oaci": "SAZW",
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 129,
+      "name": "VILLA VALERIA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 130,
+      "name": "CURUZÚ CUATIÁ",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 131,
+      "name": "DARREGUEIRA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 132,
+      "name": "DAIREAUX",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 133,
+      "name": "CONCORDIA",
+      "iata": "SST",
+      "oaci": "SAAC",
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 134,
+      "name": "TANDIL",
+      "iata": null,
+      "oaci": "SAZT",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 135,
+      "name": "﻿TANDIL",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 136,
+      "name": "MARTÍNEZ DE HOZ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 137,
+      "name": "DOLORES",
+      "iata": null,
+      "oaci": "SAZD",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 138,
+      "name": "MENDOZA",
+      "iata": null,
+      "oaci": null,
+      "region": "MENDOZA"
+    },
+    {
+      "id": 139,
+      "name": "CORONEL DORREGO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 140,
+      "name": "MENDOZA",
+      "iata": null,
+      "oaci": "SAME",
+      "region": "MENDOZA"
+    },
+    {
+      "id": 141,
+      "name": "﻿SAAVEDRA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 142,
+      "name": "﻿DAIREAUX",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 143,
+      "name": "PUERTO MADRYN",
+      "iata": null,
+      "oaci": "SAVY",
+      "region": "CHUBUT"
+    },
+    {
+      "id": 144,
+      "name": "DIAMANTE",
+      "iata": "BRC",
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 145,
+      "name": "USHUAIA",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 146,
+      "name": "ESPERANZA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 147,
+      "name": "EL CALAFATE",
+      "iata": null,
+      "oaci": "SAWC",
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 148,
+      "name": "﻿EDUARDO CASTEX",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 149,
+      "name": "CORONEL OLMEDO",
+      "iata": null,
+      "oaci": "SACD",
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 150,
+      "name": "LAS PAREJAS",
+      "iata": "LPG",
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 151,
+      "name": "25 DE MAYO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 152,
+      "name": "AEROCLUB ALTO PARANÁ EL DORADO",
+      "iata": "FDO",
+      "oaci": "SATD",
+      "region": "MISIONES"
+    },
+    {
+      "id": 153,
+      "name": "MAR DEL SUR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 154,
+      "name": "CLUB DE PLANEADORES SANTA ROSA",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 155,
+      "name": "ELIZALDE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 156,
+      "name": "EL MAITÉN",
+      "iata": "MQD",
+      "oaci": "SAVD",
+      "region": "CHUBUT"
+    },
+    {
+      "id": 157,
+      "name": "CORONEL BRANDSEN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 158,
+      "name": "MARIANO MORENO",
+      "iata": null,
+      "oaci": "SADJ",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 159,
+      "name": "RIACHUELO",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 160,
+      "name": "ESPERANZA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 161,
+      "name": "CERES",
+      "iata": null,
+      "oaci": "SANW",
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 162,
+      "name": "VILLA MERCEDES",
+      "iata": null,
+      "oaci": null,
+      "region": "SAN LUIS"
+    },
+    {
+      "id": 163,
+      "name": "ESQUINA",
+      "iata": "OVR",
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 164,
+      "name": "ESQUEL",
+      "iata": "RHD",
+      "oaci": "SAVE",
+      "region": "CHUBUT"
+    },
+    {
+      "id": 165,
+      "name": "EL ESPINILLO",
+      "iata": "CTC",
+      "oaci": null,
+      "region": "FORMOSA"
+    },
+    {
+      "id": 166,
+      "name": "EL TRÉBOL",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 167,
+      "name": "GOBERNADOR VALENTÍN VIRASORO",
+      "iata": "UAQ",
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 168,
+      "name": "LOS CONQUISTADORES",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 169,
+      "name": "EZEIZA",
+      "iata": null,
+      "oaci": "SAEZ",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 170,
+      "name": "FIRMAT",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 171,
+      "name": "﻿FEDERAL",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 172,
+      "name": "FORTÍN DRAGONES",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 173,
+      "name": "SAN FERNANDO",
+      "iata": null,
+      "oaci": "SADF",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 174,
+      "name": "FIRMAT",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 175,
+      "name": "LAS FLORES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 176,
+      "name": "CÓRDOBA",
+      "iata": null,
+      "oaci": "SACA",
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 177,
+      "name": "FORMOSA",
+      "iata": null,
+      "oaci": null,
+      "region": "FORMOSA"
+    },
+    {
+      "id": 178,
+      "name": "SAN FRANCISCO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 179,
+      "name": "ROSARIO DE LA FRONTERA",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 180,
+      "name": "FRÍAS",
+      "iata": "EHL",
+      "oaci": null,
+      "region": "SANTIAGO DEL ESTERO"
+    },
+    {
+      "id": 181,
+      "name": "FORMOSA",
+      "iata": null,
+      "oaci": "SARF",
+      "region": "FORMOSA"
+    },
+    {
+      "id": 182,
+      "name": "DEAN FUNES",
+      "iata": "PMQ",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 183,
+      "name": "FLORENCIO VARELA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 184,
+      "name": "GUALEGUAY",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 185,
+      "name": "GANCEDO",
+      "iata": null,
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 186,
+      "name": "RÍO GALLEGOS",
+      "iata": null,
+      "oaci": "SAWG",
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 187,
+      "name": "GENERAL ALVEAR",
+      "iata": "EPA",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 188,
+      "name": "GENERAL VILLEGAS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 189,
+      "name": "GENERAL BELGRANO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 190,
+      "name": "SALTA",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 191,
+      "name": "GOBERNADOR CRESPO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 192,
+      "name": "GENERAL DEHEZA",
+      "iata": "RES",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 193,
+      "name": "GANCEDO",
+      "iata": "RCQ",
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 194,
+      "name": "GUALEGUAYCHÚ",
+      "iata": "SLA",
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 195,
+      "name": "VILLA GESELL",
+      "iata": null,
+      "oaci": "SAZV",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 196,
+      "name": "GENERAL RODRÍGUEZ",
+      "iata": "EZE",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 197,
+      "name": "SAN ANDRÉS DE GILES",
+      "iata": "BHI",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 198,
+      "name": "GOYA",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 199,
+      "name": "GENERAL LAS HERAS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 200,
+      "name": "GUALEGUAYCHÚ",
+      "iata": "PUD",
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 201,
+      "name": "GUALEGUAYCHÚ",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 202,
+      "name": "GENERAL ALVEAR",
+      "iata": null,
+      "oaci": "SAMA",
+      "region": "MENDOZA"
+    },
+    {
+      "id": 203,
+      "name": "GENERAL ROCA",
+      "iata": null,
+      "oaci": "SAHR",
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 204,
+      "name": "GENERAL VIAMONTE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 205,
+      "name": "GOBERNADOR CASTRO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 206,
+      "name": "CAÑADA DE GÓMEZ",
+      "iata": "FMA",
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 207,
+      "name": "CHAMICAL",
+      "iata": "ORA",
+      "oaci": "SACT",
+      "region": "LA RIOJA"
+    },
+    {
+      "id": 208,
+      "name": "GOYA",
+      "iata": null,
+      "oaci": "SATG",
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 209,
+      "name": "GÓMEZ",
+      "iata": "ELO",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 210,
+      "name": "GENERAL PICO",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 211,
+      "name": "GENERAL PICO",
+      "iata": null,
+      "oaci": "SAZG",
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 212,
+      "name": "GENERAL PINEDO",
+      "iata": null,
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 213,
+      "name": "GENERAL PINEDO",
+      "iata": null,
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 214,
+      "name": "RÍO GRANDE",
+      "iata": null,
+      "oaci": "SAWE",
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 215,
+      "name": "GOBERNADOR GREGORES",
+      "iata": null,
+      "oaci": "SAWR",
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 216,
+      "name": "GENERAL RODRÍGUEZ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 217,
+      "name": "GUAVIRAVÍ",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 218,
+      "name": "GUATRACHÉ",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 219,
+      "name": "GUALEGUAYCHÚ",
+      "iata": null,
+      "oaci": "SAAG",
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 220,
+      "name": "GENERAL ALVEAR",
+      "iata": "RSA",
+      "oaci": null,
+      "region": "MENDOZA"
+    },
+    {
+      "id": 221,
+      "name": "GONZALEZ CHAVES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 222,
+      "name": "GOYA",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 223,
+      "name": "GOBERNADOR GARMENDIA",
+      "iata": null,
+      "oaci": null,
+      "region": "TUCUMÁN"
+    },
+    {
+      "id": 224,
+      "name": "HELIPLATAFORMA",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 225,
+      "name": "ALPA CORRAL",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 226,
+      "name": "HELIPLATAFORMA",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 227,
+      "name": "LUJÁN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 228,
+      "name": "VILLA CARLOS PAZ",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 229,
+      "name": "HELIPLATAFORMA",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 230,
+      "name": "PARANÁ",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 231,
+      "name": "ALMAFUERTE",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 232,
+      "name": "BUENOS AIRES",
+      "iata": null,
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 233,
+      "name": "SAN CARLOS DE BARILOCHE",
+      "iata": "LHS",
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 234,
+      "name": "BUENOS AIRES",
+      "iata": null,
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 235,
+      "name": "CÓRDOBA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 236,
+      "name": "BUENOS AIRES",
+      "iata": null,
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 237,
+      "name": "EL BRACHO",
+      "iata": null,
+      "oaci": null,
+      "region": "TUCUMÁN"
+    },
+    {
+      "id": 238,
+      "name": "BAHÍA BLANCA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 239,
+      "name": "CÓRDOBA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 240,
+      "name": "LA PLATA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 241,
+      "name": "COSTA AZUL",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 242,
+      "name": "CHOELE CHOEL",
+      "iata": null,
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 243,
+      "name": "SAN MARTÍN DE LOS ANDES",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 244,
+      "name": "HELIPLATAFORMA",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 245,
+      "name": "INHABILITADO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 246,
+      "name": "BELÉN DE ESCOBAR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 247,
+      "name": "CATAN LIL",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 248,
+      "name": "EMBALSE",
+      "iata": "GNR",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 249,
+      "name": "CHENAUT",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 250,
+      "name": "YACIMIENTO CAÑADON ALFA",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 251,
+      "name": "BARREALES GRAN MENDOZA",
+      "iata": null,
+      "oaci": null,
+      "region": "MENDOZA"
+    },
+    {
+      "id": 252,
+      "name": "CAPILLA DEL SEÑOR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 253,
+      "name": "CAMPANA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 254,
+      "name": "CÓRDOBA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 255,
+      "name": "CABO VÍRGENES",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 256,
+      "name": "BUENOS AIRES",
+      "iata": null,
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 257,
+      "name": "BUENOS AIRES",
+      "iata": "AFA",
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 258,
+      "name": "JUNÍN DE LOS ANDES",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 259,
+      "name": "GRANADERO BAIGORRIA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 260,
+      "name": "﻿HENDERSON",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 261,
+      "name": "DON TORCUATO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 262,
+      "name": "HELIPLATAFORMA",
+      "iata": "AOL",
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 263,
+      "name": "LA PLATA",
+      "iata": "COC",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 264,
+      "name": "BAHÍA SAN SEBASTIÁN",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 265,
+      "name": "ARIES",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 266,
+      "name": "SANTIAGO DEL ESTERO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTIAGO DEL ESTERO"
+    },
+    {
+      "id": 267,
+      "name": "ALMIRANTE BROWN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 268,
+      "name": "BUENOS AIRES",
+      "iata": "VLG",
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 269,
+      "name": "SALTA",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 270,
+      "name": "FLORENCIO VARELA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 271,
+      "name": "CAÑUELAS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 272,
+      "name": "SALTA",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 273,
+      "name": "GONZÁLEZ CATÁN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 274,
+      "name": "BUENOS AIRES",
+      "iata": null,
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 275,
+      "name": "SANTA FE",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 276,
+      "name": "LAS LAJAS",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 277,
+      "name": "SALTA",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 278,
+      "name": "DON TORCUATO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 279,
+      "name": "MORENO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 280,
+      "name": "GENERAL VILLEGAS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 281,
+      "name": "LA MATANZA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 282,
+      "name": "ITUZAINGÓ",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 283,
+      "name": "JUNÍN DE LOS ANDES",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 284,
+      "name": "LAGO ESCONDIDO",
+      "iata": null,
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 285,
+      "name": "CAPILLA DEL SEÑOR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 286,
+      "name": "LUJÁN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 287,
+      "name": "DON TORCUATO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 288,
+      "name": "SAN CARLOS DE BARILOCHE",
+      "iata": null,
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 289,
+      "name": "LA PLATA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 290,
+      "name": "LOS CARDALES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 291,
+      "name": "OPEN DOOR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 292,
+      "name": "VILLA ROSA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 293,
+      "name": "LUJÁN",
+      "iata": null,
+      "oaci": null,
+      "region": "SAN LUIS"
+    },
+    {
+      "id": 294,
+      "name": "HUDSON",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 295,
+      "name": "GARÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 296,
+      "name": "HELIPUERTO ELEVADO BUENOS AIRES",
+      "iata": "SFN",
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 297,
+      "name": "PILAR",
+      "iata": "MDZ",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 298,
+      "name": "LA MATANZA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 299,
+      "name": "HELIPUERTO ELEVADO BUENOS AIRES",
+      "iata": null,
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 300,
+      "name": "SAN FERNANDO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 301,
+      "name": "DOCTOR MARIANO MORENO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 302,
+      "name": "HELIPLATAFORMA",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 303,
+      "name": "MONTE CRISTO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 304,
+      "name": "LA MATANZA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 305,
+      "name": "TIGRE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 306,
+      "name": "VILLA NUEVA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 307,
+      "name": "HELIPLATAFORMA NOBLE HOUSTON COLBERT",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 308,
+      "name": "HELIPLATAFORMA",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 309,
+      "name": "BUENOS AIRES",
+      "iata": "LGS",
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 310,
+      "name": "ALTA GRACIA",
+      "iata": "CRR",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 311,
+      "name": "BUQUE OCEANIC CHAMPION",
+      "iata": "MCS",
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 312,
+      "name": "HELIPLATAFORMA MÓVIL",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 313,
+      "name": "BUENOS AIRES",
+      "iata": null,
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 314,
+      "name": "HELIPUERTO ELEVADO CÓRDOBA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 315,
+      "name": "MENDOZA",
+      "iata": null,
+      "oaci": null,
+      "region": "MENDOZA"
+    },
+    {
+      "id": 316,
+      "name": "PARANÁ",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 317,
+      "name": "PIEDRA DEL ÁGUILA",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 318,
+      "name": "PILAR–GOLF",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 319,
+      "name": "LA RIOJA",
+      "iata": null,
+      "oaci": null,
+      "region": "LA RIOJA"
+    },
+    {
+      "id": 320,
+      "name": "LA PLATA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 321,
+      "name": "BUENOS AIRES",
+      "iata": null,
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 322,
+      "name": "PUERTO ESPERANZA – (HPO) - DRNE - PRIVADO NO CONTROLADO",
+      "iata": null,
+      "oaci": null,
+      "region": "MISIONES"
+    },
+    {
+      "id": 323,
+      "name": "PACHÓN",
+      "iata": null,
+      "oaci": null,
+      "region": "SAN JUAN"
+    },
+    {
+      "id": 324,
+      "name": "SAN MARTÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 325,
+      "name": "PUELCHES",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 326,
+      "name": "CARMEN DE ARECO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 327,
+      "name": "RECREO",
+      "iata": null,
+      "oaci": null,
+      "region": "CATAMARCA"
+    },
+    {
+      "id": 328,
+      "name": "HELIPLATAFORMA CARINA",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 329,
+      "name": "SAN MARTÍN DE LOS ANDES",
+      "iata": "ROS",
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 330,
+      "name": "MORRISON",
+      "iata": "GHU",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 331,
+      "name": "ROMANG",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 332,
+      "name": "RÍO GRANDE",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 333,
+      "name": "HELIPUERTO DE SUPERFICIE SPEGAZZINI",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 334,
+      "name": "MORENO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 335,
+      "name": "BUENOS AIRES",
+      "iata": null,
+      "oaci": null,
+      "region": "CIUDAD AUTÓNOMA DE BUENOS AIRES"
+    },
+    {
+      "id": 336,
+      "name": "SAN ANDRÉS DE GILES",
+      "iata": "CCT",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 337,
+      "name": "CURUZÚ CUATIÁ",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 338,
+      "name": "TIGRE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 339,
+      "name": "SAN NICOLÁS DE LOS ARROYOS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 340,
+      "name": "SANTA CRUZ",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 341,
+      "name": "HELIPLATAFORMA SWIBER PJW3000 – (HSW) - DRSU - PRIVADO NO CONTROLADO [** HLP CERRADO (CLSD) **]",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 342,
+      "name": "CONCEPCIÓN DEL URUGUAY",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 343,
+      "name": "TANDIL",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 344,
+      "name": "SALTA",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 345,
+      "name": "TRENQUE LAUQUEN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 346,
+      "name": "EL TURBIO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 347,
+      "name": "CARHUÉ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 348,
+      "name": "HUANGUELÉN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 349,
+      "name": "HUINCA RENANCÓ",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 350,
+      "name": "HUMBOLDT",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 351,
+      "name": "GENERAL ALVEAR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 352,
+      "name": "25 DE MAYO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 353,
+      "name": "TIGRE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 354,
+      "name": "VILLA MARTELLI",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 355,
+      "name": "BUQUE W. G. VESPUCCI",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 356,
+      "name": "YACANTO DE CALAMUCHITA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 357,
+      "name": "MAIPÚ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 358,
+      "name": "INTENDENTE ALVEAR",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 359,
+      "name": "LA QUIACA",
+      "iata": "JSM",
+      "oaci": "SASQ",
+      "region": "JUJUY"
+    },
+    {
+      "id": 360,
+      "name": "INTENDENTE ALVEAR",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 361,
+      "name": "﻿INÉS INDART",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 362,
+      "name": "ISLAS DEL IBICUY",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 363,
+      "name": "COMODORO RIVADAVIA",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 364,
+      "name": "INGENIERO LUIGGI",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 365,
+      "name": "CATARATAS DEL IGUAZÚ",
+      "iata": null,
+      "oaci": "SARI",
+      "region": "MISIONES"
+    },
+    {
+      "id": 366,
+      "name": "INGENIERO JACOBACCI",
+      "iata": null,
+      "oaci": "SAVJ",
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 367,
+      "name": "CASILDA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 368,
+      "name": "ÁREA MATERIAL QUILMES",
+      "iata": null,
+      "oaci": "SADQ",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 369,
+      "name": "MIRAMAR",
+      "iata": null,
+      "oaci": "SAEM",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 370,
+      "name": "BERNARDO DE YRIGOYEN",
+      "iata": null,
+      "oaci": "SATI",
+      "region": "MISIONES"
+    },
+    {
+      "id": 371,
+      "name": "CHILECITO",
+      "iata": null,
+      "oaci": "SANO",
+      "region": "LA RIOJA"
+    },
+    {
+      "id": 372,
+      "name": "ISLA VERDE",
+      "iata": "NCJ",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 373,
+      "name": "ISLA VERDE",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 374,
+      "name": "JUNÍN DE LOS ANDES",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 375,
+      "name": "﻿JACINTO ARÁUZ",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 376,
+      "name": "JUAN BAUTISTA ALBERDI",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 377,
+      "name": "JUÁREZ CELMAN",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 378,
+      "name": "JARDÍN DE AMÉRICA",
+      "iata": null,
+      "oaci": null,
+      "region": "MISIONES"
+    },
+    {
+      "id": 379,
+      "name": "JESÚS MARÍA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 380,
+      "name": "JOAQUÍN V. GONZÁLEZ",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 381,
+      "name": "JUNÍN DE LOS ANDES",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 382,
+      "name": "TRES LOMAS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 383,
+      "name": "JOVITA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 384,
+      "name": "SAN JORGE",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 385,
+      "name": "JUÁREZ",
+      "iata": null,
+      "oaci": "SAZJ",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 386,
+      "name": "JOSÉ DE SAN MARTÍN",
+      "iata": null,
+      "oaci": "SAWS",
+      "region": "CHUBUT"
+    },
+    {
+      "id": 387,
+      "name": "SAN JUAN",
+      "iata": null,
+      "oaci": "SANU",
+      "region": "SAN JUAN"
+    },
+    {
+      "id": 388,
+      "name": "JUJUY",
+      "iata": "SGV",
+      "oaci": "SASJ",
+      "region": "JUJUY"
+    },
+    {
+      "id": 389,
+      "name": "PUNTA ROJA",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 390,
+      "name": "GENERAL LA MADRID",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 391,
+      "name": "LANTERI",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 392,
+      "name": "LA RIOJA",
+      "iata": null,
+      "oaci": "SANL",
+      "region": "LA RIOJA"
+    },
+    {
+      "id": 393,
+      "name": "TRENQUE LAUQUEN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 394,
+      "name": "LA PAZ",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 395,
+      "name": "LOBERÍA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 396,
+      "name": "LA CARLOTA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 397,
+      "name": "LONCOPUÉ",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 398,
+      "name": "LA CARLOTA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 399,
+      "name": "LEZAMA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 400,
+      "name": "LAGUNA DE GÓMEZ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 401,
+      "name": "VILLA DOLORES",
+      "iata": "EMX",
+      "oaci": "SAOD",
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 402,
+      "name": "BELÉN DE ESCOBAR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 403,
+      "name": "LEONES",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 404,
+      "name": "SARMIENTO",
+      "iata": null,
+      "oaci": "SAVM",
+      "region": "CHUBUT"
+    },
+    {
+      "id": 405,
+      "name": "LAS HERAS",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 406,
+      "name": "PASO DE LOS LIBRES",
+      "iata": null,
+      "oaci": "SARL",
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 407,
+      "name": "LINCOLN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 408,
+      "name": "NUEVE DE JULIO",
+      "iata": null,
+      "oaci": "SAZX",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 409,
+      "name": "LUJÁN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 410,
+      "name": "LAS LAJITAS",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 411,
+      "name": "LONGCHAMPS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 412,
+      "name": "LIBERTAD",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 413,
+      "name": "LAS LAJAS",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 414,
+      "name": "JUAN N. FERNÁNDEZ",
+      "iata": "IGB",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 415,
+      "name": "LOS MOLINOS",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 416,
+      "name": "LAGO NAHUEL HUAPI",
+      "iata": "APZ",
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 417,
+      "name": "LINCOLN",
+      "iata": "IRJ",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 418,
+      "name": "COMANDANTE LUIS PIEDRABUENA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 419,
+      "name": "LAS PALMAS",
+      "iata": "CUT",
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 420,
+      "name": "LAPRIDA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 421,
+      "name": "LA RAMADA DE ABAJO",
+      "iata": null,
+      "oaci": null,
+      "region": "TUCUMÁN"
+    },
+    {
+      "id": 422,
+      "name": "LAS ROSAS",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 423,
+      "name": "LAS ROSAS",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 424,
+      "name": "LAS VARAS",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 425,
+      "name": "LAS VARILLAS",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 426,
+      "name": "LUJÁN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 427,
+      "name": "LAS VARILLAS",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 428,
+      "name": "LABOULAYE",
+      "iata": null,
+      "oaci": "SAOL",
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 429,
+      "name": "LAGO LA ESPERANZA",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 430,
+      "name": "MAGGIOLO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 431,
+      "name": "﻿MACACHÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 432,
+      "name": "GENERAL MADARIAGA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 433,
+      "name": "MONTE MAÍZ",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 434,
+      "name": "VEINTICINCO DE MAYO",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 435,
+      "name": "MAQUINCHAO",
+      "iata": null,
+      "oaci": "SAVQ",
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 436,
+      "name": "MATANZA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 437,
+      "name": "25 DE MAYO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 438,
+      "name": "MONTE BUEY",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 439,
+      "name": "VICECOMODORO MARAMBIO – (MBI",
+      "iata": null,
+      "oaci": "SAWB",
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 440,
+      "name": "MIRAMAR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 441,
+      "name": "MINA CLAVERO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 442,
+      "name": "LOS MENUCOS",
+      "iata": null,
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 443,
+      "name": "MONTE CASEROS",
+      "iata": "TUC",
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 444,
+      "name": "MONTE CASEROS",
+      "iata": null,
+      "oaci": "SARM",
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 445,
+      "name": "MONTE CASEROS",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 446,
+      "name": "MAR DEL PLATA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 447,
+      "name": "MAR DEL PLATA",
+      "iata": null,
+      "oaci": "SAZM",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 448,
+      "name": "MERLO",
+      "iata": null,
+      "oaci": "SADR",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 449,
+      "name": "CÓRDOBA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 450,
+      "name": "ISLA MARTÍN GARCÍA",
+      "iata": "JUJ",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 451,
+      "name": "VILLA MINETTI",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 452,
+      "name": "MARCOS JUÁREZ",
+      "iata": null,
+      "oaci": "SAOM",
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 453,
+      "name": "MALABRIGO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 454,
+      "name": "CORONEL MOLDES",
+      "iata": "CNQ",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 455,
+      "name": "MALARGÜE",
+      "iata": null,
+      "oaci": "SAMM",
+      "region": "MENDOZA"
+    },
+    {
+      "id": 456,
+      "name": "CORRALITO",
+      "iata": "TTG",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 457,
+      "name": "MONJE",
+      "iata": "VME",
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 458,
+      "name": "MORÓN",
+      "iata": null,
+      "oaci": "SADM",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 459,
+      "name": "MAR DEL PLATA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 460,
+      "name": "MAR DEL PLATA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 461,
+      "name": "MAIPÚ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 462,
+      "name": "MERCEDES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 463,
+      "name": "25 DE MAYO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 464,
+      "name": "MARCOS PAZ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 465,
+      "name": "MERCEDES",
+      "iata": "LUQ",
+      "oaci": null,
+      "region": "SAN LUIS"
+    },
+    {
+      "id": 466,
+      "name": "MONTECARLO",
+      "iata": null,
+      "oaci": null,
+      "region": "MISIONES"
+    },
+    {
+      "id": 467,
+      "name": "METÁN",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 468,
+      "name": "MORTEROS",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 469,
+      "name": "﻿QUEMÚ QUEMÚ",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 470,
+      "name": "CHASCOMÚS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 471,
+      "name": "HERNANDO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 472,
+      "name": "TANDIL",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 473,
+      "name": "NORBERTO DE LA RIESTRA",
+      "iata": "GPO",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 474,
+      "name": "NECOCHEA",
+      "iata": "HOS",
+      "oaci": "SAZO",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 475,
+      "name": "NECOCHEA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 476,
+      "name": "NEUQUÉN",
+      "iata": null,
+      "oaci": "SAZN",
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 477,
+      "name": "LOBERÍA",
+      "iata": "LCM",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 478,
+      "name": "JUNÍN",
+      "iata": null,
+      "oaci": "SAAJ",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 479,
+      "name": "NOGOYÁ",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 480,
+      "name": "NOGOYÁ",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 481,
+      "name": "NOGOYÁ",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 482,
+      "name": "NECOCHEA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 483,
+      "name": "NUESTRA SEÑORA DE TALAVERA",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 484,
+      "name": "﻿NAVARRO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 485,
+      "name": "﻿OBERÁ",
+      "iata": null,
+      "oaci": "SATO",
+      "region": "MISIONES"
+    },
+    {
+      "id": 486,
+      "name": "MONTES DE OCA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 487,
+      "name": "CHOELE CHOEL",
+      "iata": "GGS",
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 488,
+      "name": "CORONEL BOGADO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 489,
+      "name": "OLAVARRÍA",
+      "iata": null,
+      "oaci": "SAZF",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 490,
+      "name": "OLIVA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 491,
+      "name": "LOMA LA LATA",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 492,
+      "name": "ORÁN",
+      "iata": null,
+      "oaci": "SASO",
+      "region": "SALTA"
+    },
+    {
+      "id": 493,
+      "name": "SANTA ROSA",
+      "iata": null,
+      "oaci": "SAZR",
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 494,
+      "name": "LAS OVEJAS",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 495,
+      "name": "EL PALOMAR",
+      "iata": "JNI",
+      "oaci": "SADP",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 496,
+      "name": "PASCANAS",
+      "iata": "UZU",
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 497,
+      "name": "PARANÁ",
+      "iata": null,
+      "oaci": "SAAP",
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 498,
+      "name": "PASTEUR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 499,
+      "name": "CARMEN DE PATAGONES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 500,
+      "name": "POBLET",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 501,
+      "name": "POSADAS",
+      "iata": null,
+      "oaci": null,
+      "region": "MISIONES"
+    },
+    {
+      "id": 502,
+      "name": "PIQUETE CABADO",
+      "iata": "PRQ",
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 503,
+      "name": "JUJUY",
+      "iata": null,
+      "oaci": null,
+      "region": "JUJUY"
+    },
+    {
+      "id": 504,
+      "name": "PRESIDENCIA ROCA",
+      "iata": null,
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 505,
+      "name": "SAN PEDRO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 506,
+      "name": "PEHUAJÓ",
+      "iata": null,
+      "oaci": "SAZP",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 507,
+      "name": "LA PELADA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 508,
+      "name": "PERGAMINO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 509,
+      "name": "RICARDONE",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 510,
+      "name": "PERGAMINO",
+      "iata": null,
+      "oaci": "SAAN",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 511,
+      "name": "PIGÜÉ",
+      "iata": null,
+      "oaci": "SAZE",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 512,
+      "name": "PEHUAJÓ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 513,
+      "name": "PIÑERO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 514,
+      "name": "PELLEGRINI",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 515,
+      "name": "PUJATO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 516,
+      "name": "PIRANÉ",
+      "iata": "RGA",
+      "oaci": null,
+      "region": "FORMOSA"
+    },
+    {
+      "id": 517,
+      "name": "PUNTA ALTA",
+      "iata": "OYA",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 518,
+      "name": "PARANÁ",
+      "iata": "PRA",
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 519,
+      "name": "PINAMAR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 520,
+      "name": "GENERAL PINTO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 521,
+      "name": "POSADAS",
+      "iata": null,
+      "oaci": "SARP",
+      "region": "MISIONES"
+    },
+    {
+      "id": 522,
+      "name": "PRESIDENCIA ROCA",
+      "iata": null,
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 523,
+      "name": "HUNTER",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 524,
+      "name": "CORONEL PRINGLES",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 525,
+      "name": "PIGÜÉ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 526,
+      "name": "PRESIDENCIA ROQUE SÁENZ PEÑA",
+      "iata": null,
+      "oaci": "SARS",
+      "region": "CHACO"
+    },
+    {
+      "id": 527,
+      "name": "PUERTO SAN MARTÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 528,
+      "name": "PRESIDENCIA ROQUE SÁENZ PEÑA",
+      "iata": null,
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 529,
+      "name": "LA PLATA",
+      "iata": null,
+      "oaci": "SADL",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 530,
+      "name": "ENSENADA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 531,
+      "name": "PERITO MORENO - JALIL HAMER (PTM",
+      "iata": null,
+      "oaci": "SAWP",
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 532,
+      "name": "PUÁN",
+      "iata": "RLO",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 533,
+      "name": "PUJATO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 534,
+      "name": "RIVADAVIA",
+      "iata": null,
+      "oaci": null,
+      "region": "MENDOZA"
+    },
+    {
+      "id": 535,
+      "name": "RANCHOS",
+      "iata": "FTE",
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 536,
+      "name": "RAUCH",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 537,
+      "name": "RAWSON",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 538,
+      "name": "RUFINO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 539,
+      "name": "MERCEDES",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 540,
+      "name": "RÍO TERCERO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 541,
+      "name": "RÍO COLORADO",
+      "iata": null,
+      "oaci": null,
+      "region": "MENDOZA"
+    },
+    {
+      "id": 542,
+      "name": "RICARDONE",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 543,
+      "name": "RESISTENCIA",
+      "iata": "RCU",
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 544,
+      "name": "RÍO GALLEGOS",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 545,
+      "name": "RÍO CUARTO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 546,
+      "name": "RINCÓN DE LOS SAUCES",
+      "iata": null,
+      "oaci": "SAHS",
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 547,
+      "name": "ROJAS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 548,
+      "name": "﻿RAFAELA",
+      "iata": null,
+      "oaci": "SAFR",
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 549,
+      "name": "REALICÓ",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 550,
+      "name": "RÍO MAYO",
+      "iata": "RDS",
+      "oaci": "SAWM",
+      "region": "CHUBUT"
+    },
+    {
+      "id": 551,
+      "name": "ROBERTS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 552,
+      "name": "ROBERTS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 553,
+      "name": "ROSARIO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 554,
+      "name": "ROSARIO",
+      "iata": null,
+      "oaci": "SAAR",
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 555,
+      "name": "ROSARIO DEL TALA",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 556,
+      "name": "CAÑADA ROSQUÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 557,
+      "name": "RECONQUISTA",
+      "iata": null,
+      "oaci": "SATR",
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 558,
+      "name": "RUFINO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 559,
+      "name": "AMÉRICA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 560,
+      "name": "RIVADAVIA",
+      "iata": "ULA",
+      "oaci": null,
+      "region": "MENDOZA"
+    },
+    {
+      "id": 561,
+      "name": "VILLA REYNOLDS",
+      "iata": null,
+      "oaci": "SAOR",
+      "region": "SAN LUIS"
+    },
+    {
+      "id": 562,
+      "name": "SALADILLO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 563,
+      "name": "SAFORCADA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 564,
+      "name": "SALTA",
+      "iata": null,
+      "oaci": "SASA",
+      "region": "SALTA"
+    },
+    {
+      "id": 565,
+      "name": "SAN ANTONIO OESTE",
+      "iata": null,
+      "oaci": "SAVN",
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 566,
+      "name": "SAN BENITO",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 567,
+      "name": "SUNCHALES",
+      "iata": null,
+      "oaci": "SAFS",
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 568,
+      "name": "SANFORD",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 569,
+      "name": "SANTA CLARA DE SAGUIER",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 570,
+      "name": "SAN CRISTÓBAL",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 571,
+      "name": "SANTA CRUZ",
+      "iata": null,
+      "oaci": "SAWU",
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 572,
+      "name": "SANTIAGO DEL ESTERO",
+      "iata": null,
+      "oaci": "SANE",
+      "region": "SANTIAGO DEL ESTERO"
+    },
+    {
+      "id": 573,
+      "name": "SALADILLO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 574,
+      "name": "CORONEL BRANDSEN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 575,
+      "name": "SERODINO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 576,
+      "name": "GENERAL PINTO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 577,
+      "name": "SELVA NUEVA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTIAGO DEL ESTERO"
+    },
+    {
+      "id": 578,
+      "name": "SAN GREGORIO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 579,
+      "name": "TRES ARROYOS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 580,
+      "name": "SIERRA GRANDE",
+      "iata": null,
+      "oaci": "SAVS",
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 581,
+      "name": "SAN GUILLERMO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 582,
+      "name": "SAN ANTONIO DE ARECO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 583,
+      "name": "RESISTENCIA",
+      "iata": null,
+      "oaci": "SARE",
+      "region": "CHACO"
+    },
+    {
+      "id": 584,
+      "name": "SAN JUAN",
+      "iata": null,
+      "oaci": null,
+      "region": "SAN JUAN"
+    },
+    {
+      "id": 585,
+      "name": "SAN JORGE",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 586,
+      "name": "SAN JOSÉ DE LA DORMIDA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 587,
+      "name": "SAN JAVIER",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 588,
+      "name": "SAN JUSTO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 589,
+      "name": "SAN JULIÁN",
+      "iata": null,
+      "oaci": "SAWJ",
+      "region": "SANTA CRUZ"
+    },
+    {
+      "id": 590,
+      "name": "SALDUNGARAY",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 591,
+      "name": "SALLIQUELÓ",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 592,
+      "name": "SANTA ROSA",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 593,
+      "name": "SALTO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 594,
+      "name": "EMBARCACIÓN",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 595,
+      "name": "SALDUNGARAY",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 596,
+      "name": "SALAZAR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 597,
+      "name": "SANTA MARÍA",
+      "iata": null,
+      "oaci": null,
+      "region": "CATAMARCA"
+    },
+    {
+      "id": 598,
+      "name": "SAN MARTÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 599,
+      "name": "SAN MIGUEL DEL MONTE",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 600,
+      "name": "SAN MARCOS",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 601,
+      "name": "GENERAL SAN MARTÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 602,
+      "name": "SAN ANTONIO DE ARECO",
+      "iata": null,
+      "oaci": "SAAA",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 603,
+      "name": "SAN NICOLÁS DE LOS ARROYOS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 604,
+      "name": "CAÑADA ROSQUÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 605,
+      "name": "SAN RAFAEL",
+      "iata": null,
+      "oaci": "SAMR",
+      "region": "MENDOZA"
+    },
+    {
+      "id": 606,
+      "name": "VALLE DEL CONLARA",
+      "iata": null,
+      "oaci": "SAOS",
+      "region": "SAN LUIS"
+    },
+    {
+      "id": 607,
+      "name": "SANTA REGINA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 608,
+      "name": "SARMIENTO",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 609,
+      "name": "SALTO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 610,
+      "name": "SALADILLO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 611,
+      "name": "STROEDER",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 612,
+      "name": "SAN MARTÍN",
+      "iata": null,
+      "oaci": "SAMI",
+      "region": "MENDOZA"
+    },
+    {
+      "id": 613,
+      "name": "SANTA TERESITA",
+      "iata": null,
+      "oaci": "SAZL",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 614,
+      "name": "CORONEL SUÁREZ",
+      "iata": null,
+      "oaci": "SAZC",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 615,
+      "name": "SANTA FE",
+      "iata": null,
+      "oaci": "SAAV",
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 616,
+      "name": "TARTAGAL",
+      "iata": null,
+      "oaci": "SAST",
+      "region": "SALTA"
+    },
+    {
+      "id": 617,
+      "name": "EL TRÉBOL",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 618,
+      "name": "TUCUMÁN",
+      "iata": null,
+      "oaci": null,
+      "region": "TUCUMÁN"
+    },
+    {
+      "id": 619,
+      "name": "EL TRÉBOL",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 620,
+      "name": "ESTANCIA TECKA",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 621,
+      "name": "CARLOS TEJEDOR",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 622,
+      "name": "TEODELINA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 623,
+      "name": "TINTINA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTIAGO DEL ESTERO"
+    },
+    {
+      "id": 624,
+      "name": "TOLHUIN",
+      "iata": null,
+      "oaci": "SAWL",
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 625,
+      "name": "TINOGASTA",
+      "iata": null,
+      "oaci": "SANI",
+      "region": "CATAMARCA"
+    },
+    {
+      "id": 626,
+      "name": "TÍO PUJIO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 627,
+      "name": "COLONIA TIROLESA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 628,
+      "name": "TILISARAO",
+      "iata": null,
+      "oaci": null,
+      "region": "SAN LUIS"
+    },
+    {
+      "id": 629,
+      "name": "TORNQUIST",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 630,
+      "name": "TOSTADO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 631,
+      "name": "ALTA GRACIA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 632,
+      "name": "TRENQUE LAUQUEN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 633,
+      "name": "RÍO CUARTO",
+      "iata": null,
+      "oaci": "SAOC",
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 634,
+      "name": "TRELEW",
+      "iata": null,
+      "oaci": "SAVT",
+      "region": "CHUBUT"
+    },
+    {
+      "id": 635,
+      "name": "TERMAS DE RÍO HONDO",
+      "iata": null,
+      "oaci": "SANR",
+      "region": "SANTIAGO DEL ESTERO"
+    },
+    {
+      "id": 636,
+      "name": "TRELEW",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 637,
+      "name": "TORTUGAS",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 638,
+      "name": "TUCUMÁN",
+      "iata": null,
+      "oaci": "SANT",
+      "region": "TUCUMÁN"
+    },
+    {
+      "id": 639,
+      "name": "TREVELÍN",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 640,
+      "name": "EL TRAPIAL",
+      "iata": null,
+      "oaci": null,
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 641,
+      "name": "GUALEGUAY",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 642,
+      "name": "﻿CHACABUCO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 643,
+      "name": "VILLAGUAY",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 644,
+      "name": "QUEQUÉN",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 645,
+      "name": "SAN LUIS",
+      "iata": null,
+      "oaci": "SAOU",
+      "region": "SAN LUIS"
+    },
+    {
+      "id": 646,
+      "name": "RÍO CULLEN",
+      "iata": null,
+      "oaci": null,
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 647,
+      "name": "FUNES",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 648,
+      "name": "SANTA FE",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 649,
+      "name": "﻿URDINARRAIN",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 650,
+      "name": "URIBURU",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 651,
+      "name": "PEDRO LURO",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 652,
+      "name": "USHUAIA",
+      "iata": null,
+      "oaci": "SAWH",
+      "region": "TIERRA DEL FUEGO ANTÁRTIDA E ISLAS DEL ATLÁNTICO SUR"
+    },
+    {
+      "id": 653,
+      "name": "﻿VALCHETA",
+      "iata": null,
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 654,
+      "name": "VILLA ÁNGELA",
+      "iata": null,
+      "oaci": null,
+      "region": "CHACO"
+    },
+    {
+      "id": 655,
+      "name": "VILLA AMANCAY",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 656,
+      "name": "VICTORICA",
+      "iata": null,
+      "oaci": null,
+      "region": "LA PAMPA"
+    },
+    {
+      "id": 657,
+      "name": "VILLA CAÑÁS",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 658,
+      "name": "VEDIA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 659,
+      "name": "CORONEL VIDAL",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 660,
+      "name": "EL CORCOVADO",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 661,
+      "name": "VILLA DEL ROSARIO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 662,
+      "name": "CORCOVADO",
+      "iata": null,
+      "oaci": null,
+      "region": "CHUBUT"
+    },
+    {
+      "id": 663,
+      "name": "VERA",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 664,
+      "name": "﻿GÁLVEZ",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 665,
+      "name": "VILLA GENERAL BELGRANO",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 666,
+      "name": "VICTORIA",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 667,
+      "name": "VIEDMA",
+      "iata": null,
+      "oaci": "SAVV",
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 668,
+      "name": "VILLAGUAY",
+      "iata": null,
+      "oaci": "SAAU",
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 669,
+      "name": "SANTA VICTORIA",
+      "iata": null,
+      "oaci": null,
+      "region": "SALTA"
+    },
+    {
+      "id": 670,
+      "name": "VILLAGUAY",
+      "iata": null,
+      "oaci": null,
+      "region": "ENTRE RÍOS"
+    },
+    {
+      "id": 671,
+      "name": "VICUÑA MACKENNA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 672,
+      "name": "VICUÑA MACKENNA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 673,
+      "name": "VICUÑA MACKENNA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 674,
+      "name": "VICUÑA MACKENNA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 675,
+      "name": "VILLA MARÍA",
+      "iata": null,
+      "oaci": "SAOV",
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 676,
+      "name": "VILLA MERCEDES",
+      "iata": null,
+      "oaci": null,
+      "region": "SAN LUIS"
+    },
+    {
+      "id": 677,
+      "name": "VERÓNICA",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 678,
+      "name": "VENADO TUERTO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 679,
+      "name": "VILLA NUEVA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 680,
+      "name": "VILLA NUEVA",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 681,
+      "name": "VILLA OCAMPO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 682,
+      "name": "VILLA REGINA",
+      "iata": null,
+      "oaci": null,
+      "region": "RÍO NEGRO"
+    },
+    {
+      "id": 683,
+      "name": "VILLA RUMIPAL",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 684,
+      "name": "SAN VICENTE",
+      "iata": null,
+      "oaci": null,
+      "region": "MISIONES"
+    },
+    {
+      "id": 685,
+      "name": "VENADO TUERTO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 686,
+      "name": "VENADO TUERTO",
+      "iata": null,
+      "oaci": null,
+      "region": "SANTA FÉ"
+    },
+    {
+      "id": 687,
+      "name": "TRES ARROYOS",
+      "iata": null,
+      "oaci": null,
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 688,
+      "name": "TRES ARROYOS",
+      "iata": null,
+      "oaci": "SAZH",
+      "region": "BUENOS AIRES"
+    },
+    {
+      "id": 689,
+      "name": "YAPEYÚ",
+      "iata": null,
+      "oaci": null,
+      "region": "CORRIENTES"
+    },
+    {
+      "id": 690,
+      "name": "ZAPALA",
+      "iata": null,
+      "oaci": "SAHZ",
+      "region": "NEUQUÉN"
+    },
+    {
+      "id": 691,
+      "name": "BELL VILLE",
+      "iata": null,
+      "oaci": null,
+      "region": "CÓRDOBA"
+    },
+    {
+      "id": 692,
+      "name": "AZUL",
+      "iata": null,
+      "oaci": "SAZA",
+      "region": "BUENOS AIRES"
+    }
+  ]
+}

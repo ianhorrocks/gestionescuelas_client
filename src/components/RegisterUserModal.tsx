@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import { NewUser } from "../types/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -11,13 +12,7 @@ import {
 interface RegisterUserModalProps {
   show: boolean;
   onClose: () => void;
-  onRegisterUser: (userData: {
-    dni: string;
-    name: string;
-    lastname: string;
-    email: string;
-    password: string;
-  }) => void;
+  onRegisterUser: (userData: NewUser) => void;
 }
 
 const RegisterUserModal: React.FC<RegisterUserModalProps> = ({
@@ -25,7 +20,9 @@ const RegisterUserModal: React.FC<RegisterUserModalProps> = ({
   onClose,
   onRegisterUser,
 }) => {
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<
+    NewUser & { confirmPassword: string }
+  >({
     dni: "",
     name: "",
     lastname: "",

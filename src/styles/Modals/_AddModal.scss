@@ -22,6 +22,7 @@
 
   &:hover {
     background-color: variables.$tertiary-color-hover;
+    transform: scale(1.07);
   }
 }
 
@@ -34,7 +35,8 @@
 
   .form-group {
     position: relative;
-    margin-bottom: 1.5rem;
+    margin-top: 0.8rem;
+    margin-bottom: 1.6rem;
   }
 
   .floating-label {

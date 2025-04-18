@@ -3,15 +3,18 @@ import { User, School } from "../types/types"; // id y name
 import { getUserById } from "../services/userService";
 import { getSchoolsForUser } from "../services/schoolService";
 import Navbar from "../components/NavbarUser";
+import PlaneLoader from "../components/PlaneLoader";
 
 const UserDashboard: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [schools, setSchools] = useState<School[]>([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserAndSchools = async () => {
       try {
+        setLoading(true);
         const token = localStorage.getItem("token");
         if (!token) {
           throw new Error("No token found");
@@ -32,6 +35,8 @@ const UserDashboard: React.FC = () => {
       } catch (err) {
         console.log("Fetch user or schools error:", err);
         setError("Inicie Sesion (Arreglar)");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -55,7 +60,10 @@ const UserDashboard: React.FC = () => {
         logoutPath="/user/login"
       />
       {error && <p className="text-danger">{error}</p>}
-      {user && (
+
+      {loading ? (
+        <PlaneLoader />
+      ) : user ? (
         <div className="dashboard-content">
           <div className="kpis">
             <div className="kpi">
@@ -95,7 +103,7 @@ const UserDashboard: React.FC = () => {
             <p>No hay escuelas asociadas.</p>
           )}
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
