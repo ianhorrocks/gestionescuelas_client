@@ -3,10 +3,10 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npx doppler run -- npm install
+        - npx doppler run --command="npm install"
     build:
       commands:
-        - npx doppler run -- npm run build
+        - npx doppler run --command="npm run build"
   artifacts:
     baseDirectory: dist
     files:
