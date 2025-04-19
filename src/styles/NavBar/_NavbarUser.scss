@@ -69,6 +69,8 @@
     flex-direction: column;
     overflow-y: auto;
     z-index: 2000;
+    min-height: 100vh; // asegura ocupar toda la altura
+    padding-bottom: 80px; // espacio para ver el logout
 
     opacity: 0;
     visibility: hidden;
@@ -171,7 +173,7 @@
     }
 
     .logout-button {
-      margin-top: auto;
+      margin-top: 20px;
       padding-top: 20px;
       display: flex;
       align-items: center;

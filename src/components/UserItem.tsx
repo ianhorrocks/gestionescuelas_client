@@ -6,6 +6,7 @@ import Alert from "./Alert";
 import { TrashFill } from "react-bootstrap-icons";
 import "../styles/GeneralComponents/Items/_UserItem.scss";
 import { User } from "../types/types"; // Importamos el tipo User
+import defaultPhoto from "../assets/images/LogoSmallUserProfilePhoto.png";
 
 interface UserItemProps {
   user: User;
@@ -25,7 +26,6 @@ const UserItem: React.FC<UserItemProps> = ({
   const [loading, setLoading] = useState(false);
   const { message, showTemporaryMessage } = useTemporaryMessage();
 
-  const defaultPhoto = "/src/assets/images/LogoSmallUserProfilePhoto.png";
   const userPhoto = user.photo || defaultPhoto;
 
   const handleShowModal = () => setShowModal(true);

@@ -1105,6 +1105,8 @@ h2 {
   flex-direction: column;
   overflow-y: auto;
   z-index: 2000;
+  min-height: 100vh;
+  padding-bottom: 80px;
   opacity: 0;
   visibility: hidden;
   transform: translateX(-300px);
@@ -1193,7 +1195,7 @@ h2 {
   color: #282d3c;
 }
 .navbar .menu-content .logout-button {
-  margin-top: auto;
+  margin-top: 20px;
   padding-top: 20px;
   display: flex;
   align-items: center;
@@ -1350,6 +1352,8 @@ body,
   flex-direction: column;
   overflow-y: auto;
   z-index: 2000;
+  min-height: 100vh;
+  padding-bottom: 80px;
   opacity: 0;
   visibility: hidden;
   transform: translateX(-300px);
@@ -1446,7 +1450,7 @@ body,
   color: #282d3c;
 }
 .navbar-admin .menu-content .logout-button {
-  margin-top: auto;
+  margin-top: 20px;
   padding-top: 20px;
   display: flex;
   align-items: center;
@@ -1879,100 +1883,6 @@ body,
 }
 .user-modal-body .delete-user-button {
   margin-top: 0.5rem;
-}
-
-.plane-modal-body {
-  padding: 1.5rem;
-}
-.plane-modal-body .plane-photo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-.plane-modal-body .plane-photo-container .plane-photo {
-  max-width: 220px;
-  max-height: 220px;
-  object-fit: cover;
-  border: 2px solid #ccc;
-}
-.plane-modal-body .section-title {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #333;
-  margin-top: 1rem;
-  margin-bottom: 0.3rem;
-}
-.plane-modal-body .subtitle {
-  font-size: 0.95rem;
-  color: #555;
-  margin-bottom: 0.25rem;
-}
-.plane-modal-body .subtitle strong {
-  color: #222;
-}
-.plane-modal-body .subtitle .id-unassigned {
-  color: #d41027;
-  font-weight: 600;
-}
-.plane-modal-body .tag-assignment-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-}
-.plane-modal-body .tag-assignment-container input.form-control {
-  font-size: 0.95rem;
-  padding: 0.4rem 0.75rem;
-  border-radius: 4px;
-}
-.plane-modal-body .tag-assignment-container .tag-action-buttons {
-  display: flex;
-  gap: 0.5rem;
-}
-.plane-modal-body .tag-assignment-container .tag-action-buttons .btn-assign {
-  background-color: #7b6983;
-  color: white;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.9rem;
-}
-.plane-modal-body .tag-assignment-container .tag-action-buttons .btn-assign:hover {
-  background-color: rgb(96.4194915254, 82.3093220339, 102.6906779661);
-}
-.plane-modal-body .tag-assignment-container .tag-action-buttons .btn-delete-tag {
-  background-color: #dc3545;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 10px;
-  border-radius: 4px;
-}
-.plane-modal-body .tag-assignment-container .tag-action-buttons .btn-delete-tag svg {
-  color: white;
-}
-.plane-modal-body .tag-assignment-container .tag-action-buttons .btn-delete-tag:hover {
-  background-color: rgb(189.2151898734, 32.7848101266, 47.7721518987);
-}
-.plane-modal-body .btn-change-photo {
-  background-color: #7b6983;
-  color: white;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  margin-top: 1rem;
-}
-.plane-modal-body .btn-change-photo:hover {
-  background-color: rgb(96.4194915254, 82.3093220339, 102.6906779661);
-}
-.plane-modal-body button {
-  font-size: 0.9rem;
-}
-.plane-modal-body .btn-danger {
-  margin-top: 1.5rem;
 }
 
 .dashboard-container,
