@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { User, School } from "../types/types"; // id y name
+import { User } from "../types/types"; // id y name
 import { getUserById } from "../services/userService";
 import { getSchoolsForUser } from "../services/schoolService";
 import Navbar from "../components/NavbarUser";
@@ -7,7 +7,6 @@ import PlaneLoader from "../components/PlaneLoader";
 
 const UserDashboard: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [schools, setSchools] = useState<School[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
@@ -31,7 +30,6 @@ const UserDashboard: React.FC = () => {
 
         const schoolsData = await getSchoolsForUser();
         console.log("Schools data:", schoolsData);
-        setSchools(schoolsData);
       } catch (err) {
         console.log("Fetch user or schools error:", err);
         setError("Inicie Sesion (Arreglar)");
@@ -42,11 +40,6 @@ const UserDashboard: React.FC = () => {
 
     fetchUserAndSchools();
   }, []);
-
-  const handleSchoolClick = (schoolId: string) => {
-    localStorage.setItem("selectedSchoolId", schoolId);
-    window.location.href = `/user/school/${schoolId}`;
-  };
 
   return (
     <div className="dashboard-container container-dashboard">
@@ -86,22 +79,6 @@ const UserDashboard: React.FC = () => {
               </div>
             </div>
           </div>
-          <h2>Gestiona tus vuelos:</h2>
-          {schools && schools.length > 0 ? (
-            <div className="school-cards">
-              {schools.map((school) => (
-                <a
-                  key={school._id}
-                  onClick={() => handleSchoolClick(school._id)}
-                  className="school-card"
-                >
-                  {school.name}
-                </a>
-              ))}
-            </div>
-          ) : (
-            <p>No hay escuelas asociadas.</p>
-          )}
         </div>
       ) : null}
     </div>
