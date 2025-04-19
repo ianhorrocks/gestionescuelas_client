@@ -19,6 +19,7 @@
 @use "./GeneralComponents/PlaneLoader.module";
 @use "./GeneralComponents/Items/UserItem";
 @use "./GeneralComponents/Items/PlaneItem";
+@use "./GeneralComponents/Maintenance";
 
 .dashboard-container,
 .profile-container,

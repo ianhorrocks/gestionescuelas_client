@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 src/data/AR.json
-.env
+.env*
 
 *.pem
 .c/Users/ianho/.keys/

@@ -1,0 +1,60 @@
+@use "../Variables/variables";
+
+.maintenance-container {
+  height: 100vh;
+  background-color: variables.$background-color;
+  color: variables.$white-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+  padding: 2rem;
+}
+
+.maintenance-content {
+  max-width: 750px;
+  padding: 1.5rem;
+
+  h1 {
+    font-size: 2.8rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    &::before,
+    &::after {
+      content: "🚧";
+      font-size: 2.8rem;
+    }
+  }
+
+  p {
+    font-size: 1.35rem;
+    line-height: 1.6;
+    color: variables.$secondary-color;
+
+    &::after {
+      content: " ✈️ ✈️";
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .maintenance-content {
+    h1 {
+      font-size: 2rem;
+
+      &::before,
+      &::after {
+        font-size: 2rem;
+      }
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+}

@@ -1885,6 +1885,54 @@ body,
   margin-top: 0.5rem;
 }
 
+.maintenance-container {
+  height: 100vh;
+  background-color: #282d3c;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+  padding: 2rem;
+}
+
+.maintenance-content {
+  max-width: 750px;
+  padding: 1.5rem;
+}
+.maintenance-content h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.maintenance-content h1::before, .maintenance-content h1::after {
+  content: "🚧";
+  font-size: 2.8rem;
+}
+.maintenance-content p {
+  font-size: 1.35rem;
+  line-height: 1.6;
+  color: #f6f6f6;
+}
+.maintenance-content p::after {
+  content: " ✈️ ✈️";
+}
+
+@media (max-width: 600px) {
+  .maintenance-content h1 {
+    font-size: 2rem;
+  }
+  .maintenance-content h1::before, .maintenance-content h1::after {
+    font-size: 2rem;
+  }
+  .maintenance-content p {
+    font-size: 1.1rem;
+  }
+}
 .dashboard-container,
 .profile-container,
 .school-container,
