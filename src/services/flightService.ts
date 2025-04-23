@@ -1,6 +1,16 @@
 // client/src/services/flightService.ts
 import api from "./api";
-import { Flight } from "../types/types";
+import {
+  Flight,
+  EmbeddedFlightInput,
+  EmbeddedFlightResponse,
+  EmbeddedFlight,
+} from "../types/types";
+
+interface CreateEmbebedRequest {
+  schoolId: string;
+  data: EmbeddedFlightInput[];
+}
 
 export interface FlightData {
   date: string;
@@ -79,4 +89,22 @@ export const getAllSchoolFlights = async (
     `/flights/school/${schoolId}`
   );
   return response.data.data;
+};
+
+export const createEmbebedFlights = async (
+  payload: CreateEmbebedRequest
+): Promise<EmbeddedFlightResponse> => {
+  const response = await api.post<EmbeddedFlightResponse>(
+    "/flights/embebed",
+    payload
+  );
+  return response.data;
+};
+
+export const validateEmbebedFlights = async (payload: {
+  schoolId: string;
+  embebedFlights: EmbeddedFlight[];
+}): Promise<{ message: string; matched: number }> => {
+  const response = await api.post("/flights/validate-embebed", payload);
+  return response.data;
 };

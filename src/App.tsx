@@ -15,7 +15,7 @@ import UserFlights from "./pages/UserFlights";
 import UserProfile from "./pages/UserProfile";
 import Maintenance from "./pages/Maintenance";
 
-const maintenanceMode = true; // Cambiar a false cuando EC2 esté activa
+const maintenanceMode = false; // Cambiar a false cuando EC2 esté activa
 
 const App: React.FC = () => {
   return (

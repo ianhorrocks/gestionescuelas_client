@@ -86,6 +86,7 @@ export interface Flight {
   departureTime: string;
   arrivalTime: string;
   status: "pending" | "confirmed" | "cancelled";
+  preValidated: boolean;
   totalFlightTime?: string;
 }
 
@@ -135,4 +136,34 @@ export interface NewSchool {
   publicEmail: string;
   adminEmail: string;
   adminPassword: string;
+}
+
+export interface EmbeddedFlightInput {
+  id_embebed: string;
+  id_tag: string;
+  timestamp: string;
+}
+
+export interface EmbeddedFlight {
+  id_embebbed: string;
+  pilot_tag?: string;
+  instructor_tag?: string;
+  departureTime: string;
+  arrivalTime: string;
+  planeRegistration?: string;
+  pilotName?: string;
+  instructorName?: string;
+}
+
+export interface DiscardedRow {
+  id_embebed: string;
+  id_tag: string;
+  timestamp: string;
+  reason: string;
+}
+
+export interface EmbeddedFlightResponse {
+  message: string;
+  embebedFlights: EmbeddedFlight[];
+  discardedRows: DiscardedRow[];
 }

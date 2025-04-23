@@ -1,3 +1,5 @@
+// pages/AdminFlights.tsx
+
 import React, { useEffect, useState } from "react";
 import { getAllSchoolFlights } from "../services/flightService";
 import { Flight as FlightBase } from "../types/types";
@@ -7,6 +9,8 @@ import FlightValidationTable from "../components/FlightValidationTable";
 import FlightHistoryTable from "../components/FlightHistoryTable";
 import { getLoggedUser } from "../services/auth";
 import PlaneLoader from "../components/PlaneLoader";
+import useTemporaryMessage from "../hooks/useTemporaryMessage";
+import Alert from "../components/Alert";
 
 type Flight = FlightBase & { validated: boolean };
 
@@ -14,9 +18,25 @@ const AdminFlights: React.FC = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [schoolId, setSchoolId] = useState<string | null>(null);
+
+  const { message, showTemporaryMessage } = useTemporaryMessage();
+
+  const fetchFlights = async (schoolId: string) => {
+    try {
+      const flightsData = await getAllSchoolFlights(schoolId);
+      const normalizedFlights = flightsData.map((flight) => ({
+        ...flight,
+        validated: flight.status === "confirmed",
+      }));
+      setFlights(normalizedFlights);
+    } catch (err) {
+      console.error("Error fetching school flights:", err);
+    }
+  };
 
   useEffect(() => {
-    const fetchFlights = async () => {
+    const initialize = async () => {
       try {
         const loggedUser = await getLoggedUser();
         const schoolId = loggedUser.assignedSchools[0]?.school?._id;
@@ -25,22 +45,16 @@ const AdminFlights: React.FC = () => {
           setLoading(false);
           return;
         }
-
-        const flightsData = await getAllSchoolFlights(schoolId);
-        const normalizedFlights = flightsData.map((flight) => ({
-          ...flight,
-          validated: flight.status === "confirmed",
-        }));
-
-        setFlights(normalizedFlights);
+        setSchoolId(schoolId);
+        await fetchFlights(schoolId);
       } catch (err) {
-        console.error("Error fetching school flights:", err);
+        console.error("Initialization error:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchFlights();
+    initialize();
   }, []);
 
   const links = [
@@ -57,14 +71,25 @@ const AdminFlights: React.FC = () => {
           <PlaneLoader />
         ) : (
           <>
+            {message && <Alert type={message.type} message={message.message} />}
+
             <div className="flights-section">
               <div className="flights-subsection">
-                <h2>Pendientes</h2>
+                <div className="align-items-center">
+                  <h2>Pendientes</h2>
+                </div>
                 <div className="flight-table-wrapper pending-flights">
                   <FlightValidationTable
                     flights={flights.filter((f) => f.status === "pending")}
-                    csvData={[]}
                   />
+                </div>
+                <div className="text-end mt-3">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setShowModal(true)}
+                  >
+                    Validar vuelos con CSV
+                  </button>
                 </div>
               </div>
 
@@ -88,11 +113,17 @@ const AdminFlights: React.FC = () => {
               </div>
             </div>
 
-            <ValidateFlightsModal
-              show={showModal}
-              onHide={() => setShowModal(false)}
-              onUpload={(file) => console.log("Archivo subido:", file)}
-            />
+            {schoolId && (
+              <ValidateFlightsModal
+                show={showModal}
+                onHide={() => setShowModal(false)}
+                schoolId={schoolId}
+                onResult={async () => {
+                  await fetchFlights(schoolId);
+                  showTemporaryMessage("success", "Validación ejecutada");
+                }}
+              />
+            )}
           </>
         )}
       </div>

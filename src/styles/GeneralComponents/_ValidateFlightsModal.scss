@@ -1,36 +1,220 @@
-.upload-zone {
-  border: 2px dashed #007bff;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-}
+@use "../Variables/variables";
 
-.upload-input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-}
+.validate-flights-modal {
+  max-width: 90vw !important;
+  width: auto !important;
 
-.upload-placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-}
+  .validation-feedback,
+  .loading-feedback {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 250px;
+    margin: 0 auto;
+    text-align: center;
 
-.upload-placeholder span {
-  font-size: 2rem;
-  color: #007bff;
-}
+    p {
+      margin-top: 1rem;
+      font-weight: 500;
+      color: #555;
+    }
+  }
 
-.upload-placeholder p {
-  margin-top: 10px;
-  color: #6c757d;
+  .modal-content {
+    width: auto !important;
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .modal-dialog {
+    width: 90vw;
+    max-width: 90vw;
+  }
+
+  .validate-flights-modal-body {
+    max-height: 65vh;
+    overflow-y: auto;
+
+    .upload-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 500px;
+      max-width: 400px;
+      min-height: 250px;
+      margin: 0 auto 2rem auto;
+      border: 2px dashed variables.$tertiary-color;
+      border-radius: 10px;
+      padding: 40px 20px;
+      background-color: #f9f9f9;
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+
+      &.dragging {
+        border-color: #6f42c1;
+        background-color: #f3f0ff;
+      }
+
+      .upload-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .upload-text {
+          font-size: 1rem;
+          color: #555;
+          text-align: center;
+        }
+      }
+
+      .lf-player-container,
+      #lottie {
+        width: 220px !important;
+        height: 220px !important;
+        max-width: 100%;
+      }
+    }
+
+    .file-uploaded-msg {
+      background-color: #eef6ff;
+      border: 1px solid #007bff;
+      border-radius: 8px;
+      padding: 10px 15px;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1rem;
+
+      svg {
+        font-size: 1.2rem;
+        color: #2168b3;
+      }
+
+      strong {
+        color: #007bff86;
+        margin-right: 0.5rem;
+      }
+
+      .filename {
+        font-weight: bold;
+        color: #0056b3;
+      }
+
+      .status {
+        color: #333;
+        font-size: 0.9rem;
+      }
+
+      button {
+        margin-left: auto;
+        padding: 6px 10px;
+        font-size: 0.85rem;
+        border: 1px solid #0056b3;
+        background: transparent;
+        border-radius: 4px;
+        color: #0056b3;
+
+        &:hover {
+          background-color: #2168b3;
+          color: #ffffff;
+        }
+      }
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 1rem;
+
+      .embedded-flights-table,
+      .discarded-rows-table {
+        width: 100%;
+        min-width: 800px;
+        border-collapse: collapse;
+
+        th,
+        td {
+          padding: 8px 12px;
+          border: 1px solid #ccc;
+          text-align: center;
+          white-space: nowrap;
+
+          .text-muted {
+            font-size: 0.8rem;
+            color: #6c757d;
+            letter-spacing: 0.04rem;
+            font-weight: 400;
+            margin-left: 4px;
+          }
+        }
+
+        th {
+          background-color: #f0f0f0;
+        }
+      }
+
+      .discarded-rows-table th {
+        background-color: #ffe6e6;
+        color: #b30000;
+      }
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #999;
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #777;
+    }
+
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #999 transparent;
+  }
+  .modal-footer {
+    display: flex;
+
+    .modal-button {
+      background-color: variables.$tertiary-color;
+      border-color: variables.$tertiary-color;
+      color: #fff;
+      padding: 8px 20px;
+      font-weight: 500;
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: variables.$tertiary-color-hover;
+        border-color: variables.$tertiary-color-hover;
+      }
+
+      &:disabled {
+        background-color: #b19abb;
+        border-color: #cfc4e1;
+        color: #eee;
+      }
+    }
+
+    .modal-button-cancel {
+      color: variables.$tertiary-color;
+      background: transparent;
+      border: none;
+
+      &:hover {
+        background: #f0f0f0;
+      }
+    }
+  }
 }
