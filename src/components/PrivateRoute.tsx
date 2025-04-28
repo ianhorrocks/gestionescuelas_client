@@ -1,18 +1,20 @@
+import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/useAuth"; // ya separado como lo hiciste
+import { useAuth } from "../context/useAuth";
 
-type Props = {
-  children: JSX.Element;
-};
-
-const PrivateRoute = ({ children }: Props) => {
+const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { loggedIn } = useAuth();
 
   if (!loggedIn) {
-    return <Navigate to="/user/login" replace />;
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return <Navigate to="/user/login" replace />;
+    }
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 export default PrivateRoute;

@@ -6,12 +6,10 @@
 @use "./AdminPlanes/AdminPlanes";
 @use "./UserDashboard/UserDashboard";
 @use "./UserFlights/UserFlights";
-@use "./UserFlights/FlightCard";
-@use "./UserProfile/UserProfile";
 @use "./UserSchool/UserSchool";
 @use "./GeneralComponents/ValidateFlightsModal";
 @use "./NavBar/NavbarUser";
-@use "./UserProfile/EditUserProfileModal";
+@use "./Modals/EditUserProfileModal";
 @use "./NavBar/NavbarAdmin";
 @use "./Modals/AddModal";
 @use "./GeneralComponents/CustomSelect";
@@ -21,6 +19,8 @@
 @use "./GeneralComponents/Items/PlaneItem";
 @use "./GeneralComponents/Maintenance";
 @use "./AdminFlights/FlightValidationTable";
+@use "./Modals/EditSchoolProfileModal";
+@use "./GeneralComponents/FilterSelect";
 
 .dashboard-container,
 .profile-container,

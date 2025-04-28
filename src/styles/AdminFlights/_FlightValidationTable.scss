@@ -1,36 +1,138 @@
-.flight-validation-table-wrapper {
-  margin-top: 1rem;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  background-color: #fff;
+@use "../Variables/variables";
 
-  table {
+.flight-validation-table-wrapper {
+  position: relative;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background-color: variables.$white-color;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+
+  .no-flights {
+    padding: 2rem;
+    font-style: italic;
+    color: variables.$soft-text-color;
+    text-align: center;
+  }
+
+  .flight-validation-table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
 
-    th,
-    td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
+    thead {
+      background-color: variables.$secondary-color;
+
+      th {
+        padding: 12px 8px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 13px;
+        color: variables.$medium-soft-text-color;
+        border-bottom: 2px solid variables.$shadow-color;
+      }
+
+      th:nth-child(1),
+      td:nth-child(1) {
+        width: 12%;
+      }
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 15%;
+      }
+      th:nth-child(3),
+      td:nth-child(3) {
+        width: 20%;
+      }
+      th:nth-child(4),
+      td:nth-child(4) {
+        width: 20%;
+      }
+      th:nth-child(5),
+      td:nth-child(5) {
+        width: 15%;
+      }
+      th:nth-child(6),
+      td:nth-child(6) {
+        width: 14%;
+      }
+      th:nth-child(7) {
+        width: 80px;
+        text-align: center;
+      }
     }
 
-    th {
-      color: #666;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 13px;
-      letter-spacing: 0.5px;
+    tbody {
+      tr {
+        transition: background 0.2s;
+
+        &:hover {
+          background-color: variables.$secondary-color;
+        }
+
+        &.prevalidated {
+          background-color: variables.$success-bg-color;
+        }
+
+        td {
+          padding: 12px 8px;
+          vertical-align: middle;
+          font-size: 14px;
+          color: variables.$text-color;
+          border-bottom: 1px solid variables.$shadow-color;
+          text-align: left;
+        }
+
+        td.actions-cell {
+          display: flex;
+          gap: 0.5rem;
+          justify-content: flex-start;
+          width: 80px;
+          padding: 12px 0;
+        }
+
+        td.actions-cell:empty {
+          border-bottom: none;
+        }
+      }
     }
 
-    tbody tr:hover {
-      background-color: #f9f9f9;
-    }
+    .icon-button {
+      background: transparent;
+      border: none;
+      padding: 6px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
 
-    tr.prevalidated {
-      background-color: #e1f9e1; // verde claro para indicar validación
+      svg {
+        width: 20px;
+        height: 20px;
+        color: variables.$medium-soft-text-color;
+        transition: color 0.2s;
+      }
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      &[aria-label="Confirmar vuelo"] svg {
+        color: variables.$success-text-color;
+      }
+
+      &[aria-label="Confirmar vuelo"]:hover svg {
+        color: variables.$success-border-color;
+      }
+
+      &[aria-label="Cancelar vuelo"] svg {
+        color: variables.$error-bg-color;
+      }
+
+      &[aria-label="Cancelar vuelo"]:hover svg {
+        color: lighten(variables.$error-bg-color, 10%);
+      }
     }
   }
 }

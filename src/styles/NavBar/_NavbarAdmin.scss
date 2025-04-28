@@ -121,6 +121,45 @@
       }
     }
 
+    .nav-admin-school-name {
+      text-align: center;
+      font-size: 1rem;
+      font-weight: bold;
+      color: variables.$white-color;
+      margin: 5px 0; // Separación del resto del contenido
+    }
+
+    .nav-admin-school-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      margin-top: auto; // Empuja el bloque hacia la parte inferior del menú
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1); // Fondo sutil en hover
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Sombra en hover
+      }
+
+      .school-thumbnail {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid variables.$white-color;
+      }
+
+      .school-name {
+        padding-left: 15px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: variables.$white-color;
+      }
+    }
+
     .admin-info {
       display: flex;
       align-items: center;
@@ -177,8 +216,11 @@
     }
 
     .logout-button {
-      margin-top: 20px;
-      padding-top: 20px;
+      position: absolute; // Fija el botón en una posición específica
+      bottom: 20px; // Separa el botón del borde inferior
+      left: 0;
+      width: 100%; // Asegura que el botón ocupe todo el ancho del menú
+      padding: 10px 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -186,6 +228,7 @@
       font-size: 1rem;
       text-decoration: none;
       gap: 8px;
+      margin-top: 10px; // Separación del bloque de la escuela
 
       .logout-icon {
         font-size: 1rem;
@@ -201,7 +244,6 @@
     box-shadow: none !important;
   }
 }
-
 html,
 body,
 #root {

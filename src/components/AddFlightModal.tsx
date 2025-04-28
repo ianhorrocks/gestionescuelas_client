@@ -7,6 +7,7 @@ import { fetchUsersFromSchool } from "../services/userService";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import airportCodes from "../data/designadores_locales.json";
 import { FlightUser, FlightData, Plane } from "../types/types";
+import { AxiosError } from "axios"; // arriba del archivo si no está ya
 
 interface AddFlightModalProps {
   show: boolean;
@@ -36,6 +37,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
 
   const [flight, setFlight] = useState<FlightData>({
     date: "",
+    flightType: "" as FlightData["flightType"], // Ensure type safety without a default value
     airplane: "",
     pilot: "",
     instructor: "",
@@ -57,11 +59,6 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    if (name === "departureTime" || name === "arrivalTime") {
-      const isValidTime = /^([01]\d|2[0-3]):([0-5]\d)$/.test(value);
-      if (!isValidTime) return;
-    }
     updateField(name as keyof FlightData, value);
   };
 
@@ -86,8 +83,12 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
         setSchools(assigned);
       }
 
-      const today = new Date().toISOString().split("T")[0];
-      updateField("date", today);
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = (today.getMonth() + 1).toString().padStart(2, "0");
+      const day = today.getDate().toString().padStart(2, "0");
+      const formattedToday = `${year}-${month}-${day}`;
+      updateField("date", formattedToday);
     }
   }, [show]);
 
@@ -142,25 +143,63 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Convertir "" a null para el campo instructor
-    const flightData = {
-      ...flight,
-      instructor: flight.instructor === "" ? null : flight.instructor,
-    };
+    if (!flight.flightType) {
+      showTemporaryMessage("error", "Debes seleccionar el tipo de vuelo.");
+      return;
+    }
 
-    if (!flightData.pilot || !flightData.school || !flightData.airplane) {
+    if (!flight.pilot || !flight.school || !flight.airplane) {
       showTemporaryMessage("error", "Faltan campos obligatorios.");
       return;
     }
 
+    if (!flight.departureTime || !flight.arrivalTime) {
+      showTemporaryMessage(
+        "error",
+        "Debes ingresar las horas de salida y llegada."
+      );
+      return;
+    }
+
     try {
-      console.log("Submitting flight:", flightData);
+      const [year, month, day] = flight.date.split("-");
+
+      const fullDate = new Date(`${year}-${month}-${day}T00:00:00`);
+      const departureDate = new Date(
+        `${year}-${month}-${day}T${flight.departureTime}:00`
+      );
+      const arrivalDate = new Date(
+        `${year}-${month}-${day}T${flight.arrivalTime}:00`
+      );
+
+      const flightData = {
+        ...flight,
+        date: fullDate,
+        departureTime: departureDate,
+        arrivalTime: arrivalDate,
+        instructor: flight.instructor === "" ? null : flight.instructor,
+        oil: flight.oil ? flight.oil : undefined,
+        charge: flight.charge ? flight.charge : undefined,
+      };
+
+      console.log("Flight data que estoy mandando:", flightData);
+
       await createFlight(flightData);
       showTemporaryMessage("success", "Vuelo agregado exitosamente");
       onSuccess?.("Vuelo agregado exitosamente");
       onClose();
-    } catch {
-      showTemporaryMessage("error", "No se pudo agregar el vuelo.");
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
+
+      console.error(
+        "Error real del servidor:",
+        axiosError.response?.data || error
+      );
+
+      showTemporaryMessage(
+        "error",
+        axiosError.response?.data?.message || "No se pudo agregar el vuelo."
+      );
     }
   };
 
@@ -194,30 +233,63 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
     [users]
   );
 
+  const handleReset = () => {
+    setFlight({
+      date: "",
+      flightType: "" as FlightData["flightType"],
+      airplane: "",
+      pilot: "",
+      instructor: "",
+      departureTime: "",
+      arrivalTime: "",
+      landings: "",
+      oil: "",
+      charge: "",
+      school: "",
+      origin: "",
+      destination: "",
+      initialOdometer: "",
+      finalOdometer: "",
+    });
+    setSelectedSchool(""); // También reseteamos la escuela seleccionada
+  };
+
   return (
-    <Modal show={show} onHide={onClose} className="fade add-modal">
+    <Modal show={show} onHide={onClose} className="fade add-modal" centered>
       <Modal.Header closeButton>
         <Modal.Title>Agregar Vuelo</Modal.Title>
       </Modal.Header>
+      {message && <Alert variant={message.type}>{message.message}</Alert>}
       <Modal.Body>
-        {message && <Alert variant={message.type}>{message.message}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formDate" className="form-group">
             <Form.Control
               type="date"
+              lang="es"
               name="date"
-              value={flight.date.split("/").reverse().join("-")}
-              onChange={(e) => {
-                const [yyyy, mm, dd] = e.target.value.split("-");
-                updateField("date", `${dd}/${mm}/${yyyy}`);
-              }}
+              value={flight.date}
+              onChange={(e) => updateField("date", e.target.value)}
               min="2020-01-01"
               max={new Date().toISOString().split("T")[0]}
               required
               className="floating-input"
             />
-
             <Form.Label className="floating-label">Fecha</Form.Label>
+          </Form.Group>
+
+          <Form.Group controlId="formFlightType" className="form-group">
+            <CustomSelect
+              options={[
+                { value: "Vuelo Privado", label: "Vuelo Privado" },
+                { value: "Instruccion Alumno", label: "Instruccion Alumno" },
+                { value: "Navegacion", label: "Navegacion" },
+                { value: "Readaptacion", label: "Readaptacion" },
+                { value: "Bautismo", label: "Bautismo" },
+              ]}
+              value={flight.flightType}
+              onChange={(value) => updateField("flightType", value)}
+              placeholder="Tipo de Vuelo"
+            />
           </Form.Group>
 
           <Form.Group controlId="formSchool" className="form-group">
@@ -360,21 +432,30 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             />
             <Form.Label className="floating-label">Combustible</Form.Label>
           </Form.Group>
-
-          <div className="form-buttons">
-            <Button variant="secondary" onClick={onClose}>
-              Cancelar
-            </Button>
-            <Button
-              variant="primary"
-              type="submit"
-              className="modal-button mt-3"
-            >
-              Agregar
-            </Button>
-          </div>
         </Form>
       </Modal.Body>
+      <Modal.Footer>
+        <div className="form-buttons">
+          <Button
+            variant="secondary"
+            onClick={handleReset}
+            className="modal-button mt-3"
+          >
+            Resetear
+          </Button>
+          <Button
+            variant="primary"
+            type="submit"
+            className="modal-button mt-3"
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmit(e);
+            }}
+          >
+            Agregar
+          </Button>
+        </div>
+      </Modal.Footer>
     </Modal>
   );
 };

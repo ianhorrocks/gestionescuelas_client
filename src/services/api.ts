@@ -32,13 +32,10 @@ api.interceptors.response.use(
 
       if (errorMsg === "ERROR_ID_TOKEN") {
         localStorage.setItem("sessionMessage", "Sesión expirada");
+        localStorage.removeItem("token");
+        localStorage.removeItem("profile");
+        window.location.href = "/user/login";
       }
-
-      localStorage.removeItem("token");
-      localStorage.removeItem("profile");
-      localStorage.removeItem("selectedSchoolId");
-
-      window.location.href = "/user/login";
     }
 
     return Promise.reject(error);

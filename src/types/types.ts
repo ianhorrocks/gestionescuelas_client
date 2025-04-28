@@ -43,14 +43,23 @@ export interface User {
   _id: string;
   name: string;
   lastname: string;
-  dni: number;
   email: string;
-  photo: string | null;
-  assignedSchools: AssignedSchool[]; // Utilizamos el subtipo actualizado
+  dni: number;
+  photo?: string | null;
+  assignedSchools: AssignedSchool[];
+  flightLocation?: string;
+  license?: string;
   createdAt: string;
   updatedAt: string;
-  deleted?: boolean;
-  password?: string;
+}
+
+export interface EditUserProfileInput {
+  name: string;
+  lastname: string;
+  email: string;
+  dni: number;
+  flightLocation?: string;
+  license?: string;
 }
 
 export interface LoginResponse {
@@ -75,6 +84,13 @@ export interface FlightUser {
   role: string;
 }
 
+export type FlightType =
+  | "Vuelo Privado"
+  | "Instruccion Alumno"
+  | "Navegacion"
+  | "Readaptacion"
+  | "Bautismo";
+
 export interface Flight {
   _id: string;
   date: string;
@@ -88,6 +104,7 @@ export interface Flight {
   status: "pending" | "confirmed" | "cancelled";
   preValidated: boolean;
   totalFlightTime?: string;
+  flightType: FlightType; // ✅ nuevo
 }
 
 export interface FlightData {
@@ -105,6 +122,7 @@ export interface FlightData {
   destination: string;
   initialOdometer: string;
   finalOdometer: string;
+  flightType: FlightType; // ✅ nuevo
 }
 
 export interface NewPlane {
@@ -166,4 +184,9 @@ export interface EmbeddedFlightResponse {
   message: string;
   embebedFlights: EmbeddedFlight[];
   discardedRows: DiscardedRow[];
+}
+
+export interface FlightEvolution {
+  month: string;
+  count: number;
 }

@@ -25,15 +25,15 @@
   }
 
   &__dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    max-height: 200px;
-    overflow-y: auto;
+    position: fixed; // Cambia a fixed para que no dependa del contenedor
+    top: auto; // Se calculará dinámicamente
+    left: auto; // Se calculará dinámicamente
+    right: auto; // Se calculará dinámicamente
+    max-height: 200px; // Altura máxima del dropdown
+    overflow-y: auto; // Permite scroll si hay más opciones
     border: 1px solid #ccc;
     background-color: #fff;
-    z-index: 1000;
+    z-index: 1050; // Asegúrate de que esté por encima del modal
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
@@ -110,15 +110,15 @@
   }
 
   .custom-select__dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    max-height: 200px;
-    overflow-y: auto;
+    position: fixed; // Cambia a fixed para que no dependa del contenedor
+    top: auto; // Se calculará dinámicamente
+    left: auto; // Se calculará dinámicamente
+    right: auto; // Se calculará dinámicamente
+    max-height: 200px; // Altura máxima del dropdown
+    overflow-y: auto; // Permite scroll si hay más opciones
     border: 1px solid #ccc;
     background-color: #fff;
-    z-index: 1000;
+    z-index: 1050; // Asegúrate de que esté por encima del modal
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;

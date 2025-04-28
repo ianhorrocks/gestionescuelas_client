@@ -12,7 +12,6 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminPlanes from "./pages/AdminPlanes";
 import AdminFlights from "./pages/AdminFlights";
 import UserFlights from "./pages/UserFlights";
-import UserProfile from "./pages/UserProfile";
 import Maintenance from "./pages/Maintenance";
 
 const maintenanceMode = false; // Cambiar a false cuando EC2 esté activa
@@ -68,14 +67,6 @@ const App: React.FC = () => {
               element={
                 <PrivateRoute>
                   <UserFlights />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/user/profile"
-              element={
-                <PrivateRoute>
-                  <UserProfile />
                 </PrivateRoute>
               }
             />

@@ -4,6 +4,7 @@ import { TrashFill } from "react-bootstrap-icons";
 import defaultPlane from "../assets/images/default-plane.jpg";
 import ReactCrop, { Crop as ReactCropType } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import "../styles/GeneralComponents/Items/_UserItem.scss";
 import {
   assignEmbeddedIdToPlane,
   removeEmbeddedIdFromPlane,
@@ -166,7 +167,7 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
             {plane.brand} - {plane.model}
           </Card.Text>
           <Card.Text>
-            ID Embebido:{" "}
+            ID Escaner:{" "}
             <strong
               className={`plane-id ${!plane.idEmbebbed ? "text-danger" : ""}`}
             >
@@ -203,7 +204,7 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
             Matrícula: <strong>{plane.registrationNumber}</strong>
           </p>
           <p className="subtitle">
-            ID Embebido:{" "}
+            ID Escaner:{" "}
             <strong className={!currentIdEmbebbedState ? "id-unassigned" : ""}>
               {currentIdEmbebbedState || "Sin asignar"}
             </strong>
@@ -214,12 +215,12 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
             Agregado el: <strong>{plane.addedDate || "-"}</strong>
           </p>
 
-          <h5 className="section-title mt-4">Asignar ID Embebido:</h5>
+          <h5 className="section-title mt-4">Asignar ID Escaner:</h5>
           <div className="tag-assignment-container">
             <input
               type="text"
               className="form-control"
-              placeholder="Escanea o ingresa el ID"
+              placeholder="Ingresa el ID"
               value={idInput}
               onChange={(e) => setIdInput(e.target.value)}
             />
@@ -231,9 +232,13 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
               >
                 {loading ? "..." : "Asignar"}
               </button>
-              <Button className="btn-delete-tag" onClick={handleRemoveId}>
+              <button
+                className="btn btn-delete-tag"
+                onClick={handleRemoveId}
+                disabled={loading}
+              >
                 <TrashFill />
-              </Button>
+              </button>
             </div>
           </div>
 
@@ -286,14 +291,13 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
             </>
           )}
           <Button
-            variant="danger"
             onClick={() => {
               onDelete(plane._id);
               handleCloseModal();
             }}
-            className="mt-3 d-block"
+            className="btn-delete-school mt-3 d-block"
           >
-            Eliminar
+            Eliminar de la escuela
           </Button>
         </Modal.Body>
       </Modal>

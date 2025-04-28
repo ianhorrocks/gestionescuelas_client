@@ -1,5 +1,6 @@
 @use "../Variables/variables";
 
+/* Contenedor principal */
 .flights-container {
   padding: 20px;
 
@@ -8,8 +9,16 @@
   }
 }
 
+/* Contenido de vuelos */
 .flights-content {
   margin-top: 35px;
+
+  .no-flights-message {
+    text-align: center;
+    font-size: 1.2rem; // Tamaño más grande para mayor visibilidad
+    color: variables.$soft-text-color;
+    margin-top: 10rem; // Ajusta para centrar verticalmente
+  }
 }
 
 /* Filtros de estado */
@@ -32,8 +41,8 @@
     transition: all 0.2s ease;
 
     &.active {
-      background-color: variables.$primary-color;
-      color: #fff;
+      background-color: variables.$tertiary-color; // Cambia el fondo al color terciario
+      color: #fff; // Asegúrate de que el texto sea visible
     }
   }
 }
@@ -49,54 +58,54 @@
   @media (max-width: 768px) {
     display: none;
   }
-}
 
-.flight-table {
-  width: 100%;
-  border-collapse: collapse;
+  .flight-table {
+    width: 100%;
+    border-collapse: collapse;
 
-  th,
-  td {
-    padding: 12px 16px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
-  }
+    th,
+    td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
 
-  th {
-    color: #666;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-  }
+    th {
+      color: #666;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
 
-  tbody tr:hover {
-    background-color: #f9f9f9;
-  }
+    tbody tr:hover {
+      background-color: #f9f9f9;
+    }
 
-  .badge {
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    display: inline-block;
-    text-transform: capitalize;
-  }
+    .badge {
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-block;
+      text-transform: capitalize;
+    }
 
-  .badge.pending {
-    background-color: #fff3cd;
-    color: #856404;
-  }
+    .badge.pending {
+      background-color: #fff3cd;
+      color: #856404;
+    }
 
-  .badge.confirmed {
-    background-color: #d4edda;
-    color: #155724;
-  }
+    .badge.confirmed {
+      background-color: #d4edda;
+      color: #155724;
+    }
 
-  .badge.cancelled {
-    background-color: #f8d7da;
-    color: #721c24;
+    .badge.cancelled {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
   }
 }
 

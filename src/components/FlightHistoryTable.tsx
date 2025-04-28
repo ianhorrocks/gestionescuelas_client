@@ -1,3 +1,4 @@
+// src/components/FlightHistoryTable.tsx
 import React from "react";
 import { Flight as BaseFlight } from "../types/types";
 
@@ -15,9 +16,16 @@ const statusMap = {
 };
 
 const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({ flights }) => {
+  if (flights.length === 0) {
+    return (
+      <div className="flight-history-table-wrapper">
+        <p className="no-flights">No hay vuelos para mostrar.</p>
+      </div>
+    );
+  }
   return (
-    <div>
-      <table>
+    <div className="flight-history-table-wrapper">
+      <table className="flight-history-table">
         <thead>
           <tr>
             <th>Fecha</th>
@@ -44,8 +52,8 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({ flights }) => {
                   hour: "2-digit",
                   minute: "2-digit",
                   hour12: false,
-                })}{" "}
-                -{" "}
+                })}
+                {" - "}
                 {new Date(flight.arrivalTime).toLocaleTimeString("es-ES", {
                   hour: "2-digit",
                   minute: "2-digit",

@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/images/LogoSmallPilotLog.png";
+import defaultSchoolImage from "../assets/images/Logo-School-Profile.png"; // Foto por defecto
+import EditSchoolProfileModal from "./EditSchoolProfileModal"; // Importar el modal
 import {
   faBars,
   faAngleDoubleLeft,
@@ -23,20 +25,37 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
   logoutPath,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [schoolName, setSchoolName] = useState<string | null>(null);
+  const [schoolImage, setSchoolImage] = useState<string>(defaultSchoolImage); // Estado para la foto de la escuela
+  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const profile = localStorage.getItem("profile");
+    if (profile) {
+      const parsedProfile = JSON.parse(profile);
+      const assignedSchool = parsedProfile.assignedSchools?.[0]?.school;
+      setSchoolName(assignedSchool?.name || "Escuela no asignada");
+      setSchoolImage(assignedSchool?.photoUrl || defaultSchoolImage);
+    }
+  }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("profile");
     navigate(logoutPath);
   };
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const linkIcons: {
     [key: string]: import("@fortawesome/fontawesome-svg-core").IconDefinition;
   } = {
-    "/admin/users": faUserGroup, // Icono de dos personas para usuarios
-    "/admin/planes": faPlane, // Icono de avión para aeronaves
-    "/admin/flights": faClipboardList, // Icono de lista para vuelos
+    "/admin/users": faUserGroup,
+    "/admin/planes": faPlane,
+    "/admin/flights": faClipboardList,
   };
 
   return (
@@ -78,11 +97,20 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
           </NavLink>
         ))}
 
+        {/* Nombre y foto de la escuela */}
+        <div className="nav-admin-school-info" onClick={openModal}>
+          <img src={schoolImage} alt="School" className="school-thumbnail" />
+          <span className="school-name">{schoolName}</span>
+        </div>
+
         <NavLink to="/" className="logout-button" onClick={handleLogout}>
           <FontAwesomeIcon icon={faSignOutAlt} className="logout-icon" />
           Cerrar Sesión
         </NavLink>
       </div>
+
+      {/* Modal para editar el perfil de la escuela */}
+      {isModalOpen && <EditSchoolProfileModal onClose={closeModal} />}
     </div>
   );
 };

@@ -1,50 +1,74 @@
-.flight-history-table-wrapper {
-  margin-top: 1rem;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+// src/styles/FlightHistoryTable.scss
+@use "../Variables/variables";
 
-  table {
+.flight-history-table-wrapper {
+  margin-top: 1.5rem; // Igual que la tabla de validación
+  padding: 1.5rem; // Igual que la tabla de validación
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); // Igual que la tabla de validación
+  background-color: variables.$white-color;
+
+  .no-flights {
+    padding: 2rem;
+    font-style: italic;
+    color: variables.$soft-text-color;
+    text-align: center;
+  }
+
+  .flight-history-table {
     width: 100%;
+    table-layout: fixed; // Asegura que las columnas tengan un ancho fijo
     border-collapse: collapse;
 
-    th,
-    td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
+    thead {
+      background-color: variables.$secondary-color;
+
+      th {
+        padding: 12px 8px; // Igual que la tabla de validación
+        text-align: left; // Alinea los encabezados con las celdas
+        font-weight: 600;
+        font-size: 13px;
+        color: variables.$medium-soft-text-color;
+        border-bottom: 2px solid variables.$shadow-color;
+      }
     }
 
-    th {
-      color: #666;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 13px;
-      letter-spacing: 0.5px;
-    }
+    tbody {
+      tr {
+        transition: background 0.2s;
 
-    tbody tr:hover {
-      background-color: #f9f9f9;
-    }
+        &:hover {
+          background-color: variables.$secondary-color;
+        }
 
-    .badge {
-      padding: 4px 8px;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      display: inline-block;
-      text-transform: capitalize;
-    }
+        td {
+          padding: 12px 8px; // Igual que la tabla de validación
+          vertical-align: middle;
+          font-size: 14px;
+          color: variables.$text-color;
+          border-bottom: 1px solid variables.$shadow-color;
+          text-align: left; // Alinea las celdas con los encabezados
+        }
 
-    .badge.confirmed {
-      background-color: #d4edda;
-      color: #155724;
-    }
+        .badge {
+          padding: 4px 8px;
+          border-radius: 8px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          display: inline-block;
+          text-transform: capitalize;
+        }
 
-    .badge.cancelled {
-      background-color: #f8d7da;
-      color: #721c24;
+        .badge.confirmed {
+          background-color: variables.$success-bg-color;
+          color: variables.$success-text-color;
+        }
+
+        .badge.cancelled {
+          background-color: variables.$error-bg-color-message;
+          color: variables.$error-text-color;
+        }
+      }
     }
   }
 }

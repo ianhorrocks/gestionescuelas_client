@@ -247,7 +247,7 @@ const ValidateFlightsModal: React.FC<Props> = ({
               {embeddedFlights.length > 0 && (
                 <>
                   <h5 className="text-success mt-4">
-                    Vuelos embebidos generados:
+                    Vuelos generados por Escaner:
                   </h5>
                   <div className="table-wrapper">
                     <table className="embedded-flights-table">
@@ -317,10 +317,10 @@ const ValidateFlightsModal: React.FC<Props> = ({
                     <table className="discarded-rows-table">
                       <thead>
                         <tr>
-                          <th>id_embebed</th>
-                          <th>id_tag</th>
-                          <th>timestamp</th>
-                          <th>reason</th>
+                          <th>ID_Escaner</th>
+                          <th>ID_Tag</th>
+                          <th>Tiempo de lectura</th>
+                          <th>Razon Descarte</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -342,7 +342,11 @@ const ValidateFlightsModal: React.FC<Props> = ({
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onHide} disabled={validating}>
+        <Button
+          onClick={onHide}
+          disabled={validating}
+          className="modal-button-cancel"
+        >
           Cancelar
         </Button>
         <Button

@@ -21,6 +21,7 @@
       border-radius: 8px; // Bordes redondeados
       overflow: hidden; // Asegurar que el contenido no se desborde
       transition: transform 0.2s;
+      text-align: left; // Alinea todo el contenido a la izquierda
 
       &:hover {
         transform: scale(1.03); // Efecto de hover
@@ -28,17 +29,24 @@
 
       .plane-registration {
         font-weight: bold;
-        text-align: center;
         font-size: 1rem;
         color: variables.$primary-color;
         margin-top: 10px;
+        text-align: left; // Alinea el texto a la izquierda
       }
 
       .plane-details {
         color: #6c757d; // Gris suave
         font-size: 0.875rem;
-        text-align: center;
         margin-bottom: 10px;
+        text-align: left; // Alinea el texto a la izquierda
+      }
+
+      .plane-id {
+        font-size: 0.875rem;
+        margin-bottom: 10px;
+        letter-spacing: px;
+        text-align: left; // Alinea el texto a la izquierda
       }
     }
 

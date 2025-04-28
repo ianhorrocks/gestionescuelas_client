@@ -13,20 +13,20 @@ interface CreateEmbebedRequest {
 }
 
 export interface FlightData {
-  date: string;
+  date: Date;
+  departureTime: Date;
+  arrivalTime: Date;
   airplane: string;
   pilot: string;
   instructor: string | null;
-  departureTime: string;
-  arrivalTime: string;
-  landings: string;
-  oil?: string;
-  charge?: string;
   school: string;
   origin: string;
   destination: string;
   initialOdometer: string;
   finalOdometer: string;
+  landings: string;
+  oil?: string;
+  charge?: string;
 }
 
 // Por ahora en ningun lado
@@ -107,4 +107,14 @@ export const validateEmbebedFlights = async (payload: {
 }): Promise<{ message: string; matched: number }> => {
   const response = await api.post("/flights/validate-embebed", payload);
   return response.data;
+};
+
+export const updateFlightStatus = async (
+  id: string,
+  status: "pending" | "confirmed" | "cancelled"
+): Promise<Flight> => {
+  const response = await api.patch<{ data: Flight }>(`/flights/${id}/status`, {
+    status,
+  });
+  return response.data.data;
 };

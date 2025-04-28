@@ -1,5 +1,11 @@
 import api from "./api";
-import { AdminUser, User, FlightUser, NewUser } from "../types/types";
+import {
+  AdminUser,
+  User,
+  FlightUser,
+  NewUser,
+  EditUserProfileInput,
+} from "../types/types";
 import { AxiosError } from "axios";
 
 // Se usa en AdminUsers.tsx
@@ -38,14 +44,27 @@ export const getUserById = async (id: string): Promise<User> => {
   return response.data;
 };
 
-// Se usa en: por ahora ningun lado..
-export const updateUserProfile = async (profile: {
-  name: string;
-  lastname: string;
-  email: string;
-}) => {
-  const response = await api.put("/users/profile", profile);
-  return response.data;
+export const updateUserProfile = async (
+  id: string,
+  profile: EditUserProfileInput
+) => {
+  try {
+    const response = await api.put(`/users/${id}`, profile);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      const errorCode = error.response?.data?.errorCode;
+
+      if (errorCode === "DNI_DUPLICATED") {
+        throw new Error("DNI_DUPLICATED");
+      }
+      if (errorCode === "EMAIL_DUPLICATED") {
+        throw new Error("EMAIL_DUPLICATED");
+      }
+    }
+
+    throw new Error("UPDATE_PROFILE_FAILED");
+  }
 };
 
 // Se usa en: por ahora ningun lado..

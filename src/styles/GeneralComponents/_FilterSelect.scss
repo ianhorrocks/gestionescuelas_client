@@ -1,0 +1,43 @@
+.filter-select {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+
+  .filter-select-dropdown {
+    width: 100%;
+    padding: 10px 14px; /* Más espacio interno */
+    border: 1px solid #ddd; /* Color de borde más suave */
+    border-radius: 6px; /* Bordes redondeados */
+    font-size: 14px;
+    color: #333;
+    background-color: #f9f9f9; /* Fondo claro */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transición suave para hover y focus */
+
+    &:hover {
+      background-color: #f1f1f1; /* Fondo más oscuro al pasar el mouse */
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #007bff; /* Color de borde azul al enfocar */
+      background-color: #fff; /* Fondo blanco al enfocar */
+    }
+  }
+
+  .filter-select-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px; /* Más cerca del contenido */
+    transform: translateY(-50%);
+    font-size: 14px; /* Tamaño más pequeño para que no domine */
+    color: #666; /* Color más suave */
+    pointer-events: none;
+    transition: color 0.3s ease;
+
+    .filter-select-dropdown:focus + & {
+      color: #007bff; /* Cambiar color al enfocar */
+    }
+  }
+}

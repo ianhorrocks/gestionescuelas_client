@@ -139,12 +139,12 @@ const UserItem: React.FC<UserItemProps> = ({
             Fecha de asignación: <strong>{assignedDate}</strong>
           </p>
 
-          <h5 className="section-title">Asignar Tag RFID:</h5>
+          <h5 className="section-title">Asignar Tag Tarjeta:</h5>
           <div className="tag-assignment-container">
             <input
               type="text"
               className="form-control"
-              placeholder="Escanea o ingresa el tag RFID"
+              placeholder="Ingresa el tag de la tarjeta"
               value={tag}
               onChange={(e) => setTag(e.target.value)}
             />
@@ -166,12 +166,11 @@ const UserItem: React.FC<UserItemProps> = ({
 
           <h5 className="section-title">Acciones:</h5>
           <Button
-            variant="danger"
             onClick={() => {
               onDelete(user._id);
               handleCloseModal();
             }}
-            className="delete-user-button btn"
+            className="btn-delete-school mt-3 d-block"
           >
             Eliminar de la escuela
           </Button>

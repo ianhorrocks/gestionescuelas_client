@@ -10,6 +10,12 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/images/LogoSmallPilotLog.png";
+import defaultProfilePhoto from "../assets/images/LogoSmallUserProfilePhoto.png";
+import EditUserProfileModal from "../components/EditUserProfileModal";
+import { User, EditUserProfileInput } from "../types/types";
+import { updateUserProfile } from "../services/userService";
+import useTemporaryMessage from "../hooks/useTemporaryMessage"; // 👈 Importamos hook
+import Alert from "../components/Alert"; // 👈 Importamos el componente de alerta
 
 interface NavbarProps {
   title: string;
@@ -19,23 +25,54 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ title, links, logoutPath }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [userName, setUserName] = useState<string | null>(null); // Inicializar con null
+  const [profile, setProfile] = useState<User | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const { message, showTemporaryMessage } = useTemporaryMessage(); // 👈 Usamos hook
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Obtener el nombre del usuario desde localStorage
-    const profile = localStorage.getItem("profile");
-    if (profile) {
-      const parsedProfile = JSON.parse(profile);
-      setUserName(`${parsedProfile.name} ${parsedProfile.lastname}`);
+    const storedProfile = localStorage.getItem("profile");
+    if (storedProfile) {
+      const parsedProfile: User = JSON.parse(storedProfile);
+      setProfile(parsedProfile);
     }
-  }, []); // Solo se ejecuta al montar el componente
+  }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("profile"); // Limpiar el perfil del usuario
+    localStorage.removeItem("profile");
     navigate(logoutPath);
+  };
+
+  const handleSaveProfileChanges = async (
+    updatedProfile: EditUserProfileInput
+  ) => {
+    try {
+      if (!profile) return;
+      await updateUserProfile(profile._id, updatedProfile);
+
+      const updatedLocalProfile = { ...profile, ...updatedProfile };
+      localStorage.setItem("profile", JSON.stringify(updatedLocalProfile));
+      setProfile(updatedLocalProfile);
+      setIsEditModalOpen(false);
+      showTemporaryMessage("success", "Perfil actualizado correctamente");
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === "DNI_DUPLICATED") {
+          showTemporaryMessage("warning", "El DNI ya está en uso.");
+        } else if (error.message === "EMAIL_DUPLICATED") {
+          showTemporaryMessage("warning", "El Email ya está en uso.");
+        } else {
+          showTemporaryMessage("error", "Error al actualizar el perfil.");
+        }
+      } else {
+        showTemporaryMessage("error", "Error inesperado.");
+      }
+    } finally {
+      setIsEditModalOpen(false);
+    }
   };
 
   const linkIcons: {
@@ -48,6 +85,9 @@ const Navbar: React.FC<NavbarProps> = ({ title, links, logoutPath }) => {
 
   return (
     <div className="navbar">
+      {/* Alert para mensajes temporales */}
+      {message && <Alert message={message.message} type={message.type} />}
+
       <div className="navbar-content">
         <div className="container-dashboard">
           <h1 className="navbar-title">{title}</h1>
@@ -65,12 +105,21 @@ const Navbar: React.FC<NavbarProps> = ({ title, links, logoutPath }) => {
           <h1 className="nav-user-title">PilotLog</h1>
         </div>
 
-        <div className="nav-user-info">
-          <strong>Hola, {userName?.split(" ")[0] || "Usuario"}.</strong>
-          <NavLink to="/user/profile" className="edit-profile-link">
-            (Editar Perfil)
-          </NavLink>
-        </div>
+        {profile && (
+          <div
+            className="nav-user-info"
+            onClick={() => setIsEditModalOpen(true)}
+          >
+            <img
+              src={profile.photo || defaultProfilePhoto}
+              alt="Foto de usuario"
+              className="user-thumbnail"
+            />
+            <span className="user-name">
+              Hola, {profile.name || "Usuario"}.
+            </span>
+          </div>
+        )}
 
         {links
           .filter((link) => link.path !== "/user/profile")
@@ -98,6 +147,14 @@ const Navbar: React.FC<NavbarProps> = ({ title, links, logoutPath }) => {
           Cerrar Sesión
         </NavLink>
       </div>
+
+      {isEditModalOpen && profile && (
+        <EditUserProfileModal
+          profile={profile}
+          onClose={() => setIsEditModalOpen(false)}
+          onSaveChanges={handleSaveProfileChanges}
+        />
+      )}
     </div>
   );
 };

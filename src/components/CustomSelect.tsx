@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 
 interface CustomSelectProps {
   options: { value: string; label: string }[];
@@ -17,6 +17,26 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [dropdownPosition, setDropdownPosition] = useState<{
+    top: number;
+    left: number;
+    width: number;
+  } | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  const toggleDropdown = () => {
+    if (!isOpen) {
+      const rect = ref.current?.getBoundingClientRect();
+      if (rect) {
+        setDropdownPosition({
+          top: rect.bottom,
+          left: rect.left,
+          width: rect.width,
+        });
+      }
+    }
+    setIsOpen(!isOpen);
+  };
 
   // Siempre mostrar el label correspondiente al value actual
   const displayValue = useMemo(() => {
@@ -51,20 +71,27 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   }, [value, options]);
 
   return (
-    <div className="form-group custom-select-wrapper">
+    <div className="form-group custom-select-wrapper" ref={ref}>
       <input
         type="text"
         className="floating-input custom-select__search"
         placeholder=" "
         value={isOpen ? searchTerm : displayValue}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onFocus={() => !disabled && setIsOpen(true)}
+        onFocus={() => !disabled && toggleDropdown()}
         onBlur={() => setTimeout(() => setIsOpen(false), 200)}
         disabled={disabled}
       />
       <label className="floating-label">{placeholder}</label>
       {isOpen && (
-        <div className="custom-select__dropdown">
+        <div
+          className="custom-select__dropdown"
+          style={{
+            top: dropdownPosition?.top,
+            left: dropdownPosition?.left,
+            width: dropdownPosition?.width,
+          }}
+        >
           {filteredOptions.map((option) => (
             <div
               key={option.value}

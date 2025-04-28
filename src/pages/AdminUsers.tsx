@@ -170,6 +170,7 @@ const AdminUsers: React.FC = () => {
           show={showModal}
           onClose={() => setShowModal(false)}
           onAssignUser={handleAssignUser}
+          showTemporaryMessage={showTemporaryMessage} // Pasa la función como prop
         />
 
         <Modal

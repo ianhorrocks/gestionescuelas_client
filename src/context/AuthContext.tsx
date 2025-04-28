@@ -1,5 +1,6 @@
 // src/context/AuthContext.tsx
 import React, { createContext, useState, useEffect } from "react";
+import api from "../services/api"; // Assuming api is imported from a file
 
 type AuthContextType = {
   loggedIn: boolean;
@@ -17,7 +18,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setLoggedIn(!!token);
+
+    if (token) {
+      // Opcional: valida el token con otro endpoint o simplemente asume que es válido
+      api
+        .get("/auth/me") // Cambia a un endpoint existente, como "/auth/me"
+        .then(() => setLoggedIn(true))
+        .catch(() => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("profile");
+          setLoggedIn(false);
+        });
+    } else {
+      setLoggedIn(false);
+    }
   }, []);
 
   const logout = () => {

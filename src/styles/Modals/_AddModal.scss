@@ -28,8 +28,24 @@
 
 /* Estilos compartidos para todos los modales */
 .add-modal {
+  .modal-dialog {
+    min-height: 100vh; // 👈 Esto asegura que el modal ocupe toda la altura de la pantalla
+    max-height: 90vh; // 👈 Esto limita la altura total
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+  }
+
+  .modal-content {
+    max-height: 90vh; // 👈 Limita el contenido también
+    display: flex;
+    flex-direction: column;
+  }
+
   .modal-body {
-    max-height: calc(100vh - 210px);
+    max-height: calc(90vh - 160px);
     overflow-y: auto;
   }
 
@@ -96,11 +112,8 @@
 
   .form-buttons {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 20px;
-    margin-top: 20px;
-    border-top: 1px solid #e0e0e0;
+    justify-content: flex-end; // 👈 Alinea todo a la derecha
+    gap: 10px; // 👈 Espacio entre los botones
   }
 
   .modal-button {
