@@ -2,11 +2,11 @@
 @use "../Variables/variables";
 
 .flight-history-table-wrapper {
-  margin-top: 1.5rem; // Igual que la tabla de validación
-  padding: 1.5rem; // Igual que la tabla de validación
+  margin-top: 1.5rem;
+  padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); // Igual que la tabla de validación
   background-color: variables.$white-color;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 
   .no-flights {
     padding: 2rem;
@@ -17,15 +17,15 @@
 
   .flight-history-table {
     width: 100%;
-    table-layout: fixed; // Asegura que las columnas tengan un ancho fijo
+    table-layout: fixed;
     border-collapse: collapse;
 
     thead {
       background-color: variables.$secondary-color;
 
       th {
-        padding: 12px 8px; // Igual que la tabla de validación
-        text-align: left; // Alinea los encabezados con las celdas
+        padding: 12px 8px;
+        text-align: left;
         font-weight: 600;
         font-size: 13px;
         color: variables.$medium-soft-text-color;
@@ -42,12 +42,12 @@
         }
 
         td {
-          padding: 12px 8px; // Igual que la tabla de validación
+          padding: 12px 8px;
           vertical-align: middle;
           font-size: 14px;
           color: variables.$text-color;
           border-bottom: 1px solid variables.$shadow-color;
-          text-align: left; // Alinea las celdas con los encabezados
+          text-align: left;
         }
 
         .badge {
@@ -57,16 +57,16 @@
           font-weight: 600;
           display: inline-block;
           text-transform: capitalize;
-        }
 
-        .badge.confirmed {
-          background-color: variables.$success-bg-color;
-          color: variables.$success-text-color;
-        }
+          &.confirmed {
+            background-color: variables.$success-bg-color;
+            color: variables.$success-text-color;
+          }
 
-        .badge.cancelled {
-          background-color: variables.$error-bg-color-message;
-          color: variables.$error-text-color;
+          &.cancelled {
+            background-color: variables.$error-bg-color-message;
+            color: variables.$error-text-color;
+          }
         }
       }
     }

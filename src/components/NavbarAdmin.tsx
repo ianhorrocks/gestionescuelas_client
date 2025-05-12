@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/images/LogoSmallPilotLog.png";
-import defaultSchoolImage from "../assets/images/Logo-School-Profile.png"; // Foto por defecto
-import EditSchoolProfileModal from "./EditSchoolProfileModal"; // Importar el modal
+import defaultSchoolImage from "../assets/images/Logo-School-Profile.png";
+import EditSchoolProfileModal from "./EditSchoolProfileModal";
 import {
   faBars,
   faAngleDoubleLeft,
@@ -26,9 +26,12 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [schoolName, setSchoolName] = useState<string | null>(null);
-  const [schoolImage, setSchoolImage] = useState<string>(defaultSchoolImage); // Estado para la foto de la escuela
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para el modal
+  const [schoolImage, setSchoolImage] = useState<string>(defaultSchoolImage);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const profile = localStorage.getItem("profile");
@@ -40,7 +43,8 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
     }
   }, []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen((prev) => !prev);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("profile");
@@ -58,18 +62,52 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
     "/admin/flights": faClipboardList,
   };
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleEscKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscKey);
+
+    return () => {
+      document.addEventListener("pointerdown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
   return (
     <div className="navbar-admin">
       <div className="navbar-content">
         <h1 className="navbar-title">{title}</h1>
         <FontAwesomeIcon
           icon={isOpen ? faAngleDoubleLeft : faBars}
+          ref={buttonRef}
           onClick={toggleMenu}
           className="navbar-icon"
         />
       </div>
 
-      <div className={`menu-content ${isOpen ? "open" : ""}`}>
+      <div ref={menuRef} className={`menu-content ${isOpen ? "open" : ""}`}>
         <div className="nav-admin-header">
           <img src={logo} alt="Logo" className="nav-admin-logo" />
           <h1 className="nav-admin-title">PilotLog</h1>
@@ -97,7 +135,6 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
           </NavLink>
         ))}
 
-        {/* Nombre y foto de la escuela */}
         <div className="nav-admin-school-info" onClick={openModal}>
           <img src={schoolImage} alt="School" className="school-thumbnail" />
           <span className="school-name">{schoolName}</span>
@@ -109,7 +146,6 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
         </NavLink>
       </div>
 
-      {/* Modal para editar el perfil de la escuela */}
       {isModalOpen && <EditSchoolProfileModal onClose={closeModal} />}
     </div>
   );

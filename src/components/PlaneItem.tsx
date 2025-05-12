@@ -177,7 +177,7 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
         </Card.Body>
       </Card>
 
-      <Modal show={showDetailModal} onHide={handleCloseModal}>
+      <Modal show={showDetailModal} onHide={handleCloseModal} keyboard={true}>
         <Modal.Header closeButton>
           <Modal.Title>Ficha de aeronave</Modal.Title>
         </Modal.Header>

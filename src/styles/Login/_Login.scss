@@ -6,8 +6,7 @@
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start; // Cambiar de center a flex-start para mover hacia arriba
-  padding-top: 5rem; // Agregar un margen superior para ajustar la posición
+  align-items: center; // Cambiar de flex-start a center para centrar verticalmente
 
   .login-container {
     background-color: variables.$white-color;
@@ -16,6 +15,7 @@
     box-shadow: 0 10px 10px variables.$shadow-color;
     text-align: center;
     width: 300px;
+    margin-top: -30px;
 
     .login-form {
       display: flex;

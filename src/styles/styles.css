@@ -10,26 +10,24 @@
     transform: translateX(0);
   }
 }
-.admin-flights-container {
-  margin-top: 80px;
-  padding: 20px;
-  display: block;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.admin-flights-navbar {
+  position: sticky;
+  top: 70px;
+  background-color: #ffffff;
+  z-index: 10;
+  padding: 0.5rem 1rem;
 }
 @media (min-width: 990px) {
-  .admin-flights-container {
+  .admin-flights-navbar {
     margin-left: 260px;
   }
 }
-.admin-flights-container .flights-tabs {
+.admin-flights-navbar .flights-tabs {
   display: flex;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 1.5rem;
 }
-.admin-flights-container .flights-tabs button {
+.admin-flights-navbar .flights-tabs button {
   background: none;
   border: none;
   color: rgba(144, 152, 158, 0.862745098);
@@ -38,19 +36,60 @@
   cursor: pointer;
   transition: color 0.2s, border-bottom-color 0.2s;
 }
-.admin-flights-container .flights-tabs button.active {
+.admin-flights-navbar .flights-tabs button.active {
   color: #282d3c;
   border-bottom: 2px solid #282d3c;
   font-weight: 600;
 }
-.admin-flights-container .flights-tabs button:hover:not(.active) {
+.admin-flights-navbar .flights-tabs button:hover:not(.active) {
   color: #282d3c;
 }
-.admin-flights-container .tab-content.history-tab .flight-history-table-wrapper,
-.admin-flights-container .tab-content.history-tab .flight-validation-table-wrapper, .admin-flights-container .tab-content.validator-tab .flight-history-table-wrapper,
+
+.admin-flights-container {
+  margin-top: 80px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: calc(100vh - 160px);
+  overflow-y: auto;
+}
+@media (min-width: 990px) {
+  .admin-flights-container {
+    margin-left: 260px;
+  }
+}
+.admin-flights-container .tab-content {
+  width: 100%;
+  max-width: 1200px;
+}
+.admin-flights-container .tab-content.validator-tab .floating-stepper {
+  margin-bottom: 0.5rem;
+}
+.admin-flights-container .tab-content.validator-tab .button-container {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+.admin-flights-container .tab-content.validator-tab .button-container .csv-button {
+  padding: 0.7rem 1.4rem;
+  background: #7b6983;
+  color: #ffffff;
+  border: none;
+  border-radius: 28px;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, background 0.2s;
+}
+.admin-flights-container .tab-content.validator-tab .button-container .csv-button:hover {
+  background: rgba(123, 105, 131, 0.631372549);
+  transform: translateY(-2px);
+}
 .admin-flights-container .tab-content.validator-tab .flight-validation-table-wrapper {
-  margin-top: 1rem;
-  height: 400px;
+  margin-top: 0;
+  height: calc(100% - 50px);
+  overflow: hidden;
 }
 
 .flight-validation-table-wrapper table thead,
@@ -183,6 +222,12 @@
 .button-container .csv-button:hover {
   background: rgba(123, 105, 131, 0.631372549);
   transform: translateY(-2px);
+}
+
+.admin-flights-footer {
+  height: 50px;
+  background-color: #ffffff;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Contenedor de pagina. En AdminUsers.tsx */
@@ -402,8 +447,7 @@ h2 {
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 5rem;
+  align-items: center;
 }
 .login-page .login-container {
   background-color: #ffffff;
@@ -412,6 +456,7 @@ h2 {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 300px;
+  margin-top: -30px;
   position: relative;
   margin-bottom: 2rem;
 }
@@ -842,31 +887,51 @@ h2 {
   margin-top: 10rem;
 }
 
-/* Filtros de estado */
+/* Filtros */
 .flight-table-filters {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
+  flex-direction: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-.flight-table-filters .status-tab {
-  padding: 8px 18px;
-  border: none;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 500;
-  color: #333;
-  transition: all 0.2s ease;
-}
-.flight-table-filters .status-tab.active {
-  background-color: #7b6983;
-  color: #fff;
+
+.flight-table-filters .filter-select {
+  width: 160px;
+  max-width: 160px;
 }
 
-/* Tabla en escritorio */
+.sort-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-filter-group .filter-select {
+  width: 160px;
+  max-width: 160px;
+}
+
+.sort-order-button {
+  width: 40px;
+  height: 40px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+.sort-order-button svg {
+  font-size: 18px;
+  color: #333;
+}
+
+/* Tabla escritorio */
 .flight-table-wrapper {
   margin-top: 1rem;
   padding: 1rem;
@@ -1007,6 +1072,66 @@ h2 {
   font-size: 13px;
 }
 
+/* Paginación */
+.flight-table-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rows-per-page {
+  display: flex;
+  align-items: center;
+  min-width: 80px;
+}
+
+.page-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.page-controls button {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.page-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.page-controls span {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Responsive Mobile Mejoras */
+@media (max-width: 768px) {
+  .flight-table-filters {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+/* Responsive para tabletas */
+@media (min-width: 550px) {
+  .flight-table-filters {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .sort-filter-group {
+    margin-left: 0;
+  }
+}
 .school-container {
   padding: 20px;
 }
@@ -2167,8 +2292,8 @@ body,
   margin-top: 1.5rem;
   padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 .flight-history-table-wrapper .no-flights {
   padding: 2rem;
@@ -2429,11 +2554,12 @@ body,
 }
 .flight-validation-table-wrapper {
   position: relative;
-  margin-top: 1.5rem;
-  padding: 1.5rem;
+  margin-top: 1rem;
+  padding: 0;
   border-radius: 8px;
   background-color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 .flight-validation-table-wrapper .no-flights {
   padding: 2rem;
@@ -2443,11 +2569,13 @@ body,
 }
 .flight-validation-table-wrapper .flight-validation-table {
   width: 100%;
-  table-layout: fixed;
   border-collapse: collapse;
 }
 .flight-validation-table-wrapper .flight-validation-table thead {
+  position: sticky;
+  top: 0;
   background-color: #f6f6f6;
+  z-index: 1;
 }
 .flight-validation-table-wrapper .flight-validation-table thead th {
   padding: 12px 8px;
@@ -2456,36 +2584,18 @@ body,
   font-size: 13px;
   color: rgba(72, 73, 73, 0.7215686275);
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
 }
-.flight-validation-table-wrapper .flight-validation-table thead th:nth-child(1),
-.flight-validation-table-wrapper .flight-validation-table thead td:nth-child(1) {
-  width: 12%;
-}
-.flight-validation-table-wrapper .flight-validation-table thead th:nth-child(2),
-.flight-validation-table-wrapper .flight-validation-table thead td:nth-child(2) {
-  width: 15%;
-}
-.flight-validation-table-wrapper .flight-validation-table thead th:nth-child(3),
-.flight-validation-table-wrapper .flight-validation-table thead td:nth-child(3) {
-  width: 20%;
-}
-.flight-validation-table-wrapper .flight-validation-table thead th:nth-child(4),
-.flight-validation-table-wrapper .flight-validation-table thead td:nth-child(4) {
-  width: 20%;
-}
-.flight-validation-table-wrapper .flight-validation-table thead th:nth-child(5),
-.flight-validation-table-wrapper .flight-validation-table thead td:nth-child(5) {
-  width: 15%;
-}
-.flight-validation-table-wrapper .flight-validation-table thead th:nth-child(6),
-.flight-validation-table-wrapper .flight-validation-table thead td:nth-child(6) {
-  width: 14%;
-}
-.flight-validation-table-wrapper .flight-validation-table thead th:nth-child(7) {
-  width: 80px;
-  text-align: center;
+.flight-validation-table-wrapper .flight-validation-table tbody {
+  display: block;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+  width: 100%;
 }
 .flight-validation-table-wrapper .flight-validation-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
   transition: background 0.2s;
 }
 .flight-validation-table-wrapper .flight-validation-table tbody tr:hover {
@@ -2545,42 +2655,72 @@ body,
 }
 
 .filter-select {
-  display: inline-block;
   position: relative;
   width: 100%;
-  max-width: 300px;
+  max-width: 160px;
 }
-.filter-select .filter-select-dropdown {
-  width: 100%;
-  padding: 10px 14px; /* Más espacio interno */
-  border: 1px solid #ddd; /* Color de borde más suave */
-  border-radius: 6px; /* Bordes redondeados */
-  font-size: 14px;
-  color: #333;
-  background-color: #f9f9f9; /* Fondo claro */
+.filter-select .filter-select-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #f9f9f9;
   cursor: pointer;
-  transition: all 0.3s ease; /* Transición suave para hover y focus */
+  transition: all 0.3s ease;
 }
-.filter-select .filter-select-dropdown:hover {
-  background-color: #f1f1f1; /* Fondo más oscuro al pasar el mouse */
+.filter-select .filter-select-wrapper:hover {
+  background-color: #f1f1f1;
 }
-.filter-select .filter-select-dropdown:focus {
-  outline: none;
-  border-color: #007bff; /* Color de borde azul al enfocar */
-  background-color: #fff; /* Fondo blanco al enfocar */
+.filter-select .filter-select-wrapper:focus-within {
+  border-color: #007bff;
+  background-color: #fff;
+}
+.filter-select .filter-select-value {
+  flex: 1;
+  font-size: 15px;
+  color: #333;
 }
 .filter-select .filter-select-icon {
-  position: absolute;
-  top: 50%;
-  right: 12px; /* Más cerca del contenido */
-  transform: translateY(-50%);
-  font-size: 14px; /* Tamaño más pequeño para que no domine */
-  color: #666; /* Color más suave */
+  font-size: 16px;
+  color: #666;
   pointer-events: none;
-  transition: color 0.3s ease;
 }
-.filter-select-dropdown:focus + .filter-select .filter-select-icon {
-  color: #007bff; /* Cambiar color al enfocar */
+.filter-select .filter-select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  overflow: hidden;
+}
+.filter-select .filter-select-dropdown .filter-select-option {
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.filter-select .filter-select-dropdown .filter-select-option:hover {
+  background-color: #f1f1f1;
+}
+@media (max-width: 768px) {
+  .filter-select {
+    max-width: 95%;
+    margin: 0 auto;
+  }
+}
+
+/* Cambio de dirección de dropdown */
+.filter-select.open-up .filter-select-dropdown {
+  bottom: 100%;
+  top: auto;
+  margin-bottom: 5px;
 }
 
 .dashboard-container,

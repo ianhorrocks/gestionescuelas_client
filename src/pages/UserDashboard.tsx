@@ -5,6 +5,7 @@ import Navbar from "../components/NavbarUser";
 import PlaneLoader from "../components/PlaneLoader";
 import { Chart } from "react-google-charts";
 import { Flight, School, FlightEvolution } from "../types/types";
+import defaultSchoolImage from "../assets/images/Logo-School-Profile.png";
 
 const UserDashboard: React.FC = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
@@ -112,7 +113,7 @@ const UserDashboard: React.FC = () => {
             {schools.map((school) => (
               <div key={school._id} className="school-card">
                 <img
-                  src={school.planes[0]?.photoUrl || "/default-school.jpg"}
+                  src={school.planes[0]?.photoUrl || defaultSchoolImage}
                   alt={school.name}
                   className="school-image"
                 />

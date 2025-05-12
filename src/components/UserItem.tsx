@@ -100,7 +100,12 @@ const UserItem: React.FC<UserItemProps> = ({
         </div>
       </li>
 
-      <Modal show={showModal} onHide={handleCloseModal} className="user-modal">
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        keyboard={true}
+        className="user-modal"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Ficha de usuario</Modal.Title>
         </Modal.Header>

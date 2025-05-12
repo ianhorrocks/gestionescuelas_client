@@ -11,24 +11,21 @@
   }
 }
 
-.admin-flights-container {
-  margin-top: 80px; // Asegura que el contenido no quede oculto detrás del navbar
-  padding: 20px;
+.admin-flights-navbar {
+  position: sticky;
+  top: 70px; // Ajusta según la altura del Navbar principal
+  background-color: variables.$white-color;
+  z-index: 10;
+  padding: 0.5rem 1rem;
 
   @media (min-width: 990px) {
-    margin-left: 260px; // Ajusta el margen para el sidebar en pantallas grandes
+    margin-left: 260px; // Alinea el navbar con el contenido principal en pantallas grandes
   }
-
-  display: block;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
   .flights-tabs {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-bottom: 1.5rem; // Espacio entre tabs y contenido
 
     button {
       background: none;
@@ -50,14 +47,62 @@
       }
     }
   }
+}
+
+.admin-flights-container {
+  margin-top: 80px; // Asegura que el contenido no quede oculto detrás del navbar
+  padding: 1rem;
+
+  @media (min-width: 990px) {
+    margin-left: 260px; // Ajusta el margen para el sidebar en pantallas grandes
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; // Asegura que el contenido comience desde arriba
+  height: calc(
+    100vh - 160px
+  ); // Altura fija para que el contenedor ocupe el espacio restante (ajustado al navbar y footer)
+  overflow-y: auto; // Habilita el scroll solo en este contenedor
 
   .tab-content {
-    &.history-tab,
+    width: 100%; // Asegura que el contenido ocupe todo el ancho disponible
+    max-width: 1200px; // Limita el ancho máximo para mantener un diseño limpio
+
     &.validator-tab {
-      .flight-history-table-wrapper,
+      .floating-stepper {
+        margin-bottom: 0.5rem; // Reduce el espacio entre el stepper y los elementos inferiores
+      }
+
+      .button-container {
+        margin-top: 0; // Elimina el margen superior del botón
+        margin-bottom: 0.5rem; // Reduce el espacio entre el botón y la tabla
+        text-align: left;
+
+        .csv-button {
+          padding: 0.7rem 1.4rem;
+          background: variables.$tertiary-color;
+          color: variables.$white-color;
+          border: none;
+          border-radius: 28px;
+          font-weight: 600;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          transition: transform 0.2s, background 0.2s;
+
+          &:hover {
+            background: variables.$tertiary-color-hover;
+            transform: translateY(-2px);
+          }
+        }
+      }
+
       .flight-validation-table-wrapper {
-        margin-top: 1rem;
-        height: 400px;
+        margin-top: 0; // Elimina el margen superior de la tabla
+        height: calc(
+          100% - 50px
+        ); // Ajusta la altura para ocupar el espacio restante
+        overflow: hidden; // Asegura que no haya scroll adicional
       }
     }
   }
@@ -208,4 +253,10 @@
       transform: translateY(-2px);
     }
   }
+}
+
+.admin-flights-footer {
+  height: 50px; // Altura del footer
+  background-color: variables.$white-color;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }

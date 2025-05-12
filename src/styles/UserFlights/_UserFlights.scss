@@ -15,39 +15,58 @@
 
   .no-flights-message {
     text-align: center;
-    font-size: 1.2rem; // Tamaño más grande para mayor visibilidad
+    font-size: 1.2rem;
     color: variables.$soft-text-color;
-    margin-top: 10rem; // Ajusta para centrar verticalmente
+    margin-top: 10rem;
   }
 }
 
-/* Filtros de estado */
+/* Filtros */
 .flight-table-filters {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
+  flex-direction: center;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
 
-  .status-tab {
-    padding: 8px 18px;
-    border: none;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 500;
+.flight-table-filters .filter-select {
+  width: 160px;
+  max-width: 160px;
+}
+
+.sort-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-filter-group .filter-select {
+  width: 160px;
+  max-width: 160px;
+}
+
+.sort-order-button {
+  width: 40px;
+  height: 40px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+
+  svg {
+    font-size: 18px;
     color: #333;
-    transition: all 0.2s ease;
-
-    &.active {
-      background-color: variables.$tertiary-color; // Cambia el fondo al color terciario
-      color: #fff; // Asegúrate de que el texto sea visible
-    }
   }
 }
 
-/* Tabla en escritorio */
+/* Tabla escritorio */
 .flight-table-wrapper {
   margin-top: 1rem;
   padding: 1rem;
@@ -202,5 +221,71 @@
         }
       }
     }
+  }
+}
+
+/* Paginación */
+.flight-table-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rows-per-page {
+  display: flex;
+  align-items: center;
+  min-width: 80px;
+}
+
+.page-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  button {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  span {
+    font-size: 14px;
+    color: #333;
+  }
+}
+
+/* Responsive Mobile Mejoras */
+@media (max-width: 768px) {
+  .flight-table-filters {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* Responsive para tabletas */
+@media (min-width: 550px) {
+  .flight-table-filters {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sort-filter-group {
+    margin-left: 0;
   }
 }

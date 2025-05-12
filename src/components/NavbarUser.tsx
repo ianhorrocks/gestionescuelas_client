@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -14,8 +14,8 @@ import defaultProfilePhoto from "../assets/images/LogoSmallUserProfilePhoto.png"
 import EditUserProfileModal from "../components/EditUserProfileModal";
 import { User, EditUserProfileInput } from "../types/types";
 import { updateUserProfile } from "../services/userService";
-import useTemporaryMessage from "../hooks/useTemporaryMessage"; // 👈 Importamos hook
-import Alert from "../components/Alert"; // 👈 Importamos el componente de alerta
+import useTemporaryMessage from "../hooks/useTemporaryMessage";
+import Alert from "../components/Alert";
 
 interface NavbarProps {
   title: string;
@@ -27,8 +27,11 @@ const Navbar: React.FC<NavbarProps> = ({ title, links, logoutPath }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [profile, setProfile] = useState<User | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const { message, showTemporaryMessage } = useTemporaryMessage(); // 👈 Usamos hook
+  const { message, showTemporaryMessage } = useTemporaryMessage();
   const navigate = useNavigate();
+  const location = useLocation();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const storedProfile = localStorage.getItem("profile");
@@ -38,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = ({ title, links, logoutPath }) => {
     }
   }, []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen((prev) => !prev);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -83,9 +86,41 @@ const Navbar: React.FC<NavbarProps> = ({ title, links, logoutPath }) => {
     "/user/flights": faPlane,
   };
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleEscKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handleClickOutside);
+    document.addEventListener("keydown", handleEscKey);
+
+    return () => {
+      document.removeEventListener("pointerdown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
   return (
     <div className="navbar">
-      {/* Alert para mensajes temporales */}
       {message && <Alert message={message.message} type={message.type} />}
 
       <div className="navbar-content">
@@ -94,12 +129,13 @@ const Navbar: React.FC<NavbarProps> = ({ title, links, logoutPath }) => {
         </div>
         <FontAwesomeIcon
           icon={isOpen ? faAngleDoubleLeft : faBars}
+          ref={buttonRef}
           onClick={toggleMenu}
           className="navbar-icon"
         />
       </div>
 
-      <div className={`menu-content ${isOpen ? "open" : ""}`}>
+      <div ref={menuRef} className={`menu-content ${isOpen ? "open" : ""}`}>
         <div className="nav-user-header">
           <img src={logo} alt="Logo" className="nav-user-logo" />
           <h1 className="nav-user-title">PilotLog</h1>

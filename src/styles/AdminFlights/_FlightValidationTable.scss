@@ -2,11 +2,12 @@
 
 .flight-validation-table-wrapper {
   position: relative;
-  margin-top: 1.5rem;
-  padding: 1.5rem;
+  margin-top: 1rem; // Reduce el espacio entre el stepper y la tabla
+  padding: 0; // Elimina el padding para que la tabla ocupe todo el espacio
   border-radius: 8px;
   background-color: variables.$white-color;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden; // Asegura que no haya scroll adicional
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Suaviza el sombreado
 
   .no-flights {
     padding: 2rem;
@@ -17,11 +18,13 @@
 
   .flight-validation-table {
     width: 100%;
-    table-layout: fixed;
     border-collapse: collapse;
 
     thead {
+      position: sticky;
+      top: 0; // Fija el encabezado en la parte superior
       background-color: variables.$secondary-color;
+      z-index: 1;
 
       th {
         padding: 12px 8px;
@@ -30,40 +33,22 @@
         font-size: 13px;
         color: variables.$medium-soft-text-color;
         border-bottom: 2px solid variables.$shadow-color;
-      }
-
-      th:nth-child(1),
-      td:nth-child(1) {
-        width: 12%;
-      }
-      th:nth-child(2),
-      td:nth-child(2) {
-        width: 15%;
-      }
-      th:nth-child(3),
-      td:nth-child(3) {
-        width: 20%;
-      }
-      th:nth-child(4),
-      td:nth-child(4) {
-        width: 20%;
-      }
-      th:nth-child(5),
-      td:nth-child(5) {
-        width: 15%;
-      }
-      th:nth-child(6),
-      td:nth-child(6) {
-        width: 14%;
-      }
-      th:nth-child(7) {
-        width: 80px;
-        text-align: center;
+        text-transform: uppercase;
       }
     }
 
     tbody {
+      display: block;
+      height: calc(
+        100% - 50px
+      ); // Ajusta la altura del contenido para que no genere scroll adicional
+      overflow-y: auto; // Habilita el scroll solo para el contenido de la tabla
+      width: 100%;
+
       tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed; // Asegura que las columnas mantengan su tamaño
         transition: background 0.2s;
 
         &:hover {

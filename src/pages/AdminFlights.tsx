@@ -106,9 +106,7 @@ const AdminFlights: React.FC = () => {
   return (
     <>
       <Navbar title="Vuelos" links={links} logoutPath="/" />
-      <div className="admin-flights-container">
-        {message && <Alert type={message.type} message={message.message} />}
-
+      <div className="admin-flights-navbar">
         <div className="flights-tabs">
           <button
             className={activeTab === Tab.VALIDATOR ? "active" : ""}
@@ -123,16 +121,20 @@ const AdminFlights: React.FC = () => {
             Historial
           </button>
         </div>
+      </div>
+      <div className="admin-flights-container">
+        {message && <Alert type={message.type} message={message.message} />}
 
         {activeTab === Tab.HISTORY && (
           <div className="tab-content history-tab">
-            <FlightHistoryTable flights={historyFlights} />
+            <div className="flight-history-table-wrapper">
+              <FlightHistoryTable flights={historyFlights} />
+            </div>
           </div>
         )}
 
         {activeTab === Tab.VALIDATOR && (
           <div className="tab-content validator-tab">
-            {/* Stepper flotante */}
             <div
               className={`floating-stepper ${
                 activeTab === Tab.VALIDATOR ? "fade-in" : ""
@@ -155,7 +157,6 @@ const AdminFlights: React.FC = () => {
               </div>
             </div>
 
-            {/* Botón "Validar vuelos" */}
             <div className="button-container">
               <button
                 className="csv-button"
@@ -168,13 +169,14 @@ const AdminFlights: React.FC = () => {
               </button>
             </div>
 
-            {/* Tabla de validación */}
-            <FlightValidationTable
-              flights={flights.filter((f) => f.status === "pending")}
-              onStatusChange={handleStatusChange}
-              validationStep={validationStep}
-              showTemporaryMessage={showTemporaryMessage}
-            />
+            <div className="flight-validation-table-wrapper">
+              <FlightValidationTable
+                flights={flights.filter((f) => f.status === "pending")}
+                onStatusChange={handleStatusChange}
+                validationStep={validationStep}
+                showTemporaryMessage={showTemporaryMessage}
+              />
+            </div>
           </div>
         )}
 
@@ -191,6 +193,7 @@ const AdminFlights: React.FC = () => {
           />
         )}
       </div>
+      <div className="admin-flights-footer"></div>
     </>
   );
 };

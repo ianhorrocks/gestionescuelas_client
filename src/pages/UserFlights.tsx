@@ -60,11 +60,6 @@ const UserFlights: React.FC = () => {
     }
   };
 
-  const filteredByStatus = flights.filter((flight) => {
-    if (statusFilter === "all") return true;
-    return flight.status === statusFilter;
-  });
-
   return (
     <div className="flights-container">
       <Navbar
@@ -91,7 +86,7 @@ const UserFlights: React.FC = () => {
           </button>
 
           <FlightTable
-            flights={filteredByStatus.map((flight) => ({
+            flights={flights.map((flight) => ({
               _id: flight._id,
               date: flight.date,
               departureTime: flight.departureTime,

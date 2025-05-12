@@ -179,9 +179,7 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
       >
         <Modal.Header closeButton>
           <Modal.Title>
-            {confirmModal.action === "confirm"
-              ? "Confirmar vuelo"
-              : "Cancelar vuelo"}
+            {confirmModal.action === "confirm" ? "Aviso" : "Aviso"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -191,16 +189,12 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
         </Modal.Body>
         <Modal.Footer>
           <Button
-            variant="secondary"
-            onClick={() => setConfirmModal({ ...confirmModal, show: false })}
-          >
-            Cancelar
-          </Button>
-          <Button
             variant={confirmModal.action === "confirm" ? "success" : "danger"}
             onClick={handleAction}
           >
-            {confirmModal.action === "confirm" ? "Confirmar" : "Cancelar"}
+            {confirmModal.action === "confirm"
+              ? "Confirmar Vuelo"
+              : "Cancelar Vuelo"}
           </Button>
         </Modal.Footer>
       </Modal>

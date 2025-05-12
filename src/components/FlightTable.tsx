@@ -1,6 +1,14 @@
-import React, { useState, useMemo } from "react";
-import { FaRoute, FaClock, FaUser, FaUserTie, FaPlane } from "react-icons/fa";
-import FilterSelect from "./FilterSelect"; // Importar el nuevo componente
+import React, { useState, useMemo, useEffect } from "react";
+import {
+  FaArrowUp,
+  FaArrowDown,
+  FaRoute,
+  FaPlane,
+  FaUser,
+  FaUserTie,
+  FaClock,
+} from "react-icons/fa";
+import FilterSelect from "./FilterSelect";
 
 interface Flight {
   _id: string;
@@ -17,18 +25,11 @@ interface Flight {
 }
 
 interface FlightTableProps {
-  flights: Flight[]; // ya filtrados por UserFlights
+  flights: Flight[];
   selectedStatus: string;
   onFilterChange: (status: string) => void;
-  allFlights: Flight[]; // todos los vuelos (para contar)
+  allFlights: Flight[];
 }
-
-const statusMap = {
-  all: "Todos",
-  pending: "Pendiente",
-  confirmed: "Confirmado",
-  cancelled: "Cancelado",
-};
 
 const FlightTable: React.FC<FlightTableProps> = ({
   flights,
@@ -39,7 +40,21 @@ const FlightTable: React.FC<FlightTableProps> = ({
   const [sortField, setSortField] = useState<
     "date" | "origin" | "airplane" | "time"
   >("date");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
+  const [rowsPerPage, setRowsPerPage] = useState(8);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const savedFilter = localStorage.getItem("userFlightsStatusFilter");
+    if (savedFilter) {
+      onFilterChange(savedFilter);
+    }
+  }, [onFilterChange]);
+
+  const handleStatusChange = (status: string) => {
+    localStorage.setItem("userFlightsStatusFilter", status);
+    onFilterChange(status);
+  };
 
   const countByStatus = useMemo(() => {
     return allFlights.reduce(
@@ -48,12 +63,7 @@ const FlightTable: React.FC<FlightTableProps> = ({
         acc[flight.status]++;
         return acc;
       },
-      {
-        all: 0,
-        pending: 0,
-        confirmed: 0,
-        cancelled: 0,
-      }
+      { all: 0, pending: 0, confirmed: 0, cancelled: 0 }
     );
   }, [allFlights]);
 
@@ -68,24 +78,23 @@ const FlightTable: React.FC<FlightTableProps> = ({
     { value: "date", label: "Fecha" },
     { value: "origin", label: "Escuela" },
     { value: "airplane", label: "Aeronave" },
-    { value: "time", label: "Tiempo" },
+    { value: "time", label: "Tiempo Vuelo" },
   ];
 
   const handleSortChange = (field: string) => {
-    if (field === sortField) {
-      // Alternar entre ascendente y descendente
-      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-    } else {
-      // Cambiar el campo de orden y establecer ascendente por defecto
-      setSortField(field as "date" | "origin" | "airplane" | "time");
-      setSortOrder("asc");
-    }
+    setSortField(field as "date" | "origin" | "airplane" | "time");
+    setSortOrder("asc");
+    setCurrentPage(1);
   };
 
-  const sortedFlights = useMemo(() => {
-    return [...flights].sort((a, b) => {
-      let compare = 0;
+  const filteredFlights = useMemo(() => {
+    if (selectedStatus === "all") return flights;
+    return flights.filter((flight) => flight.status === selectedStatus);
+  }, [flights, selectedStatus]);
 
+  const sortedFlights = useMemo(() => {
+    return [...filteredFlights].sort((a, b) => {
+      let compare = 0;
       if (sortField === "date") {
         compare = new Date(a.date).getTime() - new Date(b.date).getTime();
       } else if (sortField === "origin") {
@@ -97,10 +106,23 @@ const FlightTable: React.FC<FlightTableProps> = ({
           parseFloat(a.totalFlightTime || "0") -
           parseFloat(b.totalFlightTime || "0");
       }
-
       return sortOrder === "asc" ? compare : -compare;
     });
-  }, [flights, sortField, sortOrder]);
+  }, [filteredFlights, sortField, sortOrder]);
+
+  const paginatedFlights = useMemo(() => {
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    return sortedFlights.slice(start, end);
+  }, [sortedFlights, currentPage, rowsPerPage]);
+
+  const totalPages = Math.ceil(sortedFlights.length / rowsPerPage);
+
+  const statusMap = {
+    pending: "Pendiente",
+    confirmed: "Confirmado",
+    cancelled: "Cancelado",
+  };
 
   return (
     <div>
@@ -108,16 +130,34 @@ const FlightTable: React.FC<FlightTableProps> = ({
         <FilterSelect
           options={statusOptions}
           value={selectedStatus}
-          onChange={onFilterChange}
+          onChange={handleStatusChange}
           placeholder="Filtrar estado"
+          keyboard
+          autoClose
         />
-        <FilterSelect
-          options={sortOptions}
-          value={sortField}
-          onChange={handleSortChange}
-          placeholder="Ordenar por"
-          sortOrder={sortOrder} // Pasar el estado de orden
-        />
+        <div className="sort-filter-group">
+          <FilterSelect
+            options={sortOptions}
+            value={sortField}
+            onChange={(value) => handleSortChange(value)}
+            placeholder="Ordenar por"
+            keyboard
+            autoClose
+          />
+          <button
+            className="sort-order-button"
+            onClick={() =>
+              setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"))
+            }
+            title={
+              sortOrder === "desc"
+                ? "Cambiar a ascendente"
+                : "Cambiar a descendente"
+            }
+          >
+            {sortOrder === "desc" ? <FaArrowUp /> : <FaArrowDown />}
+          </button>
+        </div>
       </div>
 
       {allFlights.length === 0 ? (
@@ -139,7 +179,7 @@ const FlightTable: React.FC<FlightTableProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {sortedFlights.map((flight) => (
+                {paginatedFlights.map((flight) => (
                   <tr key={flight._id}>
                     <td>
                       {new Date(flight.date).toLocaleDateString("es-ES", {
@@ -158,13 +198,13 @@ const FlightTable: React.FC<FlightTableProps> = ({
                       {new Date(flight.departureTime).toLocaleTimeString(
                         "es-ES",
                         { hour: "2-digit", minute: "2-digit", hour12: false }
-                      )}
-                      {" - "}
+                      )}{" "}
+                      -{" "}
                       {new Date(flight.arrivalTime).toLocaleTimeString(
                         "es-ES",
                         { hour: "2-digit", minute: "2-digit", hour12: false }
-                      )}
-                      {" Hs"}
+                      )}{" "}
+                      Hs
                     </td>
                     <td>
                       {flight.totalFlightTime
@@ -182,9 +222,8 @@ const FlightTable: React.FC<FlightTableProps> = ({
             </table>
           </div>
 
-          {/* Cards Mobile */}
           <div className="flight-cards-mobile">
-            {sortedFlights.map((flight) => (
+            {paginatedFlights.map((flight) => (
               <div key={flight._id} className={`mobile-card ${flight.status}`}>
                 <div className="mobile-card-header">
                   <span className="date">
@@ -198,14 +237,14 @@ const FlightTable: React.FC<FlightTableProps> = ({
                     {new Date(flight.departureTime).toLocaleTimeString(
                       "es-ES",
                       { hour: "2-digit", minute: "2-digit", hour12: false }
-                    )}
-                    {" - "}
+                    )}{" "}
+                    -{" "}
                     {new Date(flight.arrivalTime).toLocaleTimeString("es-ES", {
                       hour: "2-digit",
                       minute: "2-digit",
                       hour12: false,
-                    })}
-                    {" Hs"}
+                    })}{" "}
+                    Hs
                   </span>
                 </div>
 
@@ -246,6 +285,48 @@ const FlightTable: React.FC<FlightTableProps> = ({
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="flight-table-pagination">
+            <div className="rows-per-page">
+              <FilterSelect
+                options={[
+                  { value: "8", label: "8" },
+                  { value: "10", label: "10" },
+                  { value: "20", label: "20" },
+                  { value: "30", label: "30" },
+                ]}
+                value={rowsPerPage.toString()}
+                onChange={(value) => {
+                  setRowsPerPage(Number(value));
+                  setCurrentPage(1);
+                }}
+                placeholder="rowsPerPage.toString()"
+                className="open-up"
+                keyboard
+                autoClose
+              />
+            </div>
+
+            <div className="page-controls">
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                &lt;
+              </button>
+              <span>
+                {currentPage} / {totalPages}
+              </span>
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+              >
+                &gt;
+              </button>
+            </div>
           </div>
         </>
       )}
