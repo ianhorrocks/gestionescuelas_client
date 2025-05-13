@@ -77,7 +77,7 @@ const UserDashboard: React.FC = () => {
           { path: "/user/profile", label: "Mi Perfil" },
           { path: "/user/flights", label: "Mis Vuelos" },
         ]}
-        logoutPath="/user/login"
+        logoutPath="/"
       />
 
       {error && <p className="text-danger">{error}</p>}

@@ -34,7 +34,7 @@ api.interceptors.response.use(
         localStorage.setItem("sessionMessage", "Sesión expirada");
         localStorage.removeItem("token");
         localStorage.removeItem("profile");
-        window.location.href = "/user/login";
+        window.location.href = "/";
       }
     }
 
