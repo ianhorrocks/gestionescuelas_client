@@ -10,7 +10,7 @@ const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({
   if (!loggedIn) {
     const token = localStorage.getItem("token");
     if (!token) {
-      return <Navigate to="/user/login" replace />;
+      return <Navigate to="/" replace />;
     }
   }
 

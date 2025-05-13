@@ -90,7 +90,10 @@ const Login: React.FC = () => {
   const handleRegisterUser = async (userData: NewUser) => {
     try {
       await registerUser(userData);
-      showTemporaryMessage("success", "REGISTRO EXITOSO");
+      showTemporaryMessage(
+        "success",
+        "REGISTRO EXITOSO. COMUNIQUE SU DNI A LA ESCUELA"
+      );
       setTimeout(() => {
         setShowRegisterUserModal(false);
       }, 2000);
