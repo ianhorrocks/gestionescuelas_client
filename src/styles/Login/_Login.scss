@@ -300,3 +300,9 @@
     transform: translateX(-50%) translateY(20px);
   }
 }
+
+.login-page .btn-primary {
+  color: variables.$white-color !important;
+  box-shadow: none !important;
+  outline: none !important;
+}

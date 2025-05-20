@@ -50,7 +50,7 @@
 
 .sort-order-button {
   width: 40px;
-  height: 40px;
+  height: 50px;
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -62,7 +62,7 @@
 
   svg {
     font-size: 18px;
-    color: #333;
+    color: #727272;
   }
 }
 
@@ -144,7 +144,7 @@
     background-color: #fff;
     padding: 16px;
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 -1px 2px rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
     gap: 10px;

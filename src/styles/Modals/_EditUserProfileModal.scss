@@ -29,6 +29,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: none;
 }
 
 .modal-title {
@@ -94,7 +95,7 @@ button.btn-close:hover {
 
 /* Body con scroll */
 .edit-user-modal-body {
-  height: calc(90vh - 200px);
+  max-height: 58vh;
   overflow-y: auto;
   padding-right: 0.5rem;
 }
@@ -185,74 +186,33 @@ button.btn-close:hover {
   font-weight: bold;
 }
 /* Carrusel */
-.school-carousel {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 0 20px;
-}
 
-.school-item-container {
+.school-scroll-container {
   display: flex;
-  transition: transform 0.5s ease-in-out;
-  will-change: transform;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .school-item {
-  flex: 0 0 260px; // ← ancho fijo por tarjeta
+  scroll-snap-align: center;
+  flex: 0 0 260px;
   max-width: 260px;
   background-color: #f8f9fa;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1rem;
-  margin: 0 10px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-
-.school-item p {
-  margin: 0.2rem 0;
-  font-size: 0.9rem;
-}
-
-/* Botones */
-.carousel-btn {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: variables.$soft-text-color;
-  z-index: 2;
-}
-
-.carousel-btn:hover {
-  color: variables.$text-color;
-}
-
-/* Indicadores */
-.carousel-indicators {
-  position: relative;
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.carousel-indicators .indicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: variables.$soft-text-color;
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.carousel-indicators .indicator.active {
-  background-color: variables.$tertiary-color;
-  transform: scale(1.2);
+  p {
+    margin: 0.2rem 0;
+    font-size: 0.9rem;
+  }
 }
 
 /* Footer */
@@ -260,6 +220,7 @@ button.btn-close:hover {
   padding-top: 1rem;
   display: flex;
   justify-content: flex-end;
+  border: none;
 }
 
 .btn-save {

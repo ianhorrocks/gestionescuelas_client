@@ -355,7 +355,7 @@ const ValidateFlightsModal: React.FC<Props> = ({
           onClick={handleValidateClick}
           className="modal-button"
         >
-          Cargar
+          Cargar y Validar
         </Button>
       </Modal.Footer>
     </Modal>

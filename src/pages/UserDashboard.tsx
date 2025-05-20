@@ -3,9 +3,11 @@ import { getAllUserFlights } from "../services/flightService";
 import { getSchoolsForUser } from "../services/schoolService";
 import Navbar from "../components/NavbarUser";
 import PlaneLoader from "../components/PlaneLoader";
-import { Chart } from "react-google-charts";
-import { Flight, School, FlightEvolution } from "../types/types";
+import { Flight, School } from "../types/types";
 import defaultSchoolImage from "../assets/images/Logo-School-Profile.png";
+import FlightSummaryCard from "../components/FlightSummaryCard";
+import FlightTimeline from "../components/FlightTimeline";
+import FlightHoursCard from "../components/FlightHoursCard";
 
 const UserDashboard: React.FC = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
@@ -25,11 +27,9 @@ const UserDashboard: React.FC = () => {
         );
         const userId = decodedToken._id;
 
-        // Fetch flights
         const flightsData = await getAllUserFlights(userId);
         setFlights(flightsData);
 
-        // Fetch schools
         const schoolsData = await getSchoolsForUser();
         setSchools(schoolsData);
       } catch (err) {
@@ -43,30 +43,42 @@ const UserDashboard: React.FC = () => {
     fetchData();
   }, []);
 
-  // Procesar datos para métricas
-  const flightsCount = flights.length;
+  const getStatusCounts = (flights: Flight[]) => {
+    let confirmed = 0,
+      pending = 0,
+      cancelled = 0;
 
-  const flightEvolution: FlightEvolution[] = flights.reduce(
-    (acc: FlightEvolution[], flight) => {
-      const month = new Date(flight.date).toLocaleString("es-ES", {
-        month: "long",
-      });
-      const existingMonth = acc.find((item) => item.month === month);
-      if (existingMonth) {
-        existingMonth.count++;
-      } else {
-        acc.push({ month, count: 1 });
-      }
-      return acc;
-    },
-    []
-  );
+    flights.forEach((flight) => {
+      if (flight.status === "confirmed") confirmed++;
+      else if (flight.status === "pending") pending++;
+      else if (flight.status === "cancelled") cancelled++;
+    });
 
-  // Ordenar meses en el gráfico
-  const sortedFlightEvolution = [
-    ["Mes", "Vuelos"],
-    ...flightEvolution.map((item) => [item.month, item.count]),
-  ];
+    return { confirmed, pending, cancelled };
+  };
+
+  const { confirmed, pending } = getStatusCounts(flights);
+
+  const getFlightsByDate = (flights: Flight[]) => {
+    const map = new Map<string, number>();
+
+    flights.forEach((flight) => {
+      const date = new Date(flight.date).toLocaleDateString("es-AR"); // formato DD/MM/YYYY
+      map.set(date, (map.get(date) || 0) + 1);
+    });
+
+    // Convertir a array ordenado por fecha ascendente
+    return Array.from(map.entries())
+      .map(([date, flights]) => ({ date, flights }))
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  };
+
+  const getTotalFlightHours = (flights: Flight[]): number => {
+    return flights.reduce((acc, flight) => {
+      const time = parseFloat(flight.totalFlightTime || "0");
+      return acc + (isNaN(time) ? 0 : time);
+    }, 0);
+  };
 
   return (
     <div className="dashboard-container">
@@ -80,47 +92,55 @@ const UserDashboard: React.FC = () => {
         logoutPath="/"
       />
 
-      {error && <p className="text-danger">{error}</p>}
+      {error && <p className="dashboard-error">{error}</p>}
 
       {loading ? (
         <PlaneLoader />
       ) : (
         <div className="dashboard-content">
-          {/* Métricas principales */}
-          <div className="kpis">
-            <div className="kpi">
-              <h3>Vuelos realizados</h3>
-              <p>{flightsCount}</p>
-            </div>
-            <div className="kpi">
-              <h3>Evolución de vuelos</h3>
-              <Chart
-                chartType="LineChart"
-                width="100%"
-                height="200px"
-                data={sortedFlightEvolution}
-                options={{
-                  hAxis: { title: "Mes" },
-                  vAxis: { title: "Vuelos" },
-                  legend: "none",
-                }}
-              />
-            </div>
+          {/* KPIs */}
+          <FlightSummaryCard
+            total={flights.length}
+            confirmed={confirmed}
+            pending={pending}
+          />
+
+          <FlightHoursCard
+            totalHours={getTotalFlightHours(flights)}
+            flightData={getFlightsByDate(flights)}
+          />
+
+          {/* Últimos vuelos */}
+          <div className="dashboard-timeline">
+            <h2 className="dashboard-section-title">Últimos vuelos</h2>
+            <FlightTimeline
+              flights={[...flights]
+                .sort(
+                  (a, b) =>
+                    new Date(b.date).getTime() - new Date(a.date).getTime()
+                )
+                .slice(0, 4)}
+            />
           </div>
 
-          {/* Escuelas asignadas */}
-          <div className="school-cards">
-            {schools.map((school) => (
-              <div key={school._id} className="school-card">
-                <img
-                  src={school.planes[0]?.photoUrl || defaultSchoolImage}
-                  alt={school.name}
-                  className="school-image"
-                />
-                <h4>{school.name}</h4>
-                <p>{school.address || "Ubicación no disponible"}</p>
-              </div>
-            ))}
+          {/* Escuelas */}
+          <div className="dashboard-schools">
+            <h2 className="dashboard-section-title">Mis Escuelas</h2>
+            <div className="school-cards">
+              {schools.map((school) => (
+                <div key={school._id} className="school-card">
+                  <img
+                    src={school.planes[0]?.photoUrl || defaultSchoolImage}
+                    alt={school.name}
+                    className="school-image"
+                  />
+                  <div className="school-info">
+                    <h4>{school.name}</h4>
+                    <p>{school.address || "Ubicación no disponible"}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}

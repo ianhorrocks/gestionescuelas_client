@@ -1,0 +1,87 @@
+.flight-summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  background-color: #fff;
+  border-radius: 14px;
+  width: 100%;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+      "total confirmed"
+      "total pending";
+  }
+}
+
+.summary-box {
+  text-align: center;
+  padding: 16px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+
+  .number {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: -4px;
+    color: #6b7280;
+  }
+
+  &.total {
+    background-color: #f9fafb;
+
+    @media (max-width: 640px) {
+      grid-area: total;
+
+      .number {
+        font-size: 2.4rem; // más grande solo en mobile
+      }
+
+      .label {
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+    }
+
+    .number {
+      color: #1f2937;
+    }
+  }
+
+  &.confirmed {
+    background-color: #ecfdf5;
+    @media (max-width: 640px) {
+      grid-area: confirmed;
+    }
+    .number {
+      color: #10b981;
+    }
+
+    .label {
+      color: #065f46;
+    }
+  }
+
+  &.pending {
+    background-color: #fffbeb;
+    @media (max-width: 640px) {
+      grid-area: pending;
+    }
+    .number {
+      color: #f59e0b;
+    }
+
+    .label {
+      color: #92400e;
+    }
+  }
+}

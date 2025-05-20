@@ -21,6 +21,9 @@
 @use "./AdminFlights/FlightValidationTable";
 @use "./Modals/EditSchoolProfileModal";
 @use "./GeneralComponents/FilterSelect";
+@use "./UserDashboard/FlightSummaryCard";
+@use "./UserDashboard/FlightHouseCard";
+@use "./UserDashboard/FlightTimeline";
 
 .dashboard-container,
 .profile-container,

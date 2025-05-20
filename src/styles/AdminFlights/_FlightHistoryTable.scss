@@ -1,74 +1,271 @@
 // src/styles/FlightHistoryTable.scss
 @use "../Variables/variables";
+.flight-history-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 195px); // Ajustá esto según tu navbar
+  padding-top: 1.5rem; // espacio para que no tape el filtro
 
-.flight-history-table-wrapper {
-  margin-top: 1.5rem;
-  padding: 1.5rem;
-  border-radius: 8px;
-  background-color: variables.$white-color;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  .flight-history-table-wrapper {
+    border-radius: 8px;
+    background-color: variables.$white-color;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    height: 530px; /* Altura fija para el contenedor de la tabla */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
+    overflow-x: hidden; /* Evita el desplazamiento horizontal */
+    scrollbar-width: thin;
+    scrollbar-color: variables.$soft-text-color transparent;
 
-  .no-flights {
-    padding: 2rem;
-    font-style: italic;
-    color: variables.$soft-text-color;
-    text-align: center;
-  }
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
 
-  .flight-history-table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
-    thead {
-      background-color: variables.$secondary-color;
+    &::-webkit-scrollbar-thumb {
+      background-color: variables.$shadow-color;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
 
-      th {
-        padding: 12px 8px;
-        text-align: left;
-        font-weight: 600;
-        font-size: 13px;
-        color: variables.$medium-soft-text-color;
-        border-bottom: 2px solid variables.$shadow-color;
+    &:hover::-webkit-scrollbar-thumb {
+      background-color: variables.$primary-color;
+    }
+
+    .no-flights {
+      padding: 2rem;
+      font-style: italic;
+      color: variables.$soft-text-color;
+      text-align: center;
+    }
+
+    .flight-history-table {
+      width: 100%;
+      border-collapse: collapse;
+
+      thead {
+        position: sticky;
+        top: 0;
+        background-color: variables.$secondary-color;
+        z-index: 1;
+
+        th {
+          padding: 12px 8px;
+          text-align: center;
+          font-weight: 600;
+          font-size: 13px;
+          color: variables.$medium-soft-text-color;
+          border-bottom: 2px solid variables.$shadow-color;
+          text-transform: uppercase;
+          height: 50px;
+        }
+      }
+
+      tbody {
+        tr {
+          &:hover {
+            background-color: variables.$secondary-color;
+          }
+
+          td {
+            padding: 12px 8px;
+            text-align: center; /* Centra el contenido horizontalmente */
+            vertical-align: middle; /* Centra el contenido verticalmente */
+            font-size: 14px;
+            color: variables.$text-color;
+            border-bottom: 1px solid variables.$shadow-color;
+            height: 50px;
+          }
+        }
+      }
+
+      .custom-checkbox {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        width: 22px; /* Tamaño fijo para el contenedor */
+        height: 22px;
+
+        input {
+          opacity: 0; // Oculta el input real
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%; // Asegura que el área clicable cubra todo el contenedor
+          height: 100%;
+          cursor: pointer;
+          margin: 0; // Elimina márgenes del input
+          z-index: 2; // Asegura que el input esté por encima de otros elementos
+        }
+
+        .checkmark {
+          width: 22px;
+          height: 22px;
+          background-color: #fff;
+          border: 2px solid #ccc;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+          position: relative;
+          z-index: 1; // Asegura que el checkmark esté debajo del input
+        }
+
+        .checkmark::after {
+          content: "";
+          position: absolute;
+          display: none;
+          left: 6px;
+          top: 2px;
+          width: 6px;
+          height: 12px;
+          border: solid variables.$tertiary-color;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+        }
+
+        input:checked ~ .checkmark {
+          background-color: variables.$tertiary-soft-color-step;
+          border-color: variables.$tertiary-color;
+        }
+
+        input:checked ~ .checkmark::after {
+          display: block;
+        }
+
+        &:hover .checkmark {
+          border-color: variables.$tertiary-color;
+        }
       }
     }
 
-    tbody {
-      tr {
-        transition: background 0.2s;
+    .floating-buttons {
+      position: fixed;
+      bottom: 20px;
+      right: 40px;
+      display: flex;
+      gap: 0.6rem;
+
+      .floating-button {
+        background-color: variables.$primary-color;
+        color: variables.$white-color;
+        border: none;
+        border-radius: 5px;
+        height: 35px;
+        width: 180px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
 
         &:hover {
-          background-color: variables.$secondary-color;
+          background-color: darken(variables.$primary-color, 10%);
         }
 
-        td {
-          padding: 12px 8px;
-          vertical-align: middle;
-          font-size: 14px;
-          color: variables.$text-color;
-          border-bottom: 1px solid variables.$shadow-color;
-          text-align: left;
-        }
-
-        .badge {
-          padding: 4px 8px;
-          border-radius: 8px;
-          font-size: 0.75rem;
-          font-weight: 600;
-          display: inline-block;
-          text-transform: capitalize;
-
-          &.confirmed {
-            background-color: variables.$success-bg-color;
-            color: variables.$success-text-color;
-          }
-
-          &.cancelled {
-            background-color: variables.$error-bg-color-message;
-            color: variables.$error-text-color;
-          }
+        &.to-pending {
+          background-color: variables.$warning-border-color;
         }
       }
     }
+  }
+
+  .badge {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    text-transform: capitalize;
+  }
+
+  .badge.pending {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+
+  .badge.confirmed {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .badge.cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .flight-table-pagination.centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 1rem;
+
+    .page-controls,
+    .rows-per-page {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      button,
+      select {
+        padding: 8px 12px;
+        border: 1px solid variables.$shadow-color;
+        border-radius: 6px;
+        font-size: 14px;
+        background-color: #fff;
+        color: variables.$text-color;
+        cursor: pointer;
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      button:hover {
+        background-color: variables.$secondary-color;
+      }
+    }
+  }
+}
+
+.flight-history-header {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  top: 95px;
+  left: 300px; // o el padding lateral que uses
+
+  z-index: 10;
+
+  .flight-history-header .filter-select {
+    width: 160px;
+    max-width: 160px;
+  }
+
+  .sort-select {
+    padding: 0px 36px 0px 12px;
+    font-size: 14px;
+    color: variables.$text-color;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  .filter-select-wrapper {
+    padding: 0px 20px 0px 14px;
+    align-items: center;
+    gap: 20px;
+    border: 5px solid variables.$shadow-color;
+    background-color: #fff;
+    border-radius: 6px;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+  }
+  .filter-select-icon {
+    font-size: 14px;
+    color: variables.$text-color;
   }
 }

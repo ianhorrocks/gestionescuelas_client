@@ -2,12 +2,34 @@
 
 .flight-validation-table-wrapper {
   position: relative;
-  margin-top: 1rem; // Reduce el espacio entre el stepper y la tabla
-  padding: 0; // Elimina el padding para que la tabla ocupe todo el espacio
+  margin-top: 1rem;
+  padding: 0;
   border-radius: 8px;
   background-color: variables.$white-color;
-  overflow: hidden; // Asegura que no haya scroll adicional
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // Suaviza el sombreado
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 500px; /* Altura fija para el contenedor de la tabla */
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+  overflow-x: hidden; /* Evita el desplazamiento horizontal */
+  scrollbar-width: thin;
+  scrollbar-color: variables.$soft-text-color transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: variables.$shadow-color;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: variables.$primary-color;
+  }
 
   .no-flights {
     padding: 2rem;
@@ -18,39 +40,33 @@
 
   .flight-validation-table {
     width: 100%;
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+    max-height: calc(100vh - 300px);
     border-collapse: collapse;
 
     thead {
       position: sticky;
-      top: 0; // Fija el encabezado en la parte superior
+      top: 0; /* Fija el encabezado en la parte superior */
       background-color: variables.$secondary-color;
       z-index: 1;
 
       th {
         padding: 12px 8px;
-        text-align: left;
+        text-align: center;
+        vertical-align: middle;
         font-weight: 600;
         font-size: 13px;
         color: variables.$medium-soft-text-color;
         border-bottom: 2px solid variables.$shadow-color;
         text-transform: uppercase;
+        height: 50px; /* Asegura una altura uniforme */
       }
     }
 
     tbody {
-      display: block;
-      height: calc(
-        100% - 50px
-      ); // Ajusta la altura del contenido para que no genere scroll adicional
-      overflow-y: auto; // Habilita el scroll solo para el contenido de la tabla
-      width: 100%;
-
       tr {
-        display: table;
-        width: 100%;
-        table-layout: fixed; // Asegura que las columnas mantengan su tamaño
-        transition: background 0.2s;
-
         &:hover {
           background-color: variables.$secondary-color;
         }
@@ -61,23 +77,18 @@
 
         td {
           padding: 12px 8px;
+          text-align: center;
           vertical-align: middle;
           font-size: 14px;
           color: variables.$text-color;
           border-bottom: 1px solid variables.$shadow-color;
-          text-align: left;
+          height: 50px; /* Asegura una altura uniforme */
         }
 
         td.actions-cell {
           display: flex;
           gap: 0.5rem;
-          justify-content: flex-start;
-          width: 80px;
-          padding: 12px 0;
-        }
-
-        td.actions-cell:empty {
-          border-bottom: none;
+          justify-content: center;
         }
       }
     }
@@ -117,6 +128,108 @@
 
       &[aria-label="Cancelar vuelo"]:hover svg {
         color: lighten(variables.$error-bg-color, 10%);
+      }
+    }
+
+    .custom-checkbox {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+
+      input {
+        opacity: 0;
+        position: absolute;
+        width: 0;
+        height: 0;
+      }
+
+      .checkmark {
+        width: 22px;
+        height: 22px;
+        background-color: #fff;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .checkmark::after {
+        content: "";
+        position: absolute;
+        display: none;
+        left: 6px;
+        top: 2px;
+        width: 6px;
+        height: 12px;
+        border: solid variables.$tertiary-color;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      input:checked ~ .checkmark {
+        background-color: variables.$tertiary-soft-color-step;
+        border-color: variables.$tertiary-color; // verde
+      }
+
+      input:checked ~ .checkmark::after {
+        display: block;
+      }
+
+      &:hover .checkmark {
+        border-color: variables.$tertiary-color;
+      }
+    }
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px); /* Comienza desplazado hacia la derecha */
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0); /* Termina en su posición original */
+  }
+}
+
+.floating-buttons {
+  position: fixed;
+  top: 120px; /* Separación del borde inferior */
+  right: 40px; /* Separación del borde derecho */
+  display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
+  z-index: 1000;
+
+  .floating-button {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    height: 35px;
+    width: 90px;
+    cursor: pointer;
+    animation: slideInFromRight 0.3s ease-out;
+
+    &.confirm {
+      background-color: variables.$success-text-bulk;
+      color: variables.$white-color;
+
+      &:hover {
+        scale: 1.05;
+      }
+    }
+
+    &.cancel {
+      background-color: variables.$error-text-bulk;
+      color: variables.$white-color;
+
+      &:hover {
+        scale: 1.05;
       }
     }
   }
