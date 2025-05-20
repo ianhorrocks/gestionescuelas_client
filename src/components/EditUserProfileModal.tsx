@@ -7,8 +7,6 @@ import {
   faUser,
   faMapMarkerAlt,
   faPlane,
-  faChevronLeft,
-  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { User, EditUserProfileInput } from "../types/types";
 import defaultProfilePhoto from "../assets/images/LogoSmallUserProfilePhoto.png";
@@ -24,7 +22,6 @@ const EditUserProfileModal: React.FC<EditUserProfileModalProps> = ({
   onClose,
   onSaveChanges,
 }) => {
-  const [currentSchoolIndex, setCurrentSchoolIndex] = React.useState(0);
   const [formData, setFormData] = React.useState({
     email: profile.email,
     dni: profile.dni.toString(),
@@ -47,18 +44,6 @@ const EditUserProfileModal: React.FC<EditUserProfileModalProps> = ({
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
-  };
-
-  const handleNextSchool = () => {
-    setCurrentSchoolIndex((prev) =>
-      prev === profile.assignedSchools.length - 1 ? 0 : prev + 1
-    );
-  };
-
-  const handlePrevSchool = () => {
-    setCurrentSchoolIndex((prev) =>
-      prev === 0 ? profile.assignedSchools.length - 1 : prev - 1
-    );
   };
 
   const handleSave = () => {
@@ -176,59 +161,25 @@ const EditUserProfileModal: React.FC<EditUserProfileModalProps> = ({
         <div className="assigned-schools">
           <h4>Escuelas Asignadas</h4>
 
-          <div className="school-carousel">
-            <button
-              className="carousel-btn prev-btn"
-              onClick={handlePrevSchool}
-            >
-              <FontAwesomeIcon icon={faChevronLeft} />
-            </button>
-
-            <div
-              className="school-item-container"
-              style={{
-                transform: `translateX(-${currentSchoolIndex * 280}px)`,
-              }}
-            >
-              {profile.assignedSchools.map((schoolAssign, index) => (
-                <div className="school-item" key={index}>
-                  <p>
-                    <strong>Escuela:</strong> {schoolAssign.school.name}
-                  </p>
-                  <p>
-                    <strong>Rol:</strong> {schoolAssign.role}
-                  </p>
-                  <p>
-                    <strong>Aeródromo:</strong> {schoolAssign.school.aerodrome}
-                  </p>
-                  <p>
-                    <strong>Tag:</strong>{" "}
-                    <span
-                      style={{ color: schoolAssign.tag ? "inherit" : "red" }}
-                    >
-                      {schoolAssign.tag || "Sin Asignar"}
-                    </span>
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <button
-              className="carousel-btn next-btn"
-              onClick={handleNextSchool}
-            >
-              <FontAwesomeIcon icon={faChevronRight} />
-            </button>
-          </div>
-
-          <div className="carousel-indicators">
-            {profile.assignedSchools.map((_, idx) => (
-              <span
-                key={idx}
-                className={`indicator ${
-                  idx === currentSchoolIndex ? "active" : ""
-                }`}
-              />
+          <div className="school-scroll-container">
+            {profile.assignedSchools.map((schoolAssign, index) => (
+              <div className="school-item" key={index}>
+                <p>
+                  <strong>Escuela:</strong> {schoolAssign.school.name}
+                </p>
+                <p>
+                  <strong>Rol:</strong> {schoolAssign.role}
+                </p>
+                <p>
+                  <strong>Aeródromo:</strong> {schoolAssign.school.aerodrome}
+                </p>
+                <p>
+                  <strong>Tag:</strong>{" "}
+                  <span style={{ color: schoolAssign.tag ? "inherit" : "red" }}>
+                    {schoolAssign.tag || "Sin Asignar"}
+                  </span>
+                </p>
+              </div>
             ))}
           </div>
         </div>

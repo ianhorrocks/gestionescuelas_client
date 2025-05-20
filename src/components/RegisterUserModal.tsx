@@ -258,14 +258,8 @@ const RegisterUserModal: React.FC<RegisterUserModalProps> = ({
           {passwordError && <div className="text-danger">{passwordError}</div>}
           <div className="d-flex justify-content-between ">
             <Button
-              variant="secondary"
-              onClick={onClose}
-              style={{ fontSize: "0.9rem" }}
-            >
-              Cancelar
-            </Button>
-            <Button
               variant="primary"
+              className="btn btn-primary text-end"
               type="submit"
               style={{ fontSize: "0.9rem" }}
             >

@@ -71,7 +71,10 @@ const Login: React.FC = () => {
   const handleRegisterSchool = async (schoolData: NewSchool) => {
     try {
       await registerSchool(schoolData);
-      showTemporaryMessage("success", "Registro de escuela exitoso");
+      showTemporaryMessage(
+        "success",
+        "REGISTRO DE ESCUELA EXITOSO. NECESITA APROBACION"
+      );
       setTimeout(() => {
         setShowRegisterSchoolModal(false);
       }, 2000);

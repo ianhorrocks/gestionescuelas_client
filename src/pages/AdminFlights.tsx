@@ -1,7 +1,7 @@
 // src/pages/AdminFlights.tsx
 import React, { useEffect, useState } from "react";
 import { getAllSchoolFlights } from "../services/flightService";
-import { Flight as FlightBase } from "../types/types";
+import { ExtendedFlight, HistoryFlight } from "../types/types";
 import ValidateFlightsModal from "../components/ValidateFlightsModal";
 import Navbar from "../components/NavbarAdmin";
 import FlightValidationTable from "../components/FlightValidationTable";
@@ -10,8 +10,7 @@ import { getLoggedUser } from "../services/auth";
 import PlaneLoader from "../components/PlaneLoader";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import Alert from "../components/Alert";
-
-type Flight = FlightBase & { validated: boolean };
+import { MdRestartAlt } from "react-icons/md";
 
 enum Tab {
   HISTORY = "history",
@@ -19,7 +18,7 @@ enum Tab {
 }
 
 const AdminFlights: React.FC = () => {
-  const [flights, setFlights] = useState<Flight[]>([]);
+  const [flights, setFlights] = useState<ExtendedFlight[]>([]);
   const [activeTab, setActiveTab] = useState<Tab>(Tab.VALIDATOR);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -95,9 +94,6 @@ const AdminFlights: React.FC = () => {
     );
   }
 
-  type HistoryFlight = Omit<Flight, "status"> & {
-    status: "confirmed" | "cancelled";
-  };
   const historyFlights = flights.filter(
     (f): f is HistoryFlight =>
       f.status === "confirmed" || f.status === "cancelled"
@@ -127,9 +123,18 @@ const AdminFlights: React.FC = () => {
 
         {activeTab === Tab.HISTORY && (
           <div className="tab-content history-tab">
-            <div className="flight-history-table-wrapper">
-              <FlightHistoryTable flights={historyFlights} />
-            </div>
+            <FlightHistoryTable
+              flights={historyFlights}
+              onStatusChange={(id, status) => {
+                // Actualiza el estado de los vuelos en AdminFlights
+                setFlights((prev) =>
+                  prev.map((flight) =>
+                    flight._id === id ? { ...flight, status } : flight
+                  )
+                );
+              }}
+              showTemporaryMessage={showTemporaryMessage}
+            />
           </div>
         )}
 
@@ -150,33 +155,42 @@ const AdminFlights: React.FC = () => {
                       : "progress-100"
                   }`}
                 >
-                  <div className={stepClass(1)}>Cargar CSV</div>
-                  <div className={stepClass(2)}>Revisar Validos</div>
-                  <div className={stepClass(3)}>Finalizado</div>
+                  <div
+                    className={stepClass(1)}
+                    onClick={() => {
+                      setValidationStep(1);
+                      setShowModal(true); // Abre el modal al hacer clic
+                    }}
+                    aria-label="Cargar vuelos desde un archivo CSV"
+                  >
+                    1. Cargar CSV
+                  </div>
+                  <div className={stepClass(2)}>2. Revisar Válidos</div>
+                  <div className={stepClass(3)}>3. Finalizado</div>
                 </div>
               </div>
             </div>
 
-            <div className="button-container">
+            {/* Botón de "Volver a empezar" */}
+            {validationStep === 2 && (
               <button
-                className="csv-button"
+                className="reset-button"
                 onClick={() => {
-                  setValidationStep(1);
-                  setShowModal(true);
+                  setValidationStep(1); // Reinicia el stepper al paso 1
                 }}
+                aria-label="Reiniciar validación"
               >
-                Cargar Vuelos
+                <MdRestartAlt size={20} />
               </button>
-            </div>
+            )}
 
-            <div className="flight-validation-table-wrapper">
-              <FlightValidationTable
-                flights={flights.filter((f) => f.status === "pending")}
-                onStatusChange={handleStatusChange}
-                validationStep={validationStep}
-                showTemporaryMessage={showTemporaryMessage}
-              />
-            </div>
+            <FlightValidationTable
+              flights={flights.filter((f) => f.status === "pending")}
+              onStatusChange={handleStatusChange}
+              validationStep={validationStep}
+              setValidationStep={setValidationStep}
+              showTemporaryMessage={showTemporaryMessage}
+            />
           </div>
         )}
 

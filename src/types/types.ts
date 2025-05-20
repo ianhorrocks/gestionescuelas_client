@@ -94,7 +94,7 @@ export type FlightType =
 export interface Flight {
   _id: string;
   date: string;
-  airplane: { registrationNumber: string } | null;
+  airplane: { registrationNumber: string };
   pilot: { name: string; lastname: string };
   instructor: { name: string; lastname: string } | null;
   origin: string;
@@ -190,3 +190,11 @@ export interface FlightEvolution {
   month: string;
   count: number;
 }
+
+export interface ExtendedFlight extends Flight {
+  validated: boolean;
+}
+
+export type HistoryFlight = ExtendedFlight & {
+  status: "confirmed" | "cancelled";
+};
