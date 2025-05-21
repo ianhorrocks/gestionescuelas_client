@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { getAllUserFlights } from "../services/flightService";
 import Navbar from "../components/NavbarUser";
 import AddFlightModal from "../components/AddFlightModal";
 import FlightTable from "../components/FlightTable";
 import { getLoggedUser } from "../services/auth";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
-import { Flight } from "../types/types";
+import { Flight, SimplifiedFlight } from "../types/types";
 import PlaneLoader from "../components/PlaneLoader";
+import { FaArrowUp } from "react-icons/fa";
 
 const convertToDecimalHours = (time: string): string => {
   const [hours, minutes] = time.split(":").map(Number);
@@ -22,6 +23,32 @@ const UserFlights: React.FC = () => {
   const [error, setError] = useState("");
   const { message, showTemporaryMessage } = useTemporaryMessage();
   const [loading, setLoading] = useState(true);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null); // 👈
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const node = scrollRef.current;
+      if (!node) return;
+
+      const handleScroll = () => {
+        setShowScrollTop(node.scrollTop > 0);
+      };
+
+      node.addEventListener("scroll", handleScroll);
+      handleScroll(); // fuerza evaluación inicial
+
+      // Limpieza
+      return () => {
+        node.removeEventListener("scroll", handleScroll);
+      };
+    });
+
+    // Observa cuando se monta el contenido
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -54,6 +81,7 @@ const UserFlights: React.FC = () => {
       const user = await getLoggedUser();
       const flightsData = await getAllUserFlights(user._id);
       setFlights(flightsData);
+      scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       console.error("Error al refrescar los vuelos:", err);
       setError("Error al refrescar los vuelos");
@@ -61,7 +89,7 @@ const UserFlights: React.FC = () => {
   };
 
   return (
-    <div className="flights-container">
+    <div className="user-flights-container">
       <Navbar
         title="Mis Vuelos"
         links={[
@@ -80,56 +108,63 @@ const UserFlights: React.FC = () => {
       {loading ? (
         <PlaneLoader />
       ) : (
-        <div className="flights-content">
+        <div className="user-flights-content">
           <button className="add-button" onClick={handleShowModal}>
             +
           </button>
 
           <FlightTable
-            flights={flights.map((flight) => ({
-              _id: flight._id,
-              date: flight.date,
-              departureTime: flight.departureTime,
-              arrivalTime: flight.arrivalTime,
-              pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
-              instructor: flight.instructor
-                ? `${flight.instructor.name} ${flight.instructor.lastname}`
-                : "S/A",
-              origin: flight.origin,
-              destination: flight.destination,
-              status: flight.status,
-              airplane: flight.airplane
-                ? `${flight.airplane.registrationNumber}`
-                : "N/A",
-              totalFlightTime: flight.totalFlightTime
-                ? convertToDecimalHours(flight.totalFlightTime)
-                : "N/A",
-            }))}
+            flights={flights.map(
+              (flight): SimplifiedFlight => ({
+                _id: flight._id,
+                date: flight.date,
+                departureTime: flight.departureTime,
+                arrivalTime: flight.arrivalTime,
+                pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
+                instructor: flight.instructor
+                  ? `${flight.instructor.name} ${flight.instructor.lastname}`
+                  : "S/A",
+                origin: flight.origin,
+                destination: flight.destination,
+                status: flight.status,
+                airplane: flight.airplane
+                  ? `${flight.airplane.registrationNumber}`
+                  : "N/A",
+                totalFlightTime: flight.totalFlightTime
+                  ? convertToDecimalHours(flight.totalFlightTime)
+                  : "N/A",
+                school: flight.school?.name || "N/A",
+              })
+            )}
             selectedStatus={statusFilter}
             onFilterChange={(status: string) =>
               setStatusFilter(
                 status as "pending" | "confirmed" | "cancelled" | "all"
               )
             }
-            allFlights={flights.map((flight) => ({
-              _id: flight._id,
-              date: flight.date,
-              departureTime: flight.departureTime,
-              arrivalTime: flight.arrivalTime,
-              pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
-              instructor: flight.instructor
-                ? `${flight.instructor.name} ${flight.instructor.lastname}`
-                : "S/A",
-              origin: flight.origin,
-              destination: flight.destination,
-              status: flight.status,
-              airplane: flight.airplane
-                ? `${flight.airplane.registrationNumber}`
-                : "N/A",
-              totalFlightTime: flight.totalFlightTime
-                ? convertToDecimalHours(flight.totalFlightTime)
-                : "N/A",
-            }))}
+            allFlights={flights.map(
+              (flight): SimplifiedFlight => ({
+                _id: flight._id,
+                date: flight.date,
+                departureTime: flight.departureTime,
+                arrivalTime: flight.arrivalTime,
+                pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
+                instructor: flight.instructor
+                  ? `${flight.instructor.name} ${flight.instructor.lastname}`
+                  : "S/A",
+                origin: flight.origin,
+                destination: flight.destination,
+                status: flight.status,
+                airplane: flight.airplane
+                  ? `${flight.airplane.registrationNumber}`
+                  : "N/A",
+                totalFlightTime: flight.totalFlightTime
+                  ? convertToDecimalHours(flight.totalFlightTime)
+                  : "N/A",
+                school: flight.school?.name || "N/A",
+              })
+            )}
+            scrollRef={scrollRef}
           />
         </div>
       )}
@@ -140,6 +175,18 @@ const UserFlights: React.FC = () => {
         onSuccess={handleFlightAdded}
         showTemporaryMessage={showTemporaryMessage}
       />
+
+      {!loading && (
+        <button
+          className={`scroll-top-button ${showScrollTop ? "visible" : ""}`}
+          onClick={() =>
+            scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" })
+          }
+          aria-label="Subir arriba"
+        >
+          <FaArrowUp />
+        </button>
+      )}
     </div>
   );
 };

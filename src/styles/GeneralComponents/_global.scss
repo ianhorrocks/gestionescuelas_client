@@ -47,11 +47,11 @@ h2 {
 .btn-primary:focus,
 .btn-primary:active,
 .btn-primary:focus:active {
-  background-color: variables.$btn-background;
-  color: variables.$white-color;
+  background-color: variables.$btn-background !important;
+  color: variables.$white-color !important;
   box-shadow: none !important;
   outline: none !important;
-  border-color: variables.$btn-background;
+  border-color: variables.$btn-background !important;
 }
 
 .btn-secondary {

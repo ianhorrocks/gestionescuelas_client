@@ -253,8 +253,8 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
               ? "El vuelo no ha sido validado, ¿Deseas confirmarlo de todas formas?"
               : "El vuelo no ha sido validado, ¿Deseas cancelarlo de todas formas?"
             : confirmModal.action === "confirm"
-            ? "Los/El vuelo/s seleccionado no ha sido validado, ¿Deseas confirmarlos de todas formas?"
-            : "Los/El vuelo/s seleccionado no ha sido validado, ¿Deseas rechazarlos de todas formas?"}
+            ? "Los vuelos seleccionados no han sido validados, ¿Deseas confirmarlos de todas formas?"
+            : "Los vuelos seleccionados no han sido validados, ¿Deseas confirmarlos de todas formas?"}
         </Modal.Body>
         <Modal.Footer>
           <Button

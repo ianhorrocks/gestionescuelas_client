@@ -28,14 +28,13 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      const errorMsg = error.response.data?.error;
+      // Borra sesión sí o sí
+      localStorage.setItem("sessionMessage", "Sesión expirada");
+      localStorage.removeItem("token");
+      localStorage.removeItem("profile");
 
-      if (errorMsg === "ERROR_ID_TOKEN") {
-        localStorage.setItem("sessionMessage", "Sesión expirada");
-        localStorage.removeItem("token");
-        localStorage.removeItem("profile");
-        window.location.href = "/";
-      }
+      // Redirige al login (puede ser "/login" si tu ruta es esa)
+      window.location.href = "/";
     }
 
     return Promise.reject(error);

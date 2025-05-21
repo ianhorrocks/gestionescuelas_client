@@ -12,9 +12,16 @@ import {
 interface Props {
   totalHours: number;
   flightData: { date: string; flights: number }[];
+  viewMode: "week" | "month";
+  onViewChange: (mode: "week" | "month") => void;
 }
 
-const FlightHoursCard: React.FC<Props> = ({ totalHours, flightData }) => {
+const FlightHoursCard: React.FC<Props> = ({
+  totalHours,
+  flightData,
+  viewMode,
+  onViewChange,
+}) => {
   const hasData = flightData.length > 0;
 
   return (
@@ -25,6 +32,20 @@ const FlightHoursCard: React.FC<Props> = ({ totalHours, flightData }) => {
           <div className="label">Horas Totales de Vuelo</div>
         </div>
       </div>
+      <div className="view-toggle">
+        <button
+          className={viewMode === "week" ? "active" : ""}
+          onClick={() => onViewChange("week")}
+        >
+          Semanal
+        </button>
+        <button
+          className={viewMode === "month" ? "active" : ""}
+          onClick={() => onViewChange("month")}
+        >
+          Mensual
+        </button>
+      </div>
 
       {hasData && (
         <div className="hours-chart">
@@ -33,7 +54,12 @@ const FlightHoursCard: React.FC<Props> = ({ totalHours, flightData }) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" />
               <YAxis allowDecimals={false} />
-              <Tooltip />
+              <Tooltip
+                formatter={(value: number) => [`${value} vuelos`, "Cantidad"]}
+                labelFormatter={(label: string) =>
+                  viewMode === "week" ? `Semana del ${label}` : `Mes ${label}`
+                }
+              />
               <Line
                 type="monotone"
                 dataKey="flights"

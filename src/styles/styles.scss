@@ -6,7 +6,6 @@
 @use "./AdminPlanes/AdminPlanes";
 @use "./UserDashboard/UserDashboard";
 @use "./UserFlights/UserFlights";
-@use "./UserSchool/UserSchool";
 @use "./GeneralComponents/ValidateFlightsModal";
 @use "./NavBar/NavbarUser";
 @use "./Modals/EditUserProfileModal";
@@ -22,7 +21,7 @@
 @use "./Modals/EditSchoolProfileModal";
 @use "./GeneralComponents/FilterSelect";
 @use "./UserDashboard/FlightSummaryCard";
-@use "./UserDashboard/FlightHouseCard";
+@use "./UserDashboard/FlightHoursCard";
 @use "./UserDashboard/FlightTimeline";
 
 .dashboard-container,

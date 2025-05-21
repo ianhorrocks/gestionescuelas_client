@@ -124,171 +124,178 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
 
   return (
     <>
-      <div className="flight-history-header">
-        <FilterSelect
-          options={[
-            { value: "date", label: "Fecha" },
-            { value: "airplane", label: "Aeronave" },
-            { value: "instructor", label: "Instructor" },
-            { value: "pilot", label: "Piloto" },
-            { value: "status", label: "Estado" },
-            { value: "time", label: "Tiempo Volado" },
-          ]}
-          value={sortField}
-          onChange={(value) => setSortField(value as typeof sortField)}
-          placeholder="Ordenar por"
-          keyboard
-          autoClose
-        />
-        <button
-          className="sort-order-button"
-          onClick={() =>
-            setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"))
-          }
-          title={
-            sortOrder === "desc"
-              ? "Cambiar a ascendente"
-              : "Cambiar a descendente"
-          }
-        >
-          {sortOrder === "desc" ? <FaArrowUp /> : <FaArrowDown />}
-        </button>
-      </div>
-      <div className="flight-history-container">
-        <div className="flight-history-table-wrapper">
-          <table className="flight-history-table">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Hora</th>
-                <th>Piloto</th>
-                <th>Instructor</th>
-                <th>Aeronave</th>
-                <th>Ruta</th>
-                <th>Estado</th>
-                <th>
-                  <label
-                    className="custom-checkbox"
-                    title="Seleccionar todos los vuelos"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={selectedFlights.length === flights.length}
-                      onChange={toggleSelectAll}
-                    />
-                    <span className="checkmark" />
-                  </label>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedFlights.map((flight) => (
-                <tr key={flight._id}>
-                  <td>
-                    {new Date(flight.date).toLocaleDateString("es-ES", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                    })}
-                  </td>
-                  <td>
-                    {new Date(flight.departureTime).toLocaleTimeString(
-                      "es-ES",
-                      {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: false,
-                      }
-                    )}
-                    {" - "}
-                    {new Date(flight.arrivalTime).toLocaleTimeString("es-ES", {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: false,
-                    })}
-                  </td>
-                  <td>
-                    {flight.pilot.name} {flight.pilot.lastname}
-                  </td>
-                  <td>
-                    {flight.instructor
-                      ? `${flight.instructor.name} ${flight.instructor.lastname}`
-                      : "N/A"}
-                  </td>
-                  <td>
-                    {flight.airplane
-                      ? flight.airplane.registrationNumber
-                      : "N/A"}
-                  </td>
-                  <td>
-                    {flight.origin} → {flight.destination}
-                  </td>
-                  <td>
-                    <span className={`badge ${flight.status}`}>
-                      {statusMap[flight.status]}
-                    </span>
-                  </td>
-                  <td>
-                    <label className="custom-checkbox">
+      <div className="tab-content history-tab">
+        <div className="flight-history-header-wrapper">
+          <div className="flight-history-header">
+            <FilterSelect
+              options={[
+                { value: "date", label: "Fecha" },
+                { value: "airplane", label: "Aeronave" },
+                { value: "instructor", label: "Instructor" },
+                { value: "pilot", label: "Piloto" },
+                { value: "status", label: "Estado" },
+                { value: "time", label: "Tiempo Volado" },
+              ]}
+              value={sortField}
+              onChange={(value) => setSortField(value as typeof sortField)}
+              placeholder="Ordenar por"
+              keyboard
+              autoClose
+            />
+            <button
+              className="sort-order-button"
+              onClick={() =>
+                setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"))
+              }
+              title={
+                sortOrder === "desc"
+                  ? "Cambiar a ascendente"
+                  : "Cambiar a descendente"
+              }
+            >
+              {sortOrder === "desc" ? <FaArrowUp /> : <FaArrowDown />}
+            </button>
+          </div>
+        </div>
+        <div className="flight-history-container">
+          <div className="flight-history-table-wrapper">
+            <table className="flight-history-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Piloto</th>
+                  <th>Instructor</th>
+                  <th>Aeronave</th>
+                  <th>Ruta</th>
+                  <th>Estado</th>
+                  <th>
+                    <label
+                      className="custom-checkbox"
+                      title="Seleccionar todos los vuelos"
+                    >
                       <input
                         type="checkbox"
-                        checked={selectedFlights.includes(flight._id)}
-                        onChange={() => toggleSelectFlight(flight._id)}
+                        checked={selectedFlights.length === flights.length}
+                        onChange={toggleSelectAll}
                       />
                       <span className="checkmark" />
                     </label>
-                  </td>
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {paginatedFlights.map((flight) => (
+                  <tr key={flight._id}>
+                    <td>
+                      {new Date(flight.date).toLocaleDateString("es-ES", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })}
+                    </td>
+                    <td>
+                      {new Date(flight.departureTime).toLocaleTimeString(
+                        "es-ES",
+                        {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: false,
+                        }
+                      )}
+                      {" - "}
+                      {new Date(flight.arrivalTime).toLocaleTimeString(
+                        "es-ES",
+                        {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: false,
+                        }
+                      )}
+                    </td>
+                    <td>
+                      {flight.pilot.name} {flight.pilot.lastname}
+                    </td>
+                    <td>
+                      {flight.instructor
+                        ? `${flight.instructor.name} ${flight.instructor.lastname}`
+                        : "N/A"}
+                    </td>
+                    <td>
+                      {flight.airplane
+                        ? flight.airplane.registrationNumber
+                        : "N/A"}
+                    </td>
+                    <td>
+                      {flight.origin} → {flight.destination}
+                    </td>
+                    <td>
+                      <span className={`badge ${flight.status}`}>
+                        {statusMap[flight.status]}
+                      </span>
+                    </td>
+                    <td>
+                      <label className="custom-checkbox">
+                        <input
+                          type="checkbox"
+                          checked={selectedFlights.includes(flight._id)}
+                          onChange={() => toggleSelectFlight(flight._id)}
+                        />
+                        <span className="checkmark" />
+                      </label>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
-          {/* Floating Button */}
-          {selectedFlights.length > 0 && (
-            <div className="floating-buttons">
-              <button
-                className="floating-button to-pending"
-                onClick={() => setConfirmModal(true)}
+            {/* Floating Button */}
+            {selectedFlights.length > 0 && (
+              <div className="floating-buttons">
+                <button
+                  className="floating-button to-pending"
+                  onClick={() => setConfirmModal(true)}
+                >
+                  Volver a Pendiente
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="flight-table-pagination centered">
+            <div className="rows-per-page">
+              <select
+                value={rowsPerPage}
+                onChange={(e) => {
+                  setRowsPerPage(Number(e.target.value));
+                  setCurrentPage(1);
+                }}
               >
-                Volver a Pendiente
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={30}>30</option>
+              </select>
+            </div>
+            <div className="page-controls">
+              <button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                &lt;
+              </button>
+              <span>
+                {currentPage} / {totalPages}
+              </span>
+              <button
+                onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                }
+                disabled={currentPage === totalPages}
+              >
+                &gt;
               </button>
             </div>
-          )}
-        </div>
-
-        <div className="flight-table-pagination centered">
-          <div className="rows-per-page">
-            <select
-              value={rowsPerPage}
-              onChange={(e) => {
-                setRowsPerPage(Number(e.target.value));
-                setCurrentPage(1);
-              }}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={30}>30</option>
-            </select>
-          </div>
-          <div className="page-controls">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-            >
-              &lt;
-            </button>
-            <span>
-              {currentPage} / {totalPages}
-            </span>
-            <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-            >
-              &gt;
-            </button>
           </div>
         </div>
       </div>

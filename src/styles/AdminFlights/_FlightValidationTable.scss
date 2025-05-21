@@ -2,16 +2,17 @@
 
 .flight-validation-table-wrapper {
   position: relative;
+  flex: 1;
   margin-top: 1rem;
   padding: 0;
   border-radius: 8px;
   background-color: variables.$white-color;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  height: 500px; /* Altura fija para el contenedor de la tabla */
   overflow-y: auto; /* Habilita el desplazamiento vertical */
   overflow-x: hidden; /* Evita el desplazamiento horizontal */
   scrollbar-width: thin;
   scrollbar-color: variables.$soft-text-color transparent;
+  min-height: 0;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -40,10 +41,9 @@
 
   .flight-validation-table {
     width: 100%;
-    flex: 1;
-    height: 100%;
-    overflow-y: auto;
-    max-height: calc(100vh - 300px);
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
     border-collapse: collapse;
 
     thead {
@@ -197,7 +197,7 @@
 
 .floating-buttons {
   position: fixed;
-  top: 120px; /* Separación del borde inferior */
+  top: 150px; /* Separación del borde inferior */
   right: 40px; /* Separación del borde derecho */
   display: flex;
   flex-direction: row;

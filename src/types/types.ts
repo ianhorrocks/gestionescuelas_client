@@ -105,6 +105,22 @@ export interface Flight {
   preValidated: boolean;
   totalFlightTime?: string;
   flightType: FlightType; // ✅ nuevo
+  school?: { _id: string; name: string };
+}
+
+export interface SimplifiedFlight {
+  _id: string;
+  date: string;
+  departureTime: string;
+  arrivalTime: string;
+  pilot: string;
+  instructor: string;
+  origin: string;
+  destination: string;
+  status: "pending" | "confirmed" | "cancelled";
+  airplane?: string;
+  totalFlightTime?: string;
+  school?: string; // nombre plano
 }
 
 export interface FlightData {

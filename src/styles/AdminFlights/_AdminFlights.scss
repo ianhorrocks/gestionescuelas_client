@@ -71,7 +71,7 @@
 }
 
 .admin-flights-container {
-  margin-top: 80px; // Asegura que el contenido no quede oculto detrás del navbar
+  margin-top: 44px; // Asegura que el contenido no quede oculto detrás del navbar
   padding: 1rem;
 
   @media (min-width: 990px) {
@@ -83,13 +83,17 @@
   align-items: center;
   justify-content: flex-start; // Asegura que el contenido comience desde arriba
   height: calc(
-    100vh - 160px
+    110vh - 170px
   ); // Altura fija para que el contenedor ocupe el espacio restante (ajustado al navbar y footer)
   overflow-y: auto; // Habilita el scroll solo en este contenedor
 
   .tab-content {
-    width: 100%; // Asegura que el contenido ocupe todo el ancho disponible
-    max-width: 1200px; // Limita el ancho máximo para mantener un diseño limpio
+    width: min(100%, 1600px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: calc(90vh - 150px);
 
     &.validator-tab {
       .floating-stepper {
@@ -100,22 +104,17 @@
 }
 
 .floating-stepper {
-  position: absolute;
-  top: 85px; /* Alineado con los selectores */
-  left: 300px;
-  z-index: 10;
-  margin-bottom: 1rem; /* Espaciado inferior */
   display: flex;
-  justify-content: center; /* Centra el stepper horizontalmente */
-  animation: fadeInFromRight 0.4s ease-out; /* Mantiene la animación */
+  justify-content: center;
+  margin: 1rem auto 0 auto;
+  animation: fadeInFromRight 0.4s ease-out;
 
   @media (max-width: 990px) {
-    position: relative; // Cambia a relativo en pantallas pequeñas
-    top: 0;
-    left: 0;
-    margin-bottom: 1rem; // Espaciado inferior
+    flex-shrink: 0;
     display: flex;
-    justify-content: center; // Centra el stepper horizontalmente
+    justify-content: center;
+    margin: 0.5rem 0;
+    z-index: 10;
   }
 
   .controls-card {
@@ -124,7 +123,6 @@
     padding: 0.8rem 1.6rem;
     background: variables.$white-color;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   }
 }
 

@@ -140,6 +140,19 @@ const AdminFlights: React.FC = () => {
 
         {activeTab === Tab.VALIDATOR && (
           <div className="tab-content validator-tab">
+            {/* Botón de "Volver a empezar" */}
+            {validationStep === 2 && (
+              <button
+                className="reset-button"
+                onClick={() => {
+                  setValidationStep(1); // Reinicia el stepper al paso 1
+                }}
+                aria-label="Reiniciar validación"
+              >
+                <MdRestartAlt size={20} />
+              </button>
+            )}
+
             <div
               className={`floating-stepper ${
                 activeTab === Tab.VALIDATOR ? "fade-in" : ""
@@ -170,19 +183,6 @@ const AdminFlights: React.FC = () => {
                 </div>
               </div>
             </div>
-
-            {/* Botón de "Volver a empezar" */}
-            {validationStep === 2 && (
-              <button
-                className="reset-button"
-                onClick={() => {
-                  setValidationStep(1); // Reinicia el stepper al paso 1
-                }}
-                aria-label="Reiniciar validación"
-              >
-                <MdRestartAlt size={20} />
-              </button>
-            )}
 
             <FlightValidationTable
               flights={flights.filter((f) => f.status === "pending")}
