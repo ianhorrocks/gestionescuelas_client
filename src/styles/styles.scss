@@ -23,6 +23,8 @@
 @use "./UserDashboard/FlightSummaryCard";
 @use "./UserDashboard/FlightHoursCard";
 @use "./UserDashboard/FlightTimeline";
+@use "./GeneralComponents/Spinner.module";
+@use "./Modals/FlightAdminDetailModal";
 
 .dashboard-container,
 .profile-container,

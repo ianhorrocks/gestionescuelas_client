@@ -8,7 +8,12 @@ import defaultSchoolImage from "../assets/images/Logo-School-Profile.png";
 import FlightSummaryCard from "../components/FlightSummaryCard";
 import FlightTimeline from "../components/FlightTimeline";
 import FlightHoursCard from "../components/FlightHoursCard";
-import { startOfWeek, endOfWeek, format, isAfter, addWeeks } from "date-fns";
+import {
+  getTotalFlightHoursCentesimal,
+  getFlightsByWeek,
+  getFlightsByMonth,
+} from "../utils/time";
+import { useNavigate } from "react-router-dom";
 
 const UserDashboard: React.FC = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
@@ -16,6 +21,7 @@ const UserDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [viewMode, setViewMode] = useState<"week" | "month">("week");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,80 +65,11 @@ const UserDashboard: React.FC = () => {
     return { confirmed, pending, cancelled };
   };
 
+  const handleSummaryBoxClick = (filter: "all" | "confirmed" | "pending") => {
+    navigate(`/user/flights?filter=${filter}`);
+  };
+
   const { confirmed, pending } = getStatusCounts(flights);
-
-  const getWeeksInRange = (start: Date, end: Date): Date[] => {
-    const weeks: Date[] = [];
-    let current = startOfWeek(start, { weekStartsOn: 1 });
-
-    while (!isAfter(current, end)) {
-      weeks.push(current);
-      current = addWeeks(current, 1); // avanzar 1 semana sin mutar
-    }
-
-    return weeks;
-  };
-
-  const getFlightsByWeek = (flights: Flight[]) => {
-    if (flights.length === 0) return [];
-
-    // Ordenar por fecha
-    const sorted = [...flights].sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-
-    const first = new Date(sorted[0].date);
-    const last = new Date(); // hasta hoy
-    const weeks = getWeeksInRange(
-      startOfWeek(first, { weekStartsOn: 1 }),
-      endOfWeek(last, { weekStartsOn: 1 })
-    );
-
-    const weekMap = new Map<string, number>();
-
-    // Inicializar con 0 vuelos
-    weeks.forEach((week: Date) => {
-      const key = format(week, "dd/MM/yyyy");
-      weekMap.set(key, 0);
-    });
-
-    // Contar vuelos por semana
-    flights.forEach((flight) => {
-      const key = format(
-        startOfWeek(new Date(flight.date), { weekStartsOn: 1 }),
-        "dd/MM/yyyy"
-      );
-      weekMap.set(key, (weekMap.get(key) || 0) + 1);
-    });
-
-    return Array.from(weekMap.entries()).map(([date, flights]) => ({
-      date,
-      flights,
-    }));
-  };
-
-  const getFlightsByMonth = (flights: Flight[]) => {
-    if (flights.length === 0) return [];
-
-    const map = new Map<string, number>();
-
-    flights.forEach((flight) => {
-      const key = format(new Date(flight.date), "MM/yyyy");
-      map.set(key, (map.get(key) || 0) + 1);
-    });
-
-    return Array.from(map.entries()).map(([date, flights]) => ({
-      date,
-      flights,
-    }));
-  };
-
-  const getTotalFlightHours = (flights: Flight[]): number => {
-    return flights.reduce((acc, flight) => {
-      const time = parseFloat(flight.totalFlightTime || "0");
-      return acc + (isNaN(time) ? 0 : time);
-    }, 0);
-  };
 
   return (
     <div className="dashboard-container">
@@ -157,10 +94,11 @@ const UserDashboard: React.FC = () => {
             total={flights.length}
             confirmed={confirmed}
             pending={pending}
+            onBoxClick={handleSummaryBoxClick}
           />
 
           <FlightHoursCard
-            totalHours={getTotalFlightHours(flights)}
+            totalHours={getTotalFlightHoursCentesimal(flights)}
             flightData={
               viewMode === "week"
                 ? getFlightsByWeek(flights)

@@ -106,6 +106,12 @@ export interface Flight {
   totalFlightTime?: string;
   flightType: FlightType; // ✅ nuevo
   school?: { _id: string; name: string };
+  landings?: number;
+  oil?: string;
+  oilUnit?: "lt" | "qt";
+  charge?: string;
+  chargeUnit?: "lt" | "gal";
+  comment?: string;
 }
 
 export interface SimplifiedFlight {
@@ -121,6 +127,13 @@ export interface SimplifiedFlight {
   airplane?: string;
   totalFlightTime?: string;
   school?: string; // nombre plano
+  landings?: number;
+  oil?: string;
+  oilUnit?: "lt" | "qt";
+  charge?: string;
+  chargeUnit?: "lt" | "gal";
+  comment?: string;
+  preValidated?: boolean;
 }
 
 export interface FlightData {
@@ -132,13 +145,14 @@ export interface FlightData {
   arrivalTime: string;
   landings: string;
   oil?: string;
+  oilUnit?: "lt" | "qt";
   charge?: string;
+  chargeUnit?: "lt" | "gal";
   school: string;
   origin: string;
   destination: string;
-  initialOdometer: string;
-  finalOdometer: string;
-  flightType: FlightType; // ✅ nuevo
+  flightType: FlightType;
+  comment?: string; // <-- AGREGADO
 }
 
 export interface NewPlane {

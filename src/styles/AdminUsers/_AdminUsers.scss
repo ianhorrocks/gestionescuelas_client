@@ -8,6 +8,11 @@
   margin-top: 60px;
   padding: 20px;
 
+  .add-button {
+    bottom: 30px;
+    right: 50px;
+  }
+
   /* Lista de cartas de usuarios. Estan en UserItems.tsx */
   .user-item-list {
     display: flex;

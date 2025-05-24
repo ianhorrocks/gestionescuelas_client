@@ -21,6 +21,13 @@
     height: 60px;
     width: 100%;
     position: relative;
+    @media (max-width: 600px) {
+      padding-top: env(
+        safe-area-inset-top,
+        20px
+      ); // usa valor real en iOS o 20px fallback
+      height: 70px; // o más si querés margen visual extra
+    }
   }
 
   .container-dashboard {
@@ -189,7 +196,7 @@
 
     .logout-button {
       position: absolute; // Fija el botón en una posición específica
-      bottom: 20px; // Separa el botón del borde inferior
+      bottom: 70px; // Separa el botón del borde inferior
       left: 0;
       width: 100%; // Asegura que el botón ocupe todo el ancho del menú
       padding: 10px 0;

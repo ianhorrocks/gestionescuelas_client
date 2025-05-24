@@ -4,8 +4,8 @@
 /* Botón flotante de agregar */
 .add-button {
   position: fixed;
-  bottom: 80px;
-  right: 20px;
+  bottom: 75px;
+  right: 45px;
   background-color: variables.$tertiary-color;
   color: #fff;
   border: none;
@@ -112,8 +112,8 @@
 
   .form-buttons {
     display: flex;
-    justify-content: flex-end; // 👈 Alinea todo a la derecha
-    gap: 10px; // 👈 Espacio entre los botones
+    justify-content: space-between;
+    gap: 10px;
   }
 
   .modal-button {
@@ -140,6 +140,22 @@
     &:hover {
       text-decoration: underline;
       background-color: transparent;
+    }
+  }
+
+  .form-group {
+    position: relative;
+    margin-top: 0.8rem;
+    margin-bottom: 1.6rem;
+
+    .double-field-group {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+
+      > div {
+        flex: 1;
+      }
     }
   }
 }

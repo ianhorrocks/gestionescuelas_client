@@ -306,3 +306,12 @@
   box-shadow: none !important;
   outline: none !important;
 }
+
+.login-page .btn-tertiary-loading {
+  background-color: rgba(variables.$tertiary-color-hover, 1) !important;
+  color: variables.$tertiary-color !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transition: background 0.2s;
+}

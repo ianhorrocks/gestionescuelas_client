@@ -22,8 +22,6 @@ export interface FlightData {
   school: string;
   origin: string;
   destination: string;
-  initialOdometer: string;
-  finalOdometer: string;
   landings: string;
   oil?: string;
   charge?: string;
@@ -116,5 +114,20 @@ export const updateFlightStatus = async (
   const response = await api.patch<{ data: Flight }>(`/flights/${id}/status`, {
     status,
   });
+  return response.data.data;
+};
+
+export const deleteFlight = async (id: string): Promise<void> => {
+  await api.delete(`/flights/${id}`);
+};
+
+export const editFlight = async (
+  id: string,
+  flightData: Partial<Flight>
+): Promise<Flight> => {
+  const response = await api.put<{ data: Flight }>(
+    `/flights/${id}`,
+    flightData
+  );
   return response.data.data;
 };

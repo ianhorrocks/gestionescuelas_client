@@ -6,6 +6,7 @@ interface CustomSelectProps {
   onChange: (value: string) => void;
   placeholder?: string;
   disabled?: boolean;
+  disableSearch?: boolean; // <-- AGREGADO
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -14,29 +15,11 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   onChange,
   placeholder = "Selecciona una opción",
   disabled = false,
+  disableSearch = false, // <-- AGREGADO
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [dropdownPosition, setDropdownPosition] = useState<{
-    top: number;
-    left: number;
-    width: number;
-  } | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-
-  const toggleDropdown = () => {
-    if (!isOpen) {
-      const rect = ref.current?.getBoundingClientRect();
-      if (rect) {
-        setDropdownPosition({
-          top: rect.bottom,
-          left: rect.left,
-          width: rect.width,
-        });
-      }
-    }
-    setIsOpen(!isOpen);
-  };
 
   // Siempre mostrar el label correspondiente al value actual
   const displayValue = useMemo(() => {
@@ -47,10 +30,12 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   // Filtrar opciones en base al input del usuario
   const filteredOptions = useMemo(
     () =>
-      options.filter((option) =>
-        option.label.toLowerCase().includes(searchTerm.toLowerCase())
-      ),
-    [searchTerm, options]
+      disableSearch
+        ? options // Si está deshabilitado, no filtra
+        : options.filter((option) =>
+            option.label.toLowerCase().includes(searchTerm.toLowerCase())
+          ),
+    [searchTerm, options, disableSearch]
   );
 
   // Manejar selección
@@ -70,26 +55,56 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
     }
   }, [value, options]);
 
+  // Cerrar dropdown si se hace click fuera
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="form-group custom-select-wrapper" ref={ref}>
-      <input
-        type="text"
-        className="floating-input custom-select__search"
-        placeholder=" "
-        value={isOpen ? searchTerm : displayValue}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onFocus={() => !disabled && toggleDropdown()}
-        onBlur={() => setTimeout(() => setIsOpen(false), 200)}
-        disabled={disabled}
-      />
+      {disableSearch ? (
+        <div
+          className="floating-input custom-select__search"
+          tabIndex={0}
+          onClick={() => !disabled && setIsOpen((prev) => !prev)}
+          style={{
+            minHeight: "38px",
+            display: "flex",
+            alignItems: "center",
+            borderBottom: "1px solid #757575",
+            background: "transparent",
+            paddingLeft: "8px",
+            cursor: "pointer",
+            userSelect: "none",
+          }}
+        >
+          {displayValue || ""}
+        </div>
+      ) : (
+        <input
+          type="text"
+          className="floating-input custom-select__search"
+          placeholder=" "
+          value={isOpen ? searchTerm : displayValue}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onFocus={() => !disabled && setIsOpen(true)}
+          onBlur={() => setTimeout(() => setIsOpen(false), 200)}
+          disabled={disabled}
+          autoComplete="off"
+        />
+      )}
       <label className="floating-label">{placeholder}</label>
       {isOpen && (
         <div
           className="custom-select__dropdown"
           style={{
-            top: dropdownPosition?.top,
-            left: dropdownPosition?.left,
-            width: dropdownPosition?.width,
+            width: "100%",
           }}
         >
           {filteredOptions.map((option) => (

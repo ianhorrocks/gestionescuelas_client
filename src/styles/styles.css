@@ -232,6 +232,10 @@
   padding: 20px;
   /* Lista de cartas de usuarios. Estan en UserItems.tsx */
 }
+.admin-users-container .add-button {
+  bottom: 30px;
+  right: 50px;
+}
 .admin-users-container .user-item-list {
   display: flex;
   align-items: center;
@@ -446,6 +450,16 @@ h2 {
 
 .text-danger {
   color: #d41027 !important;
+}
+
+.custom-flight-modal-width .modal-content {
+  max-width: 540px;
+  width: 95%;
+}
+
+.modal-backdrop.show {
+  background-color: #000;
+  opacity: 0.5;
 }
 
 .login-page {
@@ -742,9 +756,22 @@ h2 {
   outline: none !important;
 }
 
+.login-page .btn-tertiary-loading {
+  background-color: #7b6983 !important;
+  color: #7b6983 !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transition: background 0.2s;
+}
+
 .admin-planes-container {
   margin-top: 60px;
   padding: 20px;
+}
+.admin-planes-container .add-button {
+  bottom: 30px;
+  right: 50px;
 }
 .admin-planes-container .list-group-planes {
   display: grid;
@@ -917,6 +944,21 @@ h2 {
 .user-flights-container .user-flights-content {
   margin-top: 75px;
 }
+.user-flights-container .user-flights-content .add-button {
+  bottom: 90px;
+  right: 35px;
+  width: 70px;
+  height: 70px;
+  font-size: 50px;
+}
+@media (min-width: 769px) {
+  .user-flights-container .user-flights-content .add-button {
+    bottom: 80px;
+    width: 55px;
+    height: 55px;
+    font-size: 40px;
+  }
+}
 .user-flights-container .user-flights-content .flight-table-container {
   display: flex;
   flex-direction: column;
@@ -972,7 +1014,7 @@ h2 {
 .user-flights-container .user-flights-content .flight-table-container .flights-scrollable-body {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 0 20px;
+  padding: 10px 20px;
   max-height: calc(100vh - 230px);
   /* Tabla escritorio */
   /* Cards móviles */
@@ -1132,7 +1174,7 @@ h2 {
   justify-content: center;
   align-items: center;
   gap: 16px;
-  margin-top: 5px;
+  margin-top: 10px;
   width: 100%;
   max-width: 800px;
   margin-left: auto;
@@ -1195,6 +1237,16 @@ h2 {
     margin-left: 0;
   }
 }
+.sort-filter-group .filter-select {
+  width: 140px !important;
+  max-width: 140px !important;
+  min-width: 90px !important;
+}
+
+.sort-filter-group .sort-order-button {
+  max-height: 44px !important;
+}
+
 .badge {
   padding: 4px 8px;
   border-radius: 8px;
@@ -1417,9 +1469,6 @@ h2 {
 .validate-flights-modal .validate-flights-modal-body::-webkit-scrollbar-thumb:hover {
   background-color: #777;
 }
-.validate-flights-modal .modal-footer {
-  display: flex;
-}
 .validate-flights-modal .modal-footer .modal-button {
   background-color: #7b6983;
   border-color: #7b6983;
@@ -1467,6 +1516,12 @@ h2 {
   height: 60px;
   width: 100%;
   position: relative;
+}
+@media (max-width: 600px) {
+  .navbar .navbar-content {
+    padding-top: env(safe-area-inset-top, 20px);
+    height: 70px;
+  }
 }
 .navbar .container-dashboard {
   max-width: 1000px;
@@ -1618,7 +1673,7 @@ h2 {
 }
 .navbar .menu-content .logout-button {
   position: absolute;
-  bottom: 20px;
+  bottom: 70px;
   left: 0;
   width: 100%;
   padding: 10px 0;
@@ -1744,7 +1799,7 @@ button.btn-close:hover {
 
 /* Body con scroll */
 .edit-user-modal-body {
-  max-height: 55vh;
+  max-height: 60vh;
   overflow-y: auto;
   padding-right: 0.5rem;
 }
@@ -2073,7 +2128,7 @@ button.btn-close:hover {
 }
 .navbar-admin .menu-content .logout-button {
   position: absolute;
-  bottom: 20px;
+  bottom: 24px;
   left: 0;
   width: 100%;
   padding: 10px 0;
@@ -2108,8 +2163,8 @@ body,
 /* Botón flotante de agregar */
 .add-button {
   position: fixed;
-  bottom: 80px;
-  right: 20px;
+  bottom: 75px;
+  right: 45px;
   background-color: #7b6983;
   color: #fff;
   border: none;
@@ -2201,7 +2256,7 @@ body,
 }
 .add-modal .form-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 10px;
 }
 .add-modal .modal-button {
@@ -2226,6 +2281,19 @@ body,
 .add-modal .btn-secondary:hover {
   text-decoration: underline;
   background-color: transparent;
+}
+.add-modal .form-group {
+  position: relative;
+  margin-top: 0.8rem;
+  margin-bottom: 1.6rem;
+}
+.add-modal .form-group .double-field-group {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+}
+.add-modal .form-group .double-field-group > div {
+  flex: 1;
 }
 
 .custom-select {
@@ -2258,7 +2326,7 @@ body,
   max-height: 200px;
   overflow-y: auto;
   border: 1px solid #ccc;
-  background-color: #fff;
+  background-color: #941515;
   z-index: 1050;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -2326,15 +2394,15 @@ body,
   transition: 0.2s ease all;
 }
 .custom-select-wrapper .custom-select__dropdown {
-  position: fixed;
-  top: auto;
-  left: auto;
-  right: auto;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   max-height: 200px;
   overflow-y: auto;
   border: 1px solid #ccc;
   background-color: #fff;
-  z-index: 1050;
+  z-index: 2000;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
@@ -2422,12 +2490,6 @@ body,
 .tab-content .history-tab .flight-history-container .flight-history-table-wrapper:hover::-webkit-scrollbar-thumb {
   background-color: #282d3c;
 }
-.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .no-flights {
-  padding: 2rem;
-  font-style: italic;
-  color: rgba(144, 152, 158, 0.862745098);
-  text-align: center;
-}
 .tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table {
   width: 100%;
   border-collapse: collapse;
@@ -2513,13 +2575,16 @@ body,
   border-color: #7b6983;
 }
 .tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons {
-  position: fixed;
+  position: absolute;
   bottom: 20px;
   right: 40px;
   display: flex;
   gap: 0.6rem;
+  pointer-events: none;
+  z-index: 10;
 }
 .tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons .floating-button {
+  pointer-events: auto;
   background-color: #282d3c;
   color: #ffffff;
   border: none;
@@ -2589,6 +2654,16 @@ body,
 .tab-content .history-tab .flight-history-container .flight-table-pagination.centered .page-controls button:hover,
 .tab-content .history-tab .flight-history-container .flight-table-pagination.centered .rows-per-page button:hover {
   background-color: #f6f6f6;
+}
+
+.no-flights-history {
+  padding: 2rem;
+  font-style: italic;
+  color: #9f99a1;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 13rem;
 }
 
 .loaderContainer {
@@ -2823,11 +2898,14 @@ body,
 .flight-validation-table-wrapper:hover::-webkit-scrollbar-thumb {
   background-color: #282d3c;
 }
-.flight-validation-table-wrapper .no-flights {
+.flight-validation-table-wrapper .no-flights-validation {
   padding: 2rem;
   font-style: italic;
-  color: rgba(144, 152, 158, 0.862745098);
+  color: #9f99a1;
   text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 7rem;
 }
 .flight-validation-table-wrapper .flight-validation-table {
   width: 100%;
@@ -3150,7 +3228,6 @@ body,
   border-radius: 14px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   background-color: #f9fafb;
-  padding: 10px 0 24px 0;
   width: 100%;
 }
 .flight-hours-card .hours-header {
@@ -3325,6 +3402,146 @@ body,
   padding: 35px 0 0 0;
 }
 
+.spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid #d7ccdb;
+  border-top: 3px solid #7b6983;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto;
+  background: transparent;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.flight-admin-detail-modal .modal-content {
+  border-radius: 18px;
+  padding: 1.2rem;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.flight-admin-detail-modal .admin-detail-modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  justify-content: center;
+}
+.flight-admin-detail-modal .admin-detail-modal-body .main-col,
+.flight-admin-detail-modal .admin-detail-modal-body .num-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 10px;
+}
+.flight-admin-detail-modal .admin-detail-modal-body p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.flight-admin-detail-modal .admin-detail-modal-body p strong {
+  display: inline-block;
+  min-width: 100px;
+  font-weight: 600;
+  color: #333;
+}
+.flight-admin-detail-modal .admin-detail-modal-body p .badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+.flight-admin-detail-modal .admin-detail-modal-body p .badge.pending {
+  background-color: #d4ad35;
+  color: #fcf9e9;
+}
+.flight-admin-detail-modal .admin-detail-modal-body p .badge.confirmed {
+  background-color: #d4edda;
+  color: #15574d;
+}
+.flight-admin-detail-modal .admin-detail-modal-body p .badge.cancelled {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+.flight-admin-detail-modal .admin-detail-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 0.5rem;
+}
+.flight-admin-detail-modal .admin-detail-actions .actions-title {
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.flight-admin-detail-modal .admin-detail-actions .btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: 100%;
+}
+.flight-admin-detail-modal .admin-detail-actions .btn-row .confirm-reject-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+.flight-admin-detail-modal .admin-detail-actions .btn-row .delete-row {
+  margin-top: 0.2rem;
+  display: flex;
+  flex-direction: row;
+}
+.flight-admin-detail-modal .admin-detail-actions .action-btn {
+  font-size: 1rem;
+  gap: 0.7rem;
+  font-weight: 600;
+  border: 2px solid transparent;
+  background: none;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+}
+.flight-admin-detail-modal .admin-detail-actions .confirm-btn {
+  color: #27ae60;
+}
+.flight-admin-detail-modal .admin-detail-actions .confirm-btn:hover {
+  color: #219150;
+}
+.flight-admin-detail-modal .admin-detail-actions .reject-btn {
+  color: #c0392b;
+}
+.flight-admin-detail-modal .admin-detail-actions .reject-btn:hover {
+  color: #922b21;
+}
+.flight-admin-detail-modal .admin-detail-actions .delete-btn {
+  color: #c0392b;
+}
+.flight-admin-detail-modal .admin-detail-actions .delete-btn:hover {
+  color: #922b21;
+}
+.flight-admin-detail-modal .admin-detail-actions .to-pending-btn {
+  color: #af8e2b;
+}
+.flight-admin-detail-modal .admin-detail-actions .to-pending-btn:hover {
+  color: rgb(117, 89, 13);
+}
+
+@media (min-width: 576px) {
+  .modal-dialog.flight-admin-detail-modal {
+    max-width: 700px !important;
+    width: 100% !important;
+  }
+  .modal-dialog.flight-admin-detail-modal .modal-content {
+    max-width: 700px !important;
+    width: 100% !important;
+  }
+}
 .dashboard-container,
 .profile-container,
 .school-container,

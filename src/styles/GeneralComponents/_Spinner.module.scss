@@ -1,0 +1,18 @@
+@use "../Variables/variables";
+
+.spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid variables.$tertiary-soft-color-step;
+  border-top: 3px solid variables.$tertiary-color;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto;
+  background: transparent;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

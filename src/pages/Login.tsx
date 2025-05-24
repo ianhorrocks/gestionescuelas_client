@@ -12,6 +12,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import { useAuth } from "../context/useAuth";
 import { registerSchool } from "../services/schoolService";
+import Spinner from "../components/Spinner";
 
 const Login: React.FC = () => {
   const { message, showTemporaryMessage } = useTemporaryMessage();
@@ -20,11 +21,13 @@ const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRegisterSchoolModal, setShowRegisterSchoolModal] = useState(false);
   const [showRegisterUserModal, setShowRegisterUserModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { setLoggedIn } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { token, user } = await loginUser(email, password);
       if (!user.assignedSchools || user.assignedSchools.length === 0) {
@@ -32,12 +35,14 @@ const Login: React.FC = () => {
           "warning",
           "USUARIO NO PERTENECE A NINGUNA ESCUELA"
         );
+        setLoading(false);
         return;
       }
 
       localStorage.setItem("token", token);
       setLoggedIn(true);
       showTemporaryMessage("success", "ACCESO EXITOSO");
+
       setTimeout(() => {
         const school = user.assignedSchools[0];
         if (
@@ -51,8 +56,10 @@ const Login: React.FC = () => {
         } else {
           navigate("/");
         }
+        setLoading(false);
       }, 2000);
     } catch (err) {
+      setLoading(false);
       if (err instanceof Error) {
         if (err.message === "LA_ESCUELA_AUN_NO_FUE_APROBADA") {
           showTemporaryMessage(
@@ -171,8 +178,14 @@ const Login: React.FC = () => {
               Olvidé mi contraseña
             </a>
           </div>
-          <button type="submit" className="btn btn-primary mt-3">
-            Ingresar
+          <button
+            type="submit"
+            className={`btn btn-primary mt-3${
+              loading ? " btn-tertiary-loading" : ""
+            }`}
+            disabled={loading}
+          >
+            {loading ? <Spinner /> : "Ingresar"}
           </button>
         </form>
         <div className="register-buttons-container">

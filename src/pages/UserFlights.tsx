@@ -8,6 +8,8 @@ import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import { Flight, SimplifiedFlight } from "../types/types";
 import PlaneLoader from "../components/PlaneLoader";
 import { FaArrowUp } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
+import FlightDetailModal from "../components/FlightDetailModal";
 
 const convertToDecimalHours = (time: string): string => {
   const [hours, minutes] = time.split(":").map(Number);
@@ -15,11 +17,21 @@ const convertToDecimalHours = (time: string): string => {
 };
 
 const UserFlights: React.FC = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const initialFilter =
+    (params.get("filter") as "all" | "pending" | "confirmed" | "cancelled") ||
+    "all";
+
   const [flights, setFlights] = useState<Flight[]>([]);
   const [statusFilter, setStatusFilter] = useState<
     "all" | "pending" | "confirmed" | "cancelled"
-  >("all");
+  >(initialFilter);
   const [showModal, setShowModal] = useState(false);
+  const [showDetailModal, setShowDetailModal] = useState(false);
+  const [selectedFlight, setSelectedFlight] = useState<SimplifiedFlight | null>(
+    null
+  );
   const [error, setError] = useState("");
   const { message, showTemporaryMessage } = useTemporaryMessage();
   const [loading, setLoading] = useState(true);
@@ -68,6 +80,15 @@ const UserFlights: React.FC = () => {
     fetchFlights();
   }, []);
 
+  // 👇 AGREGA este useEffect para sincronizar el filtro con la URL
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const filter =
+      (params.get("filter") as "all" | "pending" | "confirmed" | "cancelled") ||
+      "all";
+    setStatusFilter(filter);
+  }, [location.search]);
+
   const handleShowModal = () => setShowModal(true);
 
   const handleCloseModal = () => setShowModal(false);
@@ -86,6 +107,11 @@ const UserFlights: React.FC = () => {
       console.error("Error al refrescar los vuelos:", err);
       setError("Error al refrescar los vuelos");
     }
+  };
+
+  const handleCloseDetailModal = () => {
+    setSelectedFlight(null);
+    setShowDetailModal(false);
   };
 
   return (
@@ -134,6 +160,12 @@ const UserFlights: React.FC = () => {
                   ? convertToDecimalHours(flight.totalFlightTime)
                   : "N/A",
                 school: flight.school?.name || "N/A",
+                landings: flight.landings,
+                oil: flight.oil,
+                oilUnit: flight.oilUnit,
+                charge: flight.charge,
+                chargeUnit: flight.chargeUnit,
+                comment: flight.comment,
               })
             )}
             selectedStatus={statusFilter}
@@ -162,9 +194,20 @@ const UserFlights: React.FC = () => {
                   ? convertToDecimalHours(flight.totalFlightTime)
                   : "N/A",
                 school: flight.school?.name || "N/A",
+                landings: flight.landings,
+                oil: flight.oil,
+                oilUnit: flight.oilUnit,
+                charge: flight.charge,
+                chargeUnit: flight.chargeUnit,
+                comment: flight.comment,
               })
             )}
+            onRowClick={(flight) => {
+              setSelectedFlight(flight);
+              setShowDetailModal(true);
+            }}
             scrollRef={scrollRef}
+            showTemporaryMessage={showTemporaryMessage}
           />
         </div>
       )}
@@ -173,6 +216,13 @@ const UserFlights: React.FC = () => {
         show={showModal}
         onClose={handleCloseModal}
         onSuccess={handleFlightAdded}
+        showTemporaryMessage={showTemporaryMessage}
+      />
+
+      <FlightDetailModal
+        show={showDetailModal}
+        onHide={handleCloseDetailModal}
+        flight={selectedFlight}
         showTemporaryMessage={showTemporaryMessage}
       />
 

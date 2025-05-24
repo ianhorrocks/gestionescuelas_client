@@ -1,10 +1,11 @@
 // src/components/FlightHistoryTable.tsx
 import React, { useState, useMemo } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { updateFlightStatus } from "../services/flightService";
-import { HistoryFlight } from "../types/types";
+import { updateFlightStatus, deleteFlight } from "../services/flightService";
+import { HistoryFlight, SimplifiedFlight } from "../types/types";
 import FilterSelect from "./FilterSelect"; // Importa el componente FilterSelect
-import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { FaArrowUp, FaArrowDown, FaEye } from "react-icons/fa";
+import FlightAdminDetailModal from "./FlightAdminDetailModal";
 
 interface FlightHistoryTableProps {
   flights: HistoryFlight[];
@@ -20,7 +21,7 @@ interface FlightHistoryTableProps {
 
 const statusMap = {
   confirmed: "Confirmado",
-  cancelled: "Cancelado",
+  cancelled: "Rechazado",
 };
 
 const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
@@ -36,6 +37,11 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showDetailModal, setShowDetailModal] = useState(false);
+  const [selectedFlight, setSelectedFlight] = useState<SimplifiedFlight | null>(
+    null
+  );
+  const [pendingIds, setPendingIds] = useState<string[]>([]);
 
   const toggleSelectAll = () => {
     if (selectedFlights.length === flights.length) {
@@ -91,9 +97,14 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
 
   const totalPages = Math.ceil(sortedFlights.length / rowsPerPage);
 
-  const bulkToPending = async () => {
+  const askToPending = (ids: string[]) => {
+    setPendingIds(ids);
+    setConfirmModal(true);
+  };
+
+  const confirmToPending = async () => {
     try {
-      for (const id of selectedFlights) {
+      for (const id of pendingIds) {
         await updateFlightStatus(id, "pending");
         if (onStatusChange) {
           onStatusChange(id, "pending");
@@ -101,23 +112,22 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
       }
       showTemporaryMessage?.(
         "success",
-        "Vuelo/s devuelto/s a pendiente correctamente."
+        "Vuelo/s devuelto/s a pendiente correctamente"
       );
       setSelectedFlights([]);
+      setShowDetailModal(false);
     } catch (error) {
-      showTemporaryMessage?.(
-        "error",
-        "Ocurrió un error al devolver los vuelos a pendiente."
-      );
+      showTemporaryMessage?.("error", "Ocurrió un error");
     } finally {
       setConfirmModal(false);
+      setPendingIds([]);
     }
   };
 
   if (flights.length === 0) {
     return (
       <div className="flight-history-table-wrapper">
-        <p className="no-flights">No hay vuelos para mostrar.</p>
+        <p className="no-flights-history">No hay vuelos para mostrar</p>
       </div>
     );
   }
@@ -169,6 +179,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                   <th>Aeronave</th>
                   <th>Ruta</th>
                   <th>Estado</th>
+                  <th>VER</th> {/* Columna para el icono de ojo */}
                   <th>
                     <label
                       className="custom-checkbox"
@@ -235,6 +246,46 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                       </span>
                     </td>
                     <td>
+                      <button
+                        className="eye-icon-btn"
+                        title="Ver detalles del vuelo"
+                        onClick={() => {
+                          setSelectedFlight({
+                            _id: flight._id,
+                            date: flight.date,
+                            departureTime: flight.departureTime,
+                            arrivalTime: flight.arrivalTime,
+                            pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
+                            instructor: flight.instructor
+                              ? `${flight.instructor.name} ${flight.instructor.lastname}`
+                              : "S/A",
+                            origin: flight.origin,
+                            destination: flight.destination,
+                            status: flight.status,
+                            airplane: flight.airplane
+                              ? flight.airplane.registrationNumber
+                              : "N/A",
+                            totalFlightTime: flight.totalFlightTime,
+                            school: flight.school?.name || "N/A",
+                            landings: flight.landings,
+                            oil: flight.oil,
+                            oilUnit: flight.oilUnit,
+                            charge: flight.charge,
+                            chargeUnit: flight.chargeUnit,
+                            comment: flight.comment,
+                          });
+                          setShowDetailModal(true);
+                        }}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                        }}
+                      >
+                        <FaEye size={18} color="#555" />
+                      </button>
+                    </td>
+                    <td>
                       <label className="custom-checkbox">
                         <input
                           type="checkbox"
@@ -254,7 +305,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
               <div className="floating-buttons">
                 <button
                   className="floating-button to-pending"
-                  onClick={() => setConfirmModal(true)}
+                  onClick={() => askToPending(selectedFlights)}
                 >
                   Volver a Pendiente
                 </button>
@@ -302,21 +353,40 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
       {/* Modal de confirmación */}
       <Modal show={confirmModal} onHide={() => setConfirmModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Confirmación</Modal.Title>
+          <Modal.Title>Aviso</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ¿Estás seguro de que deseas devolver los vuelos seleccionados a
-          pendiente?
+          {pendingIds.length > 1
+            ? "¿Estás seguro de que deseas devolver los vuelos seleccionados a pendiente?"
+            : "¿Estás seguro de que deseas devolver este vuelo a pendiente?"}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setConfirmModal(false)}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={bulkToPending}>
-            Confirmar
+          <Button variant="primary" onClick={confirmToPending}>
+            {pendingIds.length > 1 ? "Confirmar vuelos" : "Confirmar vuelo"}
           </Button>
         </Modal.Footer>
       </Modal>
+      <FlightAdminDetailModal
+        show={showDetailModal}
+        onHide={() => setShowDetailModal(false)}
+        flight={selectedFlight}
+        showTemporaryMessage={showTemporaryMessage || (() => {})}
+        onDelete={async () => {
+          if (!selectedFlight) return;
+          try {
+            await deleteFlight(selectedFlight._id);
+            setShowDetailModal(false);
+            showTemporaryMessage?.("success", "Vuelo eliminado correctamente");
+            // Aquí podrías refrescar la tabla si lo deseas
+          } catch (e) {
+            showTemporaryMessage?.("error", "Error al eliminar el vuelo");
+          }
+        }}
+        onToPending={async () => {
+          if (!selectedFlight) return;
+          askToPending([selectedFlight._id]);
+        }}
+      />
     </>
   );
 };

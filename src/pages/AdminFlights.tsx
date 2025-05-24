@@ -54,10 +54,17 @@ const AdminFlights: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (validationStep === 2 && flights.every((f) => f.status !== "pending")) {
-      setValidationStep(3); // Avanza al paso 3
+    const pendingFlights = flights.filter((f) => f.status === "pending");
+    const hasPrevalidated = pendingFlights.some((f) => f.preValidated);
+
+    if (pendingFlights.length === 0) {
+      setValidationStep(3); // No hay pendientes, finalizado
+    } else if (hasPrevalidated) {
+      setValidationStep(2); // Hay pendientes y al menos uno prevalidado
+    } else {
+      setValidationStep(1); // Solo pendientes, ninguno prevalidado
     }
-  }, [flights, validationStep]);
+  }, [flights]);
 
   const handleStatusChange = (
     id: string,

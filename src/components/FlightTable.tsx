@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import {
   FaArrowUp,
   FaArrowDown,
@@ -16,8 +16,14 @@ interface FlightTableProps {
   flights: SimplifiedFlight[];
   selectedStatus: string;
   onFilterChange: (status: string) => void;
+  onRowClick?: (flight: SimplifiedFlight) => void;
   allFlights: SimplifiedFlight[];
-  scrollRef?: React.RefObject<HTMLDivElement>; // 👈 nuevo
+  scrollRef?: React.RefObject<HTMLDivElement>;
+  showTemporaryMessage?: (
+    type: "success" | "error" | "warning",
+    message: string,
+    duration?: number
+  ) => void;
 }
 
 const FlightTable: React.FC<FlightTableProps> = ({
@@ -26,6 +32,7 @@ const FlightTable: React.FC<FlightTableProps> = ({
   onFilterChange,
   allFlights,
   scrollRef,
+  showTemporaryMessage,
 }) => {
   const [sortField, setSortField] = useState<
     "date" | "origin" | "airplane" | "time"
@@ -38,16 +45,9 @@ const FlightTable: React.FC<FlightTableProps> = ({
     null
   );
 
-  useEffect(() => {
-    const savedFilter = localStorage.getItem("userFlightsStatusFilter");
-    if (savedFilter) {
-      onFilterChange(savedFilter);
-    }
-  }, [onFilterChange]);
-
   const handleStatusChange = (status: string) => {
-    localStorage.setItem("userFlightsStatusFilter", status);
     onFilterChange(status);
+    setCurrentPage(1); // <-- Esto asegura que siempre vuelvas a la página 1 al cambiar filtro
   };
 
   const handleShowFlightModal = (flight: SimplifiedFlight) => {
@@ -75,7 +75,7 @@ const FlightTable: React.FC<FlightTableProps> = ({
     { value: "all", label: `Todos (${countByStatus.all})` },
     { value: "pending", label: `Pendientes (${countByStatus.pending})` },
     { value: "confirmed", label: `Confirmados (${countByStatus.confirmed})` },
-    { value: "cancelled", label: `Cancelados (${countByStatus.cancelled})` },
+    { value: "cancelled", label: `Rechazados (${countByStatus.cancelled})` },
   ];
 
   const sortOptions = [
@@ -100,7 +100,10 @@ const FlightTable: React.FC<FlightTableProps> = ({
     return [...filteredFlights].sort((a, b) => {
       let compare = 0;
       if (sortField === "date") {
-        compare = new Date(a.date).getTime() - new Date(b.date).getTime();
+        // Ordenar por fecha y hora de salida
+        compare =
+          new Date(a.departureTime).getTime() -
+          new Date(b.departureTime).getTime();
       } else if (sortField === "origin") {
         compare = (a.origin || "").localeCompare(b.origin || "");
       } else if (sortField === "airplane") {
@@ -125,7 +128,7 @@ const FlightTable: React.FC<FlightTableProps> = ({
   const statusMap = {
     pending: "Pendiente",
     confirmed: "Confirmado",
-    cancelled: "Cancelado",
+    cancelled: "Rechazado",
   };
 
   return (
@@ -354,6 +357,7 @@ const FlightTable: React.FC<FlightTableProps> = ({
         show={showDetailModal}
         onHide={handleCloseFlightModal}
         flight={selectedFlight}
+        showTemporaryMessage={showTemporaryMessage || (() => {})}
       />
     </div>
   );

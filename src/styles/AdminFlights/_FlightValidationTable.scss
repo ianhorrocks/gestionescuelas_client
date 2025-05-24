@@ -32,11 +32,14 @@
     background-color: variables.$primary-color;
   }
 
-  .no-flights {
+  .no-flights-validation {
     padding: 2rem;
     font-style: italic;
-    color: variables.$soft-text-color;
+    color: variables.$tertiary-color-glow;
     text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 7rem;
   }
 
   .flight-validation-table {

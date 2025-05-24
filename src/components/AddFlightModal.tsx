@@ -7,7 +7,7 @@ import { fetchUsersFromSchool } from "../services/userService";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import airportCodes from "../data/designadores_locales.json";
 import { FlightUser, FlightData, Plane } from "../types/types";
-import { AxiosError } from "axios"; // arriba del archivo si no está ya
+import { AxiosError } from "axios"; // arriba del archivo si no está
 
 interface AddFlightModalProps {
   show: boolean;
@@ -34,10 +34,12 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
   const [users, setUsers] = useState<FlightUser[]>([]);
   const [isPilotDisabled, setIsPilotDisabled] = useState(false);
   const [isInstructorDisabled, setIsInstructorDisabled] = useState(false);
+  const [oilUnit, setOilUnit] = useState("lt");
+  const [chargeUnit, setChargeUnit] = useState("lt");
 
   const [flight, setFlight] = useState<FlightData>({
     date: "",
-    flightType: "" as FlightData["flightType"], // Ensure type safety without a default value
+    flightType: "" as FlightData["flightType"],
     airplane: "",
     pilot: "",
     instructor: "",
@@ -49,8 +51,6 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
     school: "",
     origin: "",
     destination: "",
-    initialOdometer: "",
-    finalOdometer: "",
   });
 
   const updateField = (name: keyof FlightData, value: string) => {
@@ -179,7 +179,9 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
         arrivalTime: arrivalDate,
         instructor: flight.instructor === "" ? null : flight.instructor,
         oil: flight.oil ? flight.oil : undefined,
+        oilUnit,
         charge: flight.charge ? flight.charge : undefined,
+        chargeUnit,
       };
 
       console.log("Flight data que estoy mandando:", flightData);
@@ -248,8 +250,6 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
       school: "",
       origin: "",
       destination: "",
-      initialOdometer: "",
-      finalOdometer: "",
     });
     setSelectedSchool(""); // También reseteamos la escuela seleccionada
   };
@@ -375,30 +375,6 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Label className="floating-label">Hora de llegada</Form.Label>
           </Form.Group>
 
-          <Form.Group controlId="formInitialOdometer" className="form-group">
-            <Form.Control
-              type="number"
-              name="initialOdometer"
-              value={flight.initialOdometer}
-              onChange={handleInputChange}
-              required
-              className="floating-input"
-            />
-            <Form.Label className="floating-label">Odómetro inicial</Form.Label>
-          </Form.Group>
-
-          <Form.Group controlId="formFinalOdometer" className="form-group">
-            <Form.Control
-              type="number"
-              name="finalOdometer"
-              value={flight.finalOdometer}
-              onChange={handleInputChange}
-              required
-              className="floating-input"
-            />
-            <Form.Label className="floating-label">Odómetro final</Form.Label>
-          </Form.Group>
-
           <Form.Group controlId="formLandings" className="form-group">
             <Form.Control
               type="number"
@@ -407,30 +383,110 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
               onChange={handleInputChange}
               required
               className="floating-input"
+              min={0}
+              step={1}
+              inputMode="numeric"
+              // El input type="number" ya muestra las flechitas (spinners) en la mayoría de navegadores de escritorio.
+              // Si no aparecen, asegúrate de no tener estilos CSS que las oculten (por ejemplo, usando appearance: none).
             />
             <Form.Label className="floating-label">Aterrizajes</Form.Label>
           </Form.Group>
 
           <Form.Group controlId="formOil" className="form-group">
-            <Form.Control
-              type="text"
-              name="oil"
-              value={flight.oil || ""}
-              onChange={handleInputChange}
-              className="floating-input"
-            />
-            <Form.Label className="floating-label">Aceite</Form.Label>
+            <div className="double-field-group">
+              <div style={{ position: "relative", flex: 3 }}>
+                <Form.Control
+                  type="number"
+                  name="oil"
+                  value={flight.oil || ""}
+                  onChange={handleInputChange}
+                  className="floating-input"
+                  min="0"
+                  step="any"
+                  placeholder=" "
+                  style={{ minHeight: 38 }}
+                />
+                <Form.Label className="floating-label">Aceite</Form.Label>
+              </div>
+              <div style={{ position: "relative", flex: 1 }}>
+                <Form.Select
+                  value={oilUnit}
+                  onChange={(e) => setOilUnit(e.target.value)}
+                  className="floating-input"
+                  style={{ minHeight: 38, paddingLeft: 5 }}
+                >
+                  <option value="" disabled hidden></option>
+                  <option value="lt">Litros</option>
+                  <option value="qt">Cuartos</option>
+                </Form.Select>
+                <Form.Label className="floating-label">Unidad</Form.Label>
+              </div>
+            </div>
           </Form.Group>
 
           <Form.Group controlId="formCharge" className="form-group">
+            <div className="double-field-group">
+              <div style={{ position: "relative", flex: 3 }}>
+                <Form.Control
+                  type="number"
+                  name="charge"
+                  value={flight.charge || ""}
+                  onChange={handleInputChange}
+                  className="floating-input"
+                  min="0"
+                  step="any"
+                  placeholder=" "
+                  style={{ minHeight: 38 }}
+                />
+                <Form.Label className="floating-label">Combustible</Form.Label>
+              </div>
+              <div style={{ position: "relative", flex: 1 }}>
+                <Form.Select
+                  value={chargeUnit}
+                  onChange={(e) => setChargeUnit(e.target.value)}
+                  className="floating-input"
+                  style={{ minHeight: 38, paddingLeft: 5 }}
+                >
+                  <option value="" disabled hidden></option>
+                  <option value="lt">Litros</option>
+                  <option value="gal">Galones</option>
+                </Form.Select>
+                <Form.Label className="floating-label">Unidad</Form.Label>
+              </div>
+            </div>
+          </Form.Group>
+          <Form.Group controlId="formComment" className="form-group">
             <Form.Control
-              type="text"
-              name="charge"
-              value={flight.charge || ""}
+              as="textarea"
+              name="comment"
+              value={flight.comment || ""}
               onChange={handleInputChange}
               className="floating-input"
+              maxLength={150} // máximo 100 caracteres
+              rows={1}
+              placeholder=" "
+              style={{ resize: "vertical" }}
             />
-            <Form.Label className="floating-label">Combustible</Form.Label>
+            <Form.Label className="floating-label">
+              Comentario (opcional)
+            </Form.Label>
+            <div
+              style={{
+                textAlign: "right",
+                fontSize: 12,
+                color:
+                  (flight.comment ? flight.comment.length : 0) >= 150
+                    ? "#c0392b"
+                    : "#888",
+                fontWeight:
+                  (flight.comment ? flight.comment.length : 0) >= 150
+                    ? 600
+                    : 400,
+                transition: "color 0.2s",
+              }}
+            >
+              {flight.comment ? flight.comment.length : 0}/150
+            </div>
           </Form.Group>
         </Form>
       </Modal.Body>

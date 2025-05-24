@@ -1,0 +1,148 @@
+.flight-admin-detail-modal {
+  .modal-content {
+    border-radius: 18px;
+    padding: 1.2rem;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .admin-detail-modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    justify-content: center;
+
+    .main-col,
+    .num-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 10px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.4;
+
+      strong {
+        display: inline-block;
+        min-width: 100px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .badge {
+        padding: 0.3rem 0.6rem;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      .badge.pending {
+        background-color: #d4ad35;
+        color: #fcf9e9;
+      }
+
+      .badge.confirmed {
+        background-color: #d4edda;
+        color: #15574d;
+      }
+
+      .badge.cancelled {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+    }
+  }
+
+  .admin-detail-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 0.5rem;
+
+    .actions-title {
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      width: 100%;
+
+      .confirm-reject-row {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem; // Menor separación entre confirmar y rechazar
+      }
+      .delete-row {
+        margin-top: 0.2rem;
+        display: flex;
+        flex-direction: row;
+      }
+    }
+
+    .action-btn {
+      font-size: 1rem;
+      gap: 0.7rem;
+      font-weight: 600;
+      border: 2px solid transparent;
+      background: none;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+      cursor: pointer;
+      outline: none;
+      padding: 0;
+    }
+
+    .confirm-btn {
+      color: #27ae60;
+
+      &:hover {
+        color: #219150;
+      }
+    }
+
+    .reject-btn {
+      color: #c0392b;
+
+      &:hover {
+        color: #922b21;
+      }
+    }
+
+    .delete-btn {
+      color: #c0392b;
+
+      &:hover {
+        color: #922b21;
+      }
+    }
+
+    .to-pending-btn {
+      color: #af8e2b;
+
+      &:hover {
+        color: rgb(117, 89, 13);
+      }
+    }
+  }
+}
+
+@media (min-width: 576px) {
+  .modal-dialog.flight-admin-detail-modal {
+    max-width: 700px !important;
+    width: 100% !important;
+  }
+
+  .modal-dialog.flight-admin-detail-modal .modal-content {
+    max-width: 700px !important;
+    width: 100% !important;
+  }
+}

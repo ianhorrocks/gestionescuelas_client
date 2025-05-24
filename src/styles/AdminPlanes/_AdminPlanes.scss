@@ -5,6 +5,11 @@
   margin-top: 60px; // Espacio debajo del navbar
   padding: 20px;
 
+  .add-button {
+    bottom: 30px;
+    right: 50px;
+  }
+
   .list-group-planes {
     display: grid;
     grid-template-columns: 1fr; // Una columna por defecto
