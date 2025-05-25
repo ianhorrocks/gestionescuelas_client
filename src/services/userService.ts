@@ -24,11 +24,29 @@ export const assignUserToSchool = async (
   dni: string,
   role: string
 ): Promise<{ message: string }> => {
-  const response = await api.post<{ message: string }>("/users/add", {
-    dni,
-    role,
-  });
-  return response.data;
+  try {
+    const response = await api.post<{ message: string }>("/users/add", {
+      dni,
+      role,
+    });
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (
+        error.response?.status === 404 &&
+        error.response?.data?.message === "USER_NOT_FOUND"
+      ) {
+        throw new Error("USER_NOT_FOUND");
+      }
+      if (
+        error.response?.status === 400 &&
+        error.response?.data?.message === "USER_ALREADY_ASSIGNED"
+      ) {
+        throw new Error("USER_ALREADY_ASSIGNED");
+      }
+    }
+    throw new Error("ASSIGN_USER_FAILED");
+  }
 };
 
 export const removeUserFromSchool = async (

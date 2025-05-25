@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SimplifiedFlight, Flight } from "../types/types";
 import { format } from "date-fns";
 import { FaPlane, FaRoute } from "react-icons/fa";
-import { formatFlightDuration } from "../utils/time";
+import { formatFlightDuration, timeStringToCentesimal } from "../utils/time";
 import FlightDetailModal from "./FlightDetailModal";
 
 interface Props {
@@ -29,7 +29,9 @@ const FlightTimeline: React.FC<Props> = ({ flights }) => {
       destination: flight.destination,
       status: flight.status,
       airplane: flight.airplane ? flight.airplane.registrationNumber : "N/A",
-      totalFlightTime: flight.totalFlightTime,
+      totalFlightTime: flight.totalFlightTime
+        ? timeStringToCentesimal(flight.totalFlightTime).toString()
+        : "N/A",
       school: flight.school?.name || "N/A",
     };
   }

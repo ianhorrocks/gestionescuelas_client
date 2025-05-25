@@ -938,18 +938,23 @@ h2 {
 
 /* Contenedor principal */
 .user-flights-container {
-  padding-top: 10px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   /* Contenido de vuelos */
 }
 .user-flights-container .user-flights-content {
-  margin-top: 75px;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 .user-flights-container .user-flights-content .add-button {
   bottom: 90px;
   right: 35px;
-  width: 70px;
-  height: 70px;
-  font-size: 50px;
+  width: 65px;
+  height: 65px;
+  font-size: 45px;
 }
 @media (min-width: 769px) {
   .user-flights-container .user-flights-content .add-button {
@@ -960,26 +965,45 @@ h2 {
   }
 }
 .user-flights-container .user-flights-content .flight-table-container {
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 100px);
-  overflow: hidden;
+  min-height: 0;
 }
 .user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-header {
-  flex-shrink: 0;
+  position: sticky;
+  top: 85px;
+  left: 0;
+  right: 0;
+  z-index: 20;
   background: white;
-  z-index: 10;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  min-height: 64px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s;
+  will-change: transform, opacity;
   /* Filtros */
 }
+.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-header.hide {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s, height 0.3s;
+}
 .user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-header .flight-table-filters {
+  flex: 1;
   display: flex;
-  flex-direction: center;
+  justify-content: center;
   align-items: center;
   gap: 12px;
   width: 100%;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin: 0;
   padding: 0 20px;
 }
 .user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-header .flight-table-filters .flight-table-filters .filter-select {
@@ -1012,10 +1036,10 @@ h2 {
   color: #727272;
 }
 .user-flights-container .user-flights-content .flight-table-container .flights-scrollable-body {
-  flex-grow: 1;
+  flex: 1 1 auto;
   overflow-y: auto;
-  padding: 10px 20px;
-  max-height: calc(100vh - 230px);
+  min-height: 0;
+  padding: 0 20px;
   /* Tabla escritorio */
   /* Cards móviles */
 }
@@ -1082,7 +1106,7 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 6rem;
   align-items: center;
 }
 @media (min-width: 769px) {
@@ -1163,46 +1187,62 @@ h2 {
   font-size: 13px;
 }
 .user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer {
-  flex-shrink: 0;
+  position: static !important;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.08);
   background: white;
   z-index: 10;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.08);
-  /* Paginación */
-}
-.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .flight-table-pagination {
+  min-height: 56px;
+  max-height: 70px;
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
-  margin-top: 10px;
-  width: 100%;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
 }
-.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .rows-per-page {
+.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .flight-table-pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 0;
+  width: auto;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .flight-table-pagination .rows-per-page {
   display: flex;
   align-items: center;
   min-width: 80px;
 }
-.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .page-controls {
+.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .flight-table-pagination .rows-per-page .filter-select {
+  width: 100px;
+  max-width: 140px;
+  min-width: 90px;
+  font-size: 14px;
+  padding: 6px 12px;
+  transition: border 0.2s;
+}
+.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .flight-table-pagination .page-controls {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .page-controls button {
+.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .flight-table-pagination .page-controls button {
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 6px 10px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .page-controls button:disabled {
+.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .flight-table-pagination .page-controls button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .page-controls span {
+.user-flights-container .user-flights-content .flight-table-container .flight-table-fixed-footer .flight-table-pagination .page-controls span {
   font-size: 14px;
   color: #333;
 }
@@ -1272,8 +1312,7 @@ h2 {
 }
 
 .scroll-top-button {
-  position: fixed;
-  top: 175px;
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
   width: 40px;
@@ -1286,25 +1325,27 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 999;
+  transition: opacity 0.3s, transform 0.3s, top 0.3s;
+  z-index: 30;
   opacity: 0;
   pointer-events: none;
-}
-.scroll-top-button:hover {
-  transform: translateX(-50%) scale(1.1);
-  background-color: rgb(123, 105, 131);
+  top: 100%;
 }
 .scroll-top-button.visible {
   opacity: 1;
   pointer-events: auto;
 }
-
-@media (min-width: 768px) {
-  .scroll-top-button {
-    display: none;
-  }
+.scroll-top-button.active {
+  transform: translateX(-50%) scale(1.1);
+  background-color: rgb(123, 105, 131);
 }
+.scroll-top-button.below-navbar {
+  top: 0;
+}
+.scroll-top-button.below-header {
+  top: calc(100% + 16px);
+}
+
 .validate-flights-modal {
   max-width: 90vw !important;
   width: auto !important;
@@ -2326,7 +2367,7 @@ body,
   max-height: 200px;
   overflow-y: auto;
   border: 1px solid #ccc;
-  background-color: #941515;
+  background-color: #fff;
   z-index: 1050;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

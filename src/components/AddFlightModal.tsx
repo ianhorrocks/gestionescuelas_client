@@ -254,6 +254,12 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
     setSelectedSchool(""); // También reseteamos la escuela seleccionada
   };
 
+  const handleFieldFocus = (e: React.FocusEvent<HTMLElement>) => {
+    setTimeout(() => {
+      e.target.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 300);
+  };
+
   return (
     <Modal show={show} onHide={onClose} className="fade add-modal" centered>
       <Modal.Header closeButton>
@@ -277,7 +283,11 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <Form.Label className="floating-label">Fecha</Form.Label>
           </Form.Group>
 
-          <Form.Group controlId="formFlightType" className="form-group">
+          <Form.Group
+            controlId="formFlightType"
+            className="form-group"
+            onFocus={handleFieldFocus}
+          >
             <CustomSelect
               options={[
                 { value: "Vuelo Privado", label: "Vuelo Privado" },
@@ -292,7 +302,11 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             />
           </Form.Group>
 
-          <Form.Group controlId="formSchool" className="form-group">
+          <Form.Group
+            controlId="formSchool"
+            className="form-group"
+            onFocus={handleFieldFocus}
+          >
             <CustomSelect
               options={schools}
               value={selectedSchool}
@@ -301,7 +315,11 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             />
           </Form.Group>
 
-          <Form.Group controlId="formAirplane" className="form-group">
+          <Form.Group
+            controlId="formAirplane"
+            className="form-group"
+            onFocus={handleFieldFocus}
+          >
             <CustomSelect
               options={planeOptions}
               value={flight.airplane}
@@ -310,7 +328,11 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             />
           </Form.Group>
 
-          <Form.Group controlId="formPilot" className="form-group">
+          <Form.Group
+            controlId="formPilot"
+            className="form-group"
+            onFocus={handleFieldFocus}
+          >
             <CustomSelect
               options={pilotOptions}
               value={flight.pilot}
@@ -320,7 +342,11 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             />
           </Form.Group>
 
-          <Form.Group controlId="formInstructor" className="form-group">
+          <Form.Group
+            controlId="formInstructor"
+            className="form-group"
+            onFocus={handleFieldFocus}
+          >
             <CustomSelect
               options={[
                 { value: "", label: "Sin instructor" }, // Opción adicional
@@ -333,7 +359,11 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             />
           </Form.Group>
 
-          <Form.Group controlId="formOrigin" className="form-group">
+          <Form.Group
+            controlId="formOrigin"
+            className="form-group"
+            onFocus={handleFieldFocus}
+          >
             <CustomSelect
               options={airportOptions}
               value={flight.origin}
@@ -342,7 +372,11 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             />
           </Form.Group>
 
-          <Form.Group controlId="formDestination" className="form-group">
+          <Form.Group
+            controlId="formDestination"
+            className="form-group"
+            onFocus={handleFieldFocus}
+          >
             <CustomSelect
               options={airportOptions}
               value={flight.destination}
@@ -359,6 +393,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
               onChange={handleInputChange}
               required
               className="floating-input"
+              onFocus={handleFieldFocus}
             />
             <Form.Label className="floating-label">Hora de salida</Form.Label>
           </Form.Group>
@@ -371,6 +406,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
               onChange={handleInputChange}
               required
               className="floating-input"
+              onFocus={handleFieldFocus}
             />
             <Form.Label className="floating-label">Hora de llegada</Form.Label>
           </Form.Group>
@@ -386,8 +422,9 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
               min={0}
               step={1}
               inputMode="numeric"
-              // El input type="number" ya muestra las flechitas (spinners) en la mayoría de navegadores de escritorio.
-              // Si no aparecen, asegúrate de no tener estilos CSS que las oculten (por ejemplo, usando appearance: none).
+              tabIndex={1}
+              autoComplete="off"
+              onFocus={handleFieldFocus}
             />
             <Form.Label className="floating-label">Aterrizajes</Form.Label>
           </Form.Group>
@@ -405,6 +442,9 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
                   step="any"
                   placeholder=" "
                   style={{ minHeight: 38 }}
+                  tabIndex={2}
+                  autoComplete="off"
+                  onFocus={handleFieldFocus}
                 />
                 <Form.Label className="floating-label">Aceite</Form.Label>
               </div>
@@ -414,6 +454,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
                   onChange={(e) => setOilUnit(e.target.value)}
                   className="floating-input"
                   style={{ minHeight: 38, paddingLeft: 5 }}
+                  onFocus={handleFieldFocus}
                 >
                   <option value="" disabled hidden></option>
                   <option value="lt">Litros</option>
@@ -437,6 +478,9 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
                   step="any"
                   placeholder=" "
                   style={{ minHeight: 38 }}
+                  tabIndex={3}
+                  autoComplete="off"
+                  onFocus={handleFieldFocus}
                 />
                 <Form.Label className="floating-label">Combustible</Form.Label>
               </div>
@@ -466,6 +510,8 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
               rows={1}
               placeholder=" "
               style={{ resize: "vertical" }}
+              tabIndex={4}
+              onFocus={handleFieldFocus}
             />
             <Form.Label className="floating-label">
               Comentario (opcional)

@@ -36,31 +36,26 @@ const UserFlights: React.FC = () => {
   const { message, showTemporaryMessage } = useTemporaryMessage();
   const [loading, setLoading] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [scrollBtnActive, setScrollBtnActive] = useState(false);
+  const [headerHidden, setHeaderHidden] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null); // 👈
 
   useEffect(() => {
-    const observer = new MutationObserver(() => {
-      const node = scrollRef.current;
-      if (!node) return;
+    const node = scrollRef.current;
+    if (!node) return;
 
-      const handleScroll = () => {
-        setShowScrollTop(node.scrollTop > 0);
-      };
+    const handleScroll = () => {
+      const isHiding = node.scrollTop > 0;
+      setShowScrollTop(isHiding);
+    };
 
-      node.addEventListener("scroll", handleScroll);
-      handleScroll(); // fuerza evaluación inicial
+    node.addEventListener("scroll", handleScroll);
+    handleScroll();
 
-      // Limpieza
-      return () => {
-        node.removeEventListener("scroll", handleScroll);
-      };
-    });
-
-    // Observa cuando se monta el contenido
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      node.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollRef]);
 
   useEffect(() => {
     setLoading(true);
@@ -80,7 +75,6 @@ const UserFlights: React.FC = () => {
     fetchFlights();
   }, []);
 
-  // 👇 AGREGA este useEffect para sincronizar el filtro con la URL
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const filter =
@@ -112,6 +106,12 @@ const UserFlights: React.FC = () => {
   const handleCloseDetailModal = () => {
     setSelectedFlight(null);
     setShowDetailModal(false);
+  };
+
+  const handleScrollTopClick = () => {
+    setScrollBtnActive(true);
+    scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    setTimeout(() => setScrollBtnActive(false), 300); // 300ms para el efecto
   };
 
   return (
@@ -206,6 +206,7 @@ const UserFlights: React.FC = () => {
               setSelectedFlight(flight);
               setShowDetailModal(true);
             }}
+            onHeaderHideChange={setHeaderHidden}
             scrollRef={scrollRef}
             showTemporaryMessage={showTemporaryMessage}
           />
@@ -228,10 +229,10 @@ const UserFlights: React.FC = () => {
 
       {!loading && (
         <button
-          className={`scroll-top-button ${showScrollTop ? "visible" : ""}`}
-          onClick={() =>
-            scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" })
-          }
+          className={`scroll-top-button ${showScrollTop ? "visible" : ""} ${
+            scrollBtnActive ? "active" : ""
+          } ${headerHidden ? "below-navbar" : "below-header"}`}
+          onClick={handleScrollTopClick}
           aria-label="Subir arriba"
         >
           <FaArrowUp />

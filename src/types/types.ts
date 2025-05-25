@@ -35,7 +35,7 @@ export interface AssignedSchool {
   _id: string;
   role: string;
   createdAt: string;
-  school: School;
+  school: string;
   tag?: string; // Agregamos la propiedad tag aquí
 }
 
@@ -227,4 +227,16 @@ export interface ExtendedFlight extends Flight {
 
 export type HistoryFlight = ExtendedFlight & {
   status: "confirmed" | "cancelled";
+};
+
+export type AssignedSchoolFlat = {
+  _id: string;
+  role: "Alumno" | "Piloto" | "Instructor";
+  createdAt: string;
+  school: string;
+  tag?: string;
+};
+
+export type FlatUser = Omit<AdminUser, "assignedSchools"> & {
+  assignedSchools: AssignedSchoolFlat[];
 };

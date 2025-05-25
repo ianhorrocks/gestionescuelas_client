@@ -20,6 +20,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const ref = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement | HTMLDivElement>(null);
 
   // Siempre mostrar el label correspondiente al value actual
   const displayValue = useMemo(() => {
@@ -58,7 +59,13 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   // Cerrar dropdown si se hace click fuera
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
+      const dropdown = document.querySelector(".custom-select__dropdown");
+      if (
+        ref.current &&
+        !ref.current.contains(event.target as Node) &&
+        dropdown &&
+        !dropdown.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
@@ -67,11 +74,16 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   }, []);
 
   return (
-    <div className="form-group custom-select-wrapper" ref={ref}>
+    <div
+      className="form-group custom-select-wrapper"
+      ref={ref}
+      style={{ position: "relative" }}
+    >
       {disableSearch ? (
         <div
           className="floating-input custom-select__search"
           tabIndex={0}
+          ref={inputRef as React.RefObject<HTMLDivElement>}
           onClick={() => !disabled && setIsOpen((prev) => !prev)}
           style={{
             minHeight: "38px",
@@ -97,6 +109,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
           onBlur={() => setTimeout(() => setIsOpen(false), 200)}
           disabled={disabled}
           autoComplete="off"
+          ref={inputRef as React.RefObject<HTMLInputElement>}
         />
       )}
       <label className="floating-label">{placeholder}</label>
@@ -104,7 +117,13 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         <div
           className="custom-select__dropdown"
           style={{
+            position: "absolute",
+            top: inputRef.current
+              ? (inputRef.current as HTMLElement).offsetHeight
+              : 38,
+            left: 0,
             width: "100%",
+            zIndex: 3000,
           }}
         >
           {filteredOptions.map((option) => (

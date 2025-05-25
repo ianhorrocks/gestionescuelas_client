@@ -41,7 +41,6 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
 
     try {
       await onAssignUser(dni, role);
-      showTemporaryMessage("success", "Usuario asignado exitosamente.");
       onClose();
     } catch (error) {
       console.log("Error del servidor:", error); // Log para depurar
@@ -68,6 +67,12 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
     }
   };
 
+  const handleFieldFocus = (e: React.FocusEvent<HTMLElement>) => {
+    setTimeout(() => {
+      e.target.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 300);
+  };
+
   const roleOptions = [
     { value: "Alumno", label: "Alumno" },
     { value: "Piloto", label: "Piloto" },
@@ -85,7 +90,11 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formDni" className="form-group">
+          <Form.Group
+            controlId="formDni"
+            className="form-group"
+            onFocus={handleFieldFocus}
+          >
             <Form.Control
               type="text"
               value={dni}
@@ -97,7 +106,11 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
             />
             <Form.Label className="floating-label">DNI</Form.Label>
           </Form.Group>
-          <Form.Group controlId="formRole" className="form-group">
+          <Form.Group
+            controlId="formRole"
+            className="form-group"
+            onFocus={handleFieldFocus}
+          >
             <CustomSelect
               options={roleOptions}
               value={role}
