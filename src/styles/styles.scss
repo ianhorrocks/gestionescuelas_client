@@ -25,6 +25,8 @@
 @use "./UserDashboard/FlightTimeline";
 @use "./GeneralComponents/Spinner.module";
 @use "./Modals/FlightAdminDetailModal";
+@use "./SuperAdmin/SuperAdminPanel";
+@use "./Modals/ConfirmModal";
 
 .dashboard-container,
 .profile-container,

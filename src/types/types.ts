@@ -35,7 +35,12 @@ export interface AssignedSchool {
   _id: string;
   role: string;
   createdAt: string;
-  school: string;
+  school: string | {
+    _id: string;
+    name: string;
+    aerodrome: string;
+    // agrega otros campos si los necesitas
+  };
   tag?: string; // Agregamos la propiedad tag aquí
 }
 
@@ -51,6 +56,7 @@ export interface User {
   license?: string;
   createdAt: string;
   updatedAt: string;
+  activeSys?: boolean; // <-- AGREGADO
 }
 
 export interface EditUserProfileInput {
@@ -233,10 +239,25 @@ export type AssignedSchoolFlat = {
   _id: string;
   role: "Alumno" | "Piloto" | "Instructor";
   createdAt: string;
-  school: string;
+  school: string | { _id: string; name: string; aerodrome: string };
   tag?: string;
 };
 
-export type FlatUser = Omit<AdminUser, "assignedSchools"> & {
+export type FlatUser = Omit<User, "assignedSchools"> & {
   assignedSchools: AssignedSchoolFlat[];
 };
+
+export interface EditSchoolProfileInput {
+  name: string;
+  address: string;
+  aerodrome: string;
+  publicEmail: string;
+  publicPhone: string;
+  openingHours?: string;
+  country?: string;
+}
+
+export interface UserWithRoles extends User {
+  roles?: string[];
+}
+

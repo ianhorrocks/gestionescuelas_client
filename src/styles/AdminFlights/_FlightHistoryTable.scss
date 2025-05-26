@@ -285,3 +285,17 @@
   font-size: 1.2rem;
   margin-top: 13rem;
 }
+
+@keyframes fadeOutLeft {
+  to {
+    opacity: 0;
+    transform: translateX(-120px);
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.flight-history-table tbody tr.row-exit {
+  animation: fadeOutLeft 0.5s forwards;
+}

@@ -81,6 +81,7 @@ const EditUserProfileModal: React.FC<EditUserProfileModalProps> = ({
               {profile.name} {profile.lastname}
             </h3>
             <p className="user-dni">{profile.dni}</p>
+            
           </div>
         </div>
       </Modal.Header>
@@ -165,13 +166,17 @@ const EditUserProfileModal: React.FC<EditUserProfileModalProps> = ({
             {profile.assignedSchools.map((schoolAssign, index) => (
               <div className="school-item" key={index}>
                 <p>
-                  <strong>Escuela:</strong> {schoolAssign.school.name}
+                  <strong>Escuela:</strong> {typeof schoolAssign.school === "object" && "name" in schoolAssign.school
+                    ? schoolAssign.school.name
+                    : schoolAssign.school}
                 </p>
                 <p>
                   <strong>Rol:</strong> {schoolAssign.role}
                 </p>
                 <p>
-                  <strong>Aeródromo:</strong> {schoolAssign.school.aerodrome}
+                  <strong>Aeródromo:</strong> {typeof schoolAssign.school === "object" && "aerodrome" in schoolAssign.school
+                    ? schoolAssign.school.aerodrome
+                    : ""}
                 </p>
                 <p>
                   <strong>Tag:</strong>{" "}

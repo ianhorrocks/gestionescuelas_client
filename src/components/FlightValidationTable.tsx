@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Flight, SimplifiedFlight } from "../types/types";
 import { Modal, Button } from "react-bootstrap";
-import { updateFlightStatus, deleteFlight } from "../services/flightService";
+import { updateFlightStatus, deleteFlight, getFlight } from "../services/flightService";
 import { FaEye } from "react-icons/fa";
 import FlightAdminDetailModal from "./FlightAdminDetailModal";
 
@@ -34,6 +34,7 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
   const [showAdminDetailModal, setShowAdminDetailModal] = useState(false);
   const [adminDetailFlight, setAdminDetailFlight] =
     useState<SimplifiedFlight | null>(null);
+  const [exitingRows, setExitingRows] = useState<string[]>([]);
 
   useEffect(() => {
     if (flights.length === 0 && validationStep !== 3) {
@@ -75,10 +76,9 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
     const { ids, action } = confirmModal;
     const status = action === "confirm" ? "confirmed" : "cancelled";
     try {
-      for (const id of ids) {
-        await updateFlightStatus(id, status);
-        onStatusChange?.(id, status);
-      }
+      setExitingRows(ids); // Marcar filas para animación
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Esperar animación
+      await Promise.all(ids.map((id) => updateFlightStatus(id, status)));
       showTemporaryMessage?.(
         "success",
         status === "confirmed"
@@ -87,6 +87,9 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
       );
       setSelectedFlights([]);
       setShowAdminDetailModal(false);
+      if (onStatusChange) {
+        ids.forEach((id) => onStatusChange(id, status));
+      }
     } catch (error) {
       showTemporaryMessage?.(
         "error",
@@ -94,6 +97,7 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
       );
     } finally {
       setConfirmModal({ ...confirmModal, show: false });
+      setExitingRows([]);
     }
   };
 
@@ -193,7 +197,9 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
             {flights.map((flight) => (
               <tr
                 key={flight._id}
-                className={flight.preValidated ? "prevalidated" : ""}
+                className={
+                  `${flight.preValidated ? "prevalidated" : ""} ${exitingRows.includes(flight._id) ? "row-exit" : ""}`.trim()
+                }
               >
                 <td>{new Date(flight.date).toLocaleDateString("es-ES")}</td>
                 <td>
@@ -229,33 +235,38 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
                   <button
                     className="eye-icon-btn"
                     title="Ver detalles del vuelo"
-                    onClick={() => {
-                      setAdminDetailFlight({
-                        _id: flight._id,
-                        date: flight.date,
-                        departureTime: flight.departureTime,
-                        arrivalTime: flight.arrivalTime,
-                        pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
-                        instructor: flight.instructor
-                          ? `${flight.instructor.name} ${flight.instructor.lastname}`
-                          : "Sin Instructor",
-                        origin: flight.origin,
-                        destination: flight.destination,
-                        status: flight.status,
-                        airplane: flight.airplane
-                          ? flight.airplane.registrationNumber
-                          : "Sin Avión",
-                        totalFlightTime: flight.totalFlightTime,
-                        school: flight.school?.name || "N/A",
-                        landings: flight.landings,
-                        oil: flight.oil,
-                        oilUnit: flight.oilUnit,
-                        charge: flight.charge,
-                        chargeUnit: flight.chargeUnit,
-                        comment: flight.comment,
-                        preValidated: flight.preValidated,
-                      });
-                      setShowAdminDetailModal(true);
+                    onClick={async () => {
+                      try {
+                        const flightData = await getFlight(flight._id);
+                        setAdminDetailFlight({
+                          _id: flightData._id,
+                          date: flightData.date,
+                          departureTime: flightData.departureTime,
+                          arrivalTime: flightData.arrivalTime,
+                          pilot: flightData.pilot ? `${flightData.pilot.name} ${flightData.pilot.lastname}` : "Sin Piloto",
+                          instructor: flightData.instructor
+                            ? `${flightData.instructor.name} ${flightData.instructor.lastname}`
+                            : "Sin Instructor",
+                          origin: flightData.origin,
+                          destination: flightData.destination,
+                          status: flightData.status,
+                          airplane: flightData.airplane
+                            ? flightData.airplane.registrationNumber
+                            : "Sin Avión",
+                          totalFlightTime: flightData.totalFlightTime,
+                          school: flightData.school?.name || "N/A",
+                          landings: flightData.landings,
+                          oil: flightData.oil,
+                          oilUnit: flightData.oilUnit,
+                          charge: flightData.charge,
+                          chargeUnit: flightData.chargeUnit,
+                          comment: flightData.comment,
+                          preValidated: flightData.preValidated,
+                        });
+                        setShowAdminDetailModal(true);
+                      } catch (e) {
+                        showTemporaryMessage?.("error", "No se pudo cargar el vuelo actualizado");
+                      }
                     }}
                     style={{
                       background: "none",

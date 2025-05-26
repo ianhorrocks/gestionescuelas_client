@@ -18,15 +18,60 @@
   }
 }
 
-.btn-change-photo {
-  background-color: variables.$tertiary-color;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
 
-  &:hover {
-    background-color: color.adjust(variables.$tertiary-color, $lightness: -10%);
+
+
+.tag-assignment-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+
+  input.form-control {
+    flex: 1 1 0%;
+    min-width: 120px;
+    max-width: 300px;
+
+    &::placeholder {
+      font-size: 0.85rem;
+    }
   }
+
+  .btn {
+    min-width: 40px;
+    padding: 0 12px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-assign {
+    background-color: variables.$tertiary-color !important;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: color.adjust(variables.$tertiary-color, $lightness: -10%) !important;
+    }
+  }
+}
+
+.text-danger, .id-unassigned {
+  color: #882b35 !important;
+
+}
+
+.id-assigned {
+  color: #23853a !important;
+}
+
+.plane-id-row {
+  display: flex;
+  align-items: center;
+
 }

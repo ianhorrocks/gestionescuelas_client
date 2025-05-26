@@ -5,14 +5,15 @@ import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import Alert from "./Alert";
 import { TrashFill } from "react-bootstrap-icons";
 import "../styles/GeneralComponents/Items/_UserItem.scss";
-import { User } from "../types/types"; // Importamos el tipo User
+import { FlatUser} from "../types/types"; // Importamos el tipo User
 import defaultPhoto from "../assets/images/LogoSmallUserProfilePhoto.png";
 
 interface UserItemProps {
-  user: User;
+  user: FlatUser;
   onDelete: (id: string) => void;
   schoolId: string;
-  onTagAssigned: () => void;
+  onTagAssigned: (updatedUser: FlatUser) => void;
+
 }
 
 const UserItem: React.FC<UserItemProps> = ({
@@ -30,7 +31,6 @@ const UserItem: React.FC<UserItemProps> = ({
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => {
-    onTagAssigned();
     setShowModal(false);
   };
 
@@ -54,10 +54,18 @@ const UserItem: React.FC<UserItemProps> = ({
   const handleAssignTag = async () => {
     setLoading(true);
     try {
-      await assignTagToUser(user._id, schoolId, tag);
-      setCurrentTagState(tag);
+      const upperTag = tag.toUpperCase();
+      await assignTagToUser(user._id, schoolId, upperTag);
+      const updatedUser = {
+        ...user,
+        assignedSchools: user.assignedSchools.map((a) =>
+          a.school === schoolId ? { ...a, tag: upperTag } : a
+        ),
+      };
+      setCurrentTagState(upperTag);
       showTemporaryMessage("success", "Tag asignado exitosamente");
       setTag("");
+      onTagAssigned(updatedUser); // 🔥 actualiza el UserItemList sin recargar
     } catch (error) {
       console.error("Error asignando tag:", error);
       showTemporaryMessage("error", "Error al asignar el tag");
@@ -65,13 +73,22 @@ const UserItem: React.FC<UserItemProps> = ({
       setLoading(false);
     }
   };
+  
 
   const handleRemoveTag = async () => {
     setLoading(true);
     try {
       await removeTagFromUser(user._id, schoolId);
+      const updatedUser = {
+        ...user,
+        assignedSchools: user.assignedSchools.map((a) =>
+          a.school === schoolId ? { ...a, tag: undefined } : a
+        ),
+      };
       setCurrentTagState("");
       showTemporaryMessage("success", "Tag eliminado");
+  
+      onTagAssigned(updatedUser); // 🔥 actualiza el UserItemList sin recargar
     } catch (error) {
       console.error("Error eliminando tag:", error);
       showTemporaryMessage("error", "Error al eliminar el tag");
@@ -79,6 +96,7 @@ const UserItem: React.FC<UserItemProps> = ({
       setLoading(false);
     }
   };
+  
 
   return (
     <>
@@ -119,13 +137,7 @@ const UserItem: React.FC<UserItemProps> = ({
                 <h5 className="user-name">
                   {user.name} {user.lastname}
                 </h5>
-                <span
-                  className={`tag-highlight ${
-                    !currentTagState ? "tag-unassigned" : ""
-                  }`}
-                >
-                  ({currentTagState || "Sin asignar"})
-                </span>
+                
               </div>
               <p className="user-role">Rol: {userRole}</p>
             </div>
@@ -138,18 +150,32 @@ const UserItem: React.FC<UserItemProps> = ({
           <p className="subtitle">
             DNI: <strong>{user.dni}</strong>
           </p>
+          <p className="subtitle">
+            Licencia: <strong>{user.license || "-"}</strong>
+          </p>
 
           <h5 className="section-title">Relación con la escuela:</h5>
           <p className="subtitle">
-            Fecha de asignación: <strong>{assignedDate}</strong>
+            Agregado el: <strong>{assignedDate}</strong>
           </p>
 
-          <h5 className="section-title">Asignar Tag Tarjeta:</h5>
+          <div className="user-tag-row">
+            <h5 className="section-title mt-4" style={{ marginBottom: 0 }}>
+              Tag Tarjeta:
+            </h5>
+            <strong
+              className={`mt-4 ${currentTagState ? "id-assigned" : "id-unassigned"}`}
+              style={{ marginLeft: "0.5rem" }}
+            >
+              {currentTagState || "Sin asignar"}
+            </strong>
+          </div>
+
           <div className="tag-assignment-container">
             <input
               type="text"
               className="form-control"
-              placeholder="Ingresa el tag de la tarjeta"
+              placeholder="Ingresa el tag"
               value={tag}
               onChange={(e) => setTag(e.target.value)}
             />

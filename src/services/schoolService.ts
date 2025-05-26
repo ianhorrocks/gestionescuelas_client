@@ -48,3 +48,44 @@ export const registerSchool = async (schoolData: NewSchool) => {
     throw new Error("SCHOOL_REGISTRATION_FAILED");
   }
 };
+
+// PUT /schools/:id para editar datos de la escuela
+export const updateSchool = async (schoolId: string, data: Partial<School>) => {
+  try {
+    const response = await api.put<School>(`/schools/${schoolId}`, data);
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError<{ error: string }>;
+    throw new Error(axiosError.response?.data?.error || "UPDATE_SCHOOL_FAILED");
+  }
+};
+
+// Obtener todas las escuelas
+export const getAllSchools = async (): Promise<School[]> => {
+  const response = await api.get<{ data: School[] }>("/schools");
+  return response.data.data;
+};
+
+// Obtener solo escuelas pendientes
+export const getPendingSchools = async (): Promise<School[]> => {
+  const response = await api.get<{ data: School[] }>("/schools/pending");
+  return response.data.data;
+};
+
+// Aprobar una escuela
+export const approveSchool = async (id: string) => {
+  const response = await api.put(`/schools/approve/${id}`);
+  return response.data;
+};
+
+// Rechazar una escuela
+export const rejectSchool = async (id: string) => {
+  const response = await api.put(`/schools/reject/${id}`);
+  return response.data;
+};
+
+// Eliminar una escuela
+export const deleteSchool = async (id: string) => {
+  const response = await api.delete(`/schools/${id}`);
+  return response.data;
+};

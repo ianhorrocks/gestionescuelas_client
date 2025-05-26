@@ -198,6 +198,20 @@
   }
 }
 
+@keyframes fadeOutRight {
+  to {
+    opacity: 0;
+    transform: translateX(120px);
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.flight-validation-table tbody tr.row-exit {
+  animation: fadeOutRight 0.5s forwards;
+}
+
 .floating-buttons {
   position: fixed;
   top: 150px; /* Separación del borde inferior */

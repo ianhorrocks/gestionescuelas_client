@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "../assets/images/LogoSmallPilotLog.png";
 import defaultSchoolImage from "../assets/images/Logo-School-Profile.png";
 import EditSchoolProfileModal from "./EditSchoolProfileModal";
+import useTemporaryMessage from "../hooks/useTemporaryMessage";
+import Alert from "./Alert";
 import {
   faBars,
   faAngleDoubleLeft,
@@ -28,6 +30,7 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
   const [schoolName, setSchoolName] = useState<string | null>(null);
   const [schoolImage, setSchoolImage] = useState<string>(defaultSchoolImage);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { message, showTemporaryMessage } = useTemporaryMessage();
   const navigate = useNavigate();
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -146,7 +149,17 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
         </NavLink>
       </div>
 
-      {isModalOpen && <EditSchoolProfileModal onClose={closeModal} />}
+      {message && <Alert message={message.message} type={message.type} />}
+
+      {isModalOpen && (
+        <EditSchoolProfileModal
+          onClose={closeModal}
+          schoolName={schoolName}
+          setSchoolName={setSchoolName}
+          setSchoolImage={setSchoolImage}
+          showTemporaryMessage={showTemporaryMessage}
+        />
+      )}
     </div>
   );
 };

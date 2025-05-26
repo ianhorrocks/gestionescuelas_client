@@ -40,11 +40,15 @@
 
       .tag-highlight {
         font-size: 0.875rem;
-        color: variables.$primary-color;
         font-weight: bold;
       }
+
       .tag-unassigned {
-        color: variables.$error-text-color; // o el color que quieras
+        color: #dc3545 !important;
+      }
+
+      .id-assigned {
+        color: #28a745 !important;
       }
 
       .user-role {
@@ -57,13 +61,26 @@
 
   .tag-assignment-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
     gap: 0.5rem;
     margin-top: 0.5rem;
 
+    input.form-control {
+      flex: 1 1 0%;
+      min-width: 120px;
+      max-width: 300px;
+
+      &::placeholder {
+        font-size: 0.85rem;
+      }
+    }
+
     .tag-action-buttons {
       display: flex;
+      flex-direction: row;
       gap: 0.5rem;
+      align-items: center;
 
       .btn-assign {
         background-color: variables.$tertiary-color;
@@ -75,7 +92,7 @@
 
         &:hover {
           background-color: color.adjust(
-            variables.$tertiary-color,
+            variables.$primary-color,
             $lightness: -10%
           );
         }
@@ -106,5 +123,10 @@
 
   .delete-user-button {
     margin-top: 0.5rem;
+  }
+
+  .user-tag-row {
+    display: flex;
+    align-items: center;
   }
 }

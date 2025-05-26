@@ -31,7 +31,8 @@ const AdminPlanes: React.FC = () => {
       try {
         const loggedUser = await getLoggedUser();
         if (loggedUser && loggedUser.assignedSchools.length > 0) {
-          setSchoolId(loggedUser.assignedSchools[0].school._id);
+          const schoolField = loggedUser.assignedSchools[0].school;
+          setSchoolId(typeof schoolField === "string" ? schoolField : schoolField._id);
         } else {
           console.error("Error cant obtain school ID for logged user.");
         }
@@ -127,6 +128,15 @@ const AdminPlanes: React.FC = () => {
     }
   };
 
+  // Hot reload: actualiza solo el avión modificado
+  const handleIdAssigned = (updatedPlane: Plane) => {
+    setPlanes((prevPlanes) =>
+      prevPlanes.map((plane) =>
+        plane._id === updatedPlane._id ? { ...plane, ...updatedPlane } : plane
+      )
+    );
+  };
+
   const links = [
     { path: "/admin/users", label: "Usuarios" },
     { path: "/admin/planes", label: "Aeronaves" },
@@ -150,7 +160,7 @@ const AdminPlanes: React.FC = () => {
                   plane={plane}
                   onDelete={handleDeleteClick}
                   onUpdatePhoto={handleUpdatePlanePhoto}
-                  onIdAssigned={getPlanes}
+                  onIdAssigned={handleIdAssigned}
                 />
               ))}
             </div>

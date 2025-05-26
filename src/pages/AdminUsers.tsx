@@ -9,24 +9,13 @@ import {
   removeUserFromSchool,
   assignUserToSchool,
 } from "../services/userService";
-import { getLoggedUser } from "../services/auth";
 import { Modal } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { AdminUser } from "../types/types";
+import { FlatUser } from "../types/types";
 import Alert from "../components/Alert";
 import FilterSelect from "../components/FilterSelect";
-
-type AssignedSchoolFlat = {
-  _id: string;
-  role: "Alumno" | "Piloto" | "Instructor";
-  createdAt: string;
-  school: string; // ID plano
-  tag?: string;
-};
-
-type FlatUser = Omit<AdminUser, "assignedSchools"> & {
-  assignedSchools: AssignedSchoolFlat[];
-};
+import { FormControl } from "react-bootstrap"; // Importa el componente de Bootstrap para el input
+import { FaSearch } from "react-icons/fa"; // Importa el ícono de lupa
 
 const AdminUsers: React.FC = () => {
   const [users, setUsers] = useState<FlatUser[]>([]);
@@ -37,26 +26,18 @@ const AdminUsers: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { message, showTemporaryMessage } = useTemporaryMessage();
   const [selectedRole, setSelectedRole] = useState("all");
+  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda
 
   useEffect(() => {
-    const fetchSchoolId = async () => {
-      try {
-        const loggedUser = await getLoggedUser();
-        if (loggedUser && loggedUser.assignedSchools.length > 0) {
-          setSchoolId(loggedUser.assignedSchools[0].school);
-        } else {
-          console.error("Error cant obtain school ID for logged user.");
-        }
-      } catch (err) {
-        console.error(
-          "Error fetching logged user information:",
-          err instanceof Error ? err.message : "Unknown error"
-        );
-      }
-    };
-
-    fetchSchoolId();
+    const profile = JSON.parse(localStorage.getItem("profile") || "{}");
+    if (profile && profile.assignedSchools?.length > 0) {
+      setSchoolId(profile.assignedSchools[0].school._id);
+    } else {
+      console.error("No se encontró schoolId en el perfil del usuario.");
+    }
   }, []);
+  
+  
 
   const getUsers = async () => {
     try {
@@ -89,8 +70,6 @@ const AdminUsers: React.FC = () => {
     if (!schoolId) return { all: 0, Alumno: 0, Piloto: 0, Instructor: 0 };
     const counts = { all: 0, Alumno: 0, Piloto: 0, Instructor: 0 };
     users.forEach((user) => {
-      console.log("user.assignedSchools", user.assignedSchools);
-
       const assignment = user.assignedSchools.find(
         (a) => a.school === schoolId
       );
@@ -186,16 +165,41 @@ const AdminUsers: React.FC = () => {
     setSelectedRole(role);
   };
 
+  // Maneja el cambio en el cuadro de búsqueda
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value.toLowerCase());
+  };
+
   const filteredUsers = useMemo(() => {
     if (!schoolId) return [];
-    if (selectedRole === "all") return users;
-    return users.filter((user) => {
-      const assignment = user.assignedSchools.find(
-        (a) => a.school === schoolId
+    let filtered = users;
+
+    // Filtra por rol si no es "all"
+    if (selectedRole !== "all") {
+      filtered = filtered.filter((user) => {
+        const assignment = user.assignedSchools.find(
+          (a) => a.school === schoolId
+        );
+        return assignment?.role === selectedRole;
+      });
+    }
+
+    // Filtra por término de búsqueda
+    if (searchTerm) {
+      filtered = filtered.filter((user) =>
+        `${user.name} ${user.lastname}`.toLowerCase().includes(searchTerm)
       );
-      return assignment?.role === selectedRole;
-    });
-  }, [users, selectedRole, schoolId]);
+    }
+
+    return filtered;
+  }, [users, selectedRole, schoolId, searchTerm]);
+
+  const handleTagUpdate = (updatedUser: FlatUser) => {
+    setUsers((prevUsers) =>
+      prevUsers.map((u) => (u._id === updatedUser._id ? updatedUser : u))
+    );
+  };
+  
 
   const links = [
     { path: "/admin/users", label: "Usuarios" },
@@ -212,16 +216,32 @@ const AdminUsers: React.FC = () => {
           <PlaneLoader />
         ) : (
           <>
-            <div style={{ marginBottom: "1rem" }}>
+            {/* Contenedor de búsqueda y filtro */}
+            <div className="search-filter-container">
+              {/* Selector de roles */}
               <FilterSelect
                 options={roleOptions}
                 value={selectedRole}
                 onChange={handleRoleChange}
                 placeholder="Filtrar por rol"
+                className="filter-select"
                 keyboard
                 autoClose
               />
+              
+              {/* Cuadro de búsqueda */}
+              <div className="search-box">
+                <FaSearch className="search-icon" />
+                <FormControl
+                  type="text"
+                  placeholder="Buscar nombre"
+                  value={searchTerm}
+                  onChange={handleSearchChange}
+                />
+              </div>
             </div>
+
+            {/* Lista de usuarios */}
             <ul className="list-group-users">
               {filteredUsers.map((user) => (
                 <UserItem
@@ -229,7 +249,7 @@ const AdminUsers: React.FC = () => {
                   user={user}
                   schoolId={schoolId || ""}
                   onDelete={handleDeleteClick}
-                  onTagAssigned={getUsers}
+                  onTagAssigned={handleTagUpdate}
                 />
               ))}
             </ul>
@@ -239,13 +259,13 @@ const AdminUsers: React.FC = () => {
           </>
         )}
 
+        {/* Modales */}
         <AddUserModal
           show={showModal}
           onClose={() => setShowModal(false)}
           onAssignUser={handleAssignUser}
-          showTemporaryMessage={showTemporaryMessage} // Pasa la función como prop
+          showTemporaryMessage={showTemporaryMessage}
         />
-
         <Modal
           show={showConfirmModal}
           onHide={() => setShowConfirmModal(false)}

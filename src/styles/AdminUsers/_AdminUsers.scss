@@ -8,6 +8,76 @@
   margin-top: 60px;
   padding: 20px;
 
+  // Contenedor para centrar el cuadro de búsqueda y el selector
+  .search-filter-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+
+      .search-box {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: 350px;
+
+        input {
+          width: 100%;
+        }
+      }
+    }
+
+    .filter-select {
+      width: 220px;
+      min-width: 180px;
+    }
+
+    .search-box {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 200px;
+
+      position: relative;
+
+      input {
+        width: 100%;
+        padding: 0.5rem 2.5rem; // Espacio para el ícono
+        border: 1px solid #ddd;
+        border-radius: 20px; // Bordes redondeados
+        font-size: 0.9rem;
+        font-weight: 600;
+        background-color: variables.$white-color;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        &:focus {
+          outline: none;
+          border-color: variables.$primary-hover-color;
+          box-shadow: 0 0 5px variables.$primary-hover-color;
+        }
+      }
+
+      // Ícono de lupa
+      .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        color: variables.$primary-hover-color;
+      }
+    }
+  }
+
   .add-button {
     bottom: 30px;
     right: 50px;
@@ -80,7 +150,7 @@
     }
 
     @media (min-width: 990px) {
-      grid-template-columns: repeat(3, 1fr); // 4 columnas
+      grid-template-columns: repeat(3, 1fr); // 3 columnas
     }
 
     @media (min-width: 1300px) {

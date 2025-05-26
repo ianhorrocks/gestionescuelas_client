@@ -1,7 +1,9 @@
+@use "../Variables/variables";
+
 .filter-select {
   position: relative;
   width: 100%;
-  max-width: 160px;
+  max-width: 190px;
 
   .filter-select-wrapper {
     display: flex;
@@ -19,8 +21,9 @@
     }
 
     &:focus-within {
-      border-color: #007bff;
-      background-color: #fff;
+      border-color: variables.$primary-hover-color; // Cambiado para usar la variable
+      background-color: #fff; // Puedes mantener el fondo blanco o cambiarlo si lo deseas
+      box-shadow: 0 0 5px variables.$primary-hover-color; // Añadido para consistencia con el search-box
     }
   }
 

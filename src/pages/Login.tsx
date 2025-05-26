@@ -23,14 +23,20 @@ const Login: React.FC = () => {
   const [showRegisterUserModal, setShowRegisterUserModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setLoggedIn } = useAuth();
+  const { setLoggedIn, setUser } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
       const { token, user } = await loginUser(email, password);
-      if (!user.assignedSchools || user.assignedSchools.length === 0) {
+
+      // Permitir acceso si es Super Admin aunque no tenga escuelas
+      if (
+        (!user.assignedSchools || user.assignedSchools.length === 0) &&
+        !(user.roles && user.roles.includes("Super Admin")) &&
+        !user.activeSys
+      ) {
         showTemporaryMessage(
           "warning",
           "USUARIO NO PERTENECE A NINGUNA ESCUELA"
@@ -41,18 +47,27 @@ const Login: React.FC = () => {
 
       localStorage.setItem("token", token);
       setLoggedIn(true);
+      setUser(user); // <-- Esto asegura que el contexto tenga el usuario actualizado
       showTemporaryMessage("success", "ACCESO EXITOSO");
 
       setTimeout(() => {
-        const school = user.assignedSchools[0];
-        if (
-          school.role.includes("Alumno") ||
-          school.role.includes("Piloto") ||
-          school.role.includes("Instructor")
-        ) {
-          navigate("/user/dashboard");
-        } else if (school.role.includes("Admin")) {
-          navigate("/admin/users");
+        // Si es superadmin, redirige al panel de superadmin
+        console.log(user.roles);
+        if (user.roles && user.roles.includes("Super Admin")) {
+          navigate("/superadmin");
+        } else if (user.assignedSchools && user.assignedSchools.length > 0) {
+          const school = user.assignedSchools[0];
+          if (
+            school.role.includes("Alumno") ||
+            school.role.includes("Piloto") ||
+            school.role.includes("Instructor")
+          ) {
+            navigate("/user/dashboard");
+          } else if (school.role.includes("Admin")) {
+            navigate("/admin/users");
+          } else {
+            navigate("/");
+          }
         } else {
           navigate("/");
         }

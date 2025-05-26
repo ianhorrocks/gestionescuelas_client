@@ -1,7 +1,7 @@
 // src/components/FlightHistoryTable.tsx
 import React, { useState, useMemo } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { updateFlightStatus, deleteFlight } from "../services/flightService";
+import { updateFlightStatus, deleteFlight, getFlight } from "../services/flightService";
 import { HistoryFlight, SimplifiedFlight } from "../types/types";
 import FilterSelect from "./FilterSelect"; // Importa el componente FilterSelect
 import { FaArrowUp, FaArrowDown, FaEye } from "react-icons/fa";
@@ -42,6 +42,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
     null
   );
   const [pendingIds, setPendingIds] = useState<string[]>([]);
+  const [exitingRows, setExitingRows] = useState<string[]>([]);
 
   const toggleSelectAll = () => {
     if (selectedFlights.length === flights.length) {
@@ -58,7 +59,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
         : [...prev, id]
     );
   };
-
+  
   const sortedFlights = useMemo(() => {
     return [...flights].sort((a, b) => {
       let compare = 0;
@@ -104,23 +105,26 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
 
   const confirmToPending = async () => {
     try {
-      for (const id of pendingIds) {
-        await updateFlightStatus(id, "pending");
-        if (onStatusChange) {
-          onStatusChange(id, "pending");
-        }
-      }
+      setExitingRows(pendingIds); // Marcar filas para animación
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Esperar animación
+      await Promise.all(pendingIds.map((id) => updateFlightStatus(id, "pending")));
       showTemporaryMessage?.(
         "success",
-        "Vuelo/s devuelto/s a pendiente correctamente"
+        pendingIds.length > 1
+          ? "Vuelos devueltos a pendiente correctamente"
+          : "Vuelo devuelto a pendiente correctamente"
       );
       setSelectedFlights([]);
       setShowDetailModal(false);
+      if (onStatusChange) {
+        pendingIds.forEach((id) => onStatusChange(id, "pending"));
+      }
     } catch (error) {
       showTemporaryMessage?.("error", "Ocurrió un error");
     } finally {
       setConfirmModal(false);
       setPendingIds([]);
+      setExitingRows([]);
     }
   };
 
@@ -197,7 +201,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
               </thead>
               <tbody>
                 {paginatedFlights.map((flight) => (
-                  <tr key={flight._id}>
+                  <tr key={flight._id} className={exitingRows.includes(flight._id) ? "row-exit" : ""}>
                     <td>
                       {new Date(flight.date).toLocaleDateString("es-ES", {
                         day: "2-digit",
@@ -249,32 +253,38 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                       <button
                         className="eye-icon-btn"
                         title="Ver detalles del vuelo"
-                        onClick={() => {
-                          setSelectedFlight({
-                            _id: flight._id,
-                            date: flight.date,
-                            departureTime: flight.departureTime,
-                            arrivalTime: flight.arrivalTime,
-                            pilot: `${flight.pilot.name} ${flight.pilot.lastname}`,
-                            instructor: flight.instructor
-                              ? `${flight.instructor.name} ${flight.instructor.lastname}`
-                              : "S/A",
-                            origin: flight.origin,
-                            destination: flight.destination,
-                            status: flight.status,
-                            airplane: flight.airplane
-                              ? flight.airplane.registrationNumber
-                              : "N/A",
-                            totalFlightTime: flight.totalFlightTime,
-                            school: flight.school?.name || "N/A",
-                            landings: flight.landings,
-                            oil: flight.oil,
-                            oilUnit: flight.oilUnit,
-                            charge: flight.charge,
-                            chargeUnit: flight.chargeUnit,
-                            comment: flight.comment,
-                          });
-                          setShowDetailModal(true);
+                        onClick={async () => {
+                          try {
+                            const flightData = await getFlight(flight._id);
+                            setSelectedFlight({
+                              _id: flightData._id,
+                              date: flightData.date,
+                              departureTime: flightData.departureTime,
+                              arrivalTime: flightData.arrivalTime,
+                              pilot: `${flightData.pilot.name} ${flightData.pilot.lastname}`,
+                              instructor: flightData.instructor
+                                ? `${flightData.instructor.name} ${flightData.instructor.lastname}`
+                                : "S/A",
+                              origin: flightData.origin,
+                              destination: flightData.destination,
+                              status: flightData.status,
+                              airplane: flightData.airplane
+                                ? flightData.airplane.registrationNumber
+                                : "N/A",
+                              totalFlightTime: flightData.totalFlightTime,
+                              school: flightData.school?.name || "N/A",
+                              landings: flightData.landings,
+                              oil: flightData.oil,
+                              oilUnit: flightData.oilUnit,
+                              charge: flightData.charge,
+                              chargeUnit: flightData.chargeUnit,
+                              comment: flightData.comment,
+                              preValidated: flightData.preValidated,
+                            });
+                            setShowDetailModal(true);
+                          } catch (e) {
+                            showTemporaryMessage?.("error", "No se pudo cargar el vuelo actualizado");
+                          }
                         }}
                         style={{
                           background: "none",

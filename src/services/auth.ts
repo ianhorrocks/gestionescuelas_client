@@ -1,12 +1,12 @@
 // client/src/services/auth.ts
 import api from "./api";
-import { LoginResponse, User } from "../types/types";
+import { LoginResponse, UserWithRoles } from "../types/types";
 import { AxiosError } from "axios";
 
 export const loginUser = async (
   email: string,
   password: string
-): Promise<LoginResponse> => {
+): Promise<{ token: string; user: UserWithRoles }> => {
   try {
     const response = await api.post<{ data: LoginResponse }>("/auth/login", {
       email,
@@ -35,13 +35,13 @@ export const loginUser = async (
   }
 };
 
-export const getCurrentUser = (): User => {
+export const getCurrentUser = (): UserWithRoles => {
   return JSON.parse(localStorage.getItem("profile") || "{}");
 };
 
-export const getLoggedUser = async (): Promise<User> => {
-  const response = await api.get<{ data: User }>("/auth/me");
-  return response.data.data; // también está envuelto en "data"
+export const getLoggedUser = async (): Promise<UserWithRoles> => {
+  const response = await api.get<{ data: UserWithRoles }>("/auth/me");
+  return response.data.data;
 };
 
 export const logout = () => {

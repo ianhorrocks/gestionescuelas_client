@@ -41,7 +41,8 @@ const AdminFlights: React.FC = () => {
     (async () => {
       try {
         const user = await getLoggedUser();
-        const sid = user.assignedSchools[0]?.school?._id;
+        const schoolField = user.assignedSchools[0]?.school;
+        const sid = typeof schoolField === "string" ? schoolField : schoolField?._id;
         if (!sid) throw new Error("No school assigned");
         setSchoolId(sid);
         await fetchFlights(sid);
@@ -68,13 +69,16 @@ const AdminFlights: React.FC = () => {
 
   const handleStatusChange = (
     id: string,
-    status: "confirmed" | "cancelled"
+    status: "confirmed" | "cancelled" | "pending"
   ) => {
+    // Solo actualiza status y validated, nunca preValidated
     setFlights((prev) =>
       prev.map((f) =>
         f._id === id ? { ...f, status, validated: status === "confirmed" } : f
       )
     );
+    // Refresca los vuelos desde el backend para mantener preValidated correcto
+    if (schoolId) fetchFlights(schoolId);
   };
 
   const stepClass = (step: number) => {

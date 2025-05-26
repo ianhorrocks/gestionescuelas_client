@@ -131,3 +131,8 @@ export const editFlight = async (
   );
   return response.data.data;
 };
+
+export const getFlight = async (id: string): Promise<Flight> => {
+  const response = await api.get<{ data: Flight }>(`/flights/${id}`);
+  return response.data.data;
+};

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Card, Modal, Button, Form } from "react-bootstrap";
+import { Card, Modal, Button } from "react-bootstrap";
 import { TrashFill } from "react-bootstrap-icons";
 import defaultPlane from "../assets/images/default-plane.jpg";
-import ReactCrop, { Crop as ReactCropType } from "react-image-crop";
-import "react-image-crop/dist/ReactCrop.css";
 import "../styles/GeneralComponents/Items/_UserItem.scss";
 import {
   assignEmbeddedIdToPlane,
@@ -13,34 +11,19 @@ import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import Alert from "./Alert";
 import { Plane } from "../types/types";
 
-interface Crop extends ReactCropType {
-  aspect?: number;
-}
 interface PlaneItemProps {
   plane: Plane;
   onDelete: (id: string) => void;
   onUpdatePhoto: (id: string, formData: FormData) => Promise<void>;
-  onIdAssigned: () => void;
+  onIdAssigned: (updatedPlane: Plane) => void;
 }
 
 const PlaneItem: React.FC<PlaneItemProps> = ({
   plane,
   onDelete,
-  onUpdatePhoto,
   onIdAssigned,
 }) => {
   const [showDetailModal, setShowDetailModal] = useState(false);
-  const [crop, setCrop] = useState<Crop>({
-    unit: "%",
-    width: 50,
-    aspect: 1,
-    x: 0,
-    y: 0,
-    height: 50,
-  });
-  const [completedCrop, setCompletedCrop] = useState<Crop | null>(null);
-  const [imageRef, setImageRef] = useState<HTMLImageElement | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [idInput, setIdInput] = useState("");
   const [loading, setLoading] = useState(false);
   const { message, showTemporaryMessage } = useTemporaryMessage();
@@ -49,73 +32,8 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
 
   const handleShowModal = () => setShowDetailModal(true);
   const handleCloseModal = () => {
-    onIdAssigned();
+    onIdAssigned(plane);
     setShowDetailModal(false);
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.addEventListener("load", () =>
-        setPreviewUrl(reader.result as string)
-      );
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleImageLoaded = (image: HTMLImageElement) => {
-    setImageRef(image);
-  };
-
-  const handleCropComplete = (crop: Crop) => {
-    setCompletedCrop(crop);
-  };
-
-  const handleSavePhoto = async () => {
-    if (!completedCrop || !imageRef) return;
-
-    const canvas = document.createElement("canvas");
-    const scaleX = imageRef.naturalWidth / imageRef.width;
-    const scaleY = imageRef.naturalHeight / imageRef.height;
-    canvas.width = completedCrop.width!;
-    canvas.height = completedCrop.height!;
-    const ctx = canvas.getContext("2d");
-
-    if (ctx) {
-      ctx.drawImage(
-        imageRef,
-        completedCrop.x * scaleX,
-        completedCrop.y * scaleY,
-        completedCrop.width! * scaleX,
-        completedCrop.height! * scaleY,
-        0,
-        0,
-        completedCrop.width!,
-        completedCrop.height!
-      );
-
-      canvas.toBlob(async (blob) => {
-        if (blob) {
-          const formData = new FormData();
-          formData.append("photo", blob, "plane-photo.jpg");
-
-          try {
-            await onUpdatePhoto(plane._id, formData);
-            setPreviewUrl(null);
-            showTemporaryMessage("success", "Foto actualizada correctamente");
-          } catch (err) {
-            console.error("Failed to update plane photo");
-            showTemporaryMessage("error", "Error al actualizar la foto");
-          }
-        }
-      });
-    }
-  };
-
-  const handleCancelPhoto = () => {
-    setPreviewUrl(null);
-    setCompletedCrop(null);
   };
 
   const [currentIdEmbebbedState, setCurrentEmbebbedState] = useState(
@@ -125,13 +43,15 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
   const handleAssignId = async () => {
     setLoading(true);
     try {
-      await assignEmbeddedIdToPlane(plane._id, idInput);
-      setCurrentEmbebbedState(idInput);
-      showTemporaryMessage("success", "ID EMBEBIDO ASIGNADO");
+      const upperId = idInput.toUpperCase();
+      await assignEmbeddedIdToPlane(plane._id, upperId);
+      setCurrentEmbebbedState(upperId);
+      showTemporaryMessage("success", "ID Escaner asignado correctamente");
       setIdInput("");
+      onIdAssigned({ ...plane, idEmbebbed: upperId });
     } catch (err) {
       console.error("FAILED TO ASSIGN EMBEDDED ID:", err);
-      showTemporaryMessage("error", "ERROR AL ASIGNAR ID EMBEBIDO");
+      showTemporaryMessage("error", "Error al asignar el ID Escaner");
     } finally {
       setLoading(false);
     }
@@ -142,10 +62,11 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
     try {
       await removeEmbeddedIdFromPlane(plane._id);
       setCurrentEmbebbedState("");
-      showTemporaryMessage("success", "ID EMBEBIDO ELIMINADO");
+      showTemporaryMessage("success", "ID Escaner eliminado correctamente");
+      onIdAssigned({ ...plane, idEmbebbed: "" });
     } catch (err) {
-      console.error("Error eliminando ID embebido");
-      showTemporaryMessage("error", "Error al eliminar el ID embebido");
+      console.error("Error eliminando ID Escaner");
+      showTemporaryMessage("error", "Error al eliminar el ID Escaner");
     } finally {
       setLoading(false);
     }
@@ -203,93 +124,110 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
           <p className="subtitle">
             Matrícula: <strong>{plane.registrationNumber}</strong>
           </p>
-          <p className="subtitle">
-            ID Escaner:{" "}
-            <strong className={!currentIdEmbebbedState ? "id-unassigned" : ""}>
-              {currentIdEmbebbedState || "Sin asignar"}
-            </strong>
-          </p>
+          
 
           <h5 className="section-title mt-4">Relación con la escuela:</h5>
           <p className="subtitle">
             Agregado el: <strong>{plane.addedDate || "-"}</strong>
           </p>
 
-          <h5 className="section-title mt-4">Asignar ID Escaner:</h5>
-          <div className="tag-assignment-container">
+          <div className="plane-id-row">
+            <h5 className="section-title mt-4" style={{ marginBottom: 0 }}>
+              ID Escaner:
+            </h5>
+            <strong
+              className={`mt-4 ${currentIdEmbebbedState ? "id-assigned" : "id-unassigned"}`}
+              style={{ marginLeft: "0.5rem" }}
+            >
+              {currentIdEmbebbedState || "Sin asignar"}
+            </strong>
+          </div>
+          
+          <div
+            className="tag-assignment-container"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              width: "100%",
+            }}
+          >
             <input
               type="text"
               className="form-control"
               placeholder="Ingresa el ID"
               value={idInput}
               onChange={(e) => setIdInput(e.target.value)}
+              style={{
+                flex: 1,
+                minWidth: 120,
+                maxWidth: 300,
+                padding: "0.375rem 0.75rem",
+                borderRadius: "0.25rem",
+                border: "1px solid #ced4da",
+                backgroundColor: "#fff",
+                fontSize: "1rem",
+                lineHeight: 1.5,
+                color: "#495057",
+                transition:
+                  "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
+              }}
             />
-            <div className="tag-action-buttons">
-              <button
-                className="btn btn-assign"
-                disabled={loading || !idInput}
-                onClick={handleAssignId}
-              >
-                {loading ? "..." : "Asignar"}
-              </button>
-              <button
-                className="btn btn-delete-tag"
-                onClick={handleRemoveId}
-                disabled={loading}
-              >
-                <TrashFill />
-              </button>
-            </div>
+            <button
+              className="btn btn-assign"
+              disabled={loading || !idInput}
+              onClick={handleAssignId}
+              style={{
+                minWidth: 40,
+                padding: "0 12px",
+                height: 38,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "0.25rem",
+                border: "1px solid transparent",
+                backgroundColor: "#007bff",
+                color: "#fff",
+                fontSize: "1rem",
+                lineHeight: 1.5,
+                textAlign: "center",
+                textDecoration: "none",
+                transition:
+                  "background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
+              }}
+            >
+              {loading ? "..." : "Asignar"}
+            </button>
+            <button
+              className="btn btn-delete-tag"
+              onClick={handleRemoveId}
+              disabled={loading}
+              style={{
+                minWidth: 40,
+                padding: "0 12px",
+                height: 38,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "0.25rem",
+                border: "1px solid transparent",
+                backgroundColor: "#dc3545",
+                color: "#fff",
+                fontSize: "1rem",
+                lineHeight: 1.5,
+                textAlign: "center",
+                textDecoration: "none",
+                transition:
+                  "background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
+              }}
+            >
+              <TrashFill />
+            </button>
           </div>
 
           {message && <Alert message={message.message} type={message.type} />}
 
           <h5 className="section-title">Acciones:</h5>
-          {previewUrl ? (
-            <>
-              <ReactCrop
-                crop={crop}
-                onComplete={handleCropComplete}
-                onChange={(newCrop) => setCrop(newCrop)}
-              >
-                <img
-                  src={previewUrl || ""}
-                  alt="Crop preview"
-                  onLoad={(e) => handleImageLoaded(e.currentTarget)}
-                />
-              </ReactCrop>
-              <Button
-                variant="primary"
-                onClick={handleSavePhoto}
-                className="mt-3 d-block w-100"
-              >
-                Guardar
-              </Button>
-              <Button
-                variant="secondary"
-                onClick={handleCancelPhoto}
-                className="mt-3 d-block w-100"
-              >
-                Cancelar
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                variant="primary"
-                onClick={() => document.getElementById("fileInput")?.click()}
-                className="btn-change-photo mt-3 d-block"
-              >
-                Cambiar foto principal
-              </Button>
-              <Form.Control
-                type="file"
-                id="fileInput"
-                onChange={handleFileChange}
-                style={{ display: "none" }}
-              />
-            </>
-          )}
           <Button
             onClick={() => {
               onDelete(plane._id);
