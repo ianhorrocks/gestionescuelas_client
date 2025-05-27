@@ -119,7 +119,7 @@ const FlightDetailModal: React.FC<Props> = ({
             <strong>Escuela:</strong> {flight.school || "-"}
           </p>
           <p>
-            <strong>Aeronave:</strong> {flight.airplane || "-"}
+            <strong>Matrícula :</strong> {flight.airplane || "-"}
           </p>
 
           <p>

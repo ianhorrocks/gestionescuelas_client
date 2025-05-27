@@ -35,12 +35,14 @@ export interface AssignedSchool {
   _id: string;
   role: string;
   createdAt: string;
-  school: string | {
-    _id: string;
-    name: string;
-    aerodrome: string;
-    // agrega otros campos si los necesitas
-  };
+  school:
+    | string
+    | {
+        _id: string;
+        name: string;
+        aerodrome: string;
+        // agrega otros campos si los necesitas
+      };
   tag?: string; // Agregamos la propiedad tag aquí
 }
 
@@ -92,7 +94,7 @@ export interface FlightUser {
 
 export type FlightType =
   | "Vuelo Privado"
-  | "Instruccion Alumno"
+  | "Instrucción"
   | "Navegacion"
   | "Readaptacion"
   | "Bautismo";
@@ -140,6 +142,7 @@ export interface SimplifiedFlight {
   chargeUnit?: "lt" | "gal";
   comment?: string;
   preValidated?: boolean;
+  flightType?: FlightType;
 }
 
 export interface FlightData {
@@ -260,4 +263,3 @@ export interface EditSchoolProfileInput {
 export interface UserWithRoles extends User {
   roles?: string[];
 }
-

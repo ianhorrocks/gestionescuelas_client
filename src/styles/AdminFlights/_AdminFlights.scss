@@ -226,16 +226,12 @@
 }
 
 .reset-button {
-  position: absolute;
-  top: 160px;
-  left: 300px;
-  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
-  width: 35px;
-  height: 35px;
+  margin: 0 auto 0 auto; // Centrado y separado del stepper
+  width: 40px;
+  height: 40px;
   background: none;
   color: variables.$tertiary-color;
   border: none;
@@ -247,8 +243,8 @@
   }
 
   svg {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     pointer-events: none;
   }
 }

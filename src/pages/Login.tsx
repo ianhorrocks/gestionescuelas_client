@@ -52,7 +52,6 @@ const Login: React.FC = () => {
 
       setTimeout(() => {
         // Si es superadmin, redirige al panel de superadmin
-        console.log(user.roles);
         if (user.roles && user.roles.includes("Super Admin")) {
           navigate("/superadmin");
         } else if (user.assignedSchools && user.assignedSchools.length > 0) {
@@ -68,6 +67,9 @@ const Login: React.FC = () => {
           } else {
             navigate("/");
           }
+        } else if (user.activeSys) {
+          // Usuario activo pero sin escuelas asignadas
+          navigate("/user/flights-readonly");
         } else {
           navigate("/");
         }

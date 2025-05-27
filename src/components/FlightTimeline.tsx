@@ -33,6 +33,8 @@ const FlightTimeline: React.FC<Props> = ({ flights }) => {
         ? timeStringToCentesimal(flight.totalFlightTime).toString()
         : "N/A",
       school: flight.school?.name || "N/A",
+      preValidated: flight.preValidated,
+      flightType: flight.flightType,
     };
   }
 

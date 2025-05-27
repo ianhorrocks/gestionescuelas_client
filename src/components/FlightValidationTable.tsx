@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Flight, SimplifiedFlight } from "../types/types";
 import { Modal, Button } from "react-bootstrap";
-import { updateFlightStatus, deleteFlight, getFlight } from "../services/flightService";
+import {
+  updateFlightStatus,
+  deleteFlight,
+  getFlight,
+} from "../services/flightService";
 import { FaEye } from "react-icons/fa";
 import FlightAdminDetailModal from "./FlightAdminDetailModal";
+import { isValid } from "date-fns";
 
 interface FlightValidationTableProps {
   flights: Flight[];
@@ -128,11 +133,7 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
         : "rechazar el vuelo";
 
     if (preValidated) {
-      return (
-        <>
-          ¿Estás seguro que deseas <strong>{actionText}</strong>?
-        </>
-      );
+      return <>¿Estás seguro que deseas {actionText}?</>;
     } else {
       if (count > 1) {
         // Bulk
@@ -155,6 +156,35 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
     }
   }
 
+  // Parsea una fecha en formato DD/MM/YYYY o YYYY-MM-DD a objeto Date
+  function parseFlightDate(dateStr: string) {
+    // Intenta YYYY-MM-DD
+    let d = new Date(dateStr);
+    if (isValid(d)) return d;
+    // Intenta DD/MM/YYYY
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+      const [day, month, year] = dateStr.split("/");
+      d = new Date(`${year}-${month}-${day}`);
+    } else {
+      d = new Date(dateStr);
+    }
+    if (isValid(d)) return d;
+    return new Date(NaN); // Fecha inválida
+  }
+
+  // Ordenar vuelos por fecha (descendente) y hora de salida (descendente)
+  const sortedFlights = [...flights].sort((a, b) => {
+    const dateA = parseFlightDate(a.date);
+    const dateB = parseFlightDate(b.date);
+    // Si las fechas son iguales, comparar hora
+    if (dateB.getTime() === dateA.getTime()) {
+      return (b.departureTime || "00:00").localeCompare(
+        a.departureTime || "00:00"
+      );
+    }
+    return dateB.getTime() - dateA.getTime();
+  });
+
   if (flights.length === 0) {
     return (
       <div className="flight-validation-table-wrapper">
@@ -172,11 +202,13 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
           <thead>
             <tr>
               <th>Fecha</th>
-              <th>Hora</th>
               <th>Piloto</th>
+              <th>Tipo</th>
               <th>Instructor</th>
-              <th>Aeronave</th>
+              <th>Matrícula</th>
+              <th>Hora</th>
               <th>Ruta</th>
+              <th>Estado</th>
               <th>Ver</th>
               <th>
                 <label
@@ -194,43 +226,67 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
             </tr>
           </thead>
           <tbody>
-            {flights.map((flight) => (
+            {sortedFlights.map((flight) => (
               <tr
                 key={flight._id}
-                className={
-                  `${flight.preValidated ? "prevalidated" : ""} ${exitingRows.includes(flight._id) ? "row-exit" : ""}`.trim()
-                }
+                className={`${flight.preValidated ? "prevalidated" : ""} ${
+                  exitingRows.includes(flight._id) ? "row-exit" : ""
+                }`.trim()}
               >
-                <td>{new Date(flight.date).toLocaleDateString("es-ES")}</td>
+                {/* FECHA */}
                 <td>
-                  {new Date(flight.departureTime).toLocaleTimeString("es-ES", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false,
-                  })}{" "}
-                  -{" "}
-                  {new Date(flight.arrivalTime).toLocaleTimeString("es-ES", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false,
-                  })}
+                  {parseFlightDate(flight.date).toLocaleDateString("es-ES")}
                 </td>
+                {/* PILOTO */}
                 <td>
                   {flight.pilot.name} {flight.pilot.lastname}
                 </td>
+                {/* TIPO */}
+                <td>{flight.flightType || "-"}</td>
+                {/* INSTRUCTOR */}
                 <td>
                   {flight.instructor
                     ? `${flight.instructor.name} ${flight.instructor.lastname}`
                     : "Sin Instructor"}
                 </td>
+                {/* MATRÍCULA */}
                 <td>
                   {flight.airplane
                     ? flight.airplane.registrationNumber
                     : "Sin Avión"}
                 </td>
+                {/* HORA */}
+                <td>
+                  {flight.departureTime
+                    ? new Date(flight.departureTime).toLocaleTimeString(
+                        "es-ES",
+                        {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: false,
+                        }
+                      )
+                    : "--:--"}
+                  {" a "}
+                  {flight.arrivalTime
+                    ? new Date(flight.arrivalTime).toLocaleTimeString("es-ES", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false,
+                      })
+                    : "--:--"}
+                </td>
+                {/* RUTA */}
                 <td>
                   {flight.origin} → {flight.destination}
                 </td>
+                {/* ESTADO */}
+                <td>
+                  <span className={`badge ${flight.status}`}>
+                    {flight.status === "pending" ? "Pendiente" : flight.status}
+                  </span>
+                </td>
+                {/* VER */}
                 <td>
                   <button
                     className="eye-icon-btn"
@@ -243,7 +299,9 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
                           date: flightData.date,
                           departureTime: flightData.departureTime,
                           arrivalTime: flightData.arrivalTime,
-                          pilot: flightData.pilot ? `${flightData.pilot.name} ${flightData.pilot.lastname}` : "Sin Piloto",
+                          pilot: flightData.pilot
+                            ? `${flightData.pilot.name} ${flightData.pilot.lastname}`
+                            : "Sin Piloto",
                           instructor: flightData.instructor
                             ? `${flightData.instructor.name} ${flightData.instructor.lastname}`
                             : "Sin Instructor",
@@ -262,10 +320,14 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
                           chargeUnit: flightData.chargeUnit,
                           comment: flightData.comment,
                           preValidated: flightData.preValidated,
+                          flightType: flightData.flightType,
                         });
                         setShowAdminDetailModal(true);
                       } catch (e) {
-                        showTemporaryMessage?.("error", "No se pudo cargar el vuelo actualizado");
+                        showTemporaryMessage?.(
+                          "error",
+                          "No se pudo cargar el vuelo actualizado"
+                        );
                       }
                     }}
                     style={{
@@ -277,6 +339,7 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
                     <FaEye size={18} color="#555" />
                   </button>
                 </td>
+                {/* BULK */}
                 <td>
                   <label className="custom-checkbox">
                     <input

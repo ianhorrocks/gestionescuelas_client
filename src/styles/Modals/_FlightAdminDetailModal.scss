@@ -76,17 +76,18 @@
       flex-direction: column;
       gap: 0.7rem;
       width: 100%;
+      align-items: flex-start; // Asegura justificación a la izquierda
+    }
 
-      .confirm-reject-row {
-        display: flex;
-        flex-direction: row;
-        gap: 0.5rem; // Menor separación entre confirmar y rechazar
-      }
-      .delete-row {
-        margin-top: 0.2rem;
-        display: flex;
-        flex-direction: row;
-      }
+    .confirm-reject-row {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem; // Menor separación entre confirmar y rechazar
+    }
+    .delete-row {
+      margin-top: 0.2rem;
+      display: flex;
+      flex-direction: row;
     }
 
     .action-btn {
@@ -99,6 +100,7 @@
       cursor: pointer;
       outline: none;
       padding: 0;
+      width: auto; // Evita que ocupen todo el ancho
     }
 
     .confirm-btn {

@@ -18,9 +18,6 @@
   }
 }
 
-
-
-
 .tag-assignment-container {
   display: flex;
   flex-direction: row;
@@ -56,14 +53,17 @@
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: color.adjust(variables.$tertiary-color, $lightness: -10%) !important;
+      background-color: color.adjust(
+        variables.$tertiary-color,
+        $lightness: -10%
+      ) !important;
     }
   }
 }
 
-.text-danger, .id-unassigned {
-  color: #882b35 !important;
-
+.text-danger,
+.id-unassigned {
+  color: #f5192f !important;
 }
 
 .id-assigned {
@@ -73,5 +73,4 @@
 .plane-id-row {
   display: flex;
   align-items: center;
-
 }

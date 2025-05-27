@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { getAllUserFlights } from "../services/flightService";
 import Navbar from "../components/NavbarUser";
-import AddFlightModal from "../components/AddFlightModal";
 import FlightTable from "../components/FlightTable";
 import { getLoggedUser } from "../services/auth";
 import useTemporaryMessage from "../hooks/useTemporaryMessage";
@@ -13,10 +12,10 @@ import FlightDetailModal from "../components/FlightDetailModal";
 
 const convertToDecimalHours = (time: string): string => {
   const [hours, minutes] = time.split(":").map(Number);
-  return (hours + minutes / 60).toFixed(2); // Convertir a formato centesimal
+  return (hours + minutes / 60).toFixed(2);
 };
 
-const UserFlights: React.FC = () => {
+const UserFlightsReadOnly: React.FC = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const initialFilter =
@@ -27,7 +26,6 @@ const UserFlights: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<
     "all" | "pending" | "confirmed" | "cancelled"
   >(initialFilter);
-  const [showModal, setShowModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedFlight, setSelectedFlight] = useState<SimplifiedFlight | null>(
     null
@@ -38,7 +36,7 @@ const UserFlights: React.FC = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [scrollBtnActive, setScrollBtnActive] = useState(false);
   const [headerHidden, setHeaderHidden] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null); // 👈
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const node = scrollRef.current;
@@ -71,7 +69,6 @@ const UserFlights: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchFlights();
   }, []);
 
@@ -83,26 +80,6 @@ const UserFlights: React.FC = () => {
     setStatusFilter(filter);
   }, [location.search]);
 
-  const handleShowModal = () => setShowModal(true);
-
-  const handleCloseModal = () => setShowModal(false);
-
-  const handleFlightAdded = async (msg?: string) => {
-    setShowModal(false);
-    setError("");
-    if (msg) showTemporaryMessage("success", msg);
-
-    try {
-      const user = await getLoggedUser();
-      const flightsData = await getAllUserFlights(user._id);
-      setFlights(flightsData);
-      scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (err) {
-      console.error("Error al refrescar los vuelos:", err);
-      setError("Error al refrescar los vuelos");
-    }
-  };
-
   const handleCloseDetailModal = () => {
     setSelectedFlight(null);
     setShowDetailModal(false);
@@ -111,7 +88,7 @@ const UserFlights: React.FC = () => {
   const handleScrollTopClick = () => {
     setScrollBtnActive(true);
     scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-    setTimeout(() => setScrollBtnActive(false), 300); // 300ms para el efecto
+    setTimeout(() => setScrollBtnActive(false), 300);
   };
 
   return (
@@ -119,12 +96,16 @@ const UserFlights: React.FC = () => {
       <Navbar
         title="Mis Vuelos"
         links={[
-          { path: "/user/dashboard", label: "Dashboard" },
           { path: "/user/profile", label: "Mi Perfil" },
           { path: "/user/flights", label: "Mis Vuelos" },
         ]}
         logoutPath="/"
       />
+
+      <div className="alert alert-info" style={{ margin: "1rem" }}>
+        No tienes escuelas asignadas actualmente. Solo puedes ver tu historial
+        de vuelos.
+      </div>
 
       {error && <p className="text-danger">{error}</p>}
       {message && (
@@ -135,10 +116,6 @@ const UserFlights: React.FC = () => {
         <PlaneLoader />
       ) : (
         <div className="user-flights-content">
-          <button className="add-button" onClick={handleShowModal}>
-            +
-          </button>
-
           <FlightTable
             flights={flights.map(
               (flight): SimplifiedFlight => ({
@@ -217,13 +194,6 @@ const UserFlights: React.FC = () => {
         </div>
       )}
 
-      <AddFlightModal
-        show={showModal}
-        onClose={handleCloseModal}
-        onSuccess={handleFlightAdded}
-        showTemporaryMessage={showTemporaryMessage}
-      />
-
       <FlightDetailModal
         show={showDetailModal}
         onHide={handleCloseDetailModal}
@@ -246,4 +216,4 @@ const UserFlights: React.FC = () => {
   );
 };
 
-export default UserFlights;
+export default UserFlightsReadOnly;

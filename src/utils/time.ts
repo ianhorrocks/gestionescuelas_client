@@ -120,3 +120,33 @@ export function formatFlightDuration(time?: string | number): string {
   const minutes = totalMinutes % 60;
   return `${hours}h ${minutes}m`;
 }
+
+// Devuelve un string 'HH:mm a HH:mm' para un rango de horas, usando una fecha base
+export function formatHourRange(
+  date: string,
+  departure: string,
+  arrival: string
+): string {
+  // date puede ser YYYY-MM-DD o DD/MM/YYYY
+  let baseDate: Date;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    baseDate = new Date(date);
+  } else if (/^\d{2}\/\d{2}\/\d{4}$/.test(date)) {
+    const [day, month, year] = date.split("/");
+    baseDate = new Date(`${year}-${month}-${day}`);
+  } else {
+    baseDate = new Date(date);
+  }
+
+  // Helper para crear un Date con la hora/minutos deseados
+  function setTime(base: Date, time: string): Date {
+    const [h, m] = time.split(":").map(Number);
+    const d = new Date(base);
+    d.setHours(h || 0, m || 0, 0, 0);
+    return d;
+  }
+
+  const dep = setTime(baseDate, departure);
+  const arr = setTime(baseDate, arrival);
+  return `${format(dep, "HH:mm")} a ${format(arr, "HH:mm")}`;
+}

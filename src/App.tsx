@@ -12,6 +12,7 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminPlanes from "./pages/AdminPlanes";
 import AdminFlights from "./pages/AdminFlights";
 import UserFlights from "./pages/UserFlights";
+import UserFlightsReadOnly from "./pages/UserFlightsReadOnly";
 import Maintenance from "./pages/Maintenance";
 import SuperAdminPanel from "./pages/SuperAdminPanel";
 
@@ -70,6 +71,10 @@ const App: React.FC = () => {
                   <UserFlights />
                 </PrivateRoute>
               }
+            />
+            <Route
+              path="/user/flights-readonly"
+              element={<UserFlightsReadOnly />}
             />
             <Route
               path="/superadmin"

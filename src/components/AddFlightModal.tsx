@@ -291,7 +291,7 @@ const AddFlightModal: React.FC<AddFlightModalProps> = ({
             <CustomSelect
               options={[
                 { value: "Vuelo Privado", label: "Vuelo Privado" },
-                { value: "Instruccion Alumno", label: "Instruccion Alumno" },
+                { value: "Instruccion", label: "Instrucción" },
                 { value: "Navegacion", label: "Navegacion" },
                 { value: "Readaptacion", label: "Readaptacion" },
                 { value: "Bautismo", label: "Bautismo" },

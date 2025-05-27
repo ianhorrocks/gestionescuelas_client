@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { SimplifiedFlight } from "../types/types";
 import { timeStringToCentesimal } from "../utils/time";
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import prevalidatedTrue from "../assets/images/verified.png";
+import prevalidatedFalse from "../assets/images/not-verified.png";
 
 interface FlightAdminDetailModalProps {
   show: boolean;
@@ -64,11 +65,22 @@ const FlightAdminDetailModal: React.FC<FlightAdminDetailModalProps> = ({
               </p>
               <p className="prevalidated-row">
                 <strong>Prevalidado:</strong>{" "}
-                {flight.preValidated ? (
-                  <FaCheckCircle color="#27ae60" title="Prevalidado" />
-                ) : (
-                  <FaTimesCircle color="#c0392b" title="No prevalidado" />
-                )}
+                <img
+                  src={
+                    flight.preValidated ? prevalidatedTrue : prevalidatedFalse
+                  }
+                  alt={flight.preValidated ? "Prevalidado" : "No prevalidado"}
+                  title={flight.preValidated ? "Prevalidado" : "No prevalidado"}
+                  style={{
+                    width: 24,
+                    height: 24,
+                    verticalAlign: "middle",
+                    marginLeft: 6,
+                  }}
+                />
+              </p>
+              <p>
+                <strong>Tipo:</strong> {flight.flightType}
               </p>
               <p>
                 <strong>Piloto:</strong> {flight.pilot}
@@ -77,10 +89,13 @@ const FlightAdminDetailModal: React.FC<FlightAdminDetailModalProps> = ({
                 <strong>Instructor:</strong> {flight.instructor}
               </p>
               <p>
-                <strong>Aeronave:</strong> {flight.airplane}
+                <strong>Matrícula :</strong> {flight.airplane}
               </p>
               <p>
                 <strong>Origen:</strong> {flight.origin}
+              </p>
+              <p>
+                <strong>Destino:</strong> {flight.destination}
               </p>
             </div>
             <div className="num-col">
@@ -135,9 +150,6 @@ const FlightAdminDetailModal: React.FC<FlightAdminDetailModalProps> = ({
                   : "N/A"}
               </p>
 
-              <p>
-                <strong>Destino:</strong> {flight.destination}
-              </p>
               {flight.comment && (
                 <p>
                   <strong>Comentario:</strong> {flight.comment}
@@ -150,24 +162,20 @@ const FlightAdminDetailModal: React.FC<FlightAdminDetailModalProps> = ({
           <h6 className="actions-title">Acciones</h6>
           <div className="btn-row">
             {flight.status === "pending" && (
-              <div className="confirm-reject-row">
+              <>
                 <button className="action-btn confirm-btn" onClick={onConfirm}>
                   Confirmar Vuelo
                 </button>
                 <button className="action-btn reject-btn" onClick={onReject}>
                   Rechazar Vuelo
                 </button>
-              </div>
-            )}
-            {flight.status === "pending" && (
-              <div className="delete-row">
                 <button
                   className="action-btn delete-btn"
                   onClick={() => setShowConfirm(true)}
                 >
                   Eliminar de la escuela
                 </button>
-              </div>
+              </>
             )}
             {flight.status !== "pending" && onToPending && (
               <button

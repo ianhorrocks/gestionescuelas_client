@@ -1,11 +1,27 @@
 // src/components/FlightHistoryTable.tsx
 import React, { useState, useMemo } from "react";
-import { Modal, Button } from "react-bootstrap";
-import { updateFlightStatus, deleteFlight, getFlight } from "../services/flightService";
+import { Modal, Button, FormControl } from "react-bootstrap";
+import {
+  updateFlightStatus,
+  deleteFlight,
+  getFlight,
+} from "../services/flightService";
 import { HistoryFlight, SimplifiedFlight } from "../types/types";
-import FilterSelect from "./FilterSelect"; // Importa el componente FilterSelect
-import { FaArrowUp, FaArrowDown, FaEye } from "react-icons/fa";
+import FilterSelect from "./FilterSelect";
+import {
+  FaArrowUp,
+  FaArrowDown,
+  FaEye,
+  FaSearch,
+  FaCalendarAlt,
+} from "react-icons/fa";
 import FlightAdminDetailModal from "./FlightAdminDetailModal";
+import DatePickerBase, { DatePickerProps } from "react-datepicker";
+const DatePicker = DatePickerBase as unknown as React.FC<DatePickerProps>;
+import "react-datepicker/dist/react-datepicker.css";
+import { es } from "date-fns/locale";
+import prevalidatedTrue from "../assets/images/verified.png";
+import prevalidatedFalse from "../assets/images/not-verified.png";
 
 interface FlightHistoryTableProps {
   flights: HistoryFlight[];
@@ -34,8 +50,8 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
   const [sortField, setSortField] = useState<
     "date" | "airplane" | "instructor" | "pilot" | "status" | "time"
   >("date");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [rowsPerPage, setRowsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedFlight, setSelectedFlight] = useState<SimplifiedFlight | null>(
@@ -43,6 +59,9 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
   );
   const [pendingIds, setPendingIds] = useState<string[]>([]);
   const [exitingRows, setExitingRows] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [dateFilter, setDateFilter] = useState<Date | null>(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const toggleSelectAll = () => {
     if (selectedFlights.length === flights.length) {
@@ -59,7 +78,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
         : [...prev, id]
     );
   };
-  
+
   const sortedFlights = useMemo(() => {
     return [...flights].sort((a, b) => {
       let compare = 0;
@@ -107,7 +126,9 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
     try {
       setExitingRows(pendingIds); // Marcar filas para animación
       await new Promise((resolve) => setTimeout(resolve, 500)); // Esperar animación
-      await Promise.all(pendingIds.map((id) => updateFlightStatus(id, "pending")));
+      await Promise.all(
+        pendingIds.map((id) => updateFlightStatus(id, "pending"))
+      );
       showTemporaryMessage?.(
         "success",
         pendingIds.length > 1
@@ -128,6 +149,76 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
     }
   };
 
+  // Filtrado por búsqueda y fecha
+  const filteredFlights = useMemo(() => {
+    let filtered = paginatedFlights;
+    if (dateFilter) {
+      const selected = dateFilter;
+      filtered = filtered.filter((flight) => {
+        const flightDate = new Date(flight.date);
+        return (
+          flightDate.getFullYear() === selected.getFullYear() &&
+          flightDate.getMonth() === selected.getMonth() &&
+          flightDate.getDate() === selected.getDate()
+        );
+      });
+    }
+    if (!searchTerm) return filtered;
+    const lower = searchTerm.toLowerCase();
+    return filtered.filter((flight) => {
+      // Soluciona el error de typescript para airplane
+      let airplaneStr = "";
+      if (typeof flight.airplane === "string") {
+        airplaneStr = flight.airplane;
+      } else if (
+        flight.airplane &&
+        typeof flight.airplane === "object" &&
+        "registrationNumber" in flight.airplane
+      ) {
+        airplaneStr = flight.airplane.registrationNumber;
+      }
+      return (
+        (typeof flight.pilot === "string"
+          ? flight.pilot
+          : `${flight.pilot.name} ${flight.pilot.lastname}`
+        )
+          .toLowerCase()
+          .includes(lower) ||
+        (typeof flight.instructor === "string"
+          ? flight.instructor
+          : flight.instructor
+          ? `${flight.instructor.name} ${flight.instructor.lastname}`
+          : ""
+        )
+          .toLowerCase()
+          .includes(lower) ||
+        airplaneStr.toLowerCase().includes(lower) ||
+        (flight.origin || "").toLowerCase().includes(lower) ||
+        (flight.destination || "").toLowerCase().includes(lower) ||
+        (flight.status || "").toLowerCase().includes(lower)
+      );
+    });
+  }, [paginatedFlights, searchTerm, dateFilter]);
+
+  // Utilidad para resaltar coincidencias en texto
+  function highlightMatch(text: string, search: string) {
+    if (!search) return text;
+    const regex = new RegExp(
+      `(${search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+      "gi"
+    );
+    const parts = text.split(regex);
+    return parts.map((part, i) =>
+      regex.test(part) ? (
+        <strong key={i} style={{ fontWeight: 700, background: "#ffeeba" }}>
+          {part}
+        </strong>
+      ) : (
+        <React.Fragment key={i}>{part}</React.Fragment>
+      )
+    );
+  }
+
   if (flights.length === 0) {
     return (
       <div className="flight-history-table-wrapper">
@@ -144,7 +235,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
             <FilterSelect
               options={[
                 { value: "date", label: "Fecha" },
-                { value: "airplane", label: "Aeronave" },
+                { value: "airplane", label: "Matrícula " },
                 { value: "instructor", label: "Instructor" },
                 { value: "pilot", label: "Piloto" },
                 { value: "status", label: "Estado" },
@@ -166,9 +257,19 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                   ? "Cambiar a ascendente"
                   : "Cambiar a descendente"
               }
+              style={{ marginLeft: 0 }}
             >
               {sortOrder === "desc" ? <FaArrowUp /> : <FaArrowDown />}
             </button>
+            <div className="search-box">
+              <FaSearch className="search-icon" />
+              <FormControl
+                type="text"
+                placeholder="Buscar vuelo..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
           </div>
         </div>
         <div className="flight-history-container">
@@ -176,14 +277,102 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
             <table className="flight-history-table">
               <thead>
                 <tr>
-                  <th>Fecha</th>
-                  <th>Hora</th>
+                  <th>
+                    {/* FECHA */}
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        position: "relative",
+                      }}
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 6,
+                        }}
+                      >
+                        Fecha
+                        <button
+                          type="button"
+                          style={{
+                            background: "none",
+                            border: "none",
+                            cursor: "pointer",
+                            marginLeft: 4,
+                            padding: 0,
+                          }}
+                          onClick={() => setShowDatePicker((v) => !v)}
+                          aria-label="Filtrar por fecha"
+                        >
+                          <FaCalendarAlt
+                            color={dateFilter ? "#007bff" : "#888"}
+                            size={18}
+                          />
+                        </button>
+                        {dateFilter && (
+                          <button
+                            type="button"
+                            style={{
+                              background: "#f0f0f0",
+                              border: "1px solid #ccc",
+                              borderRadius: 4,
+                              color: "#555",
+                              fontSize: 13,
+                              marginLeft: 6,
+                              padding: "2px 10px",
+                              cursor: "pointer",
+                              transition: "background 0.2s, color 0.2s",
+                            }}
+                            onClick={() => {
+                              setDateFilter(null);
+                              setShowDatePicker(false);
+                              setCurrentPage(1);
+                            }}
+                            aria-label="Limpiar filtro de fecha"
+                            title="Limpiar filtro de fecha"
+                          >
+                            Limpiar
+                          </button>
+                        )}
+                      </span>
+                      {showDatePicker && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 30,
+                            left: 120,
+                            zIndex: 9999,
+                          }}
+                        >
+                          <DatePicker
+                            selected={dateFilter}
+                            onChange={(date: Date | null) => {
+                              setDateFilter(date);
+                              setShowDatePicker(false);
+                              setCurrentPage(1);
+                            }}
+                            locale={es}
+                            dateFormat="dd/MM/yyyy"
+                            isClearable
+                            inline
+                            maxDate={new Date()}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </th>
                   <th>Piloto</th>
+                  <th>Tipo</th>
                   <th>Instructor</th>
-                  <th>Aeronave</th>
+                  <th>Matrícula</th>
+                  <th>Hora</th>
                   <th>Ruta</th>
+                  <th>Pre-Validado</th>
                   <th>Estado</th>
-                  <th>VER</th> {/* Columna para el icono de ojo */}
+                  <th>VER</th>
                   <th>
                     <label
                       className="custom-checkbox"
@@ -200,55 +389,109 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {paginatedFlights.map((flight) => (
-                  <tr key={flight._id} className={exitingRows.includes(flight._id) ? "row-exit" : ""}>
+                {filteredFlights.map((flight) => (
+                  <tr
+                    key={flight._id}
+                    className={
+                      exitingRows.includes(flight._id) ? "row-exit" : ""
+                    }
+                  >
+                    {/* FECHA */}
                     <td>
-                      {new Date(flight.date).toLocaleDateString("es-ES", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                      })}
-                    </td>
-                    <td>
-                      {new Date(flight.departureTime).toLocaleTimeString(
-                        "es-ES",
-                        {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          hour12: false,
-                        }
-                      )}
-                      {" - "}
-                      {new Date(flight.arrivalTime).toLocaleTimeString(
-                        "es-ES",
-                        {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          hour12: false,
-                        }
+                      {highlightMatch(
+                        new Date(flight.date).toLocaleDateString("es-ES", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        }),
+                        searchTerm
                       )}
                     </td>
+                    {/* PILOTO */}
                     <td>
-                      {flight.pilot.name} {flight.pilot.lastname}
+                      {highlightMatch(
+                        `${flight.pilot.name} ${flight.pilot.lastname}`,
+                        searchTerm
+                      )}
                     </td>
+                    {/* TIPO */}
                     <td>
-                      {flight.instructor
-                        ? `${flight.instructor.name} ${flight.instructor.lastname}`
-                        : "N/A"}
+                      {highlightMatch(flight.flightType || "-", searchTerm)}
                     </td>
+                    {/* INSTRUCTOR */}
                     <td>
-                      {flight.airplane
-                        ? flight.airplane.registrationNumber
-                        : "N/A"}
+                      {highlightMatch(
+                        flight.instructor
+                          ? `${flight.instructor.name} ${flight.instructor.lastname}`
+                          : "-",
+                        searchTerm
+                      )}
                     </td>
+                    {/* MATRÍCULA */}
                     <td>
-                      {flight.origin} → {flight.destination}
+                      {highlightMatch(
+                        flight.airplane
+                          ? flight.airplane.registrationNumber
+                          : "N/A",
+                        searchTerm
+                      )}
                     </td>
+                    {/* HORA */}
+                    <td>
+                      {highlightMatch(
+                        `${new Date(flight.departureTime).toLocaleTimeString(
+                          "es-ES",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false,
+                          }
+                        )} - ${new Date(flight.arrivalTime).toLocaleTimeString(
+                          "es-ES",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false,
+                          }
+                        )}`,
+                        searchTerm
+                      )}
+                    </td>
+                    {/* RUTA */}
+                    <td>
+                      {highlightMatch(
+                        `${flight.origin} → ${flight.destination}`,
+                        searchTerm
+                      )}
+                    </td>
+                    {/* PRE-VALIDADO */}
+                    <td>
+                      <img
+                        src={
+                          flight.preValidated
+                            ? prevalidatedTrue
+                            : prevalidatedFalse
+                        }
+                        alt={
+                          flight.preValidated ? "Prevalidado" : "No prevalidado"
+                        }
+                        title={
+                          flight.preValidated ? "Prevalidado" : "No prevalidado"
+                        }
+                        style={{
+                          width: 24,
+                          height: 24,
+                          verticalAlign: "middle",
+                        }}
+                      />
+                    </td>
+                    {/* ESTADO */}
                     <td>
                       <span className={`badge ${flight.status}`}>
-                        {statusMap[flight.status]}
+                        {highlightMatch(statusMap[flight.status], searchTerm)}
                       </span>
                     </td>
+                    {/* VER */}
                     <td>
                       <button
                         className="eye-icon-btn"
@@ -264,7 +507,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                               pilot: `${flightData.pilot.name} ${flightData.pilot.lastname}`,
                               instructor: flightData.instructor
                                 ? `${flightData.instructor.name} ${flightData.instructor.lastname}`
-                                : "S/A",
+                                : "Sin Instructor",
                               origin: flightData.origin,
                               destination: flightData.destination,
                               status: flightData.status,
@@ -280,10 +523,14 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                               chargeUnit: flightData.chargeUnit,
                               comment: flightData.comment,
                               preValidated: flightData.preValidated,
+                              flightType: flightData.flightType,
                             });
                             setShowDetailModal(true);
                           } catch (e) {
-                            showTemporaryMessage?.("error", "No se pudo cargar el vuelo actualizado");
+                            showTemporaryMessage?.(
+                              "error",
+                              "No se pudo cargar el vuelo actualizado"
+                            );
                           }
                         }}
                         style={{
@@ -295,6 +542,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                         <FaEye size={18} color="#555" />
                       </button>
                     </td>
+                    {/* BULK */}
                     <td>
                       <label className="custom-checkbox">
                         <input
@@ -332,8 +580,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                   setCurrentPage(1);
                 }}
               >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
+                <option value={12}>12</option>
                 <option value={20}>20</option>
                 <option value={30}>30</option>
               </select>
