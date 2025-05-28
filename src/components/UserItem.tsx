@@ -5,7 +5,7 @@ import useTemporaryMessage from "../hooks/useTemporaryMessage";
 import Alert from "./Alert";
 import { TrashFill } from "react-bootstrap-icons";
 import "../styles/GeneralComponents/Items/_UserItem.scss";
-import { FlatUser} from "../types/types"; // Importamos el tipo User
+import { FlatUser } from "../types/types"; // Importamos el tipo User
 import defaultPhoto from "../assets/images/LogoSmallUserProfilePhoto.png";
 
 interface UserItemProps {
@@ -13,7 +13,6 @@ interface UserItemProps {
   onDelete: (id: string) => void;
   schoolId: string;
   onTagAssigned: (updatedUser: FlatUser) => void;
-
 }
 
 const UserItem: React.FC<UserItemProps> = ({
@@ -73,7 +72,6 @@ const UserItem: React.FC<UserItemProps> = ({
       setLoading(false);
     }
   };
-  
 
   const handleRemoveTag = async () => {
     setLoading(true);
@@ -87,7 +85,7 @@ const UserItem: React.FC<UserItemProps> = ({
       };
       setCurrentTagState("");
       showTemporaryMessage("success", "Tag eliminado");
-  
+
       onTagAssigned(updatedUser); // 🔥 actualiza el UserItemList sin recargar
     } catch (error) {
       console.error("Error eliminando tag:", error);
@@ -96,7 +94,6 @@ const UserItem: React.FC<UserItemProps> = ({
       setLoading(false);
     }
   };
-  
 
   return (
     <>
@@ -137,7 +134,6 @@ const UserItem: React.FC<UserItemProps> = ({
                 <h5 className="user-name">
                   {user.name} {user.lastname}
                 </h5>
-                
               </div>
               <p className="user-role">Rol: {userRole}</p>
             </div>
@@ -164,7 +160,9 @@ const UserItem: React.FC<UserItemProps> = ({
               Tag Tarjeta:
             </h5>
             <strong
-              className={`mt-4 ${currentTagState ? "id-assigned" : "id-unassigned"}`}
+              className={`mt-4 ${
+                currentTagState ? "id-assigned" : "id-unassigned"
+              }`}
               style={{ marginLeft: "0.5rem" }}
             >
               {currentTagState || "Sin asignar"}
@@ -178,6 +176,11 @@ const UserItem: React.FC<UserItemProps> = ({
               placeholder="Ingresa el tag"
               value={tag}
               onChange={(e) => setTag(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && tag && !loading) {
+                  handleAssignTag();
+                }
+              }}
             />
             <div className="tag-action-buttons">
               <button

@@ -228,17 +228,85 @@
           border: none;
           cursor: pointer;
           padding: 0;
-          color: #b0b0b0; // gris suave
+          color: #8f8e8e; // gris suave
           transition: color 0.2s;
 
           &:hover {
             color: #555;
           }
+        }
 
-          svg {
-            vertical-align: middle;
-            color: red;
-          }
+        // Sortable table header styles and icon classes
+        .th-sortable {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          position: relative;
+          justify-content: center;
+        }
+        .sort-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0 2px;
+          margin-left: 2px;
+          display: flex;
+          align-items: center;
+          transition: color 0.2s;
+          line-height: 1;
+        }
+        .sort-btn .sort-icon {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          line-height: 1;
+          gap: 10px; // Separación vertical clara entre flechas
+        }
+        .sort-btn .sort-icon svg {
+          display: block;
+          line-height: 1;
+          margin: 0;
+        }
+        .sort-btn .sort-icon svg:first-child {
+          margin-bottom: -2px;
+        }
+        .sort-btn .sort-icon svg:last-child {
+          margin-top: -2px;
+        }
+        .sort-btn.active svg {
+          color: #555 !important;
+        }
+        .sort-btn:not(.active) svg {
+          color: #bbb !important;
+        }
+        .sort-btn:hover svg {
+          filter: brightness(0.7);
+        }
+        .datepicker-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          margin-left: 4px;
+          padding: 0;
+          display: flex;
+          align-items: center;
+        }
+        .clear-date-btn {
+          background: #f0f0f0;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          color: #555;
+          font-size: 13px;
+          margin-left: 6px;
+          padding: 2px 10px;
+          cursor: pointer;
+          transition: background 0.2s, color 0.2s;
+        }
+        .datepicker-popover {
+          position: absolute;
+          top: 30px;
+          left: 120px;
+          z-index: 9999;
         }
       }
 

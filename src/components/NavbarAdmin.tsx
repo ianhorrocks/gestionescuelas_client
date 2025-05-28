@@ -27,24 +27,21 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
   logoutPath,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [schoolName, setSchoolName] = useState<string | null>(null);
-  const [schoolImage, setSchoolImage] = useState<string>(defaultSchoolImage);
+  const profile = localStorage.getItem("profile");
+  const parsedProfile = profile ? JSON.parse(profile) : null;
+  const assignedSchool = parsedProfile?.assignedSchools?.[0]?.school;
+  const [schoolName, setSchoolName] = useState<string | null>(
+    assignedSchool?.name || "Escuela no asignada"
+  );
+  const [schoolImage, setSchoolImage] = useState<string>(
+    assignedSchool?.photoUrl || defaultSchoolImage
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { message, showTemporaryMessage } = useTemporaryMessage();
   const navigate = useNavigate();
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    const profile = localStorage.getItem("profile");
-    if (profile) {
-      const parsedProfile = JSON.parse(profile);
-      const assignedSchool = parsedProfile.assignedSchools?.[0]?.school;
-      setSchoolName(assignedSchool?.name || "Escuela no asignada");
-      setSchoolImage(assignedSchool?.photoUrl || defaultSchoolImage);
-    }
-  }, []);
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 

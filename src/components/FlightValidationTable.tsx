@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Flight, SimplifiedFlight } from "../types/types";
+import { Flight } from "../types/types";
 import { Modal, Button } from "react-bootstrap";
-import {
-  updateFlightStatus,
-  deleteFlight,
-  getFlight,
-} from "../services/flightService";
+import { updateFlightStatus, deleteFlight } from "../services/flightService";
 import { FaEye } from "react-icons/fa";
 import FlightAdminDetailModal from "./FlightAdminDetailModal";
 import { isValid } from "date-fns";
@@ -37,8 +33,9 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
 
   const [selectedFlights, setSelectedFlights] = useState<string[]>([]);
   const [showAdminDetailModal, setShowAdminDetailModal] = useState(false);
-  const [adminDetailFlight, setAdminDetailFlight] =
-    useState<SimplifiedFlight | null>(null);
+  const [adminDetailFlight, setAdminDetailFlight] = useState<Flight | null>(
+    null
+  );
   const [exitingRows, setExitingRows] = useState<string[]>([]);
 
   useEffect(() => {
@@ -291,44 +288,9 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
                   <button
                     className="eye-icon-btn"
                     title="Ver detalles del vuelo"
-                    onClick={async () => {
-                      try {
-                        const flightData = await getFlight(flight._id);
-                        setAdminDetailFlight({
-                          _id: flightData._id,
-                          date: flightData.date,
-                          departureTime: flightData.departureTime,
-                          arrivalTime: flightData.arrivalTime,
-                          pilot: flightData.pilot
-                            ? `${flightData.pilot.name} ${flightData.pilot.lastname}`
-                            : "Sin Piloto",
-                          instructor: flightData.instructor
-                            ? `${flightData.instructor.name} ${flightData.instructor.lastname}`
-                            : "Sin Instructor",
-                          origin: flightData.origin,
-                          destination: flightData.destination,
-                          status: flightData.status,
-                          airplane: flightData.airplane
-                            ? flightData.airplane.registrationNumber
-                            : "Sin Avión",
-                          totalFlightTime: flightData.totalFlightTime,
-                          school: flightData.school?.name || "N/A",
-                          landings: flightData.landings,
-                          oil: flightData.oil,
-                          oilUnit: flightData.oilUnit,
-                          charge: flightData.charge,
-                          chargeUnit: flightData.chargeUnit,
-                          comment: flightData.comment,
-                          preValidated: flightData.preValidated,
-                          flightType: flightData.flightType,
-                        });
-                        setShowAdminDetailModal(true);
-                      } catch (e) {
-                        showTemporaryMessage?.(
-                          "error",
-                          "No se pudo cargar el vuelo actualizado"
-                        );
-                      }
+                    onClick={() => {
+                      setAdminDetailFlight(flight);
+                      setShowAdminDetailModal(true);
                     }}
                     style={{
                       background: "none",

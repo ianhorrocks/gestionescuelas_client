@@ -25,21 +25,15 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ title, links, logoutPath }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [profile, setProfile] = useState<User | null>(null);
+  const storedProfile = localStorage.getItem("profile");
+  const initialProfile = storedProfile ? JSON.parse(storedProfile) : null;
+  const [profile, setProfile] = useState<User | null>(initialProfile);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { message, showTemporaryMessage } = useTemporaryMessage();
   const navigate = useNavigate();
   const location = useLocation();
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    const storedProfile = localStorage.getItem("profile");
-    if (storedProfile) {
-      const parsedProfile: User = JSON.parse(storedProfile);
-      setProfile(parsedProfile);
-    }
-  }, []);
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 

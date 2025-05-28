@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-import { SimplifiedFlight } from "../types/types";
+import { SimplifiedFlight, HistoryFlight, Flight } from "../types/types";
 import { timeStringToCentesimal } from "../utils/time";
 import prevalidatedTrue from "../assets/images/verified.png";
 import prevalidatedFalse from "../assets/images/not-verified.png";
@@ -8,7 +8,7 @@ import prevalidatedFalse from "../assets/images/not-verified.png";
 interface FlightAdminDetailModalProps {
   show: boolean;
   onHide: () => void;
-  flight: SimplifiedFlight | null;
+  flight: HistoryFlight | SimplifiedFlight | Flight | null;
   showTemporaryMessage: (
     type: "success" | "error" | "warning",
     message: string
@@ -83,13 +83,28 @@ const FlightAdminDetailModal: React.FC<FlightAdminDetailModalProps> = ({
                 <strong>Tipo:</strong> {flight.flightType}
               </p>
               <p>
-                <strong>Piloto:</strong> {flight.pilot}
+                <strong>Piloto:</strong>{" "}
+                {typeof flight.pilot === "string"
+                  ? flight.pilot
+                  : flight.pilot
+                  ? `${flight.pilot.name} ${flight.pilot.lastname}`
+                  : "-"}
               </p>
               <p>
-                <strong>Instructor:</strong> {flight.instructor}
+                <strong>Instructor:</strong>{" "}
+                {typeof flight.instructor === "string"
+                  ? flight.instructor
+                  : flight.instructor
+                  ? `${flight.instructor.name} ${flight.instructor.lastname}`
+                  : "Sin Instructor"}
               </p>
               <p>
-                <strong>Matrícula :</strong> {flight.airplane}
+                <strong>Matrícula :</strong>{" "}
+                {typeof flight.airplane === "string"
+                  ? flight.airplane
+                  : flight.airplane && "registrationNumber" in flight.airplane
+                  ? flight.airplane.registrationNumber
+                  : "Sin Avión"}
               </p>
               <p>
                 <strong>Origen:</strong> {flight.origin}

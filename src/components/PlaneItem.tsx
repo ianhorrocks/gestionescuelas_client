@@ -124,7 +124,6 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
           <p className="subtitle">
             Matrícula: <strong>{plane.registrationNumber}</strong>
           </p>
-          
 
           <h5 className="section-title mt-4">Relación con la escuela:</h5>
           <p className="subtitle">
@@ -136,13 +135,15 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
               ID Escaner:
             </h5>
             <strong
-              className={`mt-4 ${currentIdEmbebbedState ? "id-assigned" : "id-unassigned"}`}
+              className={`mt-4 ${
+                currentIdEmbebbedState ? "id-assigned" : "id-unassigned"
+              }`}
               style={{ marginLeft: "0.5rem" }}
             >
               {currentIdEmbebbedState || "Sin asignar"}
             </strong>
           </div>
-          
+
           <div
             className="tag-assignment-container"
             style={{
@@ -158,6 +159,11 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
               placeholder="Ingresa el ID"
               value={idInput}
               onChange={(e) => setIdInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && idInput && !loading) {
+                  handleAssignId();
+                }
+              }}
               style={{
                 flex: 1,
                 minWidth: 120,

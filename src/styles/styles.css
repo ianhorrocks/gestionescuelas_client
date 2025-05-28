@@ -2712,15 +2712,82 @@ body,
   border: none;
   cursor: pointer;
   padding: 0;
-  color: #b0b0b0;
+  color: #8f8e8e;
   transition: color 0.2s;
 }
 .tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .eye-icon-btn:hover {
   color: #555;
 }
-.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .eye-icon-btn svg {
-  vertical-align: middle;
-  color: red;
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .th-sortable {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  justify-content: center;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .sort-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 2px;
+  margin-left: 2px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+  line-height: 1;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .sort-btn .sort-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  gap: 10px;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .sort-btn .sort-icon svg {
+  display: block;
+  line-height: 1;
+  margin: 0;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .sort-btn .sort-icon svg:first-child {
+  margin-bottom: -2px;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .sort-btn .sort-icon svg:last-child {
+  margin-top: -2px;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .sort-btn.active svg {
+  color: #555 !important;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .sort-btn:not(.active) svg {
+  color: #bbb !important;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .sort-btn:hover svg {
+  filter: brightness(0.7);
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .datepicker-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 4px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .clear-date-btn {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: #555;
+  font-size: 13px;
+  margin-left: 6px;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .flight-history-table .datepicker-popover {
+  position: absolute;
+  top: 30px;
+  left: 120px;
+  z-index: 9999;
 }
 .tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons {
   position: absolute;
@@ -3243,6 +3310,17 @@ body,
 }
 .flight-validation-table-wrapper .flight-validation-table .custom-checkbox:hover .checkmark {
   border-color: #7b6983;
+}
+.flight-validation-table-wrapper .flight-validation-table .eye-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #8f8e8e;
+  transition: color 0.2s;
+}
+.flight-validation-table-wrapper .flight-validation-table .eye-icon-btn:hover {
+  color: #555;
 }
 
 @keyframes slideInFromRight {

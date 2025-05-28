@@ -1,20 +1,9 @@
 // src/components/FlightHistoryTable.tsx
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import { Modal, Button, FormControl } from "react-bootstrap";
-import {
-  updateFlightStatus,
-  deleteFlight,
-  getFlight,
-} from "../services/flightService";
-import { HistoryFlight, SimplifiedFlight } from "../types/types";
-import FilterSelect from "./FilterSelect";
-import {
-  FaArrowUp,
-  FaArrowDown,
-  FaEye,
-  FaSearch,
-  FaCalendarAlt,
-} from "react-icons/fa";
+import { updateFlightStatus, deleteFlight } from "../services/flightService";
+import { HistoryFlight } from "../types/types";
+import { FaEye, FaSearch, FaCalendarAlt } from "react-icons/fa";
 import FlightAdminDetailModal from "./FlightAdminDetailModal";
 import DatePickerBase, { DatePickerProps } from "react-datepicker";
 const DatePicker = DatePickerBase as unknown as React.FC<DatePickerProps>;
@@ -22,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { es } from "date-fns/locale";
 import prevalidatedTrue from "../assets/images/verified.png";
 import prevalidatedFalse from "../assets/images/not-verified.png";
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 
 interface FlightHistoryTableProps {
   flights: HistoryFlight[];
@@ -47,14 +37,10 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
 }) => {
   const [selectedFlights, setSelectedFlights] = useState<string[]>([]);
   const [confirmModal, setConfirmModal] = useState(false);
-  const [sortField, setSortField] = useState<
-    "date" | "airplane" | "instructor" | "pilot" | "status" | "time"
-  >("date");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [rowsPerPage, setRowsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
   const [showDetailModal, setShowDetailModal] = useState(false);
-  const [selectedFlight, setSelectedFlight] = useState<SimplifiedFlight | null>(
+  const [selectedFlight, setSelectedFlight] = useState<HistoryFlight | null>(
     null
   );
   const [pendingIds, setPendingIds] = useState<string[]>([]);
@@ -62,6 +48,33 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [dateFilter, setDateFilter] = useState<Date | null>(null);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [sortField, setSortField] = useState<
+    | "date"
+    | "pilot"
+    | "flightType"
+    | "instructor"
+    | "airplane"
+    | "preValidated"
+    | "status"
+    | null
+  >(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
+  const datepickerRef = useRef<HTMLDivElement | null>(null);
+
+  // Close datepicker on outside click
+  useEffect(() => {
+    if (!showDatePicker) return;
+    function handleClick(e: MouseEvent) {
+      if (
+        datepickerRef.current &&
+        !datepickerRef.current.contains(e.target as Node)
+      ) {
+        setShowDatePicker(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [showDatePicker]);
 
   const toggleSelectAll = () => {
     if (selectedFlights.length === flights.length) {
@@ -80,6 +93,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
   };
 
   const sortedFlights = useMemo(() => {
+    if (!sortField || !sortOrder) return [...flights];
     return [...flights].sort((a, b) => {
       let compare = 0;
       if (sortField === "date") {
@@ -96,14 +110,10 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
         compare = a.pilot.lastname.localeCompare(b.pilot.lastname);
       } else if (sortField === "status") {
         compare = a.status.localeCompare(b.status);
-      } else if (sortField === "time") {
-        const timeA =
-          new Date(a.arrivalTime).getTime() -
-          new Date(a.departureTime).getTime();
-        const timeB =
-          new Date(b.arrivalTime).getTime() -
-          new Date(b.departureTime).getTime();
-        compare = timeA - timeB;
+      } else if (sortField === "flightType") {
+        compare = (a.flightType || "").localeCompare(b.flightType || "");
+      } else if (sortField === "preValidated") {
+        compare = Number(a.preValidated) - Number(b.preValidated);
       }
       return sortOrder === "asc" ? compare : -compare;
     });
@@ -200,7 +210,6 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
     });
   }, [paginatedFlights, searchTerm, dateFilter]);
 
-  // Utilidad para resaltar coincidencias en texto
   function highlightMatch(text: string, search: string) {
     if (!search) return text;
     const regex = new RegExp(
@@ -232,40 +241,11 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
       <div className="tab-content history-tab">
         <div className="flight-history-header-wrapper">
           <div className="flight-history-header">
-            <FilterSelect
-              options={[
-                { value: "date", label: "Fecha" },
-                { value: "airplane", label: "Matrícula " },
-                { value: "instructor", label: "Instructor" },
-                { value: "pilot", label: "Piloto" },
-                { value: "status", label: "Estado" },
-                { value: "time", label: "Tiempo Volado" },
-              ]}
-              value={sortField}
-              onChange={(value) => setSortField(value as typeof sortField)}
-              placeholder="Ordenar por"
-              keyboard
-              autoClose
-            />
-            <button
-              className="sort-order-button"
-              onClick={() =>
-                setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"))
-              }
-              title={
-                sortOrder === "desc"
-                  ? "Cambiar a ascendente"
-                  : "Cambiar a descendente"
-              }
-              style={{ marginLeft: 0 }}
-            >
-              {sortOrder === "desc" ? <FaArrowUp /> : <FaArrowDown />}
-            </button>
             <div className="search-box">
               <FaSearch className="search-icon" />
               <FormControl
                 type="text"
-                placeholder="Buscar vuelo..."
+                placeholder="Buscar..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -277,76 +257,74 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
             <table className="flight-history-table">
               <thead>
                 <tr>
+                  {/* FECHA */}
                   <th>
-                    {/* FECHA */}
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        position: "relative",
-                      }}
-                    >
-                      <span
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 6,
+                    <div className="th-sortable">
+                      <span>Fecha</span>
+                      <button
+                        className={`sort-btn${
+                          sortField === "date" ? " active" : ""
+                        }`}
+                        onClick={() => {
+                          if (sortField !== "date") {
+                            setSortField("date");
+                            setSortOrder("desc");
+                          } else if (sortOrder === "desc") {
+                            setSortOrder("asc");
+                          } else if (sortOrder === "asc") {
+                            setSortField(null);
+                            setSortOrder(null);
+                          }
                         }}
+                        aria-label="Ordenar por fecha"
                       >
-                        Fecha
+                        {sortField !== "date" ? (
+                          <span className="sort-icon sort-icon-both">
+                            <TiArrowSortedDown
+                              size={14}
+                              color="#bbb"
+                              style={{ marginBottom: -8 }}
+                            />
+                            <TiArrowSortedUp
+                              size={14}
+                              color="#bbb"
+                              style={{ marginTop: -8 }}
+                            />
+                          </span>
+                        ) : sortOrder === "desc" ? (
+                          <TiArrowSortedUp size={18} color="#555" />
+                        ) : (
+                          <TiArrowSortedDown size={18} color="#555" />
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        className="datepicker-btn"
+                        onClick={() => setShowDatePicker((v) => !v)}
+                        aria-label="Filtrar por fecha"
+                      >
+                        <FaCalendarAlt
+                          color={dateFilter ? "#007bff" : "#888"}
+                          size={18}
+                        />
+                      </button>
+                      {dateFilter && (
                         <button
                           type="button"
-                          style={{
-                            background: "none",
-                            border: "none",
-                            cursor: "pointer",
-                            marginLeft: 4,
-                            padding: 0,
+                          className="clear-date-btn"
+                          onClick={() => {
+                            setDateFilter(null);
+                            setShowDatePicker(false);
+                            setCurrentPage(1);
                           }}
-                          onClick={() => setShowDatePicker((v) => !v)}
-                          aria-label="Filtrar por fecha"
+                          aria-label="Limpiar filtro de fecha"
+                          title="Limpiar filtro de fecha"
                         >
-                          <FaCalendarAlt
-                            color={dateFilter ? "#007bff" : "#888"}
-                            size={18}
-                          />
+                          Limpiar
                         </button>
-                        {dateFilter && (
-                          <button
-                            type="button"
-                            style={{
-                              background: "#f0f0f0",
-                              border: "1px solid #ccc",
-                              borderRadius: 4,
-                              color: "#555",
-                              fontSize: 13,
-                              marginLeft: 6,
-                              padding: "2px 10px",
-                              cursor: "pointer",
-                              transition: "background 0.2s, color 0.2s",
-                            }}
-                            onClick={() => {
-                              setDateFilter(null);
-                              setShowDatePicker(false);
-                              setCurrentPage(1);
-                            }}
-                            aria-label="Limpiar filtro de fecha"
-                            title="Limpiar filtro de fecha"
-                          >
-                            Limpiar
-                          </button>
-                        )}
-                      </span>
+                      )}
                       {showDatePicker && (
-                        <div
-                          style={{
-                            position: "absolute",
-                            top: 30,
-                            left: 120,
-                            zIndex: 9999,
-                          }}
-                        >
+                        <div className="datepicker-popover" ref={datepickerRef}>
                           <DatePicker
                             selected={dateFilter}
                             onChange={(date: Date | null) => {
@@ -364,15 +342,265 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                       )}
                     </div>
                   </th>
-                  <th>Piloto</th>
-                  <th>Tipo</th>
-                  <th>Instructor</th>
-                  <th>Matrícula</th>
+                  {/* PILOTO */}
+                  <th>
+                    <div className="th-sortable">
+                      <span>Piloto</span>
+                      <button
+                        className={`sort-btn${
+                          sortField === "pilot" ? " active" : ""
+                        }`}
+                        onClick={() => {
+                          if (sortField !== "pilot") {
+                            setSortField("pilot");
+                            setSortOrder("desc");
+                          } else if (sortOrder === "desc") {
+                            setSortOrder("asc");
+                          } else if (sortOrder === "asc") {
+                            setSortField(null);
+                            setSortOrder(null);
+                          }
+                        }}
+                        aria-label="Ordenar por piloto"
+                      >
+                        {sortField !== "pilot" ? (
+                          <span className="sort-icon sort-icon-both">
+                            <TiArrowSortedDown
+                              size={14}
+                              color="#bbb"
+                              style={{ marginBottom: -8 }}
+                            />
+                            <TiArrowSortedUp
+                              size={14}
+                              color="#bbb"
+                              style={{ marginTop: -8 }}
+                            />
+                          </span>
+                        ) : sortOrder === "desc" ? (
+                          <TiArrowSortedUp size={18} color="#555" />
+                        ) : (
+                          <TiArrowSortedDown size={18} color="#555" />
+                        )}
+                      </button>
+                    </div>
+                  </th>
+                  {/* TIPO */}
+                  <th>
+                    <div className="th-sortable">
+                      <span>Tipo</span>
+                      <button
+                        className={`sort-btn${
+                          sortField === "flightType" ? " active" : ""
+                        }`}
+                        onClick={() => {
+                          if (sortField !== "flightType") {
+                            setSortField("flightType");
+                            setSortOrder("desc");
+                          } else if (sortOrder === "desc") {
+                            setSortOrder("asc");
+                          } else if (sortOrder === "asc") {
+                            setSortField(null);
+                            setSortOrder(null);
+                          }
+                        }}
+                        aria-label="Ordenar por tipo"
+                      >
+                        {sortField !== "flightType" ? (
+                          <span className="sort-icon sort-icon-both">
+                            <TiArrowSortedDown
+                              size={14}
+                              color="#bbb"
+                              style={{ marginBottom: -8 }}
+                            />
+                            <TiArrowSortedUp
+                              size={14}
+                              color="#bbb"
+                              style={{ marginTop: -8 }}
+                            />
+                          </span>
+                        ) : sortOrder === "desc" ? (
+                          <TiArrowSortedUp size={18} color="#555" />
+                        ) : (
+                          <TiArrowSortedDown size={18} color="#555" />
+                        )}
+                      </button>
+                    </div>
+                  </th>
+                  {/* INSTRUCTOR */}
+                  <th>
+                    <div className="th-sortable">
+                      <span>Instructor</span>
+                      <button
+                        className={`sort-btn${
+                          sortField === "instructor" ? " active" : ""
+                        }`}
+                        onClick={() => {
+                          if (sortField !== "instructor") {
+                            setSortField("instructor");
+                            setSortOrder("desc");
+                          } else if (sortOrder === "desc") {
+                            setSortOrder("asc");
+                          } else if (sortOrder === "asc") {
+                            setSortField(null);
+                            setSortOrder(null);
+                          }
+                        }}
+                        aria-label="Ordenar por instructor"
+                      >
+                        {sortField !== "instructor" ? (
+                          <span className="sort-icon sort-icon-both">
+                            <TiArrowSortedDown
+                              size={14}
+                              color="#bbb"
+                              style={{ marginBottom: -8 }}
+                            />
+                            <TiArrowSortedUp
+                              size={14}
+                              color="#bbb"
+                              style={{ marginTop: -8 }}
+                            />
+                          </span>
+                        ) : sortOrder === "desc" ? (
+                          <TiArrowSortedUp size={18} color="#555" />
+                        ) : (
+                          <TiArrowSortedDown size={18} color="#555" />
+                        )}
+                      </button>
+                    </div>
+                  </th>
+                  {/* MATRÍCULA */}
+                  <th>
+                    <div className="th-sortable">
+                      <span>Matrícula</span>
+                      <button
+                        className={`sort-btn${
+                          sortField === "airplane" ? " active" : ""
+                        }`}
+                        onClick={() => {
+                          if (sortField !== "airplane") {
+                            setSortField("airplane");
+                            setSortOrder("desc");
+                          } else if (sortOrder === "desc") {
+                            setSortOrder("asc");
+                          } else if (sortOrder === "asc") {
+                            setSortField(null);
+                            setSortOrder(null);
+                          }
+                        }}
+                        aria-label="Ordenar por matrícula"
+                      >
+                        {sortField !== "airplane" ? (
+                          <span className="sort-icon sort-icon-both">
+                            <TiArrowSortedDown
+                              size={14}
+                              color="#bbb"
+                              style={{ marginBottom: -8 }}
+                            />
+                            <TiArrowSortedUp
+                              size={14}
+                              color="#bbb"
+                              style={{ marginTop: -8 }}
+                            />
+                          </span>
+                        ) : sortOrder === "desc" ? (
+                          <TiArrowSortedUp size={18} color="#555" />
+                        ) : (
+                          <TiArrowSortedDown size={18} color="#555" />
+                        )}
+                      </button>
+                    </div>
+                  </th>
+                  {/* HORA (no sort) */}
                   <th>Hora</th>
+                  {/* RUTA (no sort) */}
                   <th>Ruta</th>
-                  <th>Pre-Validado</th>
-                  <th>Estado</th>
+                  {/* PRE-VALIDADO */}
+                  <th>
+                    <div className="th-sortable">
+                      <span>Pre-Validado</span>
+                      <button
+                        className={`sort-btn${
+                          sortField === "preValidated" ? " active" : ""
+                        }`}
+                        onClick={() => {
+                          if (sortField !== "preValidated") {
+                            setSortField("preValidated");
+                            setSortOrder("desc");
+                          } else if (sortOrder === "desc") {
+                            setSortOrder("asc");
+                          } else if (sortOrder === "asc") {
+                            setSortField(null);
+                            setSortOrder(null);
+                          }
+                        }}
+                        aria-label="Ordenar por pre-validado"
+                      >
+                        {sortField !== "preValidated" ? (
+                          <span className="sort-icon sort-icon-both">
+                            <TiArrowSortedDown
+                              size={14}
+                              color="#bbb"
+                              style={{ marginBottom: -8 }}
+                            />
+                            <TiArrowSortedUp
+                              size={14}
+                              color="#bbb"
+                              style={{ marginTop: -8 }}
+                            />
+                          </span>
+                        ) : sortOrder === "desc" ? (
+                          <TiArrowSortedUp size={18} color="#555" />
+                        ) : (
+                          <TiArrowSortedDown size={18} color="#555" />
+                        )}
+                      </button>
+                    </div>
+                  </th>
+                  {/* ESTADO */}
+                  <th>
+                    <div className="th-sortable">
+                      <span>Estado</span>
+                      <button
+                        className={`sort-btn${
+                          sortField === "status" ? " active" : ""
+                        }`}
+                        onClick={() => {
+                          if (sortField !== "status") {
+                            setSortField("status");
+                            setSortOrder("desc");
+                          } else if (sortOrder === "desc") {
+                            setSortOrder("asc");
+                          } else if (sortOrder === "asc") {
+                            setSortField(null);
+                            setSortOrder(null);
+                          }
+                        }}
+                        aria-label="Ordenar por estado"
+                      >
+                        {sortField !== "status" ? (
+                          <span className="sort-icon sort-icon-both">
+                            <TiArrowSortedDown
+                              size={14}
+                              color="#bbb"
+                              style={{ marginBottom: -8 }}
+                            />
+                            <TiArrowSortedUp
+                              size={14}
+                              color="#bbb"
+                              style={{ marginTop: -8 }}
+                            />
+                          </span>
+                        ) : sortOrder === "desc" ? (
+                          <TiArrowSortedUp size={18} color="#555" />
+                        ) : (
+                          <TiArrowSortedDown size={18} color="#555" />
+                        )}
+                      </button>
+                    </div>
+                  </th>
+                  {/* VER */}
                   <th>VER</th>
+                  {/* BULK */}
                   <th>
                     <label
                       className="custom-checkbox"
@@ -496,42 +724,9 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                       <button
                         className="eye-icon-btn"
                         title="Ver detalles del vuelo"
-                        onClick={async () => {
-                          try {
-                            const flightData = await getFlight(flight._id);
-                            setSelectedFlight({
-                              _id: flightData._id,
-                              date: flightData.date,
-                              departureTime: flightData.departureTime,
-                              arrivalTime: flightData.arrivalTime,
-                              pilot: `${flightData.pilot.name} ${flightData.pilot.lastname}`,
-                              instructor: flightData.instructor
-                                ? `${flightData.instructor.name} ${flightData.instructor.lastname}`
-                                : "Sin Instructor",
-                              origin: flightData.origin,
-                              destination: flightData.destination,
-                              status: flightData.status,
-                              airplane: flightData.airplane
-                                ? flightData.airplane.registrationNumber
-                                : "N/A",
-                              totalFlightTime: flightData.totalFlightTime,
-                              school: flightData.school?.name || "N/A",
-                              landings: flightData.landings,
-                              oil: flightData.oil,
-                              oilUnit: flightData.oilUnit,
-                              charge: flightData.charge,
-                              chargeUnit: flightData.chargeUnit,
-                              comment: flightData.comment,
-                              preValidated: flightData.preValidated,
-                              flightType: flightData.flightType,
-                            });
-                            setShowDetailModal(true);
-                          } catch (e) {
-                            showTemporaryMessage?.(
-                              "error",
-                              "No se pudo cargar el vuelo actualizado"
-                            );
-                          }
+                        onClick={() => {
+                          setSelectedFlight(flight);
+                          setShowDetailModal(true);
                         }}
                         style={{
                           background: "none",
