@@ -1,4 +1,5 @@
 @use "../Variables/variables";
+@use "sass:color";
 
 .flight-validation-table-wrapper {
   position: relative;
@@ -130,7 +131,7 @@
       }
 
       &[aria-label="Cancelar vuelo"]:hover svg {
-        color: lighten(variables.$error-bg-color, 10%);
+        color: color.adjust(variables.$error-bg-color, $lightness: 10%);
       }
     }
 
@@ -214,7 +215,7 @@
 
 .floating-buttons {
   position: fixed;
-  top: 150px; /* Separación del borde inferior */
+  top: 80px; /* Separación del borde inferior */
   right: 40px; /* Separación del borde derecho */
   display: flex;
   flex-direction: row;

@@ -119,6 +119,11 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
           </div>
         </div>
 
+        <div className="nav-admin-school-info" onClick={openModal}>
+          <img src={schoolImage} alt="School" className="school-thumbnail" />
+          <span className="school-name">{schoolName}</span>
+        </div>
+
         {links.map((link) => (
           <NavLink
             key={link.path}
@@ -137,11 +142,6 @@ const NavbarAdmin: React.FC<NavbarAdminProps> = ({
             {link.label}
           </NavLink>
         ))}
-
-        <div className="nav-admin-school-info" onClick={openModal}>
-          <img src={schoolImage} alt="School" className="school-thumbnail" />
-          <span className="school-name">{schoolName}</span>
-        </div>
 
         <NavLink to="/" className="logout-button" onClick={handleLogout}>
           <FontAwesomeIcon icon={faSignOutAlt} className="logout-icon" />

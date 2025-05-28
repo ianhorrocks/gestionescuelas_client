@@ -435,7 +435,7 @@ div.modal-content .btn-delete-school:hover {
 
 html,
 body {
-  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Nunito", sans-serif;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -542,13 +542,13 @@ h2 {
   gap: 0.5rem;
 }
 .login-page .login-container .login-logo {
-  width: 100px;
+  width: 130px;
   height: auto;
   margin-bottom: 0.2rem;
 }
 .login-page .login-container .login-title {
   font-family: "Caveat", cursive;
-  font-size: 3.5rem;
+  font-size: 3.2rem;
   text-align: center;
   margin-bottom: 1.5rem;
 }
@@ -2157,7 +2157,6 @@ button.btn-close:hover {
   border-radius: 8px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  margin-top: auto;
 }
 .navbar-admin .menu-content .nav-admin-school-info:hover {
   background-color: rgba(255, 255, 255, 0.1);
@@ -2725,7 +2724,7 @@ body,
 }
 .tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons {
   position: absolute;
-  top: 130px;
+  top: 80px;
   right: 50px;
   display: flex;
   gap: 0.6rem;
@@ -2749,6 +2748,9 @@ body,
 }
 .tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons .floating-button.to-pending {
   background-color: #dfb323;
+}
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons .floating-button.to-pending:hover {
+  scale: 1.05;
 }
 .tab-content .history-tab .flight-history-container .badge {
   padding: 4px 8px;
@@ -3268,7 +3270,7 @@ body,
 
 .floating-buttons {
   position: fixed;
-  top: 150px; /* Separación del borde inferior */
+  top: 80px; /* Separación del borde inferior */
   right: 40px; /* Separación del borde derecho */
   display: flex;
   flex-direction: row;

@@ -1,5 +1,6 @@
-// src/styles/FlightHistoryTable.scss
 @use "../Variables/variables";
+@use "sass:color";
+
 .tab-content .history-tab {
   .flight-history-header-wrapper {
     width: min(100%, 1600px);
@@ -243,7 +244,7 @@
 
       .floating-buttons {
         position: absolute; // Cambiado de fixed a absolute
-        top: 130px;
+        top: 80px;
         right: 50px;
         display: flex;
         gap: 0.6rem;
@@ -263,11 +264,17 @@
           transition: background 0.3s ease;
 
           &:hover {
-            background-color: darken(variables.$primary-color, 10%);
+            background-color: color.adjust(
+              variables.$primary-color,
+              $lightness: -10%
+            );
           }
 
           &.to-pending {
             background-color: variables.$warning-border-color;
+            &:hover {
+              scale: 1.05;
+            }
           }
         }
       }

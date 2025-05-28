@@ -71,21 +71,19 @@
 }
 
 .admin-flights-container {
-  margin-top: 44px; // Asegura que el contenido no quede oculto detrás del navbar
+  margin-top: 44px;
   padding: 1rem;
-
-  @media (min-width: 990px) {
-    margin-left: 260px; // Ajusta el margen para el sidebar en pantallas grandes
-  }
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; // Asegura que el contenido comience desde arriba
-  height: calc(
-    110vh - 170px
-  ); // Altura fija para que el contenedor ocupe el espacio restante (ajustado al navbar y footer)
-  overflow-y: auto; // Habilita el scroll solo en este contenedor
+  justify-content: flex-start;
+  height: calc(110vh - 170px);
+  overflow-y: auto;
+
+  @media (min-width: 990px) {
+    margin-left: 260px;
+  }
 
   .tab-content {
     width: min(100%, 1600px);
