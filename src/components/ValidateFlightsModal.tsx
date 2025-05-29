@@ -27,6 +27,7 @@ interface Props {
     discardedRows: DiscardedRow[]
   ) => void;
   schoolId: string;
+  showTemporaryMessage: (type: "success" | "error", message: string) => void;
 }
 
 const ValidateFlightsModal: React.FC<Props> = ({
@@ -34,6 +35,7 @@ const ValidateFlightsModal: React.FC<Props> = ({
   onHide,
   onResult,
   schoolId,
+  showTemporaryMessage,
 }) => {
   const [embeddedFlights, setEmbeddedFlights] = useState<EmbeddedFlight[]>([]);
   const [discardedRows, setDiscardedRows] = useState<DiscardedRow[]>([]);
@@ -89,16 +91,31 @@ const ValidateFlightsModal: React.FC<Props> = ({
 
     Papa.parse<EmbeddedFlightInput>(file, {
       header: true,
+
       skipEmptyLines: true,
       complete: async (result) => {
         try {
           const parsedRows = result.data;
+          console.log("[DEBUG] headers:", result.meta.fields);
+          console.log("[DEBUG] parsed row", parsedRows[0]);
           const response = await createEmbebedFlights({
             schoolId,
             data: parsedRows,
           });
           setEmbeddedFlights(response.embebedFlights);
           setDiscardedRows(response.discardedRows);
+          if (
+            response.discardedRows.some(
+              (r) => r.reason === "Hash inválido o ausente"
+            )
+          ) {
+            showTemporaryMessage(
+              "error",
+              "El archivo contiene líneas alteradas o inválidas (hash incorrecto)"
+            );
+          } else {
+            showTemporaryMessage("success", "Archivo cargado correctamente");
+          }
         } catch (err) {
           console.error("Error uploading file:", err);
         }

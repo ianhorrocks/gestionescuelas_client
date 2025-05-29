@@ -207,6 +207,7 @@ const AdminFlights: React.FC = () => {
             show={showModal}
             onHide={() => setShowModal(false)}
             schoolId={schoolId}
+            showTemporaryMessage={showTemporaryMessage}
             onResult={async () => {
               setValidationStep(2);
               await fetchFlights(schoolId);

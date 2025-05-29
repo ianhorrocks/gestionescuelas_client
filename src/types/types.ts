@@ -196,6 +196,7 @@ export interface NewSchool {
 }
 
 export interface EmbeddedFlightInput {
+  id?: string;
   id_embebed: string;
   id_tag: string;
   timestamp: string;
