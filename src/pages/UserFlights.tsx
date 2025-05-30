@@ -92,6 +92,11 @@ const UserFlights: React.FC = () => {
     setError("");
     if (msg) showTemporaryMessage("success", msg);
 
+    await refreshFlights();
+  };
+
+  // Add a function to refresh flights (for deletion as well)
+  const refreshFlights = async () => {
     try {
       const user = await getLoggedUser();
       const flightsData = await getAllUserFlights(user._id);
@@ -213,6 +218,7 @@ const UserFlights: React.FC = () => {
             onHeaderHideChange={setHeaderHidden}
             scrollRef={scrollRef}
             showTemporaryMessage={showTemporaryMessage}
+            onFlightDeleted={refreshFlights} // <-- Agregado para refrescar la tabla al eliminar
           />
         </div>
       )}
@@ -229,6 +235,7 @@ const UserFlights: React.FC = () => {
         onHide={handleCloseDetailModal}
         flight={selectedFlight}
         showTemporaryMessage={showTemporaryMessage}
+        onFlightDeleted={refreshFlights} // <-- Pass the callback
       />
 
       {!loading && (

@@ -148,16 +148,26 @@ export const assignTagToUser = async (
   schoolId: string,
   tag: string
 ): Promise<{ message: string; user: User }> => {
-  const response = await api.put<{ message: string; user: User }>(
-    "/users/assign-tag",
-    {
-      userId,
-      schoolId,
-      tag,
+  try {
+    const response = await api.put<{ message: string; user: User }>(
+      "/users/assign-tag",
+      {
+        userId,
+        schoolId,
+        tag,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      // Intenta extraer el mensaje de error del backend
+      const backendMessage = error.response?.data?.message;
+      if (backendMessage === "TAG_ALREADY_ASSIGNED") {
+        throw new Error("TAG_ALREADY_ASSIGNED");
+      }
     }
-  );
-
-  return response.data;
+    throw error;
+  }
 };
 
 export const removeTagFromUser = async (

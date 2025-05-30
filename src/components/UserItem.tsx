@@ -66,8 +66,12 @@ const UserItem: React.FC<UserItemProps> = ({
       setTag("");
       onTagAssigned(updatedUser); // 🔥 actualiza el UserItemList sin recargar
     } catch (error) {
-      console.error("Error asignando tag:", error);
-      showTemporaryMessage("error", "Error al asignar el tag");
+      if (error instanceof Error && error.message === "TAG_ALREADY_ASSIGNED") {
+        showTemporaryMessage("error", "TAG EN USO");
+      } else {
+        console.error("Error asignando tag:", error);
+        showTemporaryMessage("error", "ERROR AL ASIGNAR TAG");
+      }
     } finally {
       setLoading(false);
     }
@@ -84,12 +88,12 @@ const UserItem: React.FC<UserItemProps> = ({
         ),
       };
       setCurrentTagState("");
-      showTemporaryMessage("success", "Tag eliminado");
+      showTemporaryMessage("success", "TAG ELIMINADO");
 
       onTagAssigned(updatedUser); // 🔥 actualiza el UserItemList sin recargar
     } catch (error) {
       console.error("Error eliminando tag:", error);
-      showTemporaryMessage("error", "Error al eliminar el tag");
+      showTemporaryMessage("error", "ERROR AL ELIMINAR TAG");
     } finally {
       setLoading(false);
     }

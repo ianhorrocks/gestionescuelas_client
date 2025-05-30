@@ -1,5 +1,6 @@
 import api from "./api";
 import { Plane, NewPlane } from "../types/types";
+import { AxiosError } from "axios";
 
 // Se usa en AddFlightModal.tsx y en AdminPlanes.tsx
 export const fetchPlanes = async (schoolId: string): Promise<Plane[]> => {
@@ -38,13 +39,25 @@ export const updatePlanePhoto = async (
 
 export const assignEmbeddedIdToPlane = async (
   planeId: string,
-  idEmbebbed: string
+  idEmbebbed: string,
+  schoolId?: string
 ): Promise<{ message: string }> => {
-  const response = await api.put("/planes/assign-id", {
-    planeId,
-    idEmbebbed,
-  });
-  return response.data;
+  try {
+    const response = await api.put("/planes/assign-id", {
+      planeId,
+      idEmbebbed,
+      schoolId,
+    });
+    return response.data;
+  } catch (error) {
+    if (
+      error instanceof AxiosError &&
+      error.response?.data?.message === "ID_ALREADY_ASSIGNED"
+    ) {
+      throw new Error("ID_ALREADY_ASSIGNED");
+    }
+    throw error;
+  }
 };
 
 export const removeEmbeddedIdFromPlane = async (

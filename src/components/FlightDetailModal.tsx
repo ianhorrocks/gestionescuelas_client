@@ -11,6 +11,7 @@ interface Props {
     type: "success" | "error" | "warning",
     message: string
   ) => void;
+  onFlightDeleted?: () => void; // <-- Add this prop
 }
 
 const statusLabels: Record<SimplifiedFlight["status"], string> = {
@@ -54,6 +55,7 @@ const FlightDetailModal: React.FC<Props> = ({
   onHide,
   flight,
   showTemporaryMessage,
+  onFlightDeleted, // <-- Destructure the new prop
 }) => {
   const [loading, setLoading] = useState(false);
   const [showDoubleConfirmModal, setShowDoubleConfirmModal] = useState(false);
@@ -66,7 +68,7 @@ const FlightDetailModal: React.FC<Props> = ({
       await deleteFlight(flight._id); // Asegúrate que flight tiene _id
       onHide();
       showTemporaryMessage("success", "Vuelo eliminado"); // Mensaje de éxito
-      // Opcional: refresca la lista de vuelos
+      if (onFlightDeleted) onFlightDeleted(); // <-- Call the callback
     } catch (error) {
       // Opcional: muestra un mensaje de error
       console.error("Error eliminando vuelo:", error);

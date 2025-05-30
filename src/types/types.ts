@@ -12,6 +12,7 @@ export interface Plane {
   photoUrl?: string;
   addedDate?: string; // opcional para cuando lo creás
   idEmbebbed?: string | null; // ✅ agregado para manejar id del sistema embebido
+  school?: string | { _id: string; name?: string; aerodrome?: string }; // <-- AGREGADO
 }
 
 export interface School {

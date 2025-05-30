@@ -25,6 +25,7 @@ interface FlightTableProps {
     duration?: number
   ) => void;
   onHeaderHideChange?: (hide: boolean) => void;
+  onFlightDeleted?: () => void; // <-- Add this prop
 }
 
 const FlightTable: React.FC<FlightTableProps> = ({
@@ -35,6 +36,7 @@ const FlightTable: React.FC<FlightTableProps> = ({
   scrollRef,
   showTemporaryMessage,
   onHeaderHideChange,
+  onFlightDeleted, // <-- Destructure the new prop
 }) => {
   const [sortField, setSortField] = useState<
     "date" | "origin" | "airplane" | "time"
@@ -416,6 +418,7 @@ const FlightTable: React.FC<FlightTableProps> = ({
         onHide={handleCloseFlightModal}
         flight={selectedFlight}
         showTemporaryMessage={showTemporaryMessage || (() => {})}
+        onFlightDeleted={onFlightDeleted} // <-- Pass the prop down
       />
     </div>
   );

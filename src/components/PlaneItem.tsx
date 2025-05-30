@@ -44,14 +44,21 @@ const PlaneItem: React.FC<PlaneItemProps> = ({
     setLoading(true);
     try {
       const upperId = idInput.toUpperCase();
-      await assignEmbeddedIdToPlane(plane._id, upperId);
+      // Obtener schoolId del plane
+      const schoolId =
+        typeof plane.school === "string" ? plane.school : plane.school?._id;
+      await assignEmbeddedIdToPlane(plane._id, upperId, schoolId);
       setCurrentEmbebbedState(upperId);
-      showTemporaryMessage("success", "ID Escaner asignado correctamente");
+      showTemporaryMessage("success", "ID ESCANER ASIGNADO");
       setIdInput("");
       onIdAssigned({ ...plane, idEmbebbed: upperId });
     } catch (err) {
-      console.error("FAILED TO ASSIGN EMBEDDED ID:", err);
-      showTemporaryMessage("error", "Error al asignar el ID Escaner");
+      if (err instanceof Error && err.message === "ID_ALREADY_ASSIGNED") {
+        showTemporaryMessage("error", "ID ESCANER EN USO");
+      } else {
+        console.error("FAILED TO ASSIGN EMBEDDED ID:", err);
+        showTemporaryMessage("error", "ERROR AL ASIGNAR ID ESCANER");
+      }
     } finally {
       setLoading(false);
     }
