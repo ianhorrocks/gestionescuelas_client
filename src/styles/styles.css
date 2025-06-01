@@ -2813,11 +2813,31 @@ body,
 .tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons .floating-button:hover {
   background-color: rgb(19.6, 22.05, 29.4);
 }
-.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons .floating-button.to-pending {
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons .floating-button.to-pending,
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons .floating-button .modal-to-pending {
   background-color: #dfb323;
+  color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  height: 35px;
+  min-width: 180px;
+  width: auto;
+  padding: 0 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.08);
+  transition: background 0.2s, scale 0.2s;
+  cursor: pointer;
+  animation: slideInFromRight 0.3s ease-out;
+  pointer-events: auto;
 }
-.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons .floating-button.to-pending:hover {
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons .floating-button.to-pending:hover,
+.tab-content .history-tab .flight-history-container .flight-history-table-wrapper .floating-buttons .floating-button .modal-to-pending:hover {
   scale: 1.05;
+  background-color: rgb(202.9761904762, 162.380952381, 29.5238095238);
 }
 .tab-content .history-tab .flight-history-container .badge {
   padding: 4px 8px;
@@ -2895,6 +2915,30 @@ body,
 }
 .flight-history-table tbody tr.row-exit {
   animation: fadeOutLeft 0.5s forwards;
+}
+
+.modal-to-pending {
+  background-color: #dfb323;
+  color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  height: 35px;
+  min-width: 180px;
+  width: auto;
+  padding: 0 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.08);
+  transition: background 0.2s, scale 0.2s;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.modal-to-pending:hover {
+  scale: 1.05;
+  background-color: rgb(202.9761904762, 162.380952381, 29.5238095238);
 }
 
 .loaderContainer {
@@ -3379,6 +3423,29 @@ body,
 }
 .floating-buttons .floating-button.cancel:hover {
   scale: 1.05;
+}
+.floating-buttons .floating-button.validated-bulk {
+  min-width: 170px;
+  width: auto;
+  padding: 0 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: #328b32;
+  color: #ffffff;
+  border-radius: 5px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(44, 204, 64, 0.08);
+  transition: background 0.2s, scale 0.2s;
+  cursor: pointer;
+  animation: slideInFromRight 0.3s ease-out;
+  border: none;
+}
+.floating-buttons .floating-button.validated-bulk:hover {
+  scale: 1.05;
+  background-color: rgb(43.253968254, 120.246031746, 43.253968254);
 }
 
 .school-edit-modal .modal-content {

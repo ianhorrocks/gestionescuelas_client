@@ -338,10 +338,30 @@
             );
           }
 
-          &.to-pending {
+          &.to-pending,
+          .modal-to-pending {
             background-color: variables.$warning-border-color;
+            color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            height: 35px;
+            min-width: 180px;
+            width: auto;
+            padding: 0 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.08);
+            transition: background 0.2s, scale 0.2s;
+            cursor: pointer;
+            animation: slideInFromRight 0.3s ease-out;
+            pointer-events: auto;
+
             &:hover {
               scale: 1.05;
+              background-color: darken(variables.$warning-border-color, 5%);
             }
           }
         }
@@ -431,4 +451,30 @@
 
 .flight-history-table tbody tr.row-exit {
   animation: fadeOutLeft 0.5s forwards;
+}
+
+.modal-to-pending {
+  background-color: variables.$warning-border-color;
+  color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  height: 35px;
+  min-width: 180px;
+  width: auto;
+  padding: 0 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.08);
+  transition: background 0.2s, scale 0.2s;
+  cursor: pointer;
+
+  pointer-events: auto;
+
+  &:hover {
+    scale: 1.05;
+    background-color: darken(variables.$warning-border-color, 5%);
+  }
 }

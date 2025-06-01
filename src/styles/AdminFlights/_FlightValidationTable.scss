@@ -262,5 +262,30 @@
         scale: 1.05;
       }
     }
+
+    &.validated-bulk {
+      min-width: 170px;
+      width: auto;
+      padding: 0 18px;
+      font-size: 1rem;
+      font-weight: 600;
+      background-color: variables.$success-text-bulk;
+      color: variables.$white-color;
+      border-radius: 5px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(44, 204, 64, 0.08);
+      transition: background 0.2s, scale 0.2s;
+      cursor: pointer;
+      animation: slideInFromRight 0.3s ease-out;
+      border: none;
+
+      &:hover {
+        scale: 1.05;
+        background-color: darken(variables.$success-text-bulk, 5%);
+      }
+    }
   }
 }

@@ -1,6 +1,6 @@
 // src/components/FlightHistoryTable.tsx
 import React, { useState, useMemo, useRef, useEffect } from "react";
-import { Modal, Button, FormControl } from "react-bootstrap";
+import { Modal, FormControl } from "react-bootstrap";
 import { updateFlightStatus, deleteFlight } from "../services/flightService";
 import { HistoryFlight } from "../types/types";
 import { FaEye, FaSearch, FaCalendarAlt } from "react-icons/fa";
@@ -57,8 +57,8 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
     | "preValidated"
     | "status"
     | null
-  >(null);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
+  >("date"); // Por defecto: ordenar por fecha
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>("desc"); // Por defecto: descendente
   const datepickerRef = useRef<HTMLDivElement | null>(null);
 
   // Close datepicker on outside click
@@ -517,7 +517,7 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
                   {/* PRE-VALIDADO */}
                   <th>
                     <div className="th-sortable">
-                      <span>Pre-Validado</span>
+                      <span>Validado</span>
                       <button
                         className={`sort-btn${
                           sortField === "preValidated" ? " active" : ""
@@ -808,14 +808,19 @@ const FlightHistoryTable: React.FC<FlightHistoryTableProps> = ({
           <Modal.Title>Aviso</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {pendingIds.length > 1
-            ? "¿Estás seguro de que deseas devolver los vuelos seleccionados a pendiente?"
-            : "¿Estás seguro de que deseas devolver este vuelo a pendiente?"}
+          {pendingIds.length === 1
+            ? "¿Seguro que deseas volver este vuelo a pendiente?"
+            : `¿Seguro que deseas volver ${pendingIds.length} vuelos a pendiente?`}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={confirmToPending}>
-            {pendingIds.length > 1 ? "Confirmar vuelos" : "Confirmar vuelo"}
-          </Button>
+          <button
+            className="floating-button to-pending modal-to-pending"
+            onClick={confirmToPending}
+          >
+            {pendingIds.length === 1
+              ? "Confirmar pendiente"
+              : "Confirmar pendientes"}
+          </button>
         </Modal.Footer>
       </Modal>
       <FlightAdminDetailModal

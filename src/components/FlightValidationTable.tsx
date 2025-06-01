@@ -15,6 +15,15 @@ interface FlightValidationTableProps {
     type: "success" | "error" | "warning",
     message: string
   ) => void;
+  onBulkSelectedChange?: (selected: boolean) => void;
+  forceConfirmModal?: {
+    show: boolean;
+    ids: string[];
+    action: "confirm" | "cancel";
+    preValidated: boolean;
+    onClose: () => void;
+    onConfirmed?: () => void;
+  };
 }
 
 const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
@@ -23,6 +32,8 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
   validationStep,
   setValidationStep,
   showTemporaryMessage,
+  onBulkSelectedChange,
+  forceConfirmModal,
 }) => {
   const [confirmModal, setConfirmModal] = useState<{
     show: boolean;
@@ -30,6 +41,10 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
     action: "confirm" | "cancel";
     preValidated: boolean;
   }>({ show: false, ids: [], action: "confirm", preValidated: false });
+
+  // Estado exclusivo para el modal de "Confirmar Válidos"
+  const [showConfirmValidosModal, setShowConfirmValidosModal] = useState(false);
+  const [confirmValidosIds, setConfirmValidosIds] = useState<string[]>([]);
 
   const [selectedFlights, setSelectedFlights] = useState<string[]>([]);
   const [showAdminDetailModal, setShowAdminDetailModal] = useState(false);
@@ -43,6 +58,12 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
       setValidationStep?.(3);
     }
   }, [flights, validationStep, setValidationStep]);
+
+  useEffect(() => {
+    if (onBulkSelectedChange) {
+      onBulkSelectedChange(selectedFlights.length > 0);
+    }
+  }, [selectedFlights, onBulkSelectedChange]);
 
   const toggleSelectAll = () => {
     if (selectedFlights.length === flights.length) {
@@ -60,11 +81,10 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
     );
   };
 
-  // Bulk action for confirm/reject
+  // Bulk action para confirm/reject (NO para válidos)
   const bulkAction = async (status: "confirmed" | "cancelled") => {
     const selected = flights.filter((f) => selectedFlights.includes(f._id));
     const allPreValidated = selected.every((f) => f.preValidated);
-
     setConfirmModal({
       show: true,
       ids: selectedFlights,
@@ -73,32 +93,36 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
     });
   };
 
-  // Confirm action for both bulk and modal
-  const confirmAction = async () => {
-    const { ids, action } = confirmModal;
-    const status = action === "confirm" ? "confirmed" : "cancelled";
+  // Acción para el botón "Confirmar Válidos"
+  const openConfirmValidosModal = (ids: string[]) => {
+    setConfirmValidosIds(ids);
+    setShowConfirmValidosModal(true);
+  };
+
+  const handleConfirmValidos = async () => {
+    const ids = confirmValidosIds;
     try {
-      setExitingRows(ids); // Marcar filas para animación
-      await new Promise((resolve) => setTimeout(resolve, 500)); // Esperar animación
-      await Promise.all(ids.map((id) => updateFlightStatus(id, status)));
+      setExitingRows(ids);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      await Promise.all(ids.map((id) => updateFlightStatus(id, "confirmed")));
       showTemporaryMessage?.(
         "success",
-        status === "confirmed"
-          ? "Vuelo/s Confirmado. Movido a historial."
-          : "Vuelo/s Rechazado. Movido a historial."
+        ids.length === 1
+          ? "Vuelo confirmado. Movido a historial."
+          : "Vuelos confirmados. Movidos a historial."
       );
       setSelectedFlights([]);
-      setShowAdminDetailModal(false);
+      setShowConfirmValidosModal(false);
       if (onStatusChange) {
-        ids.forEach((id) => onStatusChange(id, status));
+        ids.forEach((id) => onStatusChange(id, "confirmed"));
       }
     } catch (error) {
       showTemporaryMessage?.(
         "error",
-        "Ocurrió un error al actualizar los vuelos seleccionados."
+        "Ocurrió un error al confirmar los vuelos validados."
       );
     } finally {
-      setConfirmModal({ ...confirmModal, show: false });
+      setShowConfirmValidosModal(false);
       setExitingRows([]);
     }
   };
@@ -120,6 +144,27 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
     preValidated: boolean,
     count: number
   ) {
+    // Si es confirmación masiva de válidos (forceConfirmModal y todos preValidated)
+    if (
+      forceConfirmModal &&
+      forceConfirmModal.show &&
+      action === "confirm" &&
+      preValidated
+    ) {
+      if (count === 1) {
+        return (
+          <>El vuelo ha sido validado correctamente, ¿Deseas confirmarlo?</>
+        );
+      } else {
+        return (
+          <>
+            {count} vuelos han sido validados correctamente, ¿Deseas
+            confirmarlos?
+          </>
+        );
+      }
+    }
+    // Mensaje estándar para bulk y modal individual
     const actionText =
       action === "confirm"
         ? count > 1
@@ -182,6 +227,17 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
     return dateB.getTime() - dateA.getTime();
   });
 
+  // Vuelos prevalidados y pendientes
+  const prevalidatedFlights: Flight[] = flights.filter(
+    (flight) => flight.preValidated && flight.status === "pending"
+  );
+
+  // Mostrar botón flotante solo en paso 2, si hay prevalidados y no hay selección bulk
+  const showFloatingValidos =
+    validationStep === 2 &&
+    prevalidatedFlights.length > 0 &&
+    selectedFlights.length === 0;
+
   if (flights.length === 0) {
     return (
       <div className="flight-validation-table-wrapper">
@@ -191,6 +247,37 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
       </div>
     );
   }
+
+  // Handler para el modal estándar (bulk/individual)
+  const handleModalConfirmed = async () => {
+    const ids = confirmModal.ids;
+    const status =
+      confirmModal.action === "confirm" ? "confirmed" : "cancelled";
+    try {
+      setExitingRows(ids);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      await Promise.all(ids.map((id) => updateFlightStatus(id, status)));
+      showTemporaryMessage?.(
+        "success",
+        status === "confirmed"
+          ? "Vuelo/s Confirmado. Movido a historial."
+          : "Vuelo/s Rechazado. Movido a historial."
+      );
+      setSelectedFlights([]);
+      setShowAdminDetailModal(false);
+      if (onStatusChange) {
+        ids.forEach((id) => onStatusChange(id, status));
+      }
+    } catch (error) {
+      showTemporaryMessage?.(
+        "error",
+        "Ocurrió un error al actualizar los vuelos seleccionados."
+      );
+    } finally {
+      setConfirmModal({ ...confirmModal, show: false });
+      setExitingRows([]);
+    }
+  };
 
   return (
     <>
@@ -317,6 +404,20 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
           </tbody>
         </table>
 
+        {/* Render floating button para "Confirmar Válidos" (solo si no hay selección bulk y hay prevalidados) */}
+        {showFloatingValidos && (
+          <div className="floating-buttons">
+            <button
+              className="floating-button validated-bulk"
+              onClick={() =>
+                openConfirmValidosModal(prevalidatedFlights.map((f) => f._id))
+              }
+            >
+              Confirmar Válidos
+            </button>
+          </div>
+        )}
+        {/* Render floating buttons para bulk solo si hay selección */}
         {selectedFlights.length > 0 && (
           <div className="floating-buttons">
             <button
@@ -335,6 +436,35 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
         )}
       </div>
 
+      {/* Modal exclusivo para Confirmar Válidos */}
+      <Modal
+        show={showConfirmValidosModal}
+        onHide={() => setShowConfirmValidosModal(false)}
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Aviso</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {confirmValidosIds.length === 1 ? (
+            <>El vuelo ha sido validado correctamente, ¿Deseas confirmarlo?</>
+          ) : (
+            <>
+              {confirmValidosIds.length} vuelos han sido validados
+              correctamente, ¿Deseas confirmarlos?
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleConfirmValidos}>
+            {confirmValidosIds.length === 1
+              ? "Confirmar Vuelo"
+              : "Confirmar Vuelos"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modal estándar para bulk/individual */}
       <Modal
         show={confirmModal.show}
         onHide={() => setConfirmModal({ ...confirmModal, show: false })}
@@ -353,7 +483,7 @@ const FlightValidationTable: React.FC<FlightValidationTableProps> = ({
         <Modal.Footer>
           <Button
             variant={confirmModal.action === "confirm" ? "success" : "danger"}
-            onClick={confirmAction}
+            onClick={handleModalConfirmed}
           >
             {confirmModal.action === "confirm"
               ? confirmModal.ids.length > 1

@@ -25,6 +25,15 @@ const AdminFlights: React.FC = () => {
   const [schoolId, setSchoolId] = useState<string | null>(null);
   const { message, showTemporaryMessage } = useTemporaryMessage();
   const [validationStep, setValidationStep] = useState<1 | 2 | 3>(1);
+  // Eliminado: showConfirmAllModal y setShowConfirmAllModal ya no se usan
+  const [bulkSelected, setBulkSelected] = useState(false); // Nuevo estado para selección de bulk
+  // Estado para forzar el modal de confirmación masiva
+  const [forceConfirmModal, setForceConfirmModal] = useState<null | {
+    show: boolean;
+    ids: string[];
+    action: "confirm" | "cancel";
+    preValidated: boolean;
+  }>(null);
 
   const fetchFlights = async (sid: string) => {
     try {
@@ -177,7 +186,10 @@ const AdminFlights: React.FC = () => {
                   >
                     1. Cargar CSV
                   </div>
-                  <div className={stepClass(2)}>2. Revisar Válidos</div>
+                  <div className={stepClass(2)}>
+                    2. Revisar Válidos
+                    {/* Botón eliminado del stepper, ahora es flotante */}
+                  </div>
                   <div className={stepClass(3)}>3. Finalizado</div>
                 </div>
               </div>
@@ -192,12 +204,51 @@ const AdminFlights: React.FC = () => {
               </button>
             )}
 
+            {/* Botón flotante Confirmar todos los válidos */}
+            {validationStep === 2 &&
+              flights.filter((f) => f.status === "pending" && f.preValidated)
+                .length > 0 &&
+              !bulkSelected && (
+                <div
+                  className="floating-buttons"
+                  style={{ top: 80, right: 40 }}
+                >
+                  <button
+                    className="floating-button validated-bulk"
+                    onClick={() =>
+                      setForceConfirmModal({
+                        show: true,
+                        ids: flights
+                          .filter(
+                            (f) => f.status === "pending" && f.preValidated
+                          )
+                          .map((f) => f._id),
+                        action: "confirm",
+                        preValidated: true,
+                      })
+                    }
+                  >
+                    Confirmar Válidos
+                  </button>
+                </div>
+              )}
+
             <FlightValidationTable
               flights={flights.filter((f) => f.status === "pending")}
               onStatusChange={handleStatusChange}
               validationStep={validationStep}
               setValidationStep={setValidationStep}
               showTemporaryMessage={showTemporaryMessage}
+              onBulkSelectedChange={setBulkSelected}
+              forceConfirmModal={
+                forceConfirmModal
+                  ? {
+                      ...forceConfirmModal,
+                      onClose: () => setForceConfirmModal(null),
+                      onConfirmed: () => setForceConfirmModal(null),
+                    }
+                  : undefined
+              }
             />
           </div>
         )}

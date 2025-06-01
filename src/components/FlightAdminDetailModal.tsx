@@ -64,7 +64,7 @@ const FlightAdminDetailModal: React.FC<FlightAdminDetailModalProps> = ({
                 </span>
               </p>
               <p className="prevalidated-row">
-                <strong>Prevalidado:</strong>{" "}
+                <strong>Validado:</strong>{" "}
                 <img
                   src={
                     flight.preValidated ? prevalidatedTrue : prevalidatedFalse
